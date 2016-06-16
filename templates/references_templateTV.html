@@ -1,0 +1,9 @@
+<!-- Edit this file to change the layout of each record in the table view -->
+<!-- To disable clicking of a field, remove the <%%select%%> and <%%endselect%%> formatters around it-->
+
+<!-- If you wish to hide the table view header that contains the column titles, -->
+<!-- open the generated 'references_view.php' file in your text editor and -->
+<!-- change the value of $x->ShowTableHeader to 0 -->
+
+		<td id="references-reference_name-<%%VALUE(id)%%>" class="references-reference_name "><%%SELECT%%><%%VALUE(reference_name)%%><%%ENDSELECT%%></td>
+		<td id="references-phone-<%%VALUE(id)%%>" class="references-phone "><%%SELECT%%><%%VALUE(phone)%%><%%ENDSELECT%%></td>
