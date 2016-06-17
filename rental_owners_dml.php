@@ -18,28 +18,14 @@ function rental_owners_insert(){
 		if($data['first_name'] == empty_lookup_value){ $data['first_name'] = ''; }
 	$data['last_name'] = makeSafe($_REQUEST['last_name']);
 		if($data['last_name'] == empty_lookup_value){ $data['last_name'] = ''; }
-	$data['company_name'] = makeSafe($_REQUEST['company_name']);
-		if($data['company_name'] == empty_lookup_value){ $data['company_name'] = ''; }
 	$data['date_of_birth'] = intval($_REQUEST['date_of_birthYear']) . '-' . intval($_REQUEST['date_of_birthMonth']) . '-' . intval($_REQUEST['date_of_birthDay']);
 	$data['date_of_birth'] = parseMySQLDate($data['date_of_birth'], '');
 	$data['primary_email'] = makeSafe($_REQUEST['primary_email']);
 		if($data['primary_email'] == empty_lookup_value){ $data['primary_email'] = ''; }
-	$data['alternate_email'] = makeSafe($_REQUEST['alternate_email']);
-		if($data['alternate_email'] == empty_lookup_value){ $data['alternate_email'] = ''; }
 	$data['phone'] = makeSafe($_REQUEST['phone']);
 		if($data['phone'] == empty_lookup_value){ $data['phone'] = ''; }
 	$data['country'] = makeSafe($_REQUEST['country']);
 		if($data['country'] == empty_lookup_value){ $data['country'] = ''; }
-	$data['street'] = makeSafe($_REQUEST['street']);
-		if($data['street'] == empty_lookup_value){ $data['street'] = ''; }
-	$data['city'] = makeSafe($_REQUEST['city']);
-		if($data['city'] == empty_lookup_value){ $data['city'] = ''; }
-	$data['state'] = makeSafe($_REQUEST['state']);
-		if($data['state'] == empty_lookup_value){ $data['state'] = ''; }
-	$data['zip'] = makeSafe($_REQUEST['zip']);
-		if($data['zip'] == empty_lookup_value){ $data['zip'] = ''; }
-	$data['comments'] = makeSafe($_REQUEST['comments']);
-		if($data['comments'] == empty_lookup_value){ $data['comments'] = ''; }
 
 	// hook: rental_owners_before_insert
 	if(function_exists('rental_owners_before_insert')){
@@ -48,7 +34,7 @@ function rental_owners_insert(){
 	}
 
 	$o=array('silentErrors' => true);
-	sql('insert into `rental_owners` set       `first_name`=' . (($data['first_name'] !== '' && $data['first_name'] !== NULL) ? "'{$data['first_name']}'" : 'NULL') . ', `last_name`=' . (($data['last_name'] !== '' && $data['last_name'] !== NULL) ? "'{$data['last_name']}'" : 'NULL') . ', `company_name`=' . (($data['company_name'] !== '' && $data['company_name'] !== NULL) ? "'{$data['company_name']}'" : 'NULL') . ', `date_of_birth`=' . (($data['date_of_birth'] !== '' && $data['date_of_birth'] !== NULL) ? "'{$data['date_of_birth']}'" : 'NULL') . ', `primary_email`=' . (($data['primary_email'] !== '' && $data['primary_email'] !== NULL) ? "'{$data['primary_email']}'" : 'NULL') . ', `alternate_email`=' . (($data['alternate_email'] !== '' && $data['alternate_email'] !== NULL) ? "'{$data['alternate_email']}'" : 'NULL') . ', `phone`=' . (($data['phone'] !== '' && $data['phone'] !== NULL) ? "'{$data['phone']}'" : 'NULL') . ', `country`=' . (($data['country'] !== '' && $data['country'] !== NULL) ? "'{$data['country']}'" : 'NULL') . ', `street`=' . (($data['street'] !== '' && $data['street'] !== NULL) ? "'{$data['street']}'" : 'NULL') . ', `city`=' . (($data['city'] !== '' && $data['city'] !== NULL) ? "'{$data['city']}'" : 'NULL') . ', `state`=' . (($data['state'] !== '' && $data['state'] !== NULL) ? "'{$data['state']}'" : 'NULL') . ', `zip`=' . (($data['zip'] !== '' && $data['zip'] !== NULL) ? "'{$data['zip']}'" : 'NULL') . ', `comments`=' . (($data['comments'] !== '' && $data['comments'] !== NULL) ? "'{$data['comments']}'" : 'NULL'), $o);
+	sql('insert into `rental_owners` set       `first_name`=' . (($data['first_name'] !== '' && $data['first_name'] !== NULL) ? "'{$data['first_name']}'" : 'NULL') . ', `last_name`=' . (($data['last_name'] !== '' && $data['last_name'] !== NULL) ? "'{$data['last_name']}'" : 'NULL') . ', `date_of_birth`=' . (($data['date_of_birth'] !== '' && $data['date_of_birth'] !== NULL) ? "'{$data['date_of_birth']}'" : 'NULL') . ', `primary_email`=' . (($data['primary_email'] !== '' && $data['primary_email'] !== NULL) ? "'{$data['primary_email']}'" : 'NULL') . ', `phone`=' . (($data['phone'] !== '' && $data['phone'] !== NULL) ? "'{$data['phone']}'" : 'NULL') . ', `country`=' . (($data['country'] !== '' && $data['country'] !== NULL) ? "'{$data['country']}'" : 'NULL'), $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo "<a href=\"rental_owners_view.php?addNew_x=1\">{$Translation['< back']}</a>";
@@ -144,28 +130,14 @@ function rental_owners_update($selected_id){
 		if($data['first_name'] == empty_lookup_value){ $data['first_name'] = ''; }
 	$data['last_name'] = makeSafe($_REQUEST['last_name']);
 		if($data['last_name'] == empty_lookup_value){ $data['last_name'] = ''; }
-	$data['company_name'] = makeSafe($_REQUEST['company_name']);
-		if($data['company_name'] == empty_lookup_value){ $data['company_name'] = ''; }
 	$data['date_of_birth'] = intval($_REQUEST['date_of_birthYear']) . '-' . intval($_REQUEST['date_of_birthMonth']) . '-' . intval($_REQUEST['date_of_birthDay']);
 	$data['date_of_birth'] = parseMySQLDate($data['date_of_birth'], '');
 	$data['primary_email'] = makeSafe($_REQUEST['primary_email']);
 		if($data['primary_email'] == empty_lookup_value){ $data['primary_email'] = ''; }
-	$data['alternate_email'] = makeSafe($_REQUEST['alternate_email']);
-		if($data['alternate_email'] == empty_lookup_value){ $data['alternate_email'] = ''; }
 	$data['phone'] = makeSafe($_REQUEST['phone']);
 		if($data['phone'] == empty_lookup_value){ $data['phone'] = ''; }
 	$data['country'] = makeSafe($_REQUEST['country']);
 		if($data['country'] == empty_lookup_value){ $data['country'] = ''; }
-	$data['street'] = makeSafe($_REQUEST['street']);
-		if($data['street'] == empty_lookup_value){ $data['street'] = ''; }
-	$data['city'] = makeSafe($_REQUEST['city']);
-		if($data['city'] == empty_lookup_value){ $data['city'] = ''; }
-	$data['state'] = makeSafe($_REQUEST['state']);
-		if($data['state'] == empty_lookup_value){ $data['state'] = ''; }
-	$data['zip'] = makeSafe($_REQUEST['zip']);
-		if($data['zip'] == empty_lookup_value){ $data['zip'] = ''; }
-	$data['comments'] = makeSafe($_REQUEST['comments']);
-		if($data['comments'] == empty_lookup_value){ $data['comments'] = ''; }
 	$data['selectedID']=makeSafe($selected_id);
 
 	// hook: rental_owners_before_update
@@ -175,7 +147,7 @@ function rental_owners_update($selected_id){
 	}
 
 	$o=array('silentErrors' => true);
-	sql('update `rental_owners` set       `first_name`=' . (($data['first_name'] !== '' && $data['first_name'] !== NULL) ? "'{$data['first_name']}'" : 'NULL') . ', `last_name`=' . (($data['last_name'] !== '' && $data['last_name'] !== NULL) ? "'{$data['last_name']}'" : 'NULL') . ', `company_name`=' . (($data['company_name'] !== '' && $data['company_name'] !== NULL) ? "'{$data['company_name']}'" : 'NULL') . ', `date_of_birth`=' . (($data['date_of_birth'] !== '' && $data['date_of_birth'] !== NULL) ? "'{$data['date_of_birth']}'" : 'NULL') . ', `primary_email`=' . (($data['primary_email'] !== '' && $data['primary_email'] !== NULL) ? "'{$data['primary_email']}'" : 'NULL') . ', `alternate_email`=' . (($data['alternate_email'] !== '' && $data['alternate_email'] !== NULL) ? "'{$data['alternate_email']}'" : 'NULL') . ', `phone`=' . (($data['phone'] !== '' && $data['phone'] !== NULL) ? "'{$data['phone']}'" : 'NULL') . ', `country`=' . (($data['country'] !== '' && $data['country'] !== NULL) ? "'{$data['country']}'" : 'NULL') . ', `street`=' . (($data['street'] !== '' && $data['street'] !== NULL) ? "'{$data['street']}'" : 'NULL') . ', `city`=' . (($data['city'] !== '' && $data['city'] !== NULL) ? "'{$data['city']}'" : 'NULL') . ', `state`=' . (($data['state'] !== '' && $data['state'] !== NULL) ? "'{$data['state']}'" : 'NULL') . ', `zip`=' . (($data['zip'] !== '' && $data['zip'] !== NULL) ? "'{$data['zip']}'" : 'NULL') . ', `comments`=' . (($data['comments'] !== '' && $data['comments'] !== NULL) ? "'{$data['comments']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
+	sql('update `rental_owners` set       `first_name`=' . (($data['first_name'] !== '' && $data['first_name'] !== NULL) ? "'{$data['first_name']}'" : 'NULL') . ', `last_name`=' . (($data['last_name'] !== '' && $data['last_name'] !== NULL) ? "'{$data['last_name']}'" : 'NULL') . ', `date_of_birth`=' . (($data['date_of_birth'] !== '' && $data['date_of_birth'] !== NULL) ? "'{$data['date_of_birth']}'" : 'NULL') . ', `primary_email`=' . (($data['primary_email'] !== '' && $data['primary_email'] !== NULL) ? "'{$data['primary_email']}'" : 'NULL') . ', `phone`=' . (($data['phone'] !== '' && $data['phone'] !== NULL) ? "'{$data['phone']}'" : 'NULL') . ', `country`=' . (($data['country'] !== '' && $data['country'] !== NULL) ? "'{$data['country']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo '<a href="rental_owners_view.php?SelectedID='.urlencode($selected_id)."\">{$Translation['< back']}</a>";
@@ -245,21 +217,6 @@ function rental_owners_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 		$combo_country->ListData = $combo_country->ListItem;
 	}
 	$combo_country->SelectName = 'country';
-	// combobox: state
-	$combo_state = new Combo;
-	$combo_state->ListType = 0;
-	$combo_state->MultipleSeparator = ', ';
-	$combo_state->ListBoxHeight = 10;
-	$combo_state->RadiosPerLine = 1;
-	if(is_file(dirname(__FILE__).'/hooks/rental_owners.state.csv')){
-		$state_data = addslashes(implode('', @file(dirname(__FILE__).'/hooks/rental_owners.state.csv')));
-		$combo_state->ListItem = explode('||', entitiesToUTF8(convertLegacyOptions($state_data)));
-		$combo_state->ListData = $combo_state->ListItem;
-	}else{
-		$combo_state->ListItem = explode('||', entitiesToUTF8(convertLegacyOptions("AL;;AK;;AS;;AZ;;AR;;CA;;CO;;CT;;DE;;DC;;FM;;FL;;GA;;GU;;HI;;ID;;IL;;IN;;IA;;KS;;KY;;LA;;ME;;MH;;MD;;MA;;MI;;MN;;MS;;MO;;MT;;NE;;NV;;NH;;NJ;;NM;;NY;;NC;;ND;;MP;;OH;;OK;;OR;;PW;;PA;;PR;;RI;;SC;;SD;;TN;;TX;;UT;;VT;;VI;;VA;;WA;;WV;;WI;;WY")));
-		$combo_state->ListData = $combo_state->ListItem;
-	}
-	$combo_state->SelectName = 'state';
 
 	if($selected_id){
 		// mm: check member permissions
@@ -292,13 +249,10 @@ function rental_owners_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 		$row = $hc->xss_clean($row); /* sanitize data */
 		$combo_date_of_birth->DefaultDate = $row['date_of_birth'];
 		$combo_country->SelectedData = $row['country'];
-		$combo_state->SelectedData = $row['state'];
 	}else{
-		$combo_country->SelectedText = ( $_REQUEST['FilterField'][1]=='9' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "");
-		$combo_state->SelectedText = ( $_REQUEST['FilterField'][1]=='12' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "");
+		$combo_country->SelectedText = ( $_REQUEST['FilterField'][1]=='7' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "");
 	}
 	$combo_country->Render();
-	$combo_state->Render();
 
 	ob_start();
 	?>
@@ -366,19 +320,12 @@ function rental_owners_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 	if(($selected_id && !$AllowUpdate && !$AllowInsert) || (!$selected_id && !$AllowInsert)){
 		$jsReadOnly .= "\tjQuery('#first_name').replaceWith('<div class=\"form-control-static\" id=\"first_name\">' + (jQuery('#first_name').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#last_name').replaceWith('<div class=\"form-control-static\" id=\"last_name\">' + (jQuery('#last_name').val() || '') + '</div>');\n";
-		$jsReadOnly .= "\tjQuery('#company_name').replaceWith('<div class=\"form-control-static\" id=\"company_name\">' + (jQuery('#company_name').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#date_of_birth').prop('readonly', true);\n";
 		$jsReadOnly .= "\tjQuery('#date_of_birthDay, #date_of_birthMonth, #date_of_birthYear').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
 		$jsReadOnly .= "\tjQuery('#primary_email').replaceWith('<div class=\"form-control-static\" id=\"primary_email\">' + (jQuery('#primary_email').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#primary_email, #primary_email-edit-link').hide();\n";
-		$jsReadOnly .= "\tjQuery('#alternate_email').replaceWith('<div class=\"form-control-static\" id=\"alternate_email\">' + (jQuery('#alternate_email').val() || '') + '</div>');\n";
-		$jsReadOnly .= "\tjQuery('#alternate_email, #alternate_email-edit-link').hide();\n";
 		$jsReadOnly .= "\tjQuery('#phone').replaceWith('<div class=\"form-control-static\" id=\"phone\">' + (jQuery('#phone').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#country').replaceWith('<div class=\"form-control-static\" id=\"country\">' + (jQuery('#country').val() || '') + '</div>'); jQuery('#country-multi-selection-help').hide();\n";
-		$jsReadOnly .= "\tjQuery('#street').replaceWith('<div class=\"form-control-static\" id=\"street\">' + (jQuery('#street').val() || '') + '</div>');\n";
-		$jsReadOnly .= "\tjQuery('#city').replaceWith('<div class=\"form-control-static\" id=\"city\">' + (jQuery('#city').val() || '') + '</div>');\n";
-		$jsReadOnly .= "\tjQuery('#state').replaceWith('<div class=\"form-control-static\" id=\"state\">' + (jQuery('#state').val() || '') + '</div>'); jQuery('#state-multi-selection-help').hide();\n";
-		$jsReadOnly .= "\tjQuery('#zip').replaceWith('<div class=\"form-control-static\" id=\"zip\">' + (jQuery('#zip').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('.select2-container').hide();\n";
 
 		$noUploads = true;
@@ -392,8 +339,6 @@ function rental_owners_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 	$templateCode=str_replace('<%%COMBOTEXT(date_of_birth)%%>', $combo_date_of_birth->GetHTML(true), $templateCode);
 	$templateCode=str_replace('<%%COMBO(country)%%>', $combo_country->HTML, $templateCode);
 	$templateCode=str_replace('<%%COMBOTEXT(country)%%>', $combo_country->SelectedData, $templateCode);
-	$templateCode=str_replace('<%%COMBO(state)%%>', $combo_state->HTML, $templateCode);
-	$templateCode=str_replace('<%%COMBOTEXT(state)%%>', $combo_state->SelectedData, $templateCode);
 
 	/* lookup fields array: 'lookup field name' => array('parent table name', 'lookup field caption') */
 	$lookup_fields = array();
@@ -415,17 +360,10 @@ function rental_owners_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 	$templateCode=str_replace('<%%UPLOADFILE(id)%%>', '', $templateCode);
 	$templateCode=str_replace('<%%UPLOADFILE(first_name)%%>', '', $templateCode);
 	$templateCode=str_replace('<%%UPLOADFILE(last_name)%%>', '', $templateCode);
-	$templateCode=str_replace('<%%UPLOADFILE(company_name)%%>', '', $templateCode);
 	$templateCode=str_replace('<%%UPLOADFILE(date_of_birth)%%>', '', $templateCode);
 	$templateCode=str_replace('<%%UPLOADFILE(primary_email)%%>', '', $templateCode);
-	$templateCode=str_replace('<%%UPLOADFILE(alternate_email)%%>', '', $templateCode);
 	$templateCode=str_replace('<%%UPLOADFILE(phone)%%>', '', $templateCode);
 	$templateCode=str_replace('<%%UPLOADFILE(country)%%>', '', $templateCode);
-	$templateCode=str_replace('<%%UPLOADFILE(street)%%>', '', $templateCode);
-	$templateCode=str_replace('<%%UPLOADFILE(city)%%>', '', $templateCode);
-	$templateCode=str_replace('<%%UPLOADFILE(state)%%>', '', $templateCode);
-	$templateCode=str_replace('<%%UPLOADFILE(zip)%%>', '', $templateCode);
-	$templateCode=str_replace('<%%UPLOADFILE(comments)%%>', '', $templateCode);
 
 	// process values
 	if($selected_id){
@@ -435,33 +373,14 @@ function rental_owners_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 		$templateCode=str_replace('<%%URLVALUE(first_name)%%>', urlencode($urow['first_name']), $templateCode);
 		$templateCode=str_replace('<%%VALUE(last_name)%%>', htmlspecialchars($row['last_name'], ENT_QUOTES, 'UTF-8'), $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(last_name)%%>', urlencode($urow['last_name']), $templateCode);
-		$templateCode=str_replace('<%%VALUE(company_name)%%>', htmlspecialchars($row['company_name'], ENT_QUOTES, 'UTF-8'), $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(company_name)%%>', urlencode($urow['company_name']), $templateCode);
 		$templateCode=str_replace('<%%VALUE(date_of_birth)%%>', @date('m/d/Y', @strtotime(htmlspecialchars($row['date_of_birth'], ENT_QUOTES, 'UTF-8'))), $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(date_of_birth)%%>', urlencode(@date('m/d/Y', @strtotime(htmlspecialchars($urow['date_of_birth'], ENT_QUOTES, 'UTF-8')))), $templateCode);
 		$templateCode=str_replace('<%%VALUE(primary_email)%%>', htmlspecialchars($row['primary_email'], ENT_QUOTES, 'UTF-8'), $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(primary_email)%%>', urlencode($urow['primary_email']), $templateCode);
-		$templateCode=str_replace('<%%VALUE(alternate_email)%%>', htmlspecialchars($row['alternate_email'], ENT_QUOTES, 'UTF-8'), $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(alternate_email)%%>', urlencode($urow['alternate_email']), $templateCode);
 		$templateCode=str_replace('<%%VALUE(phone)%%>', htmlspecialchars($row['phone'], ENT_QUOTES, 'UTF-8'), $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(phone)%%>', urlencode($urow['phone']), $templateCode);
 		$templateCode=str_replace('<%%VALUE(country)%%>', htmlspecialchars($row['country'], ENT_QUOTES, 'UTF-8'), $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(country)%%>', urlencode($urow['country']), $templateCode);
-		$templateCode=str_replace('<%%VALUE(street)%%>', htmlspecialchars($row['street'], ENT_QUOTES, 'UTF-8'), $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(street)%%>', urlencode($urow['street']), $templateCode);
-		$templateCode=str_replace('<%%VALUE(city)%%>', htmlspecialchars($row['city'], ENT_QUOTES, 'UTF-8'), $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(city)%%>', urlencode($urow['city']), $templateCode);
-		$templateCode=str_replace('<%%VALUE(state)%%>', htmlspecialchars($row['state'], ENT_QUOTES, 'UTF-8'), $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(state)%%>', urlencode($urow['state']), $templateCode);
-		$templateCode=str_replace('<%%VALUE(zip)%%>', htmlspecialchars($row['zip'], ENT_QUOTES, 'UTF-8'), $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(zip)%%>', urlencode($urow['zip']), $templateCode);
-		if($AllowUpdate || $AllowInsert){
-			$templateCode=str_replace('<%%HTMLAREA(comments)%%>', '<textarea name="comments" id="comments" rows="5">'.htmlspecialchars($row['comments'], ENT_QUOTES, 'UTF-8').'</textarea>', $templateCode);
-		}else{
-			$templateCode=str_replace('<%%HTMLAREA(comments)%%>', $row['comments'], $templateCode);
-		}
-		$templateCode=str_replace('<%%VALUE(comments)%%>', nl2br($row['comments']), $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(comments)%%>', urlencode($urow['comments']), $templateCode);
 	}else{
 		$templateCode=str_replace('<%%VALUE(id)%%>', '', $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(id)%%>', urlencode(''), $templateCode);
@@ -469,27 +388,14 @@ function rental_owners_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 		$templateCode=str_replace('<%%URLVALUE(first_name)%%>', urlencode(''), $templateCode);
 		$templateCode=str_replace('<%%VALUE(last_name)%%>', '', $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(last_name)%%>', urlencode(''), $templateCode);
-		$templateCode=str_replace('<%%VALUE(company_name)%%>', '', $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(company_name)%%>', urlencode(''), $templateCode);
 		$templateCode=str_replace('<%%VALUE(date_of_birth)%%>', '', $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(date_of_birth)%%>', urlencode(''), $templateCode);
 		$templateCode=str_replace('<%%VALUE(primary_email)%%>', '', $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(primary_email)%%>', urlencode(''), $templateCode);
-		$templateCode=str_replace('<%%VALUE(alternate_email)%%>', '', $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(alternate_email)%%>', urlencode(''), $templateCode);
 		$templateCode=str_replace('<%%VALUE(phone)%%>', '', $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(phone)%%>', urlencode(''), $templateCode);
 		$templateCode=str_replace('<%%VALUE(country)%%>', '', $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(country)%%>', urlencode(''), $templateCode);
-		$templateCode=str_replace('<%%VALUE(street)%%>', '', $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(street)%%>', urlencode(''), $templateCode);
-		$templateCode=str_replace('<%%VALUE(city)%%>', '', $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(city)%%>', urlencode(''), $templateCode);
-		$templateCode=str_replace('<%%VALUE(state)%%>', '', $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(state)%%>', urlencode(''), $templateCode);
-		$templateCode=str_replace('<%%VALUE(zip)%%>', '', $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(zip)%%>', urlencode(''), $templateCode);
-		$templateCode=str_replace('<%%HTMLAREA(comments)%%>', '<textarea name="comments" id="comments" rows="5"></textarea>', $templateCode);
 	}
 
 	// process translations
@@ -516,8 +422,6 @@ function rental_owners_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 		if(!$selected_id){
 			$templateCode.="\n\tif(document.getElementById('primary_emailEdit')){ document.getElementById('primary_emailEdit').style.display='inline'; }";
 			$templateCode.="\n\tif(document.getElementById('primary_emailEditLink')){ document.getElementById('primary_emailEditLink').style.display='none'; }";
-			$templateCode.="\n\tif(document.getElementById('alternate_emailEdit')){ document.getElementById('alternate_emailEdit').style.display='inline'; }";
-			$templateCode.="\n\tif(document.getElementById('alternate_emailEditLink')){ document.getElementById('alternate_emailEditLink').style.display='none'; }";
 		}
 
 		$templateCode.="\n});</script>\n";

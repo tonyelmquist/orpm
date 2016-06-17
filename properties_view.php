@@ -28,14 +28,10 @@
 		"`properties`.`number_of_units`" => "number_of_units",
 		"`properties`.`photo`" => "photo",
 		"IF(    CHAR_LENGTH(`rental_owners1`.`first_name`) || CHAR_LENGTH(`rental_owners1`.`last_name`), CONCAT_WS('',   `rental_owners1`.`first_name`, ' ', `rental_owners1`.`last_name`), '') /* Owner */" => "owner",
-		"`properties`.`operating_account`" => "operating_account",
-		"CONCAT('$', FORMAT(`properties`.`property_reserve`, 2))" => "property_reserve",
-		"`properties`.`lease_term`" => "lease_term",
 		"`properties`.`country`" => "country",
 		"`properties`.`street`" => "street",
 		"`properties`.`City`" => "City",
-		"`properties`.`State`" => "State",
-		"`properties`.`ZIP`" => "ZIP"
+		"`properties`.`State`" => "State"
 	);
 	// mapping incoming sort by requests to actual query fields
 	$x->SortFields = array(   
@@ -46,13 +42,9 @@
 		5 => 5,
 		6 => 6,
 		7 => 7,
-		8 => '`properties`.`property_reserve`',
+		8 => 8,
 		9 => 9,
-		10 => 10,
-		11 => 11,
-		12 => 12,
-		13 => 13,
-		14 => '`properties`.`ZIP`'
+		10 => 10
 	);
 
 	// Fields that can be displayed in the csv file
@@ -63,14 +55,10 @@
 		"`properties`.`number_of_units`" => "number_of_units",
 		"`properties`.`photo`" => "photo",
 		"IF(    CHAR_LENGTH(`rental_owners1`.`first_name`) || CHAR_LENGTH(`rental_owners1`.`last_name`), CONCAT_WS('',   `rental_owners1`.`first_name`, ' ', `rental_owners1`.`last_name`), '') /* Owner */" => "owner",
-		"`properties`.`operating_account`" => "operating_account",
-		"CONCAT('$', FORMAT(`properties`.`property_reserve`, 2))" => "property_reserve",
-		"`properties`.`lease_term`" => "lease_term",
 		"`properties`.`country`" => "country",
 		"`properties`.`street`" => "street",
 		"`properties`.`City`" => "City",
-		"`properties`.`State`" => "State",
-		"`properties`.`ZIP`" => "ZIP"
+		"`properties`.`State`" => "State"
 	);
 	// Fields that can be filtered
 	$x->QueryFieldsFilters=array(   
@@ -79,14 +67,10 @@
 		"`properties`.`type`" => "Type",
 		"`properties`.`number_of_units`" => "Number of units",
 		"IF(    CHAR_LENGTH(`rental_owners1`.`first_name`) || CHAR_LENGTH(`rental_owners1`.`last_name`), CONCAT_WS('',   `rental_owners1`.`first_name`, ' ', `rental_owners1`.`last_name`), '') /* Owner */" => "Owner",
-		"`properties`.`operating_account`" => "Operating account",
-		"`properties`.`property_reserve`" => "Property reserve",
-		"`properties`.`lease_term`" => "Lease term",
 		"`properties`.`country`" => "Country",
-		"`properties`.`street`" => "Street",
-		"`properties`.`City`" => "City",
-		"`properties`.`State`" => "State",
-		"`properties`.`ZIP`" => "ZIP"
+		"`properties`.`street`" => "County",
+		"`properties`.`City`" => "Area",
+		"`properties`.`State`" => "Street / Road"
 	);
 
 	// Fields that can be quick searched
@@ -96,14 +80,10 @@
 		"`properties`.`type`" => "type",
 		"`properties`.`number_of_units`" => "number_of_units",
 		"IF(    CHAR_LENGTH(`rental_owners1`.`first_name`) || CHAR_LENGTH(`rental_owners1`.`last_name`), CONCAT_WS('',   `rental_owners1`.`first_name`, ' ', `rental_owners1`.`last_name`), '') /* Owner */" => "owner",
-		"`properties`.`operating_account`" => "operating_account",
-		"CONCAT('$', FORMAT(`properties`.`property_reserve`, 2))" => "property_reserve",
-		"`properties`.`lease_term`" => "lease_term",
 		"`properties`.`country`" => "country",
 		"`properties`.`street`" => "street",
 		"`properties`.`City`" => "City",
-		"`properties`.`State`" => "State",
-		"`properties`.`ZIP`" => "ZIP"
+		"`properties`.`State`" => "State"
 	);
 
 	// Lookup fields that can be used as filterers
@@ -116,7 +96,7 @@
 	$x->AllowSelection = 1;
 	$x->HideTableView = ($perm[2]==0 ? 1 : 0);
 	$x->AllowDelete = $perm[4];
-	$x->AllowMassDelete = false;
+	$x->AllowMassDelete = true;
 	$x->AllowInsert = $perm[1];
 	$x->AllowUpdate = $perm[3];
 	$x->SeparateDV = 1;
@@ -132,14 +112,14 @@
 	$x->QuickSearchText = $Translation["quick search"];
 	$x->ScriptFileName = "properties_view.php";
 	$x->RedirectAfterInsert = "properties_view.php?SelectedID=#ID#";
-	$x->TableTitle = "Properties";
+	$x->TableTitle = "Property Center";
 	$x->TableIcon = "resources/table_icons/application_home.png";
 	$x->PrimaryKey = "`properties`.`id`";
 
-	$x->ColWidth   = array(  50, 80, 50, 60, 100, 120, 70, 120, 70, 50, 50);
-	$x->ColCaption = array("Property Name", "Type", "Number of units", "Photo", "Owner", "Operating account", "Property reserve", "Street", "City", "State", "ZIP");
-	$x->ColFieldName = array('property_name', 'type', 'number_of_units', 'photo', 'owner', 'operating_account', 'property_reserve', 'street', 'City', 'State', 'ZIP');
-	$x->ColNumber  = array(2, 3, 4, 5, 6, 7, 8, 11, 12, 13, 14);
+	$x->ColWidth   = array(  50, 80, 50, 60, 100, 120, 70, 50);
+	$x->ColCaption = array("Property Name", "Type", "Number of units", "Photo", "Owner", "County", "Area", "Street / Road");
+	$x->ColFieldName = array('property_name', 'type', 'number_of_units', 'photo', 'owner', 'street', 'City', 'State');
+	$x->ColNumber  = array(2, 3, 4, 5, 6, 8, 9, 10);
 
 	$x->Template = 'templates/properties_templateTV.html';
 	$x->SelectedTemplate = 'templates/properties_templateTVS.html';

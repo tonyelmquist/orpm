@@ -131,61 +131,6 @@
 				'inherit_permissions' => false,
 				'list_type' => 0,
 				'not_null' => false
-			),
-			'country' => array(
-				'parent_table' => 'properties',
-				'parent_pk_field' => 'id',
-				'parent_caption' => '`properties`.`country`',
-				'parent_from' => '`properties` LEFT JOIN `rental_owners` as rental_owners1 ON `rental_owners1`.`id`=`properties`.`owner` ',
-				'filterers' => array(),
-				'custom_query' => '',
-				'inherit_permissions' => false,
-				'list_type' => 0,
-				'not_null' => false
-			),
-			'street' => array(
-				'parent_table' => 'properties',
-				'parent_pk_field' => 'id',
-				'parent_caption' => '`properties`.`street`',
-				'parent_from' => '`properties` LEFT JOIN `rental_owners` as rental_owners1 ON `rental_owners1`.`id`=`properties`.`owner` ',
-				'filterers' => array(),
-				'custom_query' => '',
-				'inherit_permissions' => false,
-				'list_type' => 0,
-				'not_null' => false
-			),
-			'city' => array(
-				'parent_table' => 'properties',
-				'parent_pk_field' => 'id',
-				'parent_caption' => '`properties`.`City`',
-				'parent_from' => '`properties` LEFT JOIN `rental_owners` as rental_owners1 ON `rental_owners1`.`id`=`properties`.`owner` ',
-				'filterers' => array(),
-				'custom_query' => '',
-				'inherit_permissions' => false,
-				'list_type' => 0,
-				'not_null' => false
-			),
-			'state' => array(
-				'parent_table' => 'properties',
-				'parent_pk_field' => 'id',
-				'parent_caption' => '`properties`.`State`',
-				'parent_from' => '`properties` LEFT JOIN `rental_owners` as rental_owners1 ON `rental_owners1`.`id`=`properties`.`owner` ',
-				'filterers' => array(),
-				'custom_query' => '',
-				'inherit_permissions' => false,
-				'list_type' => 0,
-				'not_null' => false
-			),
-			'postal_code' => array(
-				'parent_table' => 'properties',
-				'parent_pk_field' => 'id',
-				'parent_caption' => '`properties`.`ZIP`',
-				'parent_from' => '`properties` LEFT JOIN `rental_owners` as rental_owners1 ON `rental_owners1`.`id`=`properties`.`owner` ',
-				'filterers' => array(),
-				'custom_query' => '',
-				'inherit_permissions' => false,
-				'list_type' => 0,
-				'not_null' => false
 			)
 		),
 		'rental_owners' => array(  

@@ -8,8 +8,8 @@
 	<div class="row">
 		<div class="col-xs-12">
 			<input type="hidden" id="applications_leases_hclink" value="applications_leases_view.php?filterer_property=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
-			<a class="hidden-xs btn btn-default btn-lg pull-right hidden hspacer-sm" href="units_view.php?filterer_property=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>" id="units_link"><i class="glyphicon glyphicon-list-alt"></i> Units</a>
-			<a class="visible-xs btn btn-default btn-lg btn-block hidden vspacer-sm" href="units_view.php?filterer_property=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>" id="xs_units_link"><i class="glyphicon glyphicon-list-alt"></i> Units</a>
+			<a class="hidden-xs btn btn-default btn-lg pull-right hidden hspacer-sm" href="units_view.php?filterer_property=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>" id="units_link"><i class="glyphicon glyphicon-list-alt"></i> Unit </a>
+			<a class="visible-xs btn btn-default btn-lg btn-block hidden vspacer-sm" href="units_view.php?filterer_property=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>" id="xs_units_link"><i class="glyphicon glyphicon-list-alt"></i> Unit </a>
 			<input type="hidden" id="units_hclink" value="units_view.php?filterer_property=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
 			<div class="clearfix"></div>
 		</div>
@@ -52,7 +52,7 @@
 				<div class="form-group">
 					<label class="control-label col-lg-3">Photo <button class="btn btn-info btn-xs vspacer-sm" type="button" data-toggle="collapse" tabindex="-1" data-target="#photo-description"><i class="glyphicon glyphicon-info-sign"></i></button></label>
 					<div class="col-lg-9">
-						<span class="help-block collapse" id="photo-description"><div class="alert alert-info">Maximum file size allowed: 1000 KB.<br />Allowed file types: jpg, jpeg, gif, png</div></span>
+						<span class="help-block collapse" id="photo-description"><div class="alert alert-info">Maximum file size allowed: 1000 KB.<br>Allowed file types: jpg, jpeg, gif, png</div></span>
 
 						<div class="row form-control-static"><div class="col-md-8">
 
@@ -84,30 +84,23 @@
 				</div>
 
 				<div class="form-group">
-					<label for="street" class="control-label col-lg-3">Street</label>
+					<label for="street" class="control-label col-lg-3">County</label>
 					<div class="col-lg-9">
 						<input maxlength="40" type="text" class="form-control" name="street" id="street" value="<%%VALUE(street)%%>">
 					</div>
 				</div>
 
 				<div class="form-group">
-					<label for="City" class="control-label col-lg-3">City</label>
+					<label for="City" class="control-label col-lg-3">Area</label>
 					<div class="col-lg-9">
 						<input maxlength="40" type="text" class="form-control" name="City" id="City" value="<%%VALUE(City)%%>">
 					</div>
 				</div>
 
 				<div class="form-group">
-					<label for="State" class="control-label col-lg-3">State</label>
+					<label for="State" class="control-label col-lg-3">Street / Road</label>
 					<div class="col-lg-9">
-						<%%COMBO(State)%%>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<label for="ZIP" class="control-label col-lg-3">ZIP</label>
-					<div class="col-lg-9">
-						<input maxlength="15" type="text" class="form-control" name="ZIP" id="ZIP" value="<%%VALUE(ZIP)%%>">
+						<input maxlength="40" type="text" class="form-control" name="State" id="State" value="<%%VALUE(State)%%>">
 					</div>
 				</div>
 

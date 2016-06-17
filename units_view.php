@@ -27,16 +27,8 @@
 		"`units`.`unit_number`" => "unit_number",
 		"`units`.`photo`" => "photo",
 		"`units`.`status`" => "status",
-		"`units`.`size`" => "size",
-		"IF(    CHAR_LENGTH(`properties1`.`country`), CONCAT_WS('',   `properties1`.`country`), '') /* Country */" => "country",
-		"IF(    CHAR_LENGTH(`properties1`.`street`), CONCAT_WS('',   `properties1`.`street`), '') /* Street */" => "street",
-		"IF(    CHAR_LENGTH(`properties1`.`City`), CONCAT_WS('',   `properties1`.`City`), '') /* City */" => "city",
-		"IF(    CHAR_LENGTH(`properties1`.`State`), CONCAT_WS('',   `properties1`.`State`), '') /* State */" => "state",
-		"IF(    CHAR_LENGTH(`properties1`.`ZIP`), CONCAT_WS('',   `properties1`.`ZIP`), '') /* Postal code */" => "postal_code",
 		"`units`.`rooms`" => "rooms",
-		"`units`.`bathroom`" => "bathroom",
 		"`units`.`features`" => "features",
-		"FORMAT(`units`.`market_rent`, 0)" => "market_rent",
 		"CONCAT('$', FORMAT(`units`.`rental_amount`, 2))" => "rental_amount",
 		"CONCAT('$', FORMAT(`units`.`deposit_amount`, 2))" => "deposit_amount",
 		"`units`.`description`" => "description"
@@ -50,17 +42,9 @@
 		5 => 5,
 		6 => 6,
 		7 => 7,
-		8 => 8,
-		9 => 9,
-		10 => 10,
-		11 => 11,
-		12 => 12,
-		13 => '`units`.`bathroom`',
-		14 => 14,
-		15 => '`units`.`market_rent`',
-		16 => '`units`.`rental_amount`',
-		17 => '`units`.`deposit_amount`',
-		18 => 18
+		8 => '`units`.`rental_amount`',
+		9 => '`units`.`deposit_amount`',
+		10 => 10
 	);
 
 	// Fields that can be displayed in the csv file
@@ -70,16 +54,8 @@
 		"`units`.`unit_number`" => "unit_number",
 		"`units`.`photo`" => "photo",
 		"`units`.`status`" => "status",
-		"`units`.`size`" => "size",
-		"IF(    CHAR_LENGTH(`properties1`.`country`), CONCAT_WS('',   `properties1`.`country`), '') /* Country */" => "country",
-		"IF(    CHAR_LENGTH(`properties1`.`street`), CONCAT_WS('',   `properties1`.`street`), '') /* Street */" => "street",
-		"IF(    CHAR_LENGTH(`properties1`.`City`), CONCAT_WS('',   `properties1`.`City`), '') /* City */" => "city",
-		"IF(    CHAR_LENGTH(`properties1`.`State`), CONCAT_WS('',   `properties1`.`State`), '') /* State */" => "state",
-		"IF(    CHAR_LENGTH(`properties1`.`ZIP`), CONCAT_WS('',   `properties1`.`ZIP`), '') /* Postal code */" => "postal_code",
 		"`units`.`rooms`" => "rooms",
-		"`units`.`bathroom`" => "bathroom",
 		"`units`.`features`" => "features",
-		"FORMAT(`units`.`market_rent`, 0)" => "market_rent",
 		"CONCAT('$', FORMAT(`units`.`rental_amount`, 2))" => "rental_amount",
 		"CONCAT('$', FORMAT(`units`.`deposit_amount`, 2))" => "deposit_amount",
 		"`units`.`description`" => "description"
@@ -90,16 +66,8 @@
 		"IF(    CHAR_LENGTH(`properties1`.`property_name`), CONCAT_WS('',   `properties1`.`property_name`), '') /* Property */" => "Property",
 		"`units`.`unit_number`" => "Unit",
 		"`units`.`status`" => "Status",
-		"`units`.`size`" => "Area (sq. feet)",
-		"IF(    CHAR_LENGTH(`properties1`.`country`), CONCAT_WS('',   `properties1`.`country`), '') /* Country */" => "Country",
-		"IF(    CHAR_LENGTH(`properties1`.`street`), CONCAT_WS('',   `properties1`.`street`), '') /* Street */" => "Street",
-		"IF(    CHAR_LENGTH(`properties1`.`City`), CONCAT_WS('',   `properties1`.`City`), '') /* City */" => "City",
-		"IF(    CHAR_LENGTH(`properties1`.`State`), CONCAT_WS('',   `properties1`.`State`), '') /* State */" => "State",
-		"IF(    CHAR_LENGTH(`properties1`.`ZIP`), CONCAT_WS('',   `properties1`.`ZIP`), '') /* Postal code */" => "Postal code",
 		"`units`.`rooms`" => "Rooms",
-		"`units`.`bathroom`" => "Bathroom",
 		"`units`.`features`" => "Features",
-		"`units`.`market_rent`" => "Market rent",
 		"`units`.`rental_amount`" => "Rental amount",
 		"`units`.`deposit_amount`" => "Deposit amount",
 		"`units`.`description`" => "Description"
@@ -111,16 +79,8 @@
 		"IF(    CHAR_LENGTH(`properties1`.`property_name`), CONCAT_WS('',   `properties1`.`property_name`), '') /* Property */" => "property",
 		"`units`.`unit_number`" => "unit_number",
 		"`units`.`status`" => "status",
-		"`units`.`size`" => "size",
-		"IF(    CHAR_LENGTH(`properties1`.`country`), CONCAT_WS('',   `properties1`.`country`), '') /* Country */" => "country",
-		"IF(    CHAR_LENGTH(`properties1`.`street`), CONCAT_WS('',   `properties1`.`street`), '') /* Street */" => "street",
-		"IF(    CHAR_LENGTH(`properties1`.`City`), CONCAT_WS('',   `properties1`.`City`), '') /* City */" => "city",
-		"IF(    CHAR_LENGTH(`properties1`.`State`), CONCAT_WS('',   `properties1`.`State`), '') /* State */" => "state",
-		"IF(    CHAR_LENGTH(`properties1`.`ZIP`), CONCAT_WS('',   `properties1`.`ZIP`), '') /* Postal code */" => "postal_code",
 		"`units`.`rooms`" => "rooms",
-		"`units`.`bathroom`" => "bathroom",
 		"`units`.`features`" => "features",
-		"FORMAT(`units`.`market_rent`, 0)" => "market_rent",
 		"CONCAT('$', FORMAT(`units`.`rental_amount`, 2))" => "rental_amount",
 		"CONCAT('$', FORMAT(`units`.`deposit_amount`, 2))" => "deposit_amount",
 		"`units`.`description`" => "description"
@@ -152,14 +112,14 @@
 	$x->QuickSearchText = $Translation["quick search"];
 	$x->ScriptFileName = "units_view.php";
 	$x->RedirectAfterInsert = "units_view.php";
-	$x->TableTitle = "Units";
+	$x->TableTitle = "Unit ";
 	$x->TableIcon = "resources/table_icons/change_password.png";
 	$x->PrimaryKey = "`units`.`id`";
 
-	$x->ColWidth   = array(  90, 40, 60, 60, 60, 100, 55, 40, 45, 70, 150, 60);
-	$x->ColCaption = array("Property", "Unit", "Photo", "Status", "Area (sq. feet)", "Street", "City", "State", "Rooms", "Bathroom", "Features", "Rental amount");
-	$x->ColFieldName = array('property', 'unit_number', 'photo', 'status', 'size', 'street', 'city', 'state', 'rooms', 'bathroom', 'features', 'rental_amount');
-	$x->ColNumber  = array(2, 3, 4, 5, 6, 8, 9, 10, 12, 13, 14, 16);
+	$x->ColWidth   = array(  90, 40, 60, 60, 45, 150, 60);
+	$x->ColCaption = array("Property", "Unit", "Photo", "Status", "Rooms", "Features", "Rental amount");
+	$x->ColFieldName = array('property', 'unit_number', 'photo', 'status', 'rooms', 'features', 'rental_amount');
+	$x->ColNumber  = array(2, 3, 4, 5, 6, 7, 8);
 
 	$x->Template = 'templates/units_templateTV.html';
 	$x->SelectedTemplate = 'templates/units_templateTVS.html';

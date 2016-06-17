@@ -142,9 +142,9 @@
 					'display-refresh' => true,
 					'display-add-new' => true,
 					'forced-where' => '',
-					'display-fields' => array(1 => 'Property Name', 2 => 'Type', 3 => 'Number of units', 4 => 'Photo', 5 => 'Owner', 6 => 'Operating account', 7 => 'Property reserve', 10 => 'Street', 11 => 'City', 12 => 'State', 13 => 'ZIP'),
-					'display-field-names' => array(1 => 'property_name', 2 => 'type', 3 => 'number_of_units', 4 => 'photo', 5 => 'owner', 6 => 'operating_account', 7 => 'property_reserve', 10 => 'street', 11 => 'City', 12 => 'State', 13 => 'ZIP'),
-					'sortable-fields' => array(1 => '2', 2 => '3', 3 => '4', 4 => '5', 5 => '6', 6 => '7', 7 => '8', 10 => '11', 11 => '12', 12 => '13', 13 => '14'),
+					'display-fields' => array(1 => 'Property Name', 2 => 'Type', 3 => 'Number of units', 4 => 'Photo', 5 => 'Owner', 7 => 'County', 8 => 'Area', 9 => 'Street / Road'),
+					'display-field-names' => array(1 => 'property_name', 2 => 'type', 3 => 'number_of_units', 4 => 'photo', 5 => 'owner', 7 => 'street', 8 => 'City', 9 => 'State'),
+					'sortable-fields' => array(1 => '2', 2 => '3', 3 => '4', 4 => '5', 5 => '6', 7 => '8', 8 => '9', 9 => '10'),
 					'records-per-page' => 10,
 					'default-sort-by' => false,
 					'default-sort-direction' => 'asc',
@@ -153,7 +153,7 @@
 					'show-page-progress' => true,
 					'template' => 'children-properties',
 					'template-printable' => 'children-properties-printable',
-					'query' => "SELECT `properties`.`id` as 'id', `properties`.`property_name` as 'property_name', `properties`.`type` as 'type', `properties`.`number_of_units` as 'number_of_units', `properties`.`photo` as 'photo', IF(    CHAR_LENGTH(`rental_owners1`.`first_name`) || CHAR_LENGTH(`rental_owners1`.`last_name`), CONCAT_WS('',   `rental_owners1`.`first_name`, ' ', `rental_owners1`.`last_name`), '') as 'owner', `properties`.`operating_account` as 'operating_account', CONCAT('$', FORMAT(`properties`.`property_reserve`, 2)) as 'property_reserve', `properties`.`lease_term` as 'lease_term', `properties`.`country` as 'country', `properties`.`street` as 'street', `properties`.`City` as 'City', `properties`.`State` as 'State', `properties`.`ZIP` as 'ZIP' FROM `properties` LEFT JOIN `rental_owners` as rental_owners1 ON `rental_owners1`.`id`=`properties`.`owner` "
+					'query' => "SELECT `properties`.`id` as 'id', `properties`.`property_name` as 'property_name', `properties`.`type` as 'type', `properties`.`number_of_units` as 'number_of_units', `properties`.`photo` as 'photo', IF(    CHAR_LENGTH(`rental_owners1`.`first_name`) || CHAR_LENGTH(`rental_owners1`.`last_name`), CONCAT_WS('',   `rental_owners1`.`first_name`, ' ', `rental_owners1`.`last_name`), '') as 'owner', `properties`.`country` as 'country', `properties`.`street` as 'street', `properties`.`City` as 'City', `properties`.`State` as 'State' FROM `properties` LEFT JOIN `rental_owners` as rental_owners1 ON `rental_owners1`.`id`=`properties`.`owner` "
 				)
 			),
 			'units' => array(   
@@ -167,9 +167,9 @@
 					'display-refresh' => true,
 					'display-add-new' => true,
 					'forced-where' => '',
-					'display-fields' => array(1 => 'Property', 2 => 'Unit', 3 => 'Photo', 4 => 'Status', 5 => 'Area (sq. feet)', 7 => 'Street', 8 => 'City', 9 => 'State', 11 => 'Rooms', 12 => 'Bathroom', 13 => 'Features', 15 => 'Rental amount'),
-					'display-field-names' => array(1 => 'property', 2 => 'unit_number', 3 => 'photo', 4 => 'status', 5 => 'size', 7 => 'street', 8 => 'city', 9 => 'state', 11 => 'rooms', 12 => 'bathroom', 13 => 'features', 15 => 'rental_amount'),
-					'sortable-fields' => array(1 => '2', 2 => '3', 3 => '4', 4 => '5', 5 => '6', 7 => '8', 8 => '9', 9 => '10', 11 => '12', 12 => '13', 13 => '14', 15 => '16'),
+					'display-fields' => array(1 => 'Property', 2 => 'Unit', 3 => 'Photo', 4 => 'Status', 5 => 'Rooms', 6 => 'Features', 7 => 'Rental amount'),
+					'display-field-names' => array(1 => 'property', 2 => 'unit_number', 3 => 'photo', 4 => 'status', 5 => 'rooms', 6 => 'features', 7 => 'rental_amount'),
+					'sortable-fields' => array(1 => '2', 2 => '3', 3 => '4', 4 => '5', 5 => '6', 6 => '7', 7 => '8'),
 					'records-per-page' => 10,
 					'default-sort-by' => false,
 					'default-sort-direction' => 'asc',
@@ -178,7 +178,7 @@
 					'show-page-progress' => true,
 					'template' => 'children-units',
 					'template-printable' => 'children-units-printable',
-					'query' => "SELECT `units`.`id` as 'id', IF(    CHAR_LENGTH(`properties1`.`property_name`), CONCAT_WS('',   `properties1`.`property_name`), '') as 'property', `units`.`unit_number` as 'unit_number', `units`.`photo` as 'photo', `units`.`status` as 'status', `units`.`size` as 'size', IF(    CHAR_LENGTH(`properties1`.`country`), CONCAT_WS('',   `properties1`.`country`), '') as 'country', IF(    CHAR_LENGTH(`properties1`.`street`), CONCAT_WS('',   `properties1`.`street`), '') as 'street', IF(    CHAR_LENGTH(`properties1`.`City`), CONCAT_WS('',   `properties1`.`City`), '') as 'city', IF(    CHAR_LENGTH(`properties1`.`State`), CONCAT_WS('',   `properties1`.`State`), '') as 'state', IF(    CHAR_LENGTH(`properties1`.`ZIP`), CONCAT_WS('',   `properties1`.`ZIP`), '') as 'postal_code', `units`.`rooms` as 'rooms', `units`.`bathroom` as 'bathroom', `units`.`features` as 'features', FORMAT(`units`.`market_rent`, 0) as 'market_rent', CONCAT('$', FORMAT(`units`.`rental_amount`, 2)) as 'rental_amount', CONCAT('$', FORMAT(`units`.`deposit_amount`, 2)) as 'deposit_amount', `units`.`description` as 'description' FROM `units` LEFT JOIN `properties` as properties1 ON `properties1`.`id`=`units`.`property` "
+					'query' => "SELECT `units`.`id` as 'id', IF(    CHAR_LENGTH(`properties1`.`property_name`), CONCAT_WS('',   `properties1`.`property_name`), '') as 'property', `units`.`unit_number` as 'unit_number', `units`.`photo` as 'photo', `units`.`status` as 'status', `units`.`rooms` as 'rooms', `units`.`features` as 'features', CONCAT('$', FORMAT(`units`.`rental_amount`, 2)) as 'rental_amount', CONCAT('$', FORMAT(`units`.`deposit_amount`, 2)) as 'deposit_amount', `units`.`description` as 'description' FROM `units` LEFT JOIN `properties` as properties1 ON `properties1`.`id`=`units`.`property` "
 				)
 			),
 			'rental_owners' => array(   

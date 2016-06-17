@@ -22,12 +22,6 @@ function properties_insert(){
 		if($data['number_of_units'] == empty_lookup_value){ $data['number_of_units'] = ''; }
 	$data['owner'] = makeSafe($_REQUEST['owner']);
 		if($data['owner'] == empty_lookup_value){ $data['owner'] = ''; }
-	$data['operating_account'] = makeSafe($_REQUEST['operating_account']);
-		if($data['operating_account'] == empty_lookup_value){ $data['operating_account'] = ''; }
-	$data['property_reserve'] = makeSafe($_REQUEST['property_reserve']);
-		if($data['property_reserve'] == empty_lookup_value){ $data['property_reserve'] = ''; }
-	$data['lease_term'] = makeSafe($_REQUEST['lease_term']);
-		if($data['lease_term'] == empty_lookup_value){ $data['lease_term'] = ''; }
 	$data['country'] = makeSafe($_REQUEST['country']);
 		if($data['country'] == empty_lookup_value){ $data['country'] = ''; }
 	$data['street'] = makeSafe($_REQUEST['street']);
@@ -36,8 +30,6 @@ function properties_insert(){
 		if($data['City'] == empty_lookup_value){ $data['City'] = ''; }
 	$data['State'] = makeSafe($_REQUEST['State']);
 		if($data['State'] == empty_lookup_value){ $data['State'] = ''; }
-	$data['ZIP'] = makeSafe($_REQUEST['ZIP']);
-		if($data['ZIP'] == empty_lookup_value){ $data['ZIP'] = ''; }
 	$data['photo'] = PrepareUploadedFile('photo', 1024000,'jpg|jpeg|gif|png', false, '');
 	if($data['photo']) createThumbnail($data['photo'], getThumbnailSpecs('properties', 'photo', 'tv'));
 	if($data['photo']) createThumbnail($data['photo'], getThumbnailSpecs('properties', 'photo', 'dv'));
@@ -67,7 +59,7 @@ function properties_insert(){
 	}
 
 	$o=array('silentErrors' => true);
-	sql('insert into `properties` set       `property_name`=' . (($data['property_name'] !== '' && $data['property_name'] !== NULL) ? "'{$data['property_name']}'" : 'NULL') . ', `type`=' . (($data['type'] !== '' && $data['type'] !== NULL) ? "'{$data['type']}'" : 'NULL') . ', `number_of_units`=' . (($data['number_of_units'] !== '' && $data['number_of_units'] !== NULL) ? "'{$data['number_of_units']}'" : 'NULL') . ', ' . ($data['photo'] != '' ? "`photo`='{$data['photo']}'" : '`photo`=NULL') . ', `owner`=' . (($data['owner'] !== '' && $data['owner'] !== NULL) ? "'{$data['owner']}'" : 'NULL') . ', `country`=' . (($data['country'] !== '' && $data['country'] !== NULL) ? "'{$data['country']}'" : 'NULL') . ', `street`=' . (($data['street'] !== '' && $data['street'] !== NULL) ? "'{$data['street']}'" : 'NULL') . ', `City`=' . (($data['City'] !== '' && $data['City'] !== NULL) ? "'{$data['City']}'" : 'NULL') . ', `State`=' . (($data['State'] !== '' && $data['State'] !== NULL) ? "'{$data['State']}'" : 'NULL') . ', `ZIP`=' . (($data['ZIP'] !== '' && $data['ZIP'] !== NULL) ? "'{$data['ZIP']}'" : 'NULL'), $o);
+	sql('insert into `properties` set       `property_name`=' . (($data['property_name'] !== '' && $data['property_name'] !== NULL) ? "'{$data['property_name']}'" : 'NULL') . ', `type`=' . (($data['type'] !== '' && $data['type'] !== NULL) ? "'{$data['type']}'" : 'NULL') . ', `number_of_units`=' . (($data['number_of_units'] !== '' && $data['number_of_units'] !== NULL) ? "'{$data['number_of_units']}'" : 'NULL') . ', ' . ($data['photo'] != '' ? "`photo`='{$data['photo']}'" : '`photo`=NULL') . ', `owner`=' . (($data['owner'] !== '' && $data['owner'] !== NULL) ? "'{$data['owner']}'" : 'NULL') . ', `country`=' . (($data['country'] !== '' && $data['country'] !== NULL) ? "'{$data['country']}'" : 'NULL') . ', `street`=' . (($data['street'] !== '' && $data['street'] !== NULL) ? "'{$data['street']}'" : 'NULL') . ', `City`=' . (($data['City'] !== '' && $data['City'] !== NULL) ? "'{$data['City']}'" : 'NULL') . ', `State`=' . (($data['State'] !== '' && $data['State'] !== NULL) ? "'{$data['State']}'" : 'NULL'), $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo "<a href=\"properties_view.php?addNew_x=1\">{$Translation['< back']}</a>";
@@ -196,12 +188,6 @@ function properties_update($selected_id){
 		if($data['number_of_units'] == empty_lookup_value){ $data['number_of_units'] = ''; }
 	$data['owner'] = makeSafe($_REQUEST['owner']);
 		if($data['owner'] == empty_lookup_value){ $data['owner'] = ''; }
-	$data['operating_account'] = makeSafe($_REQUEST['operating_account']);
-		if($data['operating_account'] == empty_lookup_value){ $data['operating_account'] = ''; }
-	$data['property_reserve'] = makeSafe($_REQUEST['property_reserve']);
-		if($data['property_reserve'] == empty_lookup_value){ $data['property_reserve'] = ''; }
-	$data['lease_term'] = makeSafe($_REQUEST['lease_term']);
-		if($data['lease_term'] == empty_lookup_value){ $data['lease_term'] = ''; }
 	$data['country'] = makeSafe($_REQUEST['country']);
 		if($data['country'] == empty_lookup_value){ $data['country'] = ''; }
 	$data['street'] = makeSafe($_REQUEST['street']);
@@ -210,8 +196,6 @@ function properties_update($selected_id){
 		if($data['City'] == empty_lookup_value){ $data['City'] = ''; }
 	$data['State'] = makeSafe($_REQUEST['State']);
 		if($data['State'] == empty_lookup_value){ $data['State'] = ''; }
-	$data['ZIP'] = makeSafe($_REQUEST['ZIP']);
-		if($data['ZIP'] == empty_lookup_value){ $data['ZIP'] = ''; }
 	$data['selectedID']=makeSafe($selected_id);
 	if($_REQUEST['photo_remove'] == 1){
 		$data['photo'] = '';
@@ -228,7 +212,7 @@ function properties_update($selected_id){
 	}
 
 	$o=array('silentErrors' => true);
-	sql('update `properties` set       `property_name`=' . (($data['property_name'] !== '' && $data['property_name'] !== NULL) ? "'{$data['property_name']}'" : 'NULL') . ', `type`=' . (($data['type'] !== '' && $data['type'] !== NULL) ? "'{$data['type']}'" : 'NULL') . ', `number_of_units`=' . (($data['number_of_units'] !== '' && $data['number_of_units'] !== NULL) ? "'{$data['number_of_units']}'" : 'NULL') . ', ' . ($data['photo']!='' ? "`photo`='{$data['photo']}'" : ($_REQUEST['photo_remove'] != 1 ? '`photo`=`photo`' : '`photo`=NULL')) . ', `owner`=' . (($data['owner'] !== '' && $data['owner'] !== NULL) ? "'{$data['owner']}'" : 'NULL') . ', `country`=' . (($data['country'] !== '' && $data['country'] !== NULL) ? "'{$data['country']}'" : 'NULL') . ', `street`=' . (($data['street'] !== '' && $data['street'] !== NULL) ? "'{$data['street']}'" : 'NULL') . ', `City`=' . (($data['City'] !== '' && $data['City'] !== NULL) ? "'{$data['City']}'" : 'NULL') . ', `State`=' . (($data['State'] !== '' && $data['State'] !== NULL) ? "'{$data['State']}'" : 'NULL') . ', `ZIP`=' . (($data['ZIP'] !== '' && $data['ZIP'] !== NULL) ? "'{$data['ZIP']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
+	sql('update `properties` set       `property_name`=' . (($data['property_name'] !== '' && $data['property_name'] !== NULL) ? "'{$data['property_name']}'" : 'NULL') . ', `type`=' . (($data['type'] !== '' && $data['type'] !== NULL) ? "'{$data['type']}'" : 'NULL') . ', `number_of_units`=' . (($data['number_of_units'] !== '' && $data['number_of_units'] !== NULL) ? "'{$data['number_of_units']}'" : 'NULL') . ', ' . ($data['photo']!='' ? "`photo`='{$data['photo']}'" : ($_REQUEST['photo_remove'] != 1 ? '`photo`=`photo`' : '`photo`=NULL')) . ', `owner`=' . (($data['owner'] !== '' && $data['owner'] !== NULL) ? "'{$data['owner']}'" : 'NULL') . ', `country`=' . (($data['country'] !== '' && $data['country'] !== NULL) ? "'{$data['country']}'" : 'NULL') . ', `street`=' . (($data['street'] !== '' && $data['street'] !== NULL) ? "'{$data['street']}'" : 'NULL') . ', `City`=' . (($data['City'] !== '' && $data['City'] !== NULL) ? "'{$data['City']}'" : 'NULL') . ', `State`=' . (($data['State'] !== '' && $data['State'] !== NULL) ? "'{$data['State']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo '<a href="properties_view.php?SelectedID='.urlencode($selected_id)."\">{$Translation['< back']}</a>";
@@ -294,21 +278,6 @@ function properties_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, 
 	$combo_type->AllowNull = false;
 	// combobox: owner
 	$combo_owner = new DataCombo;
-	// combobox: operating_account
-	$combo_operating_account = new Combo;
-	$combo_operating_account->ListType = 0;
-	$combo_operating_account->MultipleSeparator = ', ';
-	$combo_operating_account->ListBoxHeight = 10;
-	$combo_operating_account->RadiosPerLine = 1;
-	if(is_file(dirname(__FILE__).'/hooks/properties.operating_account.csv')){
-		$operating_account_data = addslashes(implode('', @file(dirname(__FILE__).'/hooks/properties.operating_account.csv')));
-		$combo_operating_account->ListItem = explode('||', entitiesToUTF8(convertLegacyOptions($operating_account_data)));
-		$combo_operating_account->ListData = $combo_operating_account->ListItem;
-	}else{
-		$combo_operating_account->ListItem = explode('||', entitiesToUTF8(convertLegacyOptions("Operating bank account;;Security deposit bank account")));
-		$combo_operating_account->ListData = $combo_operating_account->ListItem;
-	}
-	$combo_operating_account->SelectName = 'operating_account';
 	// combobox: country
 	$combo_country = new Combo;
 	$combo_country->ListType = 0;
@@ -324,21 +293,6 @@ function properties_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, 
 		$combo_country->ListData = $combo_country->ListItem;
 	}
 	$combo_country->SelectName = 'country';
-	// combobox: State
-	$combo_State = new Combo;
-	$combo_State->ListType = 0;
-	$combo_State->MultipleSeparator = ', ';
-	$combo_State->ListBoxHeight = 10;
-	$combo_State->RadiosPerLine = 1;
-	if(is_file(dirname(__FILE__).'/hooks/properties.State.csv')){
-		$State_data = addslashes(implode('', @file(dirname(__FILE__).'/hooks/properties.State.csv')));
-		$combo_State->ListItem = explode('||', entitiesToUTF8(convertLegacyOptions($State_data)));
-		$combo_State->ListData = $combo_State->ListItem;
-	}else{
-		$combo_State->ListItem = explode('||', entitiesToUTF8(convertLegacyOptions("AL;;AK;;AS;;AZ;;AR;;CA;;CO;;CT;;DE;;DC;;FM;;FL;;GA;;GU;;HI;;ID;;IL;;IN;;IA;;KS;;KY;;LA;;ME;;MH;;MD;;MA;;MI;;MN;;MS;;MO;;MT;;NE;;NV;;NH;;NJ;;NM;;NY;;NC;;ND;;MP;;OH;;OK;;OR;;PW;;PA;;PR;;RI;;SC;;SD;;TN;;TX;;UT;;VT;;VI;;VA;;WA;;WV;;WI;;WY")));
-		$combo_State->ListData = $combo_State->ListItem;
-	}
-	$combo_State->SelectName = 'State';
 
 	if($selected_id){
 		// mm: check member permissions
@@ -371,22 +325,16 @@ function properties_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, 
 		$row = $hc->xss_clean($row); /* sanitize data */
 		$combo_type->SelectedData = $row['type'];
 		$combo_owner->SelectedData = $row['owner'];
-		$combo_operating_account->SelectedData = $row['operating_account'];
 		$combo_country->SelectedData = $row['country'];
-		$combo_State->SelectedData = $row['State'];
 	}else{
 		$combo_type->SelectedText = ( $_REQUEST['FilterField'][1]=='3' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "");
 		$combo_owner->SelectedData = $filterer_owner;
-		$combo_operating_account->SelectedText = ( $_REQUEST['FilterField'][1]=='7' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "");
-		$combo_country->SelectedText = ( $_REQUEST['FilterField'][1]=='10' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "");
-		$combo_State->SelectedText = ( $_REQUEST['FilterField'][1]=='13' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "");
+		$combo_country->SelectedText = ( $_REQUEST['FilterField'][1]=='7' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "");
 	}
 	$combo_type->Render();
 	$combo_owner->HTML = '<span id="owner-container' . $rnd1 . '"></span><input type="hidden" name="owner" id="owner' . $rnd1 . '" value="' . htmlspecialchars($combo_owner->SelectedData, ENT_QUOTES, 'UTF-8') . '">';
 	$combo_owner->MatchText = '<span id="owner-container-readonly' . $rnd1 . '"></span><input type="hidden" name="owner" id="owner' . $rnd1 . '" value="' . htmlspecialchars($combo_owner->SelectedData, ENT_QUOTES, 'UTF-8') . '">';
-	$combo_operating_account->Render();
 	$combo_country->Render();
-	$combo_State->Render();
 
 	ob_start();
 	?>
@@ -532,8 +480,7 @@ function properties_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, 
 		$jsReadOnly .= "\tjQuery('#country').replaceWith('<div class=\"form-control-static\" id=\"country\">' + (jQuery('#country').val() || '') + '</div>'); jQuery('#country-multi-selection-help').hide();\n";
 		$jsReadOnly .= "\tjQuery('#street').replaceWith('<div class=\"form-control-static\" id=\"street\">' + (jQuery('#street').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#City').replaceWith('<div class=\"form-control-static\" id=\"City\">' + (jQuery('#City').val() || '') + '</div>');\n";
-		$jsReadOnly .= "\tjQuery('#State').replaceWith('<div class=\"form-control-static\" id=\"State\">' + (jQuery('#State').val() || '') + '</div>'); jQuery('#State-multi-selection-help').hide();\n";
-		$jsReadOnly .= "\tjQuery('#ZIP').replaceWith('<div class=\"form-control-static\" id=\"ZIP\">' + (jQuery('#ZIP').val() || '') + '</div>');\n";
+		$jsReadOnly .= "\tjQuery('#State').replaceWith('<div class=\"form-control-static\" id=\"State\">' + (jQuery('#State').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('.select2-container').hide();\n";
 
 		$noUploads = true;
@@ -548,12 +495,8 @@ function properties_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, 
 	$templateCode=str_replace('<%%COMBO(owner)%%>', $combo_owner->HTML, $templateCode);
 	$templateCode=str_replace('<%%COMBOTEXT(owner)%%>', $combo_owner->MatchText, $templateCode);
 	$templateCode=str_replace('<%%URLCOMBOTEXT(owner)%%>', urlencode($combo_owner->MatchText), $templateCode);
-	$templateCode=str_replace('<%%COMBO(operating_account)%%>', $combo_operating_account->HTML, $templateCode);
-	$templateCode=str_replace('<%%COMBOTEXT(operating_account)%%>', $combo_operating_account->SelectedData, $templateCode);
 	$templateCode=str_replace('<%%COMBO(country)%%>', $combo_country->HTML, $templateCode);
 	$templateCode=str_replace('<%%COMBOTEXT(country)%%>', $combo_country->SelectedData, $templateCode);
-	$templateCode=str_replace('<%%COMBO(State)%%>', $combo_State->HTML, $templateCode);
-	$templateCode=str_replace('<%%COMBOTEXT(State)%%>', $combo_State->SelectedData, $templateCode);
 
 	/* lookup fields array: 'lookup field name' => array('parent table name', 'lookup field caption') */
 	$lookup_fields = array(  'owner' => array('rental_owners', 'Owner'));
@@ -583,14 +526,10 @@ function properties_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, 
 		$templateCode=str_replace('<%%REMOVEFILE(photo)%%>', '', $templateCode);
 	}
 	$templateCode=str_replace('<%%UPLOADFILE(owner)%%>', '', $templateCode);
-	$templateCode=str_replace('<%%UPLOADFILE(operating_account)%%>', '', $templateCode);
-	$templateCode=str_replace('<%%UPLOADFILE(property_reserve)%%>', '', $templateCode);
-	$templateCode=str_replace('<%%UPLOADFILE(lease_term)%%>', '', $templateCode);
 	$templateCode=str_replace('<%%UPLOADFILE(country)%%>', '', $templateCode);
 	$templateCode=str_replace('<%%UPLOADFILE(street)%%>', '', $templateCode);
 	$templateCode=str_replace('<%%UPLOADFILE(City)%%>', '', $templateCode);
 	$templateCode=str_replace('<%%UPLOADFILE(State)%%>', '', $templateCode);
-	$templateCode=str_replace('<%%UPLOADFILE(ZIP)%%>', '', $templateCode);
 
 	// process values
 	if($selected_id){
@@ -607,12 +546,6 @@ function properties_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, 
 		$templateCode=str_replace('<%%URLVALUE(photo)%%>', urlencode($urow['photo']), $templateCode);
 		$templateCode=str_replace('<%%VALUE(owner)%%>', htmlspecialchars($row['owner'], ENT_QUOTES, 'UTF-8'), $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(owner)%%>', urlencode($urow['owner']), $templateCode);
-		$templateCode=str_replace('<%%VALUE(operating_account)%%>', htmlspecialchars($row['operating_account'], ENT_QUOTES, 'UTF-8'), $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(operating_account)%%>', urlencode($urow['operating_account']), $templateCode);
-		$templateCode=str_replace('<%%VALUE(property_reserve)%%>', htmlspecialchars($row['property_reserve'], ENT_QUOTES, 'UTF-8'), $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(property_reserve)%%>', urlencode($urow['property_reserve']), $templateCode);
-		$templateCode=str_replace('<%%VALUE(lease_term)%%>', htmlspecialchars($row['lease_term'], ENT_QUOTES, 'UTF-8'), $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(lease_term)%%>', urlencode($urow['lease_term']), $templateCode);
 		$templateCode=str_replace('<%%VALUE(country)%%>', htmlspecialchars($row['country'], ENT_QUOTES, 'UTF-8'), $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(country)%%>', urlencode($urow['country']), $templateCode);
 		$templateCode=str_replace('<%%VALUE(street)%%>', htmlspecialchars($row['street'], ENT_QUOTES, 'UTF-8'), $templateCode);
@@ -621,8 +554,6 @@ function properties_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, 
 		$templateCode=str_replace('<%%URLVALUE(City)%%>', urlencode($urow['City']), $templateCode);
 		$templateCode=str_replace('<%%VALUE(State)%%>', htmlspecialchars($row['State'], ENT_QUOTES, 'UTF-8'), $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(State)%%>', urlencode($urow['State']), $templateCode);
-		$templateCode=str_replace('<%%VALUE(ZIP)%%>', htmlspecialchars($row['ZIP'], ENT_QUOTES, 'UTF-8'), $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(ZIP)%%>', urlencode($urow['ZIP']), $templateCode);
 	}else{
 		$templateCode=str_replace('<%%VALUE(id)%%>', '', $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(id)%%>', urlencode(''), $templateCode);
@@ -635,12 +566,6 @@ function properties_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, 
 		$templateCode=str_replace('<%%VALUE(photo)%%>', 'blank.gif', $templateCode);
 		$templateCode=str_replace('<%%VALUE(owner)%%>', '', $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(owner)%%>', urlencode(''), $templateCode);
-		$templateCode=str_replace('<%%VALUE(operating_account)%%>', '', $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(operating_account)%%>', urlencode(''), $templateCode);
-		$templateCode=str_replace('<%%VALUE(property_reserve)%%>', '', $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(property_reserve)%%>', urlencode(''), $templateCode);
-		$templateCode=str_replace('<%%VALUE(lease_term)%%>', '', $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(lease_term)%%>', urlencode(''), $templateCode);
 		$templateCode=str_replace('<%%VALUE(country)%%>', '', $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(country)%%>', urlencode(''), $templateCode);
 		$templateCode=str_replace('<%%VALUE(street)%%>', '', $templateCode);
@@ -649,8 +574,6 @@ function properties_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, 
 		$templateCode=str_replace('<%%URLVALUE(City)%%>', urlencode(''), $templateCode);
 		$templateCode=str_replace('<%%VALUE(State)%%>', '', $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(State)%%>', urlencode(''), $templateCode);
-		$templateCode=str_replace('<%%VALUE(ZIP)%%>', '', $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(ZIP)%%>', urlencode(''), $templateCode);
 	}
 
 	// process translations

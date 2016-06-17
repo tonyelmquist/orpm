@@ -70,14 +70,10 @@
 			'number_of_units' => array('appgini' => 'DECIMAL(15,0) '),
 			'photo' => array('appgini' => 'VARCHAR(40) '),
 			'owner' => array('appgini' => 'INT unsigned '),
-			'operating_account' => array('appgini' => 'VARCHAR(40) '),
-			'property_reserve' => array('appgini' => 'DECIMAL(15,0) '),
-			'lease_term' => array('appgini' => 'VARCHAR(15) '),
 			'country' => array('appgini' => 'VARCHAR(40) '),
 			'street' => array('appgini' => 'VARCHAR(40) '),
 			'City' => array('appgini' => 'VARCHAR(40) '),
-			'State' => array('appgini' => 'VARCHAR(40) '),
-			'ZIP' => array('appgini' => 'DECIMAL(15,0) ')
+			'State' => array('appgini' => 'VARCHAR(40) ')
 		),
 		'units' => array(   
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),
@@ -85,16 +81,8 @@
 			'unit_number' => array('appgini' => 'VARCHAR(40) '),
 			'photo' => array('appgini' => 'VARCHAR(40) '),
 			'status' => array('appgini' => 'VARCHAR(40) not null '),
-			'size' => array('appgini' => 'VARCHAR(40) '),
-			'country' => array('appgini' => 'INT unsigned '),
-			'street' => array('appgini' => 'INT unsigned '),
-			'city' => array('appgini' => 'INT unsigned '),
-			'state' => array('appgini' => 'INT unsigned '),
-			'postal_code' => array('appgini' => 'INT unsigned '),
 			'rooms' => array('appgini' => 'VARCHAR(40) '),
-			'bathroom' => array('appgini' => 'DECIMAL(15,0) '),
 			'features' => array('appgini' => 'TEXT '),
-			'market_rent' => array('appgini' => 'DECIMAL(15,0) '),
 			'rental_amount' => array('appgini' => 'DECIMAL(6,2) '),
 			'deposit_amount' => array('appgini' => 'DECIMAL(6,2) '),
 			'description' => array('appgini' => 'TEXT ')
@@ -103,17 +91,10 @@
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),
 			'first_name' => array('appgini' => 'VARCHAR(40) '),
 			'last_name' => array('appgini' => 'VARCHAR(40) '),
-			'company_name' => array('appgini' => 'VARCHAR(40) '),
 			'date_of_birth' => array('appgini' => 'DATE '),
 			'primary_email' => array('appgini' => 'VARCHAR(40) '),
-			'alternate_email' => array('appgini' => 'VARCHAR(40) '),
 			'phone' => array('appgini' => 'VARCHAR(40) '),
-			'country' => array('appgini' => 'VARCHAR(40) '),
-			'street' => array('appgini' => 'VARCHAR(40) '),
-			'city' => array('appgini' => 'VARCHAR(40) '),
-			'state' => array('appgini' => 'VARCHAR(40) '),
-			'zip' => array('appgini' => 'DECIMAL(15,0) '),
-			'comments' => array('appgini' => 'TEXT ')
+			'country' => array('appgini' => 'VARCHAR(40) ')
 		)
 	);
 

@@ -25,34 +25,20 @@
 		"`rental_owners`.`id`" => "id",
 		"`rental_owners`.`first_name`" => "first_name",
 		"`rental_owners`.`last_name`" => "last_name",
-		"`rental_owners`.`company_name`" => "company_name",
 		"if(`rental_owners`.`date_of_birth`,date_format(`rental_owners`.`date_of_birth`,'%m/%d/%Y'),'')" => "date_of_birth",
 		"`rental_owners`.`primary_email`" => "primary_email",
-		"`rental_owners`.`alternate_email`" => "alternate_email",
 		"CONCAT_WS('-', LEFT(`rental_owners`.`phone`,3), MID(`rental_owners`.`phone`,4,3), RIGHT(`rental_owners`.`phone`,4))" => "phone",
-		"`rental_owners`.`country`" => "country",
-		"`rental_owners`.`street`" => "street",
-		"`rental_owners`.`city`" => "city",
-		"`rental_owners`.`state`" => "state",
-		"`rental_owners`.`zip`" => "zip",
-		"`rental_owners`.`comments`" => "comments"
+		"`rental_owners`.`country`" => "country"
 	);
 	// mapping incoming sort by requests to actual query fields
 	$x->SortFields = array(   
 		1 => '`rental_owners`.`id`',
 		2 => 2,
 		3 => 3,
-		4 => 4,
-		5 => '`rental_owners`.`date_of_birth`',
+		4 => '`rental_owners`.`date_of_birth`',
+		5 => 5,
 		6 => 6,
-		7 => 7,
-		8 => 8,
-		9 => 9,
-		10 => 10,
-		11 => 11,
-		12 => 12,
-		13 => '`rental_owners`.`zip`',
-		14 => 14
+		7 => 7
 	);
 
 	// Fields that can be displayed in the csv file
@@ -60,34 +46,20 @@
 		"`rental_owners`.`id`" => "id",
 		"`rental_owners`.`first_name`" => "first_name",
 		"`rental_owners`.`last_name`" => "last_name",
-		"`rental_owners`.`company_name`" => "company_name",
 		"if(`rental_owners`.`date_of_birth`,date_format(`rental_owners`.`date_of_birth`,'%m/%d/%Y'),'')" => "date_of_birth",
 		"`rental_owners`.`primary_email`" => "primary_email",
-		"`rental_owners`.`alternate_email`" => "alternate_email",
 		"CONCAT_WS('-', LEFT(`rental_owners`.`phone`,3), MID(`rental_owners`.`phone`,4,3), RIGHT(`rental_owners`.`phone`,4))" => "phone",
-		"`rental_owners`.`country`" => "country",
-		"`rental_owners`.`street`" => "street",
-		"`rental_owners`.`city`" => "city",
-		"`rental_owners`.`state`" => "state",
-		"`rental_owners`.`zip`" => "zip",
-		"`rental_owners`.`comments`" => "comments"
+		"`rental_owners`.`country`" => "country"
 	);
 	// Fields that can be filtered
 	$x->QueryFieldsFilters=array(   
 		"`rental_owners`.`id`" => "ID",
 		"`rental_owners`.`first_name`" => "First name",
 		"`rental_owners`.`last_name`" => "Last name",
-		"`rental_owners`.`company_name`" => "Company name",
 		"`rental_owners`.`date_of_birth`" => "Date of birth",
-		"`rental_owners`.`primary_email`" => "Primary email",
-		"`rental_owners`.`alternate_email`" => "Alternate email",
+		"`rental_owners`.`primary_email`" => "Email",
 		"`rental_owners`.`phone`" => "Phone",
-		"`rental_owners`.`country`" => "Country",
-		"`rental_owners`.`street`" => "Street",
-		"`rental_owners`.`city`" => "City",
-		"`rental_owners`.`state`" => "State",
-		"`rental_owners`.`zip`" => "Zip",
-		"`rental_owners`.`comments`" => "Comments"
+		"`rental_owners`.`country`" => "Country"
 	);
 
 	// Fields that can be quick searched
@@ -95,17 +67,10 @@
 		"`rental_owners`.`id`" => "id",
 		"`rental_owners`.`first_name`" => "first_name",
 		"`rental_owners`.`last_name`" => "last_name",
-		"`rental_owners`.`company_name`" => "company_name",
 		"if(`rental_owners`.`date_of_birth`,date_format(`rental_owners`.`date_of_birth`,'%m/%d/%Y'),'')" => "date_of_birth",
 		"`rental_owners`.`primary_email`" => "primary_email",
-		"`rental_owners`.`alternate_email`" => "alternate_email",
 		"CONCAT_WS('-', LEFT(`rental_owners`.`phone`,3), MID(`rental_owners`.`phone`,4,3), RIGHT(`rental_owners`.`phone`,4))" => "phone",
-		"`rental_owners`.`country`" => "country",
-		"`rental_owners`.`street`" => "street",
-		"`rental_owners`.`city`" => "city",
-		"`rental_owners`.`state`" => "state",
-		"`rental_owners`.`zip`" => "zip",
-		"`rental_owners`.`comments`" => "comments"
+		"`rental_owners`.`country`" => "country"
 	);
 
 	// Lookup fields that can be used as filterers
@@ -118,7 +83,7 @@
 	$x->AllowSelection = 1;
 	$x->HideTableView = ($perm[2]==0 ? 1 : 0);
 	$x->AllowDelete = $perm[4];
-	$x->AllowMassDelete = false;
+	$x->AllowMassDelete = true;
 	$x->AllowInsert = $perm[1];
 	$x->AllowUpdate = $perm[3];
 	$x->SeparateDV = 1;
@@ -138,10 +103,10 @@
 	$x->TableIcon = "resources/table_icons/administrator.png";
 	$x->PrimaryKey = "`rental_owners`.`id`";
 
-	$x->ColWidth   = array(  150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150);
-	$x->ColCaption = array("First name", "Last name", "Company name", "Primary email", "Alternate email", "Phone", "Country", "Street", "City", "State", "Zip", "Comments");
-	$x->ColFieldName = array('first_name', 'last_name', 'company_name', 'primary_email', 'alternate_email', 'phone', 'country', 'street', 'city', 'state', 'zip', 'comments');
-	$x->ColNumber  = array(2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 13, 14);
+	$x->ColWidth   = array(  150, 150, 150, 150, 150);
+	$x->ColCaption = array("First name", "Last name", "Email", "Phone", "Country");
+	$x->ColFieldName = array('first_name', 'last_name', 'primary_email', 'phone', 'country');
+	$x->ColNumber  = array(2, 3, 5, 6, 7);
 
 	$x->Template = 'templates/rental_owners_templateTV.html';
 	$x->SelectedTemplate = 'templates/rental_owners_templateTVS.html';

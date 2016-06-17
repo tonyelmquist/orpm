@@ -20,22 +20,8 @@ function units_insert(){
 		if($data['unit_number'] == empty_lookup_value){ $data['unit_number'] = ''; }
 	$data['status'] = makeSafe($_REQUEST['status']);
 		if($data['status'] == empty_lookup_value){ $data['status'] = ''; }
-	$data['size'] = makeSafe($_REQUEST['size']);
-		if($data['size'] == empty_lookup_value){ $data['size'] = ''; }
-	$data['country'] = makeSafe($_REQUEST['property']);
-		if($data['country'] == empty_lookup_value){ $data['country'] = ''; }
-	$data['street'] = makeSafe($_REQUEST['property']);
-		if($data['street'] == empty_lookup_value){ $data['street'] = ''; }
-	$data['city'] = makeSafe($_REQUEST['property']);
-		if($data['city'] == empty_lookup_value){ $data['city'] = ''; }
-	$data['state'] = makeSafe($_REQUEST['property']);
-		if($data['state'] == empty_lookup_value){ $data['state'] = ''; }
-	$data['postal_code'] = makeSafe($_REQUEST['property']);
-		if($data['postal_code'] == empty_lookup_value){ $data['postal_code'] = ''; }
 	$data['rooms'] = makeSafe($_REQUEST['rooms']);
 		if($data['rooms'] == empty_lookup_value){ $data['rooms'] = ''; }
-	$data['bathroom'] = makeSafe($_REQUEST['bathroom']);
-		if($data['bathroom'] == empty_lookup_value){ $data['bathroom'] = ''; }
 	if(is_array($_REQUEST['features'])){
 		$MultipleSeparator=', ';
 		foreach($_REQUEST['features'] as $k => $v)
@@ -44,8 +30,6 @@ function units_insert(){
 	}else{
 		$data['features']='';
 	}
-	$data['market_rent'] = makeSafe($_REQUEST['market_rent']);
-		if($data['market_rent'] == empty_lookup_value){ $data['market_rent'] = ''; }
 	$data['rental_amount'] = makeSafe($_REQUEST['rental_amount']);
 		if($data['rental_amount'] == empty_lookup_value){ $data['rental_amount'] = ''; }
 	$data['deposit_amount'] = makeSafe($_REQUEST['deposit_amount']);
@@ -76,7 +60,7 @@ function units_insert(){
 	}
 
 	$o=array('silentErrors' => true);
-	sql('insert into `units` set       `property`=' . (($data['property'] !== '' && $data['property'] !== NULL) ? "'{$data['property']}'" : 'NULL') . ', `unit_number`=' . (($data['unit_number'] !== '' && $data['unit_number'] !== NULL) ? "'{$data['unit_number']}'" : 'NULL') . ', ' . ($data['photo'] != '' ? "`photo`='{$data['photo']}'" : '`photo`=NULL') . ', `status`=' . (($data['status'] !== '' && $data['status'] !== NULL) ? "'{$data['status']}'" : 'NULL') . ', `size`=' . (($data['size'] !== '' && $data['size'] !== NULL) ? "'{$data['size']}'" : 'NULL') . ', `country`=' . (($data['country'] !== '' && $data['country'] !== NULL) ? "'{$data['country']}'" : 'NULL') . ', `street`=' . (($data['street'] !== '' && $data['street'] !== NULL) ? "'{$data['street']}'" : 'NULL') . ', `city`=' . (($data['city'] !== '' && $data['city'] !== NULL) ? "'{$data['city']}'" : 'NULL') . ', `state`=' . (($data['state'] !== '' && $data['state'] !== NULL) ? "'{$data['state']}'" : 'NULL') . ', `postal_code`=' . (($data['postal_code'] !== '' && $data['postal_code'] !== NULL) ? "'{$data['postal_code']}'" : 'NULL') . ', `rooms`=' . (($data['rooms'] !== '' && $data['rooms'] !== NULL) ? "'{$data['rooms']}'" : 'NULL') . ', `bathroom`=' . (($data['bathroom'] !== '' && $data['bathroom'] !== NULL) ? "'{$data['bathroom']}'" : 'NULL') . ', `features`=' . (($data['features'] !== '' && $data['features'] !== NULL) ? "'{$data['features']}'" : 'NULL') . ', `rental_amount`=' . (($data['rental_amount'] !== '' && $data['rental_amount'] !== NULL) ? "'{$data['rental_amount']}'" : 'NULL') . ', `description`=' . (($data['description'] !== '' && $data['description'] !== NULL) ? "'{$data['description']}'" : 'NULL'), $o);
+	sql('insert into `units` set       `property`=' . (($data['property'] !== '' && $data['property'] !== NULL) ? "'{$data['property']}'" : 'NULL') . ', `unit_number`=' . (($data['unit_number'] !== '' && $data['unit_number'] !== NULL) ? "'{$data['unit_number']}'" : 'NULL') . ', ' . ($data['photo'] != '' ? "`photo`='{$data['photo']}'" : '`photo`=NULL') . ', `status`=' . (($data['status'] !== '' && $data['status'] !== NULL) ? "'{$data['status']}'" : 'NULL') . ', `rooms`=' . (($data['rooms'] !== '' && $data['rooms'] !== NULL) ? "'{$data['rooms']}'" : 'NULL') . ', `features`=' . (($data['features'] !== '' && $data['features'] !== NULL) ? "'{$data['features']}'" : 'NULL') . ', `rental_amount`=' . (($data['rental_amount'] !== '' && $data['rental_amount'] !== NULL) ? "'{$data['rental_amount']}'" : 'NULL') . ', `description`=' . (($data['description'] !== '' && $data['description'] !== NULL) ? "'{$data['description']}'" : 'NULL'), $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo "<a href=\"units_view.php?addNew_x=1\">{$Translation['< back']}</a>";
@@ -179,22 +163,8 @@ function units_update($selected_id){
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
 		exit;
 	}
-	$data['size'] = makeSafe($_REQUEST['size']);
-		if($data['size'] == empty_lookup_value){ $data['size'] = ''; }
-	$data['country'] = makeSafe($_REQUEST['property']);
-		if($data['country'] == empty_lookup_value){ $data['country'] = ''; }
-	$data['street'] = makeSafe($_REQUEST['property']);
-		if($data['street'] == empty_lookup_value){ $data['street'] = ''; }
-	$data['city'] = makeSafe($_REQUEST['property']);
-		if($data['city'] == empty_lookup_value){ $data['city'] = ''; }
-	$data['state'] = makeSafe($_REQUEST['property']);
-		if($data['state'] == empty_lookup_value){ $data['state'] = ''; }
-	$data['postal_code'] = makeSafe($_REQUEST['property']);
-		if($data['postal_code'] == empty_lookup_value){ $data['postal_code'] = ''; }
 	$data['rooms'] = makeSafe($_REQUEST['rooms']);
 		if($data['rooms'] == empty_lookup_value){ $data['rooms'] = ''; }
-	$data['bathroom'] = makeSafe($_REQUEST['bathroom']);
-		if($data['bathroom'] == empty_lookup_value){ $data['bathroom'] = ''; }
 	if(is_array($_REQUEST['features'])){
 		$MultipleSeparator = ', ';
 		foreach($_REQUEST['features'] as $k => $v)
@@ -203,8 +173,6 @@ function units_update($selected_id){
 	}else{
 		$data['features']='';
 	}
-	$data['market_rent'] = makeSafe($_REQUEST['market_rent']);
-		if($data['market_rent'] == empty_lookup_value){ $data['market_rent'] = ''; }
 	$data['rental_amount'] = makeSafe($_REQUEST['rental_amount']);
 		if($data['rental_amount'] == empty_lookup_value){ $data['rental_amount'] = ''; }
 	$data['deposit_amount'] = makeSafe($_REQUEST['deposit_amount']);
@@ -227,7 +195,7 @@ function units_update($selected_id){
 	}
 
 	$o=array('silentErrors' => true);
-	sql('update `units` set       `property`=' . (($data['property'] !== '' && $data['property'] !== NULL) ? "'{$data['property']}'" : 'NULL') . ', `unit_number`=' . (($data['unit_number'] !== '' && $data['unit_number'] !== NULL) ? "'{$data['unit_number']}'" : 'NULL') . ', ' . ($data['photo']!='' ? "`photo`='{$data['photo']}'" : ($_REQUEST['photo_remove'] != 1 ? '`photo`=`photo`' : '`photo`=NULL')) . ', `status`=' . (($data['status'] !== '' && $data['status'] !== NULL) ? "'{$data['status']}'" : 'NULL') . ', `size`=' . (($data['size'] !== '' && $data['size'] !== NULL) ? "'{$data['size']}'" : 'NULL') . ', `country`=' . (($data['country'] !== '' && $data['country'] !== NULL) ? "'{$data['country']}'" : 'NULL') . ', `street`=' . (($data['street'] !== '' && $data['street'] !== NULL) ? "'{$data['street']}'" : 'NULL') . ', `city`=' . (($data['city'] !== '' && $data['city'] !== NULL) ? "'{$data['city']}'" : 'NULL') . ', `state`=' . (($data['state'] !== '' && $data['state'] !== NULL) ? "'{$data['state']}'" : 'NULL') . ', `postal_code`=' . (($data['postal_code'] !== '' && $data['postal_code'] !== NULL) ? "'{$data['postal_code']}'" : 'NULL') . ', `rooms`=' . (($data['rooms'] !== '' && $data['rooms'] !== NULL) ? "'{$data['rooms']}'" : 'NULL') . ', `bathroom`=' . (($data['bathroom'] !== '' && $data['bathroom'] !== NULL) ? "'{$data['bathroom']}'" : 'NULL') . ', `features`=' . (($data['features'] !== '' && $data['features'] !== NULL) ? "'{$data['features']}'" : 'NULL') . ', `rental_amount`=' . (($data['rental_amount'] !== '' && $data['rental_amount'] !== NULL) ? "'{$data['rental_amount']}'" : 'NULL') . ', `description`=' . (($data['description'] !== '' && $data['description'] !== NULL) ? "'{$data['description']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
+	sql('update `units` set       `property`=' . (($data['property'] !== '' && $data['property'] !== NULL) ? "'{$data['property']}'" : 'NULL') . ', `unit_number`=' . (($data['unit_number'] !== '' && $data['unit_number'] !== NULL) ? "'{$data['unit_number']}'" : 'NULL') . ', ' . ($data['photo']!='' ? "`photo`='{$data['photo']}'" : ($_REQUEST['photo_remove'] != 1 ? '`photo`=`photo`' : '`photo`=NULL')) . ', `status`=' . (($data['status'] !== '' && $data['status'] !== NULL) ? "'{$data['status']}'" : 'NULL') . ', `rooms`=' . (($data['rooms'] !== '' && $data['rooms'] !== NULL) ? "'{$data['rooms']}'" : 'NULL') . ', `features`=' . (($data['features'] !== '' && $data['features'] !== NULL) ? "'{$data['features']}'" : 'NULL') . ', `rental_amount`=' . (($data['rental_amount'] !== '' && $data['rental_amount'] !== NULL) ? "'{$data['rental_amount']}'" : 'NULL') . ', `description`=' . (($data['description'] !== '' && $data['description'] !== NULL) ? "'{$data['description']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo '<a href="units_view.php?SelectedID='.urlencode($selected_id)."\">{$Translation['< back']}</a>";
@@ -490,9 +458,7 @@ function units_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Allo
 		$jsReadOnly .= "\tjQuery('#unit_number').replaceWith('<div class=\"form-control-static\" id=\"unit_number\">' + (jQuery('#unit_number').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#photo').replaceWith('<div class=\"form-control-static\" id=\"photo\">' + (jQuery('#photo').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('input[name=status]').parent().html('<div class=\"form-control-static\">' + jQuery('input[name=status]:checked').next().text() + '</div>')\n";
-		$jsReadOnly .= "\tjQuery('#size').replaceWith('<div class=\"form-control-static\" id=\"size\">' + (jQuery('#size').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#rooms').replaceWith('<div class=\"form-control-static\" id=\"rooms\">' + (jQuery('#rooms').val() || '') + '</div>');\n";
-		$jsReadOnly .= "\tjQuery('#bathroom').replaceWith('<div class=\"form-control-static\" id=\"bathroom\">' + (jQuery('#bathroom').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#features').replaceWith('<div class=\"form-control-static\" id=\"features\">' + (jQuery('#features').val() || '') + '</div>'); jQuery('#features-multi-selection-help').hide();\n";
 		$jsReadOnly .= "\tjQuery('#s2id_features').remove();\n";
 		$jsReadOnly .= "\tjQuery('#rental_amount').replaceWith('<div class=\"form-control-static\" id=\"rental_amount\">' + (jQuery('#rental_amount').val() || '') + '</div>');\n";
@@ -540,11 +506,8 @@ function units_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Allo
 		$templateCode=str_replace('<%%REMOVEFILE(photo)%%>', '', $templateCode);
 	}
 	$templateCode=str_replace('<%%UPLOADFILE(status)%%>', '', $templateCode);
-	$templateCode=str_replace('<%%UPLOADFILE(size)%%>', '', $templateCode);
 	$templateCode=str_replace('<%%UPLOADFILE(rooms)%%>', '', $templateCode);
-	$templateCode=str_replace('<%%UPLOADFILE(bathroom)%%>', '', $templateCode);
 	$templateCode=str_replace('<%%UPLOADFILE(features)%%>', '', $templateCode);
-	$templateCode=str_replace('<%%UPLOADFILE(market_rent)%%>', '', $templateCode);
 	$templateCode=str_replace('<%%UPLOADFILE(rental_amount)%%>', '', $templateCode);
 	$templateCode=str_replace('<%%UPLOADFILE(deposit_amount)%%>', '', $templateCode);
 	$templateCode=str_replace('<%%UPLOADFILE(description)%%>', '', $templateCode);
@@ -562,16 +525,10 @@ function units_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Allo
 		$templateCode=str_replace('<%%URLVALUE(photo)%%>', urlencode($urow['photo']), $templateCode);
 		$templateCode=str_replace('<%%VALUE(status)%%>', htmlspecialchars($row['status'], ENT_QUOTES, 'UTF-8'), $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(status)%%>', urlencode($urow['status']), $templateCode);
-		$templateCode=str_replace('<%%VALUE(size)%%>', htmlspecialchars($row['size'], ENT_QUOTES, 'UTF-8'), $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(size)%%>', urlencode($urow['size']), $templateCode);
 		$templateCode=str_replace('<%%VALUE(rooms)%%>', htmlspecialchars($row['rooms'], ENT_QUOTES, 'UTF-8'), $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(rooms)%%>', urlencode($urow['rooms']), $templateCode);
-		$templateCode=str_replace('<%%VALUE(bathroom)%%>', htmlspecialchars($row['bathroom'], ENT_QUOTES, 'UTF-8'), $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(bathroom)%%>', urlencode($urow['bathroom']), $templateCode);
 		$templateCode=str_replace('<%%VALUE(features)%%>', htmlspecialchars($row['features'], ENT_QUOTES, 'UTF-8'), $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(features)%%>', urlencode($urow['features']), $templateCode);
-		$templateCode=str_replace('<%%VALUE(market_rent)%%>', htmlspecialchars($row['market_rent'], ENT_QUOTES, 'UTF-8'), $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(market_rent)%%>', urlencode($urow['market_rent']), $templateCode);
 		$templateCode=str_replace('<%%VALUE(rental_amount)%%>', htmlspecialchars($row['rental_amount'], ENT_QUOTES, 'UTF-8'), $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(rental_amount)%%>', urlencode($urow['rental_amount']), $templateCode);
 		$templateCode=str_replace('<%%VALUE(deposit_amount)%%>', htmlspecialchars($row['deposit_amount'], ENT_QUOTES, 'UTF-8'), $templateCode);
@@ -593,16 +550,10 @@ function units_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Allo
 		$templateCode=str_replace('<%%VALUE(photo)%%>', 'blank.gif', $templateCode);
 		$templateCode=str_replace('<%%VALUE(status)%%>', '', $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(status)%%>', urlencode(''), $templateCode);
-		$templateCode=str_replace('<%%VALUE(size)%%>', '', $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(size)%%>', urlencode(''), $templateCode);
 		$templateCode=str_replace('<%%VALUE(rooms)%%>', '', $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(rooms)%%>', urlencode(''), $templateCode);
-		$templateCode=str_replace('<%%VALUE(bathroom)%%>', '', $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(bathroom)%%>', urlencode(''), $templateCode);
 		$templateCode=str_replace('<%%VALUE(features)%%>', '', $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(features)%%>', urlencode(''), $templateCode);
-		$templateCode=str_replace('<%%VALUE(market_rent)%%>', '', $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(market_rent)%%>', urlencode(''), $templateCode);
 		$templateCode=str_replace('<%%VALUE(rental_amount)%%>', '', $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(rental_amount)%%>', urlencode(''), $templateCode);
 		$templateCode=str_replace('<%%VALUE(deposit_amount)%%>', '', $templateCode);
@@ -640,19 +591,6 @@ function units_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Allo
 	// ajaxed auto-fill fields
 	$templateCode .= '<script>';
 	$templateCode .= '$j(function() {';
-
-	$templateCode.="\tproperty_update_autofills$rnd1 = function(){\n";
-	$templateCode.="\t\tnew Ajax.Request(\n";
-	if($dvprint){
-		$templateCode.="\t\t\t'units_autofill.php?rnd1=$rnd1&mfk=property&id=' + encodeURIComponent('".addslashes($row['property'])."'),\n";
-		$templateCode.="\t\t\t{encoding: 'UTF-8', method: 'get'}\n";
-	}else{
-		$templateCode.="\t\t\t'units_autofill.php?rnd1=$rnd1&mfk=property&id=' + encodeURIComponent(current_property{$rnd1}.value),\n";
-		$templateCode.="\t\t\t{encoding: 'UTF-8', method: 'get', onCreate: function(){ \$j('#property$rnd1').prop('disabled', true); \$j('#propertyLoading').html('<img src=loading.gif align=top>'); }, onComplete: function(){".(($arrPerm[1] || (($arrPerm[3] == 1 && $ownerMemberID == getLoggedMemberID()) || ($arrPerm[3] == 2 && $ownerGroupID == getLoggedGroupID()) || $arrPerm[3] == 3)) ? "\$j('#property$rnd1').prop('disabled', false); " : "\$j('#property$rnd1').prop('disabled', true); ")."\$j('#propertyLoading').html('');}}\n";
-	}
-	$templateCode.="\t\t);\n";
-	$templateCode.="\t};\n";
-	if(!$dvprint) $templateCode.="\tif(\$j('#property_caption').length) \$j('#property_caption').click(function(){ property_update_autofills$rnd1(); });\n";
 
 
 	$templateCode.="});";

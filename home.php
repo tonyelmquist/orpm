@@ -60,7 +60,7 @@
 			$tc = $arrTables[$tn];
 			$tChkFF = array_search($tn, array());
 			$tChkHL = array_search($tn, array('residence_and_rental_history','employment_and_income_history','references'));
-			$tChkAHAN = array_search($tn, array('applicants_and_tenants'));
+			$tChkAHAN = array_search($tn, array('applicants_and_tenants','properties','units','rental_owners'));
 
 			$t_perm = getTablePermissions($tn);
 			$can_insert = $t_perm['insert'];

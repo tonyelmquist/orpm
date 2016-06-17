@@ -48,8 +48,8 @@
 				'employment_and_income_history' => 'Employment and income history',
 				'references' => 'References',
 				'applicants_and_tenants' => 'Tenant Center',
-				'properties' => 'Properties',
-				'units' => 'Units',
+				'properties' => 'Property Center',
+				'units' => 'Unit ',
 				'rental_owners' => 'Rental owners'
 			);
 
