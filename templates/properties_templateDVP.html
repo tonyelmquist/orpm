@@ -4,8 +4,10 @@
 <div class="panel-heading"><h3 class="panel-title">
 	<strong><%%DETAIL_VIEW_TITLE%%></strong>
 	<div class="hidden-print pull-right">
-		<button type="button" id="print" onclick="window.print();" title="<%%TRANSLATION(Print)%%>" class="btn btn-success"><i class="glyphicon glyphicon-print"></i></button>
-		<button type="submit" id="back" title="<%%TRANSLATION(Back)%%>" class="btn btn-warning"><i class="glyphicon glyphicon-remove"></i></button>
+		<div class="btn-group">
+			<button type="button" id="print" onclick="window.print();" title="<%%TRANSLATION(Print)%%>" class="btn btn-primary"><i class="glyphicon glyphicon-print"></i> <%%TRANSLATION(Print)%%></button>
+			<button type="submit" id="back" title="<%%TRANSLATION(Cancel Printing)%%>" class="btn btn-default"><i class="glyphicon glyphicon-remove-circle"></i> <%%TRANSLATION(Cancel Printing)%%></button>
+		</div>
 	</div>
 	<div class="clearfix"></div>
 </h3></div>
@@ -84,3 +86,28 @@
 		</div>
 	</fieldset>
 </div>
+<!-- child records -->
+<div class="panel-body">
+	<div id="properties-children"></div>
+</div>
+
+<script>
+	$j(function(){
+		/* prevent loading child records in multiple DVP */
+		if($j('[id=properties-children]').length > 1) return;
+
+		post(
+			'parent-children.php', {
+				ParentTable: 'properties',
+				SelectedID: '<%%VALUE(id)%%>',
+				Operation: 'show-children-printable'
+			},
+			'properties-children'
+		);
+
+		$j('form').on('click', '#children-tabs button[data-target]', function(){
+			$j(this).toggleClass('active');
+		});
+	})
+</script>
+

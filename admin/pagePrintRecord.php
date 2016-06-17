@@ -1,13 +1,13 @@
 <?php
-	$currDir=dirname(__FILE__);
-	require("$currDir/incCommon.php");
+	$currDir = dirname(__FILE__);
+	require("{$currDir}/incCommon.php");
 ?>
 <!doctype html public "-//W3C//DTD html 4.0 //en">
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<link rel="stylesheet" href="adminStyles.css">
-		<title>Membership Management -- Record details</title>
+		<title><?php echo $Translation["record details"]; ?></title>
 		</head>
 	<body>
 		<div align="center">
@@ -27,7 +27,7 @@
 			$groupID=$row['groupID'];
 		}else{
 			// no such record exists
-			die("<div class=\"status\">Error: Record not found!</div>");
+			die("<div class=\"status\">{$Translation["record not found error"]}</div>");
 		}
 	}
 
@@ -37,7 +37,7 @@
 
 	// get field list
 	if(!$res=sql("show fields from `$tableName`", $eo)){
-		errorMsg("Couldn't retrieve field list from '$tableName'");
+		errorMsg(str_replace ( "<TABLENAME>" , $tableName , $Translation["could not retrieve field list"] ));
 	}
 	while($row=db_fetch_assoc($res)){
 		$field[]=$row['Field'];
@@ -46,16 +46,16 @@
 	$res=sql("select * from `$tableName` where `$pkField`='" . makeSafe($pkValue, false) . "'", $eo);
 	if($row=db_fetch_assoc($res)){
 		?>
-		<h2>Table: <?php echo $tableName; ?></h2>
+		<h2><?php echo str_replace ( "<TABLENAME>" , $tableName , $Translation["table name"] ); ?></h2>
 		<table class="table table-striped">
 			<tr>
-				<td class="tdHeader"><div class="ColCaption">Field name</div></td>
-				<td class="tdHeader"><div class="ColCaption">Value</div></td>
+				<td class="tdHeader"><div class="ColCaption"><?php echo $Translation["field name"]; ?></div></td>
+				<td class="tdHeader"><div class="ColCaption"><?php echo $Translation["value"]; ?></div></td>
 				</tr>
 		<?php
-		include("$currDir/../language.php");
+		include("{$currDir}/../language.php");
 		foreach($field as $fn){
-			if(@is_file("$currDir/../".$Translation['ImageFolder'].$row[$fn])){
+			if(@is_file("{$currDir}/../".$Translation['ImageFolder'].$row[$fn])){
 				$op="<a href=\""."../".$Translation['ImageFolder'].$row[$fn]."\" target=\"_blank\">".htmlspecialchars($row[$fn])."</a>";
 			}else{
 				$op=htmlspecialchars($row[$fn]);
@@ -75,6 +75,5 @@
 	}
 
 
-
-	include("$currDir/incFooter.php");
+	include("{$currDir}/incFooter.php");
 ?>

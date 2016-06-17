@@ -114,83 +114,43 @@ class DataList{
 
 		$Embedded = intval($_REQUEST['Embedded']);
 
-		if($_SERVER['REQUEST_METHOD'] == 'GET'){
-			$SortField = $_GET["SortField"];
-			$SortDirection = $_GET["SortDirection"];
-			$FirstRecord = $_GET["FirstRecord"];
-			$ScrollUp_y = $_GET["ScrollUp_y"];
-			$ScrollDn_y = $_GET["ScrollDn_y"];
-			$Previous_x = $_GET["Previous_x"];
-			$Next_x = $_GET["Next_x"];
-			$Filter_x = $_GET["Filter_x"];
-			$SaveFilter_x = $_GET["SaveFilter_x"];
-			$NoFilter_x = $_GET["NoFilter_x"];
-			$CancelFilter = $_GET["CancelFilter"];
-			$ApplyFilter = $_GET["ApplyFilter"];
-			$Search_x = $_GET["Search_x"];
-			$SearchString = (get_magic_quotes_gpc() ? stripslashes($_GET['SearchString']) : $_GET['SearchString']);
-			$CSV_x = $_GET["CSV_x"];
+		$SortField = $_REQUEST["SortField"];
+		$SortDirection = $_REQUEST["SortDirection"];
+		$FirstRecord = $_REQUEST["FirstRecord"];
+		$ScrollUp_y = $_REQUEST["ScrollUp_y"];
+		$ScrollDn_y = $_REQUEST["ScrollDn_y"];
+		$Previous_x = $_REQUEST["Previous_x"];
+		$Next_x = $_REQUEST["Next_x"];
+		$Filter_x = $_REQUEST["Filter_x"];
+		$SaveFilter_x = $_REQUEST["SaveFilter_x"];
+		$NoFilter_x = $_REQUEST["NoFilter_x"];
+		$CancelFilter = $_REQUEST["CancelFilter"];
+		$ApplyFilter = $_REQUEST["ApplyFilter"];
+		$Search_x = $_REQUEST["Search_x"];
+		$SearchString = (get_magic_quotes_gpc() ? stripslashes($_REQUEST['SearchString']) : $_REQUEST['SearchString']);
+		$CSV_x = $_REQUEST["CSV_x"];
 
-			$FilterAnd = $_GET["FilterAnd"];
-			$FilterField = $_GET["FilterField"];
-			$FilterOperator = $_GET["FilterOperator"];
-			if(is_array($_GET['FilterValue'])){
-				foreach($_GET['FilterValue'] as $fvi=>$fv){
-					$FilterValue[$fvi]=(get_magic_quotes_gpc() ? stripslashes($fv) : $fv);
-				}
+		$FilterAnd = $_REQUEST["FilterAnd"];
+		$FilterField = $_REQUEST["FilterField"];
+		$FilterOperator = $_REQUEST["FilterOperator"];
+		if(is_array($_REQUEST['FilterValue'])){
+			foreach($_REQUEST['FilterValue'] as $fvi=>$fv){
+				$FilterValue[$fvi]=(get_magic_quotes_gpc() ? stripslashes($fv) : $fv);
 			}
-
-			$Print_x = $_GET['Print_x'];
-			$PrintTV = $_GET['PrintTV'];
-			$PrintDV = $_GET['PrintDV'];
-			$SelectedID = (get_magic_quotes_gpc() ? stripslashes($_GET['SelectedID']) : $_GET['SelectedID']);
-			$insert_x = $_GET['insert_x'];
-			$update_x = $_GET['update_x'];
-			$delete_x = $_GET['delete_x'];
-			$SkipChecks = $_GET['confirmed'];
-			$deselect_x = $_GET['deselect_x'];
-			$addNew_x = $_GET['addNew_x'];
-			$dvprint_x = $_GET['dvprint_x'];
-			$DisplayRecords = (in_array($_GET['DisplayRecords'], array('user', 'group')) ? $_GET['DisplayRecords'] : 'all');
-		}else{
-			$SortField = $_POST['SortField'];
-			$SortDirection = $_POST['SortDirection'];
-			$FirstRecord = $_POST['FirstRecord'];
-			$ScrollUp_y = $_POST['ScrollUp_y'];
-			$ScrollDn_y = $_POST['ScrollDn_y'];
-			$Previous_x = $_POST['Previous_x'];
-			$Next_x = $_POST['Next_x'];
-			$Filter_x = $_POST['Filter_x'];
-			$SaveFilter_x = $_POST['SaveFilter_x'];
-			$NoFilter_x = $_POST['NoFilter_x'];
-			$CancelFilter = $_POST['CancelFilter'];
-			$ApplyFilter = $_POST['ApplyFilter'];
-			$Search_x = $_POST['Search_x'];
-			$SearchString = (get_magic_quotes_gpc() ? stripslashes($_POST['SearchString']) : $_POST['SearchString']);
-			$CSV_x = $_POST['CSV_x'];
-
-			$FilterAnd = $_POST['FilterAnd'];
-			$FilterField = $_POST['FilterField'];
-			$FilterOperator = $_POST['FilterOperator'];
-			if(is_array($_POST['FilterValue'])){
-				foreach($_POST['FilterValue'] as $fvi=>$fv){
-					$FilterValue[$fvi]=(get_magic_quotes_gpc() ? stripslashes($fv) : $fv);
-				}
-			}
-
-			$Print_x = $_POST['Print_x'];
-			$PrintTV = $_POST['PrintTV'];
-			$PrintDV = $_POST['PrintDV'];
-			$SelectedID = (get_magic_quotes_gpc() ? stripslashes($_POST['SelectedID']) : $_POST['SelectedID']);
-			$insert_x = $_POST['insert_x'];
-			$update_x = $_POST['update_x'];
-			$delete_x = $_POST['delete_x'];
-			$SkipChecks = $_POST['confirmed'];
-			$deselect_x = $_POST['deselect_x'];
-			$addNew_x = $_POST['addNew_x'];
-			$dvprint_x = $_POST['dvprint_x'];
-			$DisplayRecords = (in_array($_POST['DisplayRecords'], array('user', 'group')) ? $_POST['DisplayRecords'] : 'all');
 		}
+
+		$Print_x = $_REQUEST['Print_x'];
+		$PrintTV = $_REQUEST['PrintTV'];
+		$PrintDV = $_REQUEST['PrintDV'];
+		$SelectedID = (get_magic_quotes_gpc() ? stripslashes($_REQUEST['SelectedID']) : $_REQUEST['SelectedID']);
+		$insert_x = $_REQUEST['insert_x'];
+		$update_x = $_REQUEST['update_x'];
+		$delete_x = $_REQUEST['delete_x'];
+		$SkipChecks = $_REQUEST['confirmed'];
+		$deselect_x = $_REQUEST['deselect_x'];
+		$addNew_x = $_REQUEST['addNew_x'];
+		$dvprint_x = $_REQUEST['dvprint_x'];
+		$DisplayRecords = (in_array($_REQUEST['DisplayRecords'], array('user', 'group')) ? $_REQUEST['DisplayRecords'] : 'all');
 
 		$mi = getMemberInfo();
 
@@ -274,7 +234,9 @@ class DataList{
 
 		$this->HTML .= '<div class="row"><div class="col-xs-11 col-md-12">';
 		$this->HTML .= '<form ' . (datalist_image_uploads_exist ? 'enctype="multipart/form-data" ' : '') . 'method="post" name="myform" action="' . $this->ScriptFileName . '">';
-		if($Embedded) $this->HTML .= '<input name="Embedded" value="1" type="hidden" />';
+		if($Embedded) $this->HTML .= '<input name="Embedded" value="1" type="hidden">';
+		$this->HTML .= '<!-- possible values for current_view: TV, TVP, DV, DVP, Filters, TVDV -->';
+		$this->HTML .= '<input name="current_view" id="current_view" value="' . $current_view . '" type="hidden">';
 		$this->HTML .= '<script>';
 		$this->HTML .= 'function enterAction(){';
 		$this->HTML .= '   if($$("input[name=SearchString]:focus")[0] != undefined){ $("Search").click(); }';
@@ -286,8 +248,8 @@ class DataList{
 		$this->ContentType='tableview'; // default content type
 
 		if($PrintTV != ''){
-			$Print_x=1;
-			$_POST['Print_x']=1;
+			$Print_x = 1;
+			$_REQUEST['Print_x'] = 1;
 		}
 
 	// handle user commands ...
@@ -353,6 +315,11 @@ class DataList{
 				$_REQUEST['record-deleted-ok'] = 1;
 				$SelectedID = '';
 				$this->showTV();
+
+				/* close window if embedded */
+				if($Embedded){
+					$this->HTML .= '<script>$j(function(){ setTimeout(function(){ window.parent.jQuery(".modal").modal("hide"); }, 2000); })</script>';
+				}
 			}
 		}
 
@@ -401,6 +368,9 @@ class DataList{
 					$filter_link .= urlencode("FilterField[$i]") . '=' . urlencode($FilterField[$i]) . '&';
 					$filter_link .= urlencode("FilterOperator[$i]") . '=' . urlencode($FilterOperator[$i]) . '&';
 					$filter_link .= urlencode("FilterValue[$i]") . '=' . urlencode($FilterValue[$i]) . '&';
+				}elseif(($i % $FiltersPerGroup == 1) && in_array($FilterAnd[$i], array('and', 'or'))){
+					/* always include the and/or at the beginning of each group */
+					$filter_link .= urlencode("FilterAnd[$i]") . '=' . urlencode($FilterAnd[$i]) . '&';
 				}
 			}
 			$filter_link = substr($filter_link, 0, -1); /* trim last '&' */
@@ -734,7 +704,7 @@ class DataList{
 				}
 
 				$quick_search_html .= '<div class="input-group" id="quick-search">';
-					$quick_search_html .= '<input type="text" name="SearchString" value="' . htmlspecialchars($SearchString, ENT_QUOTES) . '" class="form-control" placeholder="' . htmlspecialchars($this->QuickSearchText) . '">';
+					$quick_search_html .= '<input type="text" name="SearchString" value="' . htmlspecialchars($SearchString, ENT_QUOTES, 'UTF-8') . '" class="form-control" placeholder="' . htmlspecialchars($this->QuickSearchText) . '">';
 					$quick_search_html .= '<span class="input-group-btn">';
 						$quick_search_html .= '<button name="Search_x" value="1" id="Search" type="submit" onClick="' . $resetSelection . ' document.myform.NoDV.value=1; return true;"  class="btn btn-default" title="' . htmlspecialchars($this->QuickSearchText) . '"><i class="glyphicon glyphicon-search"></i></button>';
 						$quick_search_html .= '<button name="NoFilter_x" value="1" id="NoFilter_x" type="submit" onClick="' . $resetSelection . ' document.myform.NoDV.value=1; return true;"  class="btn btn-default" title="' . htmlspecialchars($Translation['Reset Filters']) . '"><i class="glyphicon glyphicon-remove-circle"></i></button>';
@@ -1020,16 +990,16 @@ class DataList{
 				$tvQuery = 'SELECT '.$fieldList.' from '.$this->QueryFrom.' '.$this->QueryWhere.' '.$this->QueryOrder;
 				$result = sql($tvQuery . " limit " . ($i-1) . ",$this->RecordsPerPage", $eo);
 				while(($row = db_fetch_array($result)) && ($i < ($FirstRecord + $this->RecordsPerPage))){
-					$attr_id = htmlspecialchars($row[$FieldCountTV]); /* pk value suitable for inserting into html tag attributes */
+					$attr_id = htmlspecialchars($row[$FieldCountTV], ENT_QUOTES, 'UTF-8'); /* pk value suitable for inserting into html tag attributes */
 					$js_id = addslashes($row[$FieldCountTV]); /* pk value suitable for inserting into js strings */
 					$alt = (($i - $FirstRecord) % 2);
-					if(($PrintTV || $Print_x) && count($_POST['record_selector']) && !in_array($row[$FieldCountTV], $_POST['record_selector'])) continue;
+					if(($PrintTV || $Print_x) && count($_REQUEST['record_selector']) && !in_array($row[$FieldCountTV], $_REQUEST['record_selector'])) continue;
 					$class = "TableBody".($alt ? 'Selected' : '').($fNumeric ? 'Numeric' : '');
 
 					if($Print_x != ''){ $this->HTML .= '<tr>'; }
 					if(!$Print_x){
 						$this->HTML .= ($SelectedID == $row[$FieldCountTV] ? '<tr class="active">' : '<tr>');
-						$checked = (is_array($_POST['record_selector']) && in_array($row[$FieldCountTV], $_POST['record_selector']) ? ' checked' : '');
+						$checked = (is_array($_REQUEST['record_selector']) && in_array($row[$FieldCountTV], $_REQUEST['record_selector']) ? ' checked' : '');
 						$this->HTML .= "<td class=\"text-center\"><input class=\"hidden-print record_selector\" type=\"checkbox\" id=\"record_selector_{$attr_id}\" name=\"record_selector[]\" value=\"{$attr_id}\"{$checked}></td>";
 					}
 
@@ -1050,9 +1020,18 @@ class DataList{
 						}
 
 						for($j = 0; $j < $FieldCountTV; $j++){
-							$fieldTVCaption=current(array_slice($this->QueryFieldsTV, $j, 1));
+							$fieldTVCaption = current(array_slice($this->QueryFieldsTV, $j, 1));
 
-							$fd=$hc->xss_clean(nl2br($row[$j])); /* Sanitize output against XSS attacks */
+							/* apply nl2br only for non-HTML data */
+							if($row[$j] == strip_tags($row[$j])){
+								$fd = nl2br($row[$j]);
+							}else{
+								$fd = $row[$j];
+							}
+
+							/* Sanitize output against XSS attacks */
+							$fd = $hc->xss_clean($fd);
+
 							/*
 								the TV template could contain field placeholders in the format 
 								<%%FIELD_n%%> or <%%VALUE(Field name)%%> 
@@ -1211,19 +1190,19 @@ class DataList{
 	// hidden variables ....
 		foreach($this->filterers as $filterer => $caption){
 			if($_REQUEST['filterer_' . $filterer] != ''){
-				$this->HTML .= "<input name=\"filterer_{$filterer}\" value=\"" . htmlspecialchars($_REQUEST['filterer_' . $filterer]) . "\" type=\"hidden\" />";
+				$this->HTML .= "<input name=\"filterer_{$filterer}\" value=\"" . htmlspecialchars($_REQUEST['filterer_' . $filterer], ENT_QUOTES, 'UTF-8') . "\" type=\"hidden\" />";
 				break; // currently, only one filterer can be applied at a time
 			}
 		}
 
 		$this->HTML .= '<input name="SortField" value="' . $SortField . '" type="hidden">';
-		$this->HTML .= '<input name="SelectedID" value="' . htmlspecialchars($SelectedID) . '" type="hidden">';
+		$this->HTML .= '<input name="SelectedID" value="' . htmlspecialchars($SelectedID, ENT_QUOTES, 'UTF-8') . '" type="hidden">';
 		$this->HTML .= '<input name="SelectedField" value="" type="hidden">';
 		$this->HTML .= '<input name="SortDirection" type="hidden" value="' . $SortDirection . '">';
 		$this->HTML .= '<input name="FirstRecord" type="hidden" value="' . $FirstRecord . '">';
 		$this->HTML .= '<input name="NoDV" type="hidden" value="">';
 		$this->HTML .= '<input name="PrintDV" type="hidden" value="">';
-		if($this->QuickSearch && !strpos($this->HTML, 'SearchString')) $this->HTML .= '<input name="SearchString" type="hidden" value="' . htmlspecialchars($SearchString, ENT_QUOTES) . '">';
+		if($this->QuickSearch && !strpos($this->HTML, 'SearchString')) $this->HTML .= '<input name="SearchString" type="hidden" value="' . htmlspecialchars($SearchString, ENT_QUOTES, 'UTF-8') . '">';
 	// hidden variables: filters ...
 		$FiltersCode = '';
 		for($i = 1; $i <= (datalist_filters_count * $FiltersPerGroup); $i++){ // Number of filters allowed
@@ -1235,7 +1214,7 @@ class DataList{
 					$FiltersCode .= "<input name=\"FilterAnd[{$i}]\" value=\"{$FilterAnd[$i]}\" type=\"hidden\">\n";
 				$FiltersCode .= "<input name=\"FilterField[{$i}]\" value=\"{$FilterField[$i]}\" type=\"hidden\">\n";
 				$FiltersCode .= "<input name=\"FilterOperator[{$i}]\" value=\"{$FilterOperator[$i]}\" type=\"hidden\">\n";
-				$FiltersCode .= "<input name=\"FilterValue[{$i}]\" value=\"" . htmlspecialchars($FilterValue[$i], ENT_QUOTES) . "\" type=\"hidden\">\n";
+				$FiltersCode .= "<input name=\"FilterValue[{$i}]\" value=\"" . htmlspecialchars($FilterValue[$i], ENT_QUOTES, 'UTF-8') . "\" type=\"hidden\">\n";
 			}
 		}
 		$FiltersCode .= "<input name=\"DisplayRecords\" value=\"$DisplayRecords\" type=\"hidden\" />";
@@ -1247,7 +1226,7 @@ class DataList{
 				$dvCode = call_user_func("{$this->TableName}_form", $SelectedID, $this->AllowUpdate, (($this->HideTableView && $SelectedID) ? 0 : $this->AllowInsert), $this->AllowDelete, $this->SeparateDV);
 
 				$this->HTML .= "\n\t<div class=\"panel panel-default detail_view\">{$dvCode}</div>";
-				$this->HTML .= ($this->SeparateDV ? '<input name="SearchString" value="' . htmlspecialchars($SearchString, ENT_QUOTES) . '" type="hidden">' : '');
+				$this->HTML .= ($this->SeparateDV ? '<input name="SearchString" value="' . htmlspecialchars($SearchString, ENT_QUOTES, 'UTF-8') . '" type="hidden">' : '');
 				if($dvCode){
 					$this->ContentType = 'detailview';
 					$dvShown = true;
@@ -1258,25 +1237,25 @@ class DataList{
 	// display multiple printable detail views
 		if($PrintDV){
 			$dvCode = '';
-			$_POST['dvprint_x'] = $_GET['dvprint_x'] = $_REQUEST['dvprint_x'] = 1;
+			$_REQUEST['dvprint_x'] = 1;
 
 			// hidden vars
 			foreach($this->filterers as $filterer => $caption){
 				if($_REQUEST['filterer_' . $filterer] != ''){
-					$this->HTML .= "<input name=\"filterer_{$filterer}\" value=\"" . htmlspecialchars($_REQUEST['filterer_' . $filterer]) . "\" type=\"hidden\" />";
+					$this->HTML .= "<input name=\"filterer_{$filterer}\" value=\"" . htmlspecialchars($_REQUEST['filterer_' . $filterer], ENT_QUOTES, 'UTF-8') . "\" type=\"hidden\" />";
 					break; // currently, only one filterer can be applied at a time
 				}
 			}
 
 			// count selected records
 			$selectedRecords = 0;
-			if(is_array($_POST['record_selector'])) foreach($_POST['record_selector'] as $id){
+			if(is_array($_REQUEST['record_selector'])) foreach($_REQUEST['record_selector'] as $id){
 				$selectedRecords++;
-				$this->HTML .= '<input type="hidden" name="record_selector[]" value="' . htmlspecialchars($id) . '">'."\n";
+				$this->HTML .= '<input type="hidden" name="record_selector[]" value="' . htmlspecialchars($id, ENT_QUOTES, 'UTF-8') . '">'."\n";
 			}
 
 			if($selectedRecords && $selectedRecords <= datalist_max_records_dv_print){ // if records selected > {datalist_max_records_dv_print} don't show DV preview to avoid db performance issues.
-				foreach($_POST['record_selector'] as $id){
+				foreach($_REQUEST['record_selector'] as $id){
 					$dvCode .= call_user_func($this->TableName . '_form', $id, 0, 0, 0, 1);
 				}
 

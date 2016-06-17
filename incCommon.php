@@ -1,88 +1,10 @@
 <?php
-	define('maxSortBy', 4);
-	define('empty_lookup_value', '{empty_value}');
-
-	error_reporting(E_ERROR | E_WARNING | E_PARSE);
-	if(function_exists('set_magic_quotes_runtime')) @set_magic_quotes_runtime(0);
-	ob_start();
-
-	$currDir=dirname(__FILE__);
-
-	include("$currDir/admin/incFunctions.php");
-
-	/* trim $_POST, $_GET, $_REQUEST */
-	if(count($_POST)) $_POST = array_trim($_POST);
-	if(count($_GET)) $_GET = array_trim($_GET);
-	if(count($_REQUEST)) $_REQUEST = array_trim($_REQUEST);
-
-	// include global hook functions
-	@include("$currDir/hooks/__global.php");
-
-	// check sessions config
-	$noPathCheck=True;
-	$arrPath=explode(';', ini_get('session.save_path'));
-	$save_path=$arrPath[count($arrPath)-1];
-	if(!$noPathCheck && !is_dir($save_path)){
-		?>
-		<center>
-			<div class="alert alert-danger">
-				Your site is not configured to support sessions correctly. Please edit your php.ini file and change the value of <i>session.save_path</i> to a valid path.
-			</div>
-		</center>
-		<?php
-		exit;
-	}
-	if(session_id()){ session_write_close(); }
-	$configured_save_handler = @ini_get('session.save_handler');
-	if($configured_save_handler != 'memcache' && $configured_save_handler != 'memcached')
-		@ini_set('session.save_handler', 'files');
-	@ini_set('session.serialize_handler', 'php');
-	@ini_set('session.use_cookies', '1');
-	@ini_set('session.use_only_cookies', '1');
-	@header('Cache-Control: no-cache, no-store, must-revalidate'); // HTTP 1.1.
-	@header('Pragma: no-cache'); // HTTP 1.0.
-	@header('Expires: 0'); // Proxies.
-	@session_name('real_estate');
-	session_start();
-
-	// check if membership system exists
-	setupMembership();
-
-	// silently apply db changes, if any
-	@include_once("$currDir/updateDB.php");
-
-	// do we have a login request?
-	logInMember();
-
-	// convert expanded sorting variables, if provided, to SortField and SortDirection
-	$postedOrderBy = array();
-	for($i = 0; $i < maxSortBy; $i++){
-		if(isset($_POST["OrderByField$i"])){
-			$sd = ($_POST["OrderDir$i"] == 'desc' ? 'desc' : 'asc');
-			if($sfi = intval($_POST["OrderByField$i"])){
-				$postedOrderBy[] = array($sfi => $sd);
-			}
-		}
-	}
-	if(count($postedOrderBy)){
-		$_POST['SortField'] = '';
-		$_POST['SortDirection'] = '';
-		foreach($postedOrderBy as $obi){
-			$sfi = ''; $sd = '';
-			foreach($obi as $sfi => $sd);
-			$_POST['SortField'] .= "$sfi $sd,";
-		}
-		$_POST['SortField'] = substr($_POST['SortField'], 0, -2 - strlen($sd));
-		$_POST['SortDirection'] = $sd;
-	}elseif($_POST['apply_sorting']){
-		/* no sorting and came from filters page .. so clear sorting */
-		$_POST['SortField'] = $_POST['SortDirection'] = '';
-	}
 
 	#########################################################
 	/*
 	~~~~~~ LIST OF FUNCTIONS ~~~~~~
-		getTableList() -- returns an associative array (tableName=>tableData, tableData is array(tableCaption, tableDescription, tableIcon)) of tables accessible by current user
+		getTableList() -- returns an associative array (tableName => tableData, tableData is array(tableCaption, tableDescription, tableIcon)) of tables accessible by current user
+		get_table_groups() -- returns an associative array (table_group => tables_array)
 		getLoggedMemberID() -- returns memberID of logged member. If no login, returns anonymous memberID
 		getLoggedGroupID() -- returns groupID of logged member, or anonymous groupID
 		logOutMember() -- destroys session and logs member out.
@@ -112,20 +34,28 @@
 		reIndex(&$arr) -- returns a copy of the given array, with keys replaced by 1-based numeric indices, and values replaced by original keys
 		get_embed($provider, $url[, $width, $height, $retrieve]) -- returns embed code for a given url (supported providers: youtube, googlemap)
 		check_record_permission($table, $id, $perm = 'view') -- returns true if current user has the specified permission $perm ('view', 'edit' or 'delete') for the given recors, false otherwise
+		sql($query, $o) -- executes given $query and returns its result set. $o is an options array (see the function definition for details)
+		NavMenus($options) -- returns the HTML code for the top navigation menus. $options is not implemented currently.
+		StyleSheet() -- returns the HTML code for included style sheet files to be placed in the <head> section.
+		getUploadDir($dir) -- if dir is empty, returns upload dir configured in defaultLang.php, else returns $dir.
+		PrepareUploadedFile($FieldName, $MaxSize, $FileTypes='jpg|jpeg|gif|png', $NoRename=false, $dir="") -- validates and moves uploaded file for given $FieldName into the given $dir (or the default one if empty)
+		get_home_links($homeLinks, $default_classes, $tgroup) -- process $homeLinks array and return custom links for homepage. Applies $default_classes to links if links have classes defined, and filters links by $tgroup (using '*' matches all table_group values)
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	*/
+
 	#########################################################
+
 	function getTableList($skip_authentication = false){
 		$arrAccessTables = array();
 		$arrTables = array(   
-			'applications_leases' => array('Applications/Leases', 'This is the application form filled by an applicant to apply for leasing a unit. The application might be changed to a lease when approved.', 'resources/table_icons/curriculum_vitae.png'),
-			'residence_and_rental_history' => array('Residence and rental history', 'Records of the tenant residence and rental history.', 'resources/table_icons/document_comment_above.png'),
-			'employment_and_income_history' => array('Employment and income history', 'Records of the employment and income history of the tenant.', 'resources/table_icons/cash_stack.png'),
-			'references' => array('References', 'List of references for each tenant.', 'resources/table_icons/application_from_storage.png'),
-			'applicants_and_tenants' => array('Applicants and tenants', 'List of applicants/tenants and their current status. Each tenant might have an application or a lease.', 'resources/table_icons/account_balances.png'),
-			'properties' => array('Properties', 'Listing of all properties. Each property has an owner and consists of one or more rental units.', 'resources/table_icons/application_home.png'),
-			'units' => array('Units', 'Listing of all units, its details and current status.', 'resources/table_icons/change_password.png'),
-			'rental_owners' => array('Rental owners', 'Listing of owners of rental properties, and all the properties owned by each.', 'resources/table_icons/administrator.png')
+			'applications_leases' => array('Applications/Leases', 'This is the application form filled by an applicant to apply for leasing a unit. The application might be changed to a lease when approved.', 'resources/table_icons/curriculum_vitae.png', 'None'),
+			'residence_and_rental_history' => array('Residence and rental history', 'Records of the tenant residence and rental history.', 'resources/table_icons/document_comment_above.png', 'None'),
+			'employment_and_income_history' => array('Employment and income history', 'Records of the employment and income history of the tenant.', 'resources/table_icons/cash_stack.png', 'None'),
+			'references' => array('References', 'List of references for each tenant.', 'resources/table_icons/application_from_storage.png', 'None'),
+			'applicants_and_tenants' => array('Tenant Center', 'Click to view a list of all Tenants and their current status...', 'resources/table_icons/account_balances.png', 'None'),
+			'properties' => array('Properties', 'Listing of all properties. Each property has an owner and consists of one or more rental units.', 'resources/table_icons/application_home.png', 'None'),
+			'units' => array('Units', 'Listing of all units, its details and current status.', 'resources/table_icons/change_password.png', 'None'),
+			'rental_owners' => array('Rental owners', 'Listing of owners of rental properties, and all the properties owned by each.', 'resources/table_icons/administrator.png', 'None')
 		);
 		if($skip_authentication || getLoggedAdmin()) return $arrTables;
 
@@ -140,7 +70,26 @@
 
 		return $arrAccessTables;
 	}
+
 	#########################################################
+
+	function get_table_groups($skip_authentication = false){
+		$tables = getTableList($skip_authentication);
+		$all_groups = array('None');
+
+		$groups = array();
+		foreach($all_groups as $grp){
+			foreach($tables as $tn => $td){
+				if($td[3] && $td[3] == $grp) $groups[$grp][] = $tn;
+				if(!$td[3]) $groups[0][] = $tn;
+			}
+		}
+
+		return $groups;
+	}
+
+	#########################################################
+
 	function getTablePermissions($tn){
 		static $table_permissions = array();
 		if(isset($table_permissions[$tn])) return $table_permissions[$tn];
@@ -190,13 +139,14 @@
 	}
 
 	#########################################################
+
 	function get_sql_fields($table_name){
 		$sql_fields = array(   
 			'applications_leases' => "`applications_leases`.`id` as 'id', IF(    CHAR_LENGTH(`applicants_and_tenants1`.`first_name`) || CHAR_LENGTH(`applicants_and_tenants1`.`last_name`), CONCAT_WS('',   `applicants_and_tenants1`.`first_name`, ' ', `applicants_and_tenants1`.`last_name`), '') as 'tenants', `applications_leases`.`status` as 'status', IF(    CHAR_LENGTH(`properties1`.`property_name`), CONCAT_WS('',   `properties1`.`property_name`), '') as 'property', IF(    CHAR_LENGTH(`units1`.`unit_number`), CONCAT_WS('',   `units1`.`unit_number`), '') as 'unit', `applications_leases`.`type` as 'type', `applications_leases`.`total_number_of_occupants` as 'total_number_of_occupants', if(`applications_leases`.`start_date`,date_format(`applications_leases`.`start_date`,'%m/%d/%Y'),'') as 'start_date', if(`applications_leases`.`end_date`,date_format(`applications_leases`.`end_date`,'%m/%d/%Y'),'') as 'end_date', `applications_leases`.`recurring_charges_frequency` as 'recurring_charges_frequency', if(`applications_leases`.`next_due_date`,date_format(`applications_leases`.`next_due_date`,'%m/%d/%Y'),'') as 'next_due_date', CONCAT('$', FORMAT(`applications_leases`.`rent`, 2)) as 'rent', CONCAT('$', FORMAT(`applications_leases`.`security_deposit`, 2)) as 'security_deposit', if(`applications_leases`.`security_deposit_date`,date_format(`applications_leases`.`security_deposit_date`,'%m/%d/%Y'),'') as 'security_deposit_date', `applications_leases`.`emergency_contact` as 'emergency_contact', `applications_leases`.`co_signer_details` as 'co_signer_details', `applications_leases`.`notes` as 'notes', `applications_leases`.`agreement` as 'agreement'",
 			'residence_and_rental_history' => "`residence_and_rental_history`.`id` as 'id', IF(    CHAR_LENGTH(`applicants_and_tenants1`.`first_name`) || CHAR_LENGTH(`applicants_and_tenants1`.`last_name`), CONCAT_WS('',   `applicants_and_tenants1`.`first_name`, ' ', `applicants_and_tenants1`.`last_name`), '') as 'tenant', `residence_and_rental_history`.`address` as 'address', `residence_and_rental_history`.`landlord_or_manager_name` as 'landlord_or_manager_name', `residence_and_rental_history`.`landlord_or_manager_phone` as 'landlord_or_manager_phone', CONCAT('$', FORMAT(`residence_and_rental_history`.`monthly_rent`, 2)) as 'monthly_rent', if(`residence_and_rental_history`.`duration_of_residency_from`,date_format(`residence_and_rental_history`.`duration_of_residency_from`,'%m/%d/%Y'),'') as 'duration_of_residency_from', if(`residence_and_rental_history`.`to`,date_format(`residence_and_rental_history`.`to`,'%m/%d/%Y'),'') as 'to', `residence_and_rental_history`.`reason_for_leaving` as 'reason_for_leaving', `residence_and_rental_history`.`notes` as 'notes'",
 			'employment_and_income_history' => "`employment_and_income_history`.`id` as 'id', IF(    CHAR_LENGTH(`applicants_and_tenants1`.`first_name`) || CHAR_LENGTH(`applicants_and_tenants1`.`last_name`), CONCAT_WS('',   `applicants_and_tenants1`.`first_name`, ' ', `applicants_and_tenants1`.`last_name`), '') as 'tenant', `employment_and_income_history`.`employer_name` as 'employer_name', `employment_and_income_history`.`city` as 'city', CONCAT_WS('-', LEFT(`employment_and_income_history`.`employer_phone`,3), MID(`employment_and_income_history`.`employer_phone`,4,3), RIGHT(`employment_and_income_history`.`employer_phone`,4)) as 'employer_phone', if(`employment_and_income_history`.`employed_from`,date_format(`employment_and_income_history`.`employed_from`,'%m/%d/%Y'),'') as 'employed_from', if(`employment_and_income_history`.`employed_till`,date_format(`employment_and_income_history`.`employed_till`,'%m/%d/%Y'),'') as 'employed_till', `employment_and_income_history`.`occupation` as 'occupation', `employment_and_income_history`.`notes` as 'notes'",
 			'references' => "`references`.`id` as 'id', IF(    CHAR_LENGTH(`applicants_and_tenants1`.`first_name`) || CHAR_LENGTH(`applicants_and_tenants1`.`last_name`), CONCAT_WS('',   `applicants_and_tenants1`.`first_name`, ' ', `applicants_and_tenants1`.`last_name`), '') as 'tenant', `references`.`reference_name` as 'reference_name', CONCAT_WS('-', LEFT(`references`.`phone`,3), MID(`references`.`phone`,4,3), RIGHT(`references`.`phone`,4)) as 'phone'",
-			'applicants_and_tenants' => "`applicants_and_tenants`.`id` as 'id', `applicants_and_tenants`.`last_name` as 'last_name', `applicants_and_tenants`.`first_name` as 'first_name', `applicants_and_tenants`.`email` as 'email', CONCAT_WS('-', LEFT(`applicants_and_tenants`.`phone`,3), MID(`applicants_and_tenants`.`phone`,4,3), RIGHT(`applicants_and_tenants`.`phone`,4)) as 'phone', if(`applicants_and_tenants`.`birth_date`,date_format(`applicants_and_tenants`.`birth_date`,'%m/%d/%Y'),'') as 'birth_date', `applicants_and_tenants`.`driver_license_number` as 'driver_license_number', `applicants_and_tenants`.`driver_license_state` as 'driver_license_state', `applicants_and_tenants`.`requested_lease_term` as 'requested_lease_term', CONCAT('$', FORMAT(`applicants_and_tenants`.`monthly_gross_pay`, 2)) as 'monthly_gross_pay', CONCAT('$', FORMAT(`applicants_and_tenants`.`additional_income`, 2)) as 'additional_income', CONCAT('$', FORMAT(`applicants_and_tenants`.`assets`, 2)) as 'assets', `applicants_and_tenants`.`status` as 'status', `applicants_and_tenants`.`notes` as 'notes'",
+			'applicants_and_tenants' => "`applicants_and_tenants`.`id` as 'id', `applicants_and_tenants`.`last_name` as 'last_name', `applicants_and_tenants`.`first_name` as 'first_name', `applicants_and_tenants`.`email` as 'email', CONCAT_WS('-', LEFT(`applicants_and_tenants`.`phone`,3), MID(`applicants_and_tenants`.`phone`,4,3), RIGHT(`applicants_and_tenants`.`phone`,4)) as 'phone', if(`applicants_and_tenants`.`birth_date`,date_format(`applicants_and_tenants`.`birth_date`,'%m/%d/%Y'),'') as 'birth_date', `applicants_and_tenants`.`status` as 'status'",
 			'properties' => "`properties`.`id` as 'id', `properties`.`property_name` as 'property_name', `properties`.`type` as 'type', `properties`.`number_of_units` as 'number_of_units', `properties`.`photo` as 'photo', IF(    CHAR_LENGTH(`rental_owners1`.`first_name`) || CHAR_LENGTH(`rental_owners1`.`last_name`), CONCAT_WS('',   `rental_owners1`.`first_name`, ' ', `rental_owners1`.`last_name`), '') as 'owner', `properties`.`operating_account` as 'operating_account', CONCAT('$', FORMAT(`properties`.`property_reserve`, 2)) as 'property_reserve', `properties`.`lease_term` as 'lease_term', `properties`.`country` as 'country', `properties`.`street` as 'street', `properties`.`City` as 'City', `properties`.`State` as 'State', `properties`.`ZIP` as 'ZIP'",
 			'units' => "`units`.`id` as 'id', IF(    CHAR_LENGTH(`properties1`.`property_name`), CONCAT_WS('',   `properties1`.`property_name`), '') as 'property', `units`.`unit_number` as 'unit_number', `units`.`photo` as 'photo', `units`.`status` as 'status', `units`.`size` as 'size', IF(    CHAR_LENGTH(`properties1`.`country`), CONCAT_WS('',   `properties1`.`country`), '') as 'country', IF(    CHAR_LENGTH(`properties1`.`street`), CONCAT_WS('',   `properties1`.`street`), '') as 'street', IF(    CHAR_LENGTH(`properties1`.`City`), CONCAT_WS('',   `properties1`.`City`), '') as 'city', IF(    CHAR_LENGTH(`properties1`.`State`), CONCAT_WS('',   `properties1`.`State`), '') as 'state', IF(    CHAR_LENGTH(`properties1`.`ZIP`), CONCAT_WS('',   `properties1`.`ZIP`), '') as 'postal_code', `units`.`rooms` as 'rooms', `units`.`bathroom` as 'bathroom', `units`.`features` as 'features', FORMAT(`units`.`market_rent`, 0) as 'market_rent', CONCAT('$', FORMAT(`units`.`rental_amount`, 2)) as 'rental_amount', CONCAT('$', FORMAT(`units`.`deposit_amount`, 2)) as 'deposit_amount', `units`.`description` as 'description'",
 			'rental_owners' => "`rental_owners`.`id` as 'id', `rental_owners`.`first_name` as 'first_name', `rental_owners`.`last_name` as 'last_name', `rental_owners`.`company_name` as 'company_name', if(`rental_owners`.`date_of_birth`,date_format(`rental_owners`.`date_of_birth`,'%m/%d/%Y'),'') as 'date_of_birth', `rental_owners`.`primary_email` as 'primary_email', `rental_owners`.`alternate_email` as 'alternate_email', CONCAT_WS('-', LEFT(`rental_owners`.`phone`,3), MID(`rental_owners`.`phone`,4,3), RIGHT(`rental_owners`.`phone`,4)) as 'phone', `rental_owners`.`country` as 'country', `rental_owners`.`street` as 'street', `rental_owners`.`city` as 'city', `rental_owners`.`state` as 'state', `rental_owners`.`zip` as 'zip', `rental_owners`.`comments` as 'comments'"
@@ -208,7 +158,9 @@
 
 		return false;
 	}
+
 	#########################################################
+
 	function get_sql_from($table_name, $skip_permissions = false){
 		$sql_from = array(   
 			'applications_leases' => "`applications_leases` LEFT JOIN `applicants_and_tenants` as applicants_and_tenants1 ON `applicants_and_tenants1`.`id`=`applications_leases`.`tenants` LEFT JOIN `properties` as properties1 ON `properties1`.`id`=`applications_leases`.`property` LEFT JOIN `units` as units1 ON `units1`.`id`=`applications_leases`.`unit` ",
@@ -251,7 +203,9 @@
 
 		return false;
 	}
+
 	#########################################################
+
 	function getLoggedGroupID(){
 		if($_SESSION['memberGroupID']!=''){
 			return $_SESSION['memberGroupID'];
@@ -260,7 +214,9 @@
 			return getLoggedGroupID();
 		}
 	}
+
 	#########################################################
+
 	function getLoggedMemberID(){
 		if($_SESSION['memberID']!=''){
 			return strtolower($_SESSION['memberID']);
@@ -269,7 +225,9 @@
 			return getLoggedMemberID();
 		}
 	}
+
 	#########################################################
+
 	function setAnonymousAccess(){
 		$adminConfig = config('adminConfig');
 
@@ -279,7 +237,9 @@
 		$anonMemberID=sqlValue("select lcase(memberID) from membership_users where lcase(memberID)='".strtolower($adminConfig['anonymousMember'])."' and groupID='$anonGroupID'");
 		$_SESSION['memberID']=($anonMemberID ? $anonMemberID : 0);
 	}
+
 	#########################################################
+
 	function logInMember(){
 		$redir = 'index.php';
 		if($_POST['signIn'] != ''){
@@ -330,14 +290,19 @@
 			}
 		}
 	}
+
 	#########################################################
+
 	function logOutMember(){
 		logOutUser();
 		redirect("index.php?signIn=1");
 	}
+
 	#########################################################
+
 	function htmlUserBar(){
 		global $adminConfig, $Translation;
+		if(!defined('PREPEND_PATH')) define('PREPEND_PATH', '');
 
 		ob_start();
 		$home_page = (basename($_SERVER['PHP_SELF'])=='index.php' ? true : false);
@@ -352,38 +317,41 @@
 					<span class="icon-bar"></span>
 				</button>
 				<!-- application title is obtained from the name besides the yellow database icon in AppGini, use underscores for spaces -->
-				<a class="navbar-brand" href="index.php"><i class="glyphicon glyphicon-home"></i> real estate</a>
+				<a class="navbar-brand" href="<?php echo PREPEND_PATH; ?>index.php"><i class="glyphicon glyphicon-home"></i> real estate</a>
 			</div>
 			<div class="collapse navbar-collapse">
 				<ul class="nav navbar-nav">
 					<?php if(!$home_page){ ?>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $Translation['select a table']; ?> <b class="caret"></b></a>
-							<ul class="dropdown-menu" role="menu">
-								<?php echo NavMenus(); ?>
-							</ul>
-						</li>
+						<?php echo NavMenus(); ?>
 					<?php } ?>
 				</ul>
 
 				<?php if(getLoggedAdmin()){ ?>
 					<ul class="nav navbar-nav">
-						<a href="admin/pageHome.php" class="btn btn-danger navbar-btn visible-sm visible-md visible-lg"><i class="glyphicon glyphicon-wrench"></i> <?php echo $Translation['admin area']; ?></a>
-						<a href="admin/pageHome.php" class="visible-xs btn btn-danger navbar-btn btn-lg"><i class="glyphicon glyphicon-wrench"></i> <?php echo $Translation['admin area']; ?></a>
+						<a href="<?php echo PREPEND_PATH; ?>admin/pageHome.php" class="btn btn-danger navbar-btn hidden-xs"><i class="glyphicon glyphicon-cog"></i> <?php echo $Translation['admin area']; ?></a>
+						<a href="<?php echo PREPEND_PATH; ?>admin/pageHome.php" class="btn btn-danger navbar-btn visible-xs btn-lg"><i class="glyphicon glyphicon-cog"></i> <?php echo $Translation['admin area']; ?></a>
 					</ul>
 				<?php } ?>
 
 				<?php if(!$_GET['signIn'] && !$_GET['loginFailed']){ ?>
 					<?php if(getLoggedMemberID() == $adminConfig['anonymousMember']){ ?>
-						<a href="index.php?signIn=1" class="btn btn-success navbar-btn navbar-right"><?php echo $Translation['sign in']; ?></a>
+						<a href="<?php echo PREPEND_PATH; ?>index.php?signIn=1" class="btn btn-success navbar-btn navbar-right"><?php echo $Translation['sign in']; ?></a>
 						<p class="navbar-text navbar-right">
 							<?php echo $Translation['not signed in']; ?>
 						</p>
 					<?php }else{ ?>
-						<a class="btn navbar-btn btn-default navbar-right" href="index.php?signOut=1"><i class="glyphicon glyphicon-log-out"></i> <?php echo $Translation['sign out']; ?></a>
-						<p class="navbar-text navbar-right">
-							<?php echo $Translation['signed as']; ?> <strong><a href="membership_profile.php" class="navbar-link"><?php echo getLoggedMemberID(); ?></a></strong>
-						</p>
+						<ul class="nav navbar-nav navbar-right hidden-xs" style="min-width: 330px;">
+							<a class="btn navbar-btn btn-default" href="<?php echo PREPEND_PATH; ?>index.php?signOut=1"><i class="glyphicon glyphicon-log-out"></i> <?php echo $Translation['sign out']; ?></a>
+							<p class="navbar-text">
+								<?php echo $Translation['signed as']; ?> <strong><a href="<?php echo PREPEND_PATH; ?>membership_profile.php" class="navbar-link"><?php echo getLoggedMemberID(); ?></a></strong>
+							</p>
+						</ul>
+						<ul class="nav navbar-nav visible-xs">
+							<a class="btn navbar-btn btn-default btn-lg visible-xs" href="<?php echo PREPEND_PATH; ?>index.php?signOut=1"><i class="glyphicon glyphicon-log-out"></i> <?php echo $Translation['sign out']; ?></a>
+							<p class="navbar-text text-center">
+								<?php echo $Translation['signed as']; ?> <strong><a href="<?php echo PREPEND_PATH; ?>membership_profile.php" class="navbar-link"><?php echo getLoggedMemberID(); ?></a></strong>
+							</p>
+						</ul>
 					<?php } ?>
 				<?php } ?>
 			</div>
@@ -395,7 +363,9 @@
 
 		return $html;
 	}
+
 	#########################################################
+
 	function showNotifications($msg = '', $class = '', $fadeout = true){
 		global $Translation;
 
@@ -448,7 +418,9 @@
 
 		return $out;
 	}
+
 	#########################################################
+
 	function parseMySQLDate($date, $altDate){
 		// is $date valid?
 		if(preg_match("/^\d{4}-\d{1,2}-\d{1,2}$/", trim($date))){
@@ -465,7 +437,9 @@
 
 		return '';
 	}
+
 	#########################################################
+
 	function parseCode($code, $isInsert=true, $rawData=false){
 		if($isInsert){
 			$arrCodes=array(
@@ -497,7 +471,9 @@
 
 		return $pc;
 	}
+
 	#########################################################
+
 	function addFilter($index, $filterAnd, $filterField, $filterOperator, $filterValue){
 		// validate input
 		if($index < 1 || $index > 80 || !is_int($index)) return false;
@@ -518,27 +494,24 @@
 			$filterValue = '';
 		}
 
-		if($_SERVER['REQUEST_METHOD']=='POST'){
-			$_POST['FilterAnd'][$index]=$filterAnd;
-			$_POST['FilterField'][$index]=$filterField;
-			$_POST['FilterOperator'][$index]=$filterOperator;
-			$_POST['FilterValue'][$index]=$filterValue;
-		}else{
-			$_GET['FilterAnd'][$index]=$filterAnd;
-			$_GET['FilterField'][$index]=$filterField;
-			$_GET['FilterOperator'][$index]=$filterOperator;
-			$_GET['FilterValue'][$index]=$filterValue;
-		}
+		$_REQUEST['FilterAnd'][$index] = $filterAnd;
+		$_REQUEST['FilterField'][$index] = $filterField;
+		$_REQUEST['FilterOperator'][$index] = $filterOperator;
+		$_REQUEST['FilterValue'][$index] = $filterValue;
 
 		return true;
 	}
+
 	#########################################################
+
 	function clearFilters(){
 		for($i=1; $i<=80; $i++){
 			addFilter($i, '', 0, '', '');
 		}
 	}
+
 	#########################################################
+
 	function getMemberInfo($memberID = ''){
 		static $member_info = array();
 
@@ -581,7 +554,9 @@
 
 		return $mi;
 	}
+
 	#########################################################
+
 	if(!function_exists('str_ireplace')){
 		function str_ireplace($search, $replace, $subject){
 			$ret=$subject;
@@ -596,7 +571,9 @@
 			return $ret;
 		} 
 	} 
+
 	#########################################################
+
 	/**
 	* Loads a given view from the templates folder, passing the given data to it
 	* @param $view the name of a php file (without extension) to be loaded from the 'templates' folder
@@ -622,7 +599,9 @@
 
 		return $out;
 	}
+
 	#########################################################
+
 	/**
 	* Loads a table template from the templates folder, passing the given data to it
 	* @param $table_name the name of the table whose template is to be loaded from the 'templates' folder
@@ -653,7 +632,9 @@
 
 		return "{$header}{$table}{$footer}";
 	}
+
 	#########################################################
+
 	function filterDropdownBy($filterable, $filterers, $parentFilterers, $parentPKField, $parentCaption, $parentTable, &$filterableCombo){
 		$filterersArray = explode(',', $filterers);
 		$parentFilterersArray = explode(',', $parentFilterers);
@@ -737,12 +718,14 @@
 
 		return $filterJS;
 	}
+
 	#########################################################
 	function br2nl($text){
 		return  preg_replace('/\<br(\s*)?\/?\>/i', "\n", $text);
 	}
 
 	#########################################################
+
 	if(!function_exists('htmlspecialchars_decode')){
 		function htmlspecialchars_decode($string, $quote_style = ENT_COMPAT){
 			return strtr($string, array_flip(get_html_translation_table(HTML_SPECIALCHARS, $quote_style)));
@@ -750,6 +733,7 @@
 	}
 
 	#########################################################
+
 	function entitiesToUTF8($input){
 		return preg_replace_callback('/(&#[0-9]+;)/', '_toUTF8', $input);
 	}
@@ -763,6 +747,7 @@
 	}
 
 	#########################################################
+
 	function func_get_args_byref() {
 		if(!function_exists('debug_backtrace')) return false;
 
@@ -771,9 +756,11 @@
 	}
 
 	#########################################################
+
 	function html_attr($str) {
-		return htmlspecialchars($str, ENT_QUOTES);
+		return htmlspecialchars($str, ENT_QUOTES, 'UTF-8');
 	}
+
 	#########################################################
 
 	function permissions_sql($table, $level = 'all'){
@@ -799,6 +786,7 @@
 	}
 
 	#########################################################
+
 	function error_message($msg, $back_url = ''){
 		$curr_dir = dirname(__FILE__);
 		global $Translation;
@@ -827,6 +815,7 @@
 
 		return $out;
 	}
+
 	#########################################################
 
 	function toMySQLDate($formattedDate, $sep = datalist_date_separator, $ord = datalist_date_format){
@@ -835,12 +824,14 @@
 		$mySQLDate=intval($de[strpos($ord, 'Y')]).'-'.intval($de[strpos($ord, 'm')]).'-'.intval($de[strpos($ord, 'd')]);
 		return $mySQLDate;
 	}
+
 	#########################################################
 
 	function highlight($needle, $haystack){
 		$needle = preg_quote($needle, "/");
 		return preg_replace("/(?!<.*?)({$needle})(?![^<>]*?>)/i", '<span class="search_highlight">\1</span>', $haystack);
 	}
+
 	#########################################################
 
 	function reIndex(&$arr){
@@ -915,7 +906,7 @@
 				return $thumbnail_url;
 			}
 		}else{
-			return '<div class="text-danger">' . $Translation['cant retrieve coorsinates from url'] . '</div>';
+			return '<div class="text-danger">' . $Translation['cant retrieve coordinates from url'] . '</div>';
 		}
 	}
 
@@ -957,7 +948,7 @@
 			}elseif($cache_table_exists){
 				/* store response in cache */
 				$ts = time();
-				sql("replace into membership_cache set request='" . md5($request) . "', request_ts='{$ts}', response='" . makeSafe($response) . "'", $eo);
+				sql("replace into membership_cache set request='" . md5($request) . "', request_ts='{$ts}', response='" . makeSafe($response, false) . "'", $eo);
 			}
 		}
 
@@ -989,4 +980,267 @@
 
 		return false;
 	}
+
+	#########################################################
+
+	function sql($statment, &$o){
+
+		/*
+			Supported options that can be passed in $o options array (as array keys):
+			'silentErrors': If true, errors will be returned in $o['error'] rather than displaying them on screen and exiting.
+		*/
+
+		global $Translation;
+		static $connected = false, $db_link;
+
+		$dbServer = config('dbServer');
+		$dbUsername = config('dbUsername');
+		$dbPassword = config('dbPassword');
+		$dbDatabase = config('dbDatabase');
+
+		ob_start();
+
+		if(!$connected){
+			/****** Connect to MySQL ******/
+			if(!extension_loaded('mysql') && !extension_loaded('mysqli')){
+				echo error_message('PHP is not configured to connect to MySQL on this machine. Please see <a href="http://www.php.net/manual/en/ref.mysql.php">this page</a> for help on how to configure MySQL.');
+				$e=ob_get_contents(); ob_end_clean(); if($o['silentErrors']){ $o['error']=$e; return FALSE; }else{ echo $e; exit; }
+			}
+
+			if(!($db_link = @db_connect($dbServer, $dbUsername, $dbPassword))){
+				echo error_message(db_error($db_link, true));
+				$e=ob_get_contents(); ob_end_clean(); if($o['silentErrors']){ $o['error']=$e; return FALSE; }else{ echo $e; exit; }
+			}
+
+			/****** Select DB ********/
+			if(!db_select_db($dbDatabase, $db_link)){
+				echo error_message(db_error($db_link));
+				$e=ob_get_contents(); ob_end_clean(); if($o['silentErrors']){ $o['error']=$e; return FALSE; }else{ echo $e; exit; }
+			}
+
+			$connected = true;
+		}
+
+		if(!$result = @db_query($statment, $db_link)){
+			if(!stristr($statment, "show columns")){
+				// retrieve error codes
+				$errorNum = db_errno($db_link);
+				$errorMsg = db_error($db_link);
+
+				echo error_message(htmlspecialchars($errorMsg) . "\n\n<!--\n" . $Translation['query:'] . "\n $statment\n-->\n\n");
+				$e = ob_get_contents(); ob_end_clean(); if($o['silentErrors']){ $o['error'] = $errorMsg; return false; }else{ echo $e; exit; }
+			}
+		}
+
+		ob_end_clean();
+		return $result;
+	}
+
+	#########################################################
+
+	function NavMenus($options = array()){
+		if(!defined('PREPEND_PATH')) define('PREPEND_PATH', '');
+		global $Translation;
+		$menu = array();
+		$prepend_path = PREPEND_PATH;
+
+		/* default options */
+		if(empty($options)){
+			$options = array(
+				'tabs' => 7
+			);
+		}
+
+		$table_group_name = array_keys(get_table_groups()); /* 0 => group1, 1 => group2 .. */
+		/* if only one group named 'None', set to translation of 'select a table' */
+		if(count($table_group_name) == 1 && $table_group_name[0] == 'None') $table_group_name[0] = $Translation['select a table'];
+		$table_group_index = array_flip($table_group_name); /* group1 => 0, group2 => 1 .. */
+
+		$t = time();
+		$arrTables = getTableList();
+		if(is_array($arrTables)){
+			foreach($arrTables as $tn => $tc){
+				/* ---- list of tables where hide link in nav menu is set ---- */
+				$tChkHL = array_search($tn, array('residence_and_rental_history','employment_and_income_history','references'));
+				if($tChkHL !== false && $tChkHL !== null) continue;
+
+				/* ---- list of tables where filter first is set ---- */
+				$tChkFF = array_search($tn, array());
+				if($tChkFF !== false && $tChkFF !== null){
+					$searchFirst = '&Filter_x=1';
+				}else{
+					$searchFirst = '';
+				}
+
+				/* when no groups defined, $table_group_index['None'] is NULL, so $menu_index is still set to 0 */
+				$menu_index = intval($table_group_index[$tc[3]]);
+				$menu[$menu_index] .= "<li><a href=\"{$prepend_path}{$tn}_view.php?t={$t}{$searchFirst}\"><img src=\"{$prepend_path}" . ($tc[2] ? $tc[2] : 'blank.gif') . "\" height=\"32\"> {$tc[0]}</a></li>";
+			}
+		}
+
+		// custom nav links, as defined in "hooks/links-navmenu.php" 
+		global $navLinks;
+		if(is_array($navLinks)){
+			$memberInfo = getMemberInfo();
+			$links_added = array();
+			foreach($navLinks as $link){
+				if(!isset($link['url']) || !isset($link['title'])) continue;
+				if($memberInfo['admin'] || @in_array($memberInfo['group'], $link['groups']) || @in_array('*', $link['groups'])){
+					$menu_index = intval($link['table_group']);
+					if(!$links_added[$menu_index]) $menu[$menu_index] .= '<li class="divider"></li>';
+
+					/* add prepend_path to custom links if they aren't absolute links */
+					if(!preg_match('/^(http|\/\/)/i', $link['url'])) $link['url'] = $prepend_path . $link['url'];
+					if(!preg_match('/^(http|\/\/)/i', $link['icon']) && $link['icon']) $link['icon'] = $prepend_path . $link['icon'];
+
+					$menu[$menu_index] .= "<li><a href=\"{$link['url']}\"><img src=\"" . ($link['icon'] ? $link['icon'] : "{$prepend_path}blank.gif") . "\" height=\"32\"> {$link['title']}</a></li>";
+					$links_added[$menu_index]++;
+				}
+			}
+		}
+
+		$menu_wrapper = '';
+		for($i = 0; $i < count($menu); $i++){
+			$menu_wrapper .= <<<EOT
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">{$table_group_name[$i]} <b class="caret"></b></a>
+					<ul class="dropdown-menu" role="menu">{$menu[$i]}</ul>
+				</li>
+EOT;
+		}
+
+		return $menu_wrapper;
+	}
+
+	#########################################################
+
+	function StyleSheet(){
+		if(!defined('PREPEND_PATH')) define('PREPEND_PATH', '');
+		$prepend_path = PREPEND_PATH;
+
+		$css_links = <<<EOT
+
+			<link rel="stylesheet" href="{$prepend_path}resources/initializr/css/bootstrap.css">
+			<!--[if gt IE 8]><!-->
+				<link rel="stylesheet" href="{$prepend_path}resources/initializr/css/bootstrap-theme.css">
+			<!--<![endif]-->';
+			<link rel="stylesheet" href="{$prepend_path}resources/lightbox/css/lightbox.css" media="screen">
+			<link rel="stylesheet" href="{$prepend_path}resources/select2/select2.css" media="screen">
+			<link rel="stylesheet" href="{$prepend_path}resources/timepicker/bootstrap-timepicker.min.css" media="screen">
+			<link rel="stylesheet" href="{$prepend_path}dynamic.css.php">
+EOT;
+
+		return $css_links;
+	}
+
+	#########################################################
+
+	function getUploadDir($dir){
+		global $Translation;
+
+		if($dir==""){
+			$dir=$Translation['ImageFolder'];
+		}
+
+		if(substr($dir, -1)!="/"){
+			$dir.="/";
+		}
+
+		return $dir;
+	}
+
+	#########################################################
+
+	function PrepareUploadedFile($FieldName, $MaxSize, $FileTypes='jpg|jpeg|gif|png', $NoRename=false, $dir=""){
+		global $Translation;
+		$f = $_FILES[$FieldName];
+
+		$dir = getUploadDir($dir);
+
+		/* get php.ini upload_max_filesize in bytes */
+		$php_upload_size_limit = trim(ini_get('upload_max_filesize'));
+		$last = strtolower($php_upload_size_limit[strlen($php_upload_size_limit)-1]);
+		switch($last){
+			case 'g':
+				$php_upload_size_limit *= 1024;
+			case 'm':
+				$php_upload_size_limit *= 1024;
+			case 'k':
+				$php_upload_size_limit *= 1024;
+		}
+
+		$MaxSize = min($MaxSize, $php_upload_size_limit);
+
+		if($f['error'] != 4 && $f['name']!=''){
+			if($f['size']>$MaxSize || $f['error']){
+				echo error_message(str_replace('<MaxSize>', intval($MaxSize / 1024), $Translation['file too large']));
+				exit;
+			}
+			if(!preg_match('/\.('.$FileTypes.')$/i', $f['name'], $ft)){
+				echo error_message(str_replace('<FileTypes>', str_replace('|', ', ', $FileTypes), $Translation['invalid file type']));
+				exit;
+			}
+
+			if($NoRename){
+				$n  = str_replace(' ', '_', $f['name']);
+			}else{
+				$n  = microtime();
+				$n  = str_replace(' ', '_', $n);
+				$n  = str_replace('0.', '', $n);
+				$n .= $ft[0];
+			}
+
+			if(!file_exists($dir)){
+				@mkdir($dir, 0777);
+			}
+
+			if(!@move_uploaded_file($f['tmp_name'], $dir . $n)){
+				echo error_message("Couldn't save the uploaded file. Try chmoding the upload folder '{$dir}' to 777.");
+				exit;
+			}else{
+				@chmod($dir.$n, 0666);
+				return $n;
+			}
+		}
+		return "";
+	}
+
+	#########################################################
+
+	function get_home_links($homeLinks, $default_classes, $tgroup = ''){
+		if(!is_array($homeLinks) || !count($homeLinks)) return '';
+
+		$memberInfo = getMemberInfo();
+
+		ob_start();
+		foreach($homeLinks as $link){
+			if(!isset($link['url']) || !isset($link['title'])) continue;
+			if($tgroup != $link['table_group'] && $tgroup != '*') continue;
+
+			/* fall-back classes if none defined */
+			if(!$link['grid_column_classes']) $link['grid_column_classes'] = $default_classes['grid_column'];
+			if(!$link['panel_classes']) $link['panel_classes'] = $default_classes['panel'];
+			if(!$link['link_classes']) $link['link_classes'] = $default_classes['link'];
+
+			if($memberInfo['admin'] || @in_array($memberInfo['group'], $link['groups']) || @in_array('*', $link['groups'])){
+				?>
+				<div class="col-xs-12 <?php echo $link['grid_column_classes']; ?>">
+					<div class="panel <?php echo $link['panel_classes']; ?>">
+						<div class="panel-body">
+							<a class="btn btn-block btn-lg <?php echo $link['link_classes']; ?>" title="<?php echo preg_replace("/&amp;(#[0-9]+|[a-z]+);/i", "&$1;", htmlspecialchars(strip_tags($link['description']))); ?>" href="<?php echo $link['url']; ?>"><?php echo ($link['icon'] ? '<img src="' . $link['icon'] . '">' : ''); ?><strong><?php echo $link['title']; ?></strong></a>
+							<div class="panel-body-description"><?php echo $link['description']; ?></div>
+						</div>
+					</div>
+				</div>
+				<?php
+			}
+		}
+
+		$html = ob_get_contents();
+		ob_end_clean();
+
+		return $html;
+	}
+
+	#########################################################
 

@@ -84,22 +84,22 @@ references_delete2Tip=["",spacer+"This option allows each member of the group to
 references_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'References' table."];
 
 // applicants_and_tenants table
-applicants_and_tenants_addTip=["",spacer+"This option allows all members of the group to add records to the 'Applicants and tenants' table. A member who adds a record to the table becomes the 'owner' of that record."];
+applicants_and_tenants_addTip=["",spacer+"This option allows all members of the group to add records to the 'Tenant Center' table. A member who adds a record to the table becomes the 'owner' of that record."];
 
-applicants_and_tenants_view0Tip=["",spacer+"This option prohibits all members of the group from viewing any record in the 'Applicants and tenants' table."];
-applicants_and_tenants_view1Tip=["",spacer+"This option allows each member of the group to view only his own records in the 'Applicants and tenants' table."];
-applicants_and_tenants_view2Tip=["",spacer+"This option allows each member of the group to view any record owned by any member of the group in the 'Applicants and tenants' table."];
-applicants_and_tenants_view3Tip=["",spacer+"This option allows each member of the group to view all records in the 'Applicants and tenants' table."];
+applicants_and_tenants_view0Tip=["",spacer+"This option prohibits all members of the group from viewing any record in the 'Tenant Center' table."];
+applicants_and_tenants_view1Tip=["",spacer+"This option allows each member of the group to view only his own records in the 'Tenant Center' table."];
+applicants_and_tenants_view2Tip=["",spacer+"This option allows each member of the group to view any record owned by any member of the group in the 'Tenant Center' table."];
+applicants_and_tenants_view3Tip=["",spacer+"This option allows each member of the group to view all records in the 'Tenant Center' table."];
 
-applicants_and_tenants_edit0Tip=["",spacer+"This option prohibits all members of the group from modifying any record in the 'Applicants and tenants' table."];
-applicants_and_tenants_edit1Tip=["",spacer+"This option allows each member of the group to edit only his own records in the 'Applicants and tenants' table."];
-applicants_and_tenants_edit2Tip=["",spacer+"This option allows each member of the group to edit any record owned by any member of the group in the 'Applicants and tenants' table."];
-applicants_and_tenants_edit3Tip=["",spacer+"This option allows each member of the group to edit any records in the 'Applicants and tenants' table, regardless of their owner."];
+applicants_and_tenants_edit0Tip=["",spacer+"This option prohibits all members of the group from modifying any record in the 'Tenant Center' table."];
+applicants_and_tenants_edit1Tip=["",spacer+"This option allows each member of the group to edit only his own records in the 'Tenant Center' table."];
+applicants_and_tenants_edit2Tip=["",spacer+"This option allows each member of the group to edit any record owned by any member of the group in the 'Tenant Center' table."];
+applicants_and_tenants_edit3Tip=["",spacer+"This option allows each member of the group to edit any records in the 'Tenant Center' table, regardless of their owner."];
 
-applicants_and_tenants_delete0Tip=["",spacer+"This option prohibits all members of the group from deleting any record in the 'Applicants and tenants' table."];
-applicants_and_tenants_delete1Tip=["",spacer+"This option allows each member of the group to delete only his own records in the 'Applicants and tenants' table."];
-applicants_and_tenants_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'Applicants and tenants' table."];
-applicants_and_tenants_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'Applicants and tenants' table."];
+applicants_and_tenants_delete0Tip=["",spacer+"This option prohibits all members of the group from deleting any record in the 'Tenant Center' table."];
+applicants_and_tenants_delete1Tip=["",spacer+"This option allows each member of the group to delete only his own records in the 'Tenant Center' table."];
+applicants_and_tenants_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'Tenant Center' table."];
+applicants_and_tenants_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'Tenant Center' table."];
 
 // properties table
 properties_addTip=["",spacer+"This option allows all members of the group to add records to the 'Properties' table. A member who adds a record to the table becomes the 'owner' of that record."];

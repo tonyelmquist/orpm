@@ -265,7 +265,12 @@
 
 	<script>
 		$j(function() {
-			if('<?php echo addslashes($_GET['notify']); ?>' != '') notify('<?php echo addslashes($_GET['notify']); ?>');
+			<?php
+				/* Is there a notification to display? */
+				$notify = '';
+				if(isset($_GET['notify'])) $notify = addslashes(strip_tags($_GET['notify']));
+			?>
+			<?php if($notify){ ?> notify('<?php echo $notify; ?>'); <?php } ?>
 
 			$('update-profile').observe('click', function(){
 				post2(
@@ -312,15 +317,15 @@
 					if($F('confirm-password') != $F('new-password') || !$F('confirm-password').length){
 						$('confirm-status').update('<img align="top" src="Exit.gif"/>');
 					}else{
-						$('confirm-status').update('<img align="top" src="Update.gif"/>');
+						$('confirm-status').update('<img align="top" src="update.gif"/>');
 					}
 				});
 			<?php } ?>
 		});
 
 		function notify(msg){
-			$('notify').update(msg).appear();
-			window.setTimeout(function(){ $('notify').fade(); }, 15000);
+			$j('#notify').html(msg).fadeIn();
+			window.setTimeout(function(){ $j('#notify').fadeOut(); }, 15000);
 		}
 	</script>
 

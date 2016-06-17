@@ -62,7 +62,7 @@
 					<label for="primary_email" class="control-label col-lg-3">Primary email</label>
 					<div class="col-lg-9">
 						
-						<div class="form-control-static">
+						<div>
 							<a id="primary_email-link" href="mailto:<%%VALUE(primary_email)%%>" target="_blank"><i class="glyphicon glyphicon-envelope text-info" title="<%%VALUE(primary_email)%%>"></i></a>
 							<label for="primary_email"><button type="button" id="primary_email-edit-link" class="btn btn-default hspacer-lg vspacer-sm" data-toggle="collapse" data-target="#primary_email" title="<%%TRANSLATION(Edit)%%>"><i class="glyphicon glyphicon-pencil"></i></button></label>
 						</div>
@@ -74,7 +74,7 @@
 					<label for="alternate_email" class="control-label col-lg-3">Alternate email</label>
 					<div class="col-lg-9">
 						
-						<div class="form-control-static">
+						<div>
 							<a id="alternate_email-link" href="mailto:<%%VALUE(alternate_email)%%>" target="_blank"><i class="glyphicon glyphicon-envelope text-info" title="<%%VALUE(alternate_email)%%>"></i></a>
 							<label for="alternate_email"><button type="button" id="alternate_email-edit-link" class="btn btn-default hspacer-lg vspacer-sm" data-toggle="collapse" data-target="#alternate_email" title="<%%TRANSLATION(Edit)%%>"><i class="glyphicon glyphicon-pencil"></i></button></label>
 						</div>
@@ -193,7 +193,7 @@
 
 				/* append embedded mode to all links */
 				var append_embedded = function(){
-					$j('a[href]:not([href^=#]):not([href^=javascript]):not([href$="Embedded=1"])').each(
+					$j('a[href]:not([href^=#]):not([href^=javascript]):not([href$="Embedded=1"]):not([href*="link.php?t="]):not([href^="mailto:"])').each(
 						function(){
 							$j(this).attr('href', $j(this).attr('href') + '&Embedded=1');
 						}
@@ -238,9 +238,18 @@
 				});
 			}
 
+			/* find and hide parent links if field label has data 'parent_link' set to 'view_parent_hidden' */
+			$j('label[data-parent_link=view_parent_hidden]').each(function(){
+				$j(this).parents('.form-group').find('.view_parent').hide();
+			});
+
 			$j('form').on('click', '.view_parent', function(){
 				var pt = $j(this).attr('id').replace(/_view_parent$/, '');
-				var parent_id = $j(this).prevAll('input:hidden').eq(0).val();
+				if($j(this).prevAll('input:hidden').length){
+					var parent_id = $j(this).prevAll('input:hidden').eq(0).val();
+				}else{
+					var parent_id = $j(this).prevAll().children('input:hidden').eq(0).val();
+				}
 
 				/* handle radio lookups */
 				if($j(this).prevAll('[type=radio]').length){
@@ -248,16 +257,31 @@
 				}
 
 				if(parent_id != '{empty_value}'){
-					modal_window({
-						url: pt + '_view.php?Embedded=1&SelectedID=' + encodeURIComponent(parent_id),
-						close: function(){
-							var field_id = $j('#' + pt + '_view_parent').prevAll('input:hidden').eq(0).attr('id');
-							$j('#' + field_id + '-container').select2('focus').select2('focus');
-						},
-						size: 'full',
-						title: $j(this).attr('title')
-					});
+					var parent_link = $j(this).parents('.form-group').children('label').data('parent_link');
+					switch(parent_link){
+						case 'view_parent_hidden':
+							break;
+						case 'view_parent_modal':
+							modal_window({
+								url: pt + '_view.php?Embedded=1&SelectedID=' + encodeURIComponent(parent_id),
+								close: function(){
+									var field_id = $j('#' + pt + '_view_parent').prevAll('input:hidden').eq(0).attr('id');
+									$j('#' + field_id + '-container').select2('focus').select2('focus');
+								},
+								size: 'full',
+								title: $j(this).attr('title')
+							});
+							break;
+						case 'view_parent_same_window':
+							window.location = pt + '_view.php?Embedded=' + (embedded_mode ? '1' : '') + '&SelectedID=' + encodeURIComponent(parent_id);
+							break;
+						case 'view_parent_new_window':
+							window.open(pt + '_view.php?SelectedID=' + encodeURIComponent(parent_id));
+							break;
+					}
+
 				}
 			});
+
 		});
 	</script>

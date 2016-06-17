@@ -234,7 +234,7 @@
 		</div>
 	<?php } ?>
 	<div class="col-md-2 vspacer-lg">
-		<button onclick="jQuery('form')[0].reset();" type="submit" id="cancelFilters" class="btn btn-warning btn-block btn-sm"><i class="glyphicon glyphicon-remove"></i> <?php echo $Translation['Cancel']; ?></button>
+		<button onclick="jQuery('form')[0].reset();" type="submit" id="cancelFilters" class="btn btn-warning btn-block btn-lg"><i class="glyphicon glyphicon-remove"></i> <?php echo $Translation['Cancel']; ?></button>
 	</div>
 </div>
 

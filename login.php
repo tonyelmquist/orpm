@@ -14,7 +14,9 @@
 
 			<div class="panel-heading">
 				<h1 class="panel-title"><strong><?php echo $Translation['sign in here']; ?></strong></h1>
-				<a class="btn btn-success pull-right" href="membership_signup.php"><?php echo $Translation['sign up']; ?></a>
+				<?php if(sqlValue("select count(1) from membership_groups where allowSignup=1")){ ?>
+					<a class="btn btn-success pull-right" href="membership_signup.php"><?php echo $Translation['sign up']; ?></a>
+				<?php } ?>
 				<div class="clearfix"></div>
 			</div>
 

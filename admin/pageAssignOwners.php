@@ -1,19 +1,19 @@
 <?php
 	@set_time_limit(0);
-	$currDir=dirname(__FILE__);
-	require("$currDir/incCommon.php");
-	include("$currDir/incHeader.php");
+	$currDir = dirname(__FILE__);
+	require("{$currDir}/incCommon.php");
+	include("{$currDir}/incHeader.php");
 
 	// get a list of tables
-	$arrTables=getTableList();
+	$arrTables = getTableList();
 
 	// get a list of tables with records that have no owners
-	foreach($arrTables as $tn=>$tc){
-		$countOwned=sqlValue("select count(1) from membership_userrecords where tableName='$tn'");
-		$countAll=sqlValue("select count(1) from `$tn`");
+	foreach($arrTables as $tn => $tc){
+		$countOwned = sqlValue("select count(1) from membership_userrecords where tableName='{$tn}'");
+		$countAll = sqlValue("select count(1) from `{$tn}`");
 
-		if($countAll>$countOwned){
-			$arrTablesNoOwners[$tn]=($countAll-$countOwned);
+		if($countAll > $countOwned){
+			$arrTablesNoOwners[$tn] = ($countAll - $countOwned);
 		}
 	}
 
@@ -29,6 +29,7 @@
 				$insertBegin = "insert ignore into membership_userrecords (tableName, pkValue, groupID, memberID, dateAdded, dateUpdated) values ";
 				$ts = time();
 				$assigned = 0;
+				$tempStatus = '';
 
 				$res = sql("select `$tn`.`$pkf` from `$tn`", $eo);
 				while($row = db_fetch_row($res)){
@@ -46,8 +47,21 @@
 					$insert = '';
 				}
 
-				$status.="Assigned " . number_format($assigned)." records of table '$tn' to group '" . sqlValue("select name from membership_groups where groupID='$groupID'") . "'" . ($memberID ? ", member '$memberID'" : "") . ".<br>";
-			}
+				if ($memberID){
+					$tempStatus = $Translation["assigned table records to group and member"];
+					$tempStatus = str_replace ( "<MEMBERID>" , $memberID , $tempStatus );
+				}else{
+					$tempStatus = $Translation["assigned table records to group"];   
+				}
+
+				$originalValues =  array ('<NUMBER>','<TABLE>' , '<GROUP>' );
+				$number = number_format($assigned);
+				$group = sqlValue("select name from membership_groups where groupID='$groupID'");
+				$replaceValues = array ( $number , $tn , $group );
+				$tempStatus = str_replace ( $originalValues , $replaceValues , $tempStatus );
+
+				$status.= $tempStatus. ".<br>";
+			} 
 		}
 
 		// refresh the list of tables with records that have no owners
@@ -65,13 +79,13 @@
 
 ?>
 
-<div class="page-header"><h1>Assign ownership to data that has no owners</h1></div>
+<div class="page-header"><h1><?php echo  $Translation['data ownership assign'] ; ?></h1></div>
 
 <?php
 
 	// if all records of all tables have owners, no need to continue
 	if(!is_array($arrTablesNoOwners)){
-		echo "<div class=\"status\">All records in all tables have owners now.<br>Back to <a href=\"pageHome.php\">Admin homepage</a>.<div>";
+		echo "<div class=\"status\">{$Translation['records ownership done']}</div>";
 		include("$currDir/incFooter.php");
 		exit;
 	}
@@ -82,7 +96,7 @@
 	}
 
 	// compose groups drop-down
-	$htmlGroups="<option value=\"0\">--- Select group ---</option>";
+	$htmlGroups="<option value=\"0\">--- {$Translation['select group']} ---</option>";
 	$res=sql("select groupID, name from membership_groups order by name", $eo);
 	while($row=db_fetch_row($res)){
 		$htmlGroups.="<option value=\"$row[0]\">$row[1]</option>";
@@ -130,19 +144,15 @@
 
 <form method="post" action="pageAssignOwners.php">
 	<p>
-		Sometimes, you might have tables with data that were entered before implementing
-		this AppGini membership management system, or entered using other applications
-		unaware of AppGini ownership system.
-		This data currently has no owners.
-		This page allows you to assign owner groups and owner members to this data.
+		<?php echo  $Translation['data ownership'] ; ?>
 	</p>
 
 	<div class="table-responsive"><table class="table">
 		<thead><tr>
-			<th><div class="ColCaption">Table</div></th>
-			<th><div class="ColCaption">Records with no owners</div></th>
-			<th><div class="ColCaption">New owner group</div></th>
-			<th><div class="ColCaption">New owner member*</div></th>
+			<th><div class="ColCaption"><?php echo  $Translation["table"] ; ?></div></th>
+			<th><div class="ColCaption"><?php echo  $Translation["records with no owners"] ; ?></div></th>
+			<th><div class="ColCaption"><?php echo  $Translation["new owner group"] ; ?></div></th>
+			<th><div class="ColCaption"><?php echo  $Translation["new owner member"] ; ?></div></th>
 		</tr></thead>
 
 		<tbody>
@@ -159,13 +169,13 @@
 	}
 ?>
 		<tr><td colspan="4" class="text-center">
-			<input type="button" value="Cancel" onclick="window.location='pageHome.php';">
-			<input type="button" name="assignOwners" value="Assign new owners" onclick="this.value='Please wait ...'; this.onclick='return FALSE;'; this.disabled=true; document.getElementsByTagName('form')[0].submit();">
+			<input type="button" value="<?php echo $Translation['cancel'] ; ?>" onclick="window.location='pageHome.php';">
+			<input type="button" name="assignOwners" value="<?php echo $Translation["assign new owners"] ; ?>" onclick="this.value='<?php echo $Translation["please wait"] ; ?>'; this.onclick='return FALSE;'; this.disabled=true; document.getElementsByTagName('form')[0].submit();">
 			</td></tr>
 		</tbody>
 		</table></div>
 
-		<p>* If you assign no owner member here, you can still use the <a href="pageTransferOwnership.php">Batch Transfer Wizard</a> later to do so.</p>
+		<p><?php echo  $Translation["if no owner member assigned"] ; ?></p>
 	</form>
 
 <?php

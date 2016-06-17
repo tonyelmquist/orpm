@@ -34,6 +34,7 @@
 		is_ajax() -- return true if this is an ajax request, false otherwise
 		array_trim($arr) -- recursively trim provided value/array
 		csrf_token($validate) -- csrf-proof a form
+		get_plugins() -- scans for installed plugins and returns them in an array ('name', 'title', 'icon' or 'glyphicon', 'admin_path')
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	*/
 	########################################################################
@@ -46,7 +47,7 @@
 				'residence_and_rental_history' => 'Residence and rental history',
 				'employment_and_income_history' => 'Employment and income history',
 				'references' => 'References',
-				'applicants_and_tenants' => 'Applicants and tenants',
+				'applicants_and_tenants' => 'Tenant Center',
 				'properties' => 'Properties',
 				'units' => 'Units',
 				'rental_owners' => 'Rental owners'
@@ -395,11 +396,11 @@
 		$today = @date('Y-m-d');
 
 		$membership_tables = array(
-			'membership_groups' => "CREATE TABLE IF NOT EXISTS membership_groups (groupID int unsigned NOT NULL auto_increment, name varchar(20), description text, allowSignup tinyint, needsApproval tinyint, PRIMARY KEY (groupID))",
-			'membership_users' => "CREATE TABLE IF NOT EXISTS membership_users (memberID varchar(20) NOT NULL, passMD5 varchar(40), email varchar(100), signupDate date, groupID int unsigned, isBanned tinyint, isApproved tinyint, custom1 text, custom2 text, custom3 text, custom4 text, comments text, PRIMARY KEY (memberID))",
-			'membership_grouppermissions' => "CREATE TABLE IF NOT EXISTS membership_grouppermissions (permissionID int unsigned NOT NULL auto_increment,  groupID int, tableName varchar(100), allowInsert tinyint, allowView tinyint NOT NULL DEFAULT '0', allowEdit tinyint NOT NULL DEFAULT '0', allowDelete tinyint NOT NULL DEFAULT '0', PRIMARY KEY (permissionID))",
-			'membership_userrecords' => "CREATE TABLE IF NOT EXISTS membership_userrecords (recID bigint unsigned NOT NULL auto_increment, tableName varchar(100), pkValue varchar(255), memberID varchar(20), dateAdded bigint unsigned, dateUpdated bigint unsigned, groupID int, PRIMARY KEY (recID))",
-			'membership_userpermissions' => "CREATE TABLE IF NOT EXISTS membership_userpermissions (permissionID int unsigned NOT NULL auto_increment,  memberID varchar(20) NOT NULL, tableName varchar(100), allowInsert tinyint, allowView tinyint NOT NULL DEFAULT '0', allowEdit tinyint NOT NULL DEFAULT '0', allowDelete tinyint NOT NULL DEFAULT '0', PRIMARY KEY (permissionID))" 
+			'membership_groups' => "CREATE TABLE IF NOT EXISTS membership_groups (groupID int unsigned NOT NULL auto_increment, name varchar(20), description text, allowSignup tinyint, needsApproval tinyint, PRIMARY KEY (groupID)) CHARSET " . mysql_charset,
+			'membership_users' => "CREATE TABLE IF NOT EXISTS membership_users (memberID varchar(20) NOT NULL, passMD5 varchar(40), email varchar(100), signupDate date, groupID int unsigned, isBanned tinyint, isApproved tinyint, custom1 text, custom2 text, custom3 text, custom4 text, comments text, PRIMARY KEY (memberID)) CHARSET " . mysql_charset,
+			'membership_grouppermissions' => "CREATE TABLE IF NOT EXISTS membership_grouppermissions (permissionID int unsigned NOT NULL auto_increment,  groupID int, tableName varchar(100), allowInsert tinyint, allowView tinyint NOT NULL DEFAULT '0', allowEdit tinyint NOT NULL DEFAULT '0', allowDelete tinyint NOT NULL DEFAULT '0', PRIMARY KEY (permissionID)) CHARSET " . mysql_charset,
+			'membership_userrecords' => "CREATE TABLE IF NOT EXISTS membership_userrecords (recID bigint unsigned NOT NULL auto_increment, tableName varchar(100), pkValue varchar(255), memberID varchar(20), dateAdded bigint unsigned, dateUpdated bigint unsigned, groupID int, PRIMARY KEY (recID)) CHARSET " . mysql_charset,
+			'membership_userpermissions' => "CREATE TABLE IF NOT EXISTS membership_userpermissions (permissionID int unsigned NOT NULL auto_increment,  memberID varchar(20) NOT NULL, tableName varchar(100), allowInsert tinyint, allowView tinyint NOT NULL DEFAULT '0', allowEdit tinyint NOT NULL DEFAULT '0', allowDelete tinyint NOT NULL DEFAULT '0', PRIMARY KEY (permissionID)) CHARSET " . mysql_charset 
 		);
 
 		// get db tables
@@ -705,4 +706,25 @@
 		}
 
 		return true;
+	}
+	########################################################################
+	function get_plugins(){
+		$plugins = array();
+		$plugins_path = dirname(__FILE__) . '/../plugins/';
+
+		if(!is_dir($plugins_path)) return $plugins;
+
+		$pd = dir($plugins_path);
+		while(false !== ($plugin = $pd->read())){
+			if(!is_dir($plugins_path . $plugin) || in_array($plugin, array('projects', 'plugins-resources', '.', '..'))) continue;
+
+			$info_file = "{$plugins_path}{$plugin}/plugin-info.json";
+			if(!is_file($info_file)) continue;
+
+			$plugins[] = json_decode(file_get_contents($info_file), true);
+			$plugins[count($plugins) - 1]['admin_path'] = "../plugins/{$plugin}";
+		}
+		$pd->close();
+
+		return $plugins;
 	}

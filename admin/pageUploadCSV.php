@@ -6,14 +6,14 @@
 	ignore_user_abort(true);
 	set_time_limit(0);
 	@ini_set('auto_detect_line_endings', '1');
-	$currDir=dirname(__FILE__);
-	require("$currDir/incCommon.php");
-	include("$currDir/incHeader.php");
+	$currDir = dirname(__FILE__);
+	require("{$currDir}/incCommon.php");
+	include("{$currDir}/incHeader.php");
 
 	$arrTables=getTableList();
 
 	if($_POST['csvPreview']!=''){
-		$fn=(strpos($_POST['csvPreview'], 'Apply')===false ? getUploadedFile('csvFile') : $_SESSION['csvUploadFile']);
+		$fn=(strpos($_POST['csvPreview'], 'Apply') === false ? getUploadedFile('csvFile') : $_SESSION['csvUploadFile']);
 
 		$headCellStyle='border: solid 1px white; border-bottom: solid 1px #C0C0C0; border-right: solid 1px #C0C0C0; background-color: #ECECFB; font-weight: bold; font-size: 12px; padding: 0 2px;';
 		$dataCellStyle='border: solid 1px white; border-bottom: solid 1px #C0C0C0; border-right: solid 1px #C0C0C0; font-size: 10px; padding: 0 2px;';
@@ -21,32 +21,25 @@
 		if(!is_file($fn)){
 			?>
 			<div class="alert alert-danger">
-				Error: File '<?php echo $fn; ?>' not found.
-				</div>
+				<?php echo str_replace ( '<FILENAME>' , $fn , $Translation['file not found error'] ) ; ?>
+			</div>
 			<?php
-			include("$currDir/incFooter.php");
+			include("{$currDir}/incFooter.php");
 			exit;
 		}
 
-		?>
-		<!--<div align=left>
-		<pre><?php print_r($_POST); ?></pre>
-		<pre><?php print_r($_SESSION); ?></pre>
-		</div>-->
-		<?php
-
-		$_SESSION['csvUploadFile']=$fn;
+		$_SESSION['csvUploadFile'] = $fn;
 
 		$arrPreviewData=getCSVArray(0, 10, false);
 		if(!is_array($arrPreviewData)){
-			die('<div class="alert alert-danger">Error: '. $arrPreviewData.'</div>');
+			die("<div class='alert alert-danger'>{$Translation['error']}: ". $arrPreviewData."</div>");
 		}
 		?>
-		<div class="page-header"><h1>Preview the CSV data then confirm to import it ...</h1></div>
+		<div class="page-header"><h1><?php echo $Translation['preview and confirm CSV data'] ;  ?></h1></div>
 
 		<form method="post" action="pageUploadCSV.php">
 		<div class="table-responsive"><table class="table table-striped">
-			<tr><td colspan="<?php echo (count($arrPreviewData[0])+1); ?>"><i>Displaying the first 10 rows of the CSV file ...</i></td></tr>
+			<tr><td colspan="<?php echo (count($arrPreviewData[0])+1); ?>"><i><?php echo $Translation['display csv file rows'] ;  ?></i></td></tr>
 			<tr><td width="60" style="<?php echo $headCellStyle; ?>">&nbsp;</td><?php
 			foreach($arrPreviewData[0] as $fc){
 				echo '<td style="'.$headCellStyle.'">'.$fc.'</td>';
@@ -64,18 +57,18 @@
 		?>
 
 		<tr><td align="left" colspan="<?php echo (count($arrPreviewData[0])+1); ?>" style="<?php echo $headCellStyle; ?>">
-			<input type="button" value="Change CSV settings" style="font-weight: bold;" onclick="
+			<input type="button" value="<?php echo $Translation['change CSV settings'] ; ?>" style="font-weight: bold;" onclick=" 
 				document.getElementById('advancedOptions').style.display='inline'; 
 				document.getElementById('applyCSVSettings').style.display='inline';
 				this.style.display='none';
 				">
-			<input type="submit" name="csvImport" value="Confirm and import CSV data &gt;" style="font-weight: bold;" onclick="this.visibility='hidden';">
+			<input type="submit" name="csvImport" value="<?php echo $Translation['import CSV data'] ; ?>" style="font-weight: bold;" onclick="this.visibility='hidden';">
 			</td></tr>
 		</table></div>
 
 		<?php echo advancedCSVSettingsForm(); ?>
 		<div id="applyCSVSettings" style="width: 850px; text-align: right; visibility: hidden;">
-			<input type="submit" name="csvPreview" value="Apply CSV Settings" style="font-weight: bold;">
+			<input type="submit" name="csvPreview" value="<?php echo $Translation['apply CSV settings'] ; ?>" style="font-weight: bold;">
 			</div>
 		<input type="hidden" name="tableName" value="<?php echo htmlspecialchars($_POST['tableName'])?>">
 		</form>
@@ -102,10 +95,10 @@
 		if(!is_file($fn)){
 			?>
 			<div class="alert alert-danger">
-				Error: File '<?php echo $fn; ?>' not found.
-				</div>
+				<?php echo str_replace ( '<FILENAME>' , $fn , $Translation['file not found error'] ) ; ?>
+			</div>
 			<?php
-			include("$currDir/incFooter.php");
+			include("{$currDir}/incFooter.php");
 			exit;
 		}
 
@@ -124,14 +117,17 @@
 
 		// header
 		?>
-		<div class="page-header"><h1>Importing CSV data ...</h1></div>
+		<div class="page-header"><h1><?php echo $Translation['importing CSV data'] ; ?></h1></div>
 		<div style="width: 700px; text-align: left;">
 		<?php
 
 		// get tablename and csv data
 		$tn = $_POST['tableName'];
 		$arrCSVData = getCSVArray($csvStart, 0, false);
-		echo 'Starting at record '.number_format($csvStart).' of '.number_format($_SESSION['csvEstimatedRecords']).' total estimated records ...<br>';
+		$originalValues =  array ('<RECORDNUMBER>','<RECORDS>' );
+		$replaceValues = array ( number_format($csvStart) , number_format($_SESSION['csvEstimatedRecords']) );
+		echo str_replace ( $originalValues , $replaceValues , $Translation['start at estimated record'] )."<br>";
+
 
 		if(@count($arrCSVData)>1){
 			// backup table
@@ -141,9 +137,11 @@
 					sql("drop table if exists `$btn`", $eo);
 					sql("create table if not exists `$btn` select * from `$tn`", $eo);
 
-					echo "Table '$tn' backed up as '$btn'.<br><br>";
+					$originalValues =  array ('<TABLE>','<TABLENAME>' );
+					$replaceValues = array ( $tn , $btn );
+					echo str_replace ( $originalValues , $replaceValues , $Translation['table backed up'])."<br><br>";
 				}else{
-					echo "Table '$tn' is empty, so no backup was done.<br><br>";
+					echo str_replace ( '<TABLE>' , $tn , $Translation['table backup not done'] )."<br><br>";
 				}
 			}
 
@@ -176,11 +174,14 @@
 				}
 
 				// execute batch
-				echo 'Importing batch '.(($i-1)/$batch + 1).' of '.$numBatches.': ';
+				$originalValues =  array ('<BATCH>','<BATCHNUM>' );
+				$replaceValues = array ( (($i-1)/$batch + 1) , $numBatches );
+				echo str_replace ( $originalValues , $replaceValues , $Translation['importing batch']);
+
 				if(!@db_query($insert)){
-					echo 'ERROR: ' . db_error(db_link()) . "\n";
+					echo "{$Translation['error']}: " . db_error(db_link()) . "\n";
 				}else{
-					echo "Ok\n";
+					echo $Translation['ok']."\n";
 				}
 
 				if(!($i%($batch*5)))   flush();
@@ -196,13 +197,26 @@
 			$_SESSION['csvUploadFile']='';
 			$_SESSION['csvEstimatedRecords']='';
 			?>
-			<br><b><?php echo $numRows; ?> records inserted/updated in <?php echo round(array_sum(explode(' ', microtime())) - $t1, 3); ?> seconds. <i style="color: green;">Mission accomplished!</i></b>
-			<br><br><input type="button" name="assignOwner" value="Assign an owner to the imported records &gt;" style="font-weight: bold;" onclick="window.location='pageAssignOwners.php';">
+			<br><b>
+			<?php
+				$secondsNum = round(array_sum(explode(' ', microtime())) - $t1, 3);
+				$originalValues =  array ('<RECORDS>',  '<SECONDS>'  );
+				$replaceValues = array ( $numRows , $secondsNum );
+				echo str_replace ( $originalValues , $replaceValues , $Translation['records inserted or updated successfully'] );
+			?> <i style="color: green;"><?php echo $Translation['mission accomplished'] ; ?></i>
+			</b>
+			<br><br><input type="button" name="assignOwner" value="<?php echo $Translation['assign a records owner'] ; ?>" style="font-weight: bold;" onclick="window.location='pageAssignOwners.php';">
 			<?php
 		}else{
 			?>
 			<META HTTP-EQUIV="Refresh" CONTENT="0;url=pageUploadCSV.php?csvImport=1&tableName=<?php echo urlencode($tn); ?>&csvBackupBeforeImport=0&csvUpdateIfPKExists=<?php echo $csvUpdateIfPKExists; ?>&csvIgnoreNRows=<?php echo $csvIgnoreNRows; ?>&csvCharsPerLine=<?php echo $csvCharsPerLine; ?>&csvFieldSeparator=<?echo urlencode($csvFieldSeparator); ?>&csvStart=<?php echo ($csvStart+$numRows); ?>&csvFieldDelimiter=<?php echo urlencode($csvFieldDelimiter); ?>">
-			<br><b><?php echo $numRows; ?> records inserted/updated in <?php echo round(array_sum(explode(' ', microtime())) - $t1, 3); ?> seconds. <i style="color: red; background-color: #FFFF9C;">Please wait and don't close this page ...</i></b>
+			<br><b>
+			<?php
+				$secondsNum = round(array_sum(explode(' ', microtime())) - $t1, 3);
+				$originalValues =  array ('<RECORDS>',  '<SECONDS>'  );
+				$replaceValues = array ( $numRows , $secondsNum );
+				echo str_replace ( $originalValues , $replaceValues , $Translation['records inserted or updated successfully'] );
+			?> <i style="color: red; background-color: #FFFF9C;"><?php echo $Translation['please wait and do not close']; ?></i></b>
 			<?php
 		}
 		echo '</div>';
@@ -217,54 +231,49 @@
 
 				if(b.checked){
 					t.style.display='inline';
-					b.value='Hide advanced options';
+					b.value='<?php echo $Translation['hide advanced options']; ?>';
 				}else{
 					t.style.display='none';
-					b.value='Show advanced options';
+					b.value='<?php echo $Translation['show advanced options']; ?>';
 				}
 			}
 			//-->
 			</script>
 
-		<div class="page-header"><h1>Import a CSV file to the database</h1></div>
+		<div class="page-header"><h1><?php echo $Translation['import CSV to database']; ?></h1></div>
 
 		<form enctype="multipart/form-data" method="post" action="pageUploadCSV.php">
 			<table class="table table-striped">
 				<tr>
 					<td colspan="2" class="tdFormCaption">
 						<div class="formFieldCaption">
-							This page allows you to upload a CSV file
-							(for example, one generated from MS Excel) and
-							import it to one of the tables of the database.
-							This makes it so easy to bulk-populate the database
-							with data from other sources rather than manually
-							entering every single record.
-							</div>
+							<?php echo $Translation['import CSV to database page']; ?>
+						</div>
 						</td>
 					</tr>
 				<tr>
 					<td align="right" class="tdFormCaption" valign="top" width="250">
-						<div class="formFieldCaption">Table</div>
-						</td>
+						<div class="formFieldCaption"><?php echo $Translation["table"] ; ?></div>
+					</td>
 					<td align="left" class="tdFormInput">
 						<?php 
 							echo htmlSelect('tableName', array_keys($arrTables), array_values($arrTables), '');
 						?>
-						<br><i>This is the table that you want to populate with data from the CSV file.</i>
-						</td>
+						<br><i><?php echo $Translation['populate table from CSV'] ; ?></i>
+					</td>
 					</tr>
 				<tr>
 					<td align="right" class="tdFormCaption" valign="top">
-						<div class="formFieldCaption">CSV file</div>
-						</td>
+						<div class="formFieldCaption"><?php echo $Translation['CSV file'] ; ?></div>
+					</td>
 					<td align="left" class="tdFormInput">
 						<input type="file" name="csvFile" class="formTextBox"><br>
-						</td>
+					</td>
 					</tr>
 				<tr>
 					<td align="left" class="tdFormCaption" valign="top" colspan="2">
-						<div class="formFieldCaption"><input type="checkbox" id="TAO" onclick="toggleAdvancedOptions();"> <label for="TAO">Show advanced options</label></div>
-						</td>
+						<div class="formFieldCaption"><input type="checkbox" id="TAO" onclick="toggleAdvancedOptions();"> <label for="TAO"><?php echo $Translation['show advanced options'] ; ?></label></div>
+					</td>
 					</tr>
 				</table>
 
@@ -273,24 +282,26 @@
 			<table class="table table-striped">
 				<tr>
 					<td align="right" class="tdFormCaption" valign="top" colspan="2">
-						<input type="submit" name="csvPreview" value="Preview CSV data &gt;" style="font-weight: bold;">
-						</td>
+						<input type="submit" name="csvPreview" value="<?php echo $Translation['preview CSV data'] ; ?>" style="font-weight: bold;">
+					</td>
 					</tr>
 				</table>
 			</form>
 		<?php
 	}
 
-	include("$currDir/incFooter.php");
+	include("{$currDir}/incFooter.php");
 
 	##########################################################################
 	function getCSVArray($start = 0, $numRows = 0, $makeSafe = true){
+		global $Translation;
+
 		if($numRows<1) $numRows=MAXROWS;
 
 		getCSVSettings($csvIgnoreNRows, $csvCharsPerLine, $csvFieldSeparator, $csvFieldDelimiter, $csvFieldNamesOnTop, $csvUpdateIfPKExists, $csvBackupBeforeImport);
 
 		$tn=$_POST['tableName'];
-		if($tn=='')    return 'No table name provided.';
+		if($tn=='')    return $Translation['no table name provided'];
 
 		// get field names of table
 		$res=sql('select * from `'.$tn.'` limit 1', $eo);
@@ -299,13 +310,13 @@
 		}
 
 		$fn=$_SESSION['csvUploadFile'];
-		if(!$fp=fopen($fn, 'r'))   return "Can't open csv file '$fn'.";
+		if(!$fp=fopen($fn, 'r'))   return  str_replace ( '<FILENAME>' , $fn , $Translation['can not open CSV'] ) ;
 
 		if($_POST['csvFieldNamesOnTop']==1){
 			// read first line
 			if(!$arr=fgetcsv($fp, $csvCharsPerLine, $csvFieldSeparator, $csvFieldDelimiter)){
 				fclose($fp);
-				return "The csv file '$fn' is empty.";
+				return str_replace ( '<FILENAME>' , $fn , $Translation['empty CSV file'] ) ;
 			}
 			if(lineHasFieldNames($arr, $tn)){
 				$arrCSVData[0]=arrayResize($arr, count($arrFieldName));
@@ -323,14 +334,14 @@
 					for($i=1; $i<$csvIgnoreNRows; $i++){
 						if(!fgets($fp)){
 							fclose($fp);
-							return "The csv file '$fn' has no data to read.";
+							return str_replace ( '<FILENAME>' , $fn , $Translation['no CSV file data'] ) ;
 						}
 					}
 					echo '<!-- getCSVArray: line '.__LINE__.' -->';
 					// read one line
 					if(!$arr=fgetcsv($fp, $csvCharsPerLine, $csvFieldSeparator, $csvFieldDelimiter)){
 						fclose($fp);
-						return "The csv file '$fn' has no data to read.";
+						return str_replace ( '<FILENAME>' , $fn , $Translation['no CSV file data'] ) ;
 					}
 					if(lineHasFieldNames($arr, $tn)){
 						$arrCSVData[0]=arrayResize($arr, count($arrFieldName));
@@ -408,6 +419,8 @@
 	}
 	##########################################################################
 	function lineHasFieldNames($arr, $table){
+		global $Translation;
+
 		if(!is_array($arr)){
 			#echo '<!-- lineHasFieldNames: line '.__LINE__.' -->';
 			return false;
@@ -474,6 +487,8 @@
 	}
 	##########################################################################
 	function advancedCSVSettingsForm(){
+		global $Translation;
+
 		getCSVSettings($csvIgnoreNRows, $csvCharsPerLine, $csvFieldSeparator, $csvFieldDelimiter, $csvFieldNamesOnTop, $csvUpdateIfPKExists, $csvBackupBeforeImport);
 		ob_start();
 		?>
@@ -481,34 +496,34 @@
 		<table class="table table-striped">
 			<tr>
 				<td align="right" class="tdFormCaption" valign="top" width="250">
-					<div class="formFieldCaption">Field separator</div>
+					<div class="formFieldCaption"><?php echo $Translation['field separator'] ; ?></div>
 					</td>
 				<td align="left" class="tdFormInput">
-					<input type="text" name="csvFieldSeparator" class="formTextBox" value="<?php echo htmlspecialchars($csvFieldSeparator); ?>" size="2"> <i>The default is comma (,)</i>
+					<input type="text" name="csvFieldSeparator" class="formTextBox" value="<?php echo htmlspecialchars($csvFieldSeparator); ?>" size="2"> <i><?php echo $Translation['default comma'] ; ?></i>
 					</td>
 				</tr>
 			<tr>
 				<td align="right" class="tdFormCaption" valign="top">
-					<div class="formFieldCaption">Field delimiter</div>
+					<div class="formFieldCaption"><?php echo $Translation['field delimiter'] ; ?></div>
 					</td>
 				<td align="left" class="tdFormInput">
-					<input type="text" name="csvFieldDelimiter" class="formTextBox" value="<?php echo htmlspecialchars($csvFieldDelimiter); ?>" size="2"> <i>The default is double-quote (")</i>
+					<input type="text" name="csvFieldDelimiter" class="formTextBox" value="<?php echo htmlspecialchars($csvFieldDelimiter); ?>" size="2"> <i><?php echo $Translation['default double-quote'] ; ?></i>
 					</td>
 				</tr>
 			<tr>
 				<td align="right" class="tdFormCaption" valign="top">
-					<div class="formFieldCaption">Maximum characters per line</div>
+					<div class="formFieldCaption"><?php echo $Translation['maximum characters per line'] ; ?></div>
 					</td>
 				<td align="left" class="tdFormInput">
-					<input type="text" name="csvCharsPerLine" class="formTextBox" value="<?php echo intval($csvCharsPerLine); ?>" size="6"> <i>If you have trouble importing the CSV file, try increasing this value.</i>
+					<input type="text" name="csvCharsPerLine" class="formTextBox" value="<?php echo intval($csvCharsPerLine); ?>" size="6"> <i><?php echo $Translation['trouble importing CSV'] ; ?></i>
 					</td>
 				</tr>
 			<tr>
 				<td align="right" class="tdFormCaption" valign="top">
-					<div class="formFieldCaption">Number of lines to ignore</div>
+					<div class="formFieldCaption"><?php echo $Translation['ignore lines number'] ; ?></div>
 					</td>
 				<td align="left" class="tdFormInput">
-					<input type="text" name="csvIgnoreNRows" class="formTextBox" value="<?php echo intval($csvIgnoreNRows); ?>" size="8"> <i>Change this value if you want to skip a specific number of lines in the CSV file.</i>
+					<input type="text" name="csvIgnoreNRows" class="formTextBox" value="<?php echo intval($csvIgnoreNRows); ?>" size="8"> <i><?php echo $Translation['skip lines number'] ; ?></i>
 					</td>
 				</tr>
 			<tr>
@@ -516,8 +531,8 @@
 					<div class="formFieldCaption"><input type="checkbox" id="csvFieldNamesOnTop" name="csvFieldNamesOnTop" value="1" <?php echo ($csvFieldNamesOnTop ? 'checked' : ''); ?>></div>
 					</td>
 				<td align="left" class="tdFormInput">
-					<label for="csvFieldNamesOnTop">The first line of the file contains field names</label>
-					<br><i>Field names must <b>exactly</b> match those in the database.</i>
+					<label for="csvFieldNamesOnTop"><?php echo $Translation['first line field names'] ; ?></label>
+					<br><i><?php echo $Translation['field names must match'] ; ?></i>
 					</td>
 				</tr>
 			<tr>
@@ -525,8 +540,8 @@
 					<div class="formFieldCaption"><input type="checkbox" id="csvUpdateIfPKExists" name="csvUpdateIfPKExists" value="1" <?php echo ($csvUpdateIfPKExists ? 'checked' : ''); ?>></div>
 					</td>
 				<td align="left" class="tdFormInput">
-					<label for="csvUpdateIfPKExists">Update table records if their primary key values match those in the CSV file.</label>
-					<br><i>If not checked, records in the CSV file having the same primary key values as those in the table <b>will be ignored</b></i>
+					<label for="csvUpdateIfPKExists"><?php echo $Translation['update table records'] ; ?></label>
+					<br><i><?php echo $Translation['ignore CSV table records'] ; ?></i>
 					</td>
 				</tr>
 			<tr>
@@ -534,7 +549,7 @@
 					<div class="formFieldCaption"><input type="checkbox" id="csvBackupBeforeImport" name="csvBackupBeforeImport" value="1" <?php echo ($csvBackupBeforeImport ? 'checked' : ''); ?>></div>
 					</td>
 				<td align="left" class="tdFormInput">
-					<label for="csvBackupBeforeImport">Back up the table before importing CSV data into it.</label>
+					<label for="csvBackupBeforeImport"><?php echo $Translation['back up the table'] ; ?></label>
 					</td>
 				</tr>
 			</table>

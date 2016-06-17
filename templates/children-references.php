@@ -152,12 +152,14 @@
 			</table>
 		</div>
 		<?php if($totalMatches){ ?>
-			<div class="row">
+			<div class="row hidden-print">
 				<div class="col-xs-12">
 					<button type="button" class="btn btn-default" onclick="<?php echo $current_table; ?>GetChildrenRecordsList({ Verb: 'page', Page: 'previous' });"><i class="glyphicon glyphicon-chevron-left"></i></button>
 					<button type="button" class="btn btn-default" onclick="<?php echo $current_table; ?>GetChildrenRecordsList({ Verb: 'page', Page: 'next' });"><i class="glyphicon glyphicon-chevron-right"></i></button>
 				</div>
 			</div>
 		<?php } ?>
-	</div><div class="col-xs-1 md-hidden lg-hidden"></div>
+	</div>
+	<div class="col-xs-1 md-hidden lg-hidden"></div>
 </div>
+<script>$j(function(){ $j('img[src^="thumbnail.php?i=&"').parent().hide(); });</script>

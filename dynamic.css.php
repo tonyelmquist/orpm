@@ -92,14 +92,7 @@ img[src="blank.gif"] { max-height: 10px !important; }
 .applicants_and_tenants-email{ white-space: normal !important; max-width: 100px !important; min-width: 100px !important; overflow: hidden; word-break: break-all; }
 .applicants_and_tenants-phone{ white-space: normal !important; max-width: 100px !important; min-width: 100px !important; overflow: hidden;  }
 .applicants_and_tenants-birth_date{ white-space: normal !important; max-width: 100px !important; min-width: 100px !important; overflow: hidden;  }
-.applicants_and_tenants-driver_license_number{ white-space: normal !important; max-width: 100px !important; min-width: 100px !important; overflow: hidden;  }
-.applicants_and_tenants-driver_license_state{ white-space: normal !important; max-width: 100px !important; min-width: 100px !important; overflow: hidden;  }
-.applicants_and_tenants-requested_lease_term{ white-space: normal !important; max-width: 100px !important; min-width: 100px !important; overflow: hidden;  }
-.applicants_and_tenants-monthly_gross_pay{ white-space: normal !important; max-width: 80px !important; min-width: 80px !important; overflow: hidden;  }
-.applicants_and_tenants-additional_income{ white-space: normal !important; max-width: 80px !important; min-width: 80px !important; overflow: hidden;  }
-.applicants_and_tenants-assets{ white-space: normal !important; max-width: 80px !important; min-width: 80px !important; overflow: hidden;  }
 .applicants_and_tenants-status{ white-space: normal !important; max-width: 100px !important; min-width: 100px !important; overflow: hidden;  }
-.applicants_and_tenants-notes{ white-space: normal !important; max-width: 100px !important; min-width: 100px !important; overflow: hidden;  }
 .properties-property_name{ white-space: normal !important; max-width: 50px !important; min-width: 50px !important; overflow: hidden;  }
 .properties-type{ white-space: normal !important; max-width: 80px !important; min-width: 80px !important; overflow: hidden;  }
 .properties-number_of_units{ white-space: normal !important; max-width: 50px !important; min-width: 50px !important; overflow: hidden;  }
@@ -227,7 +220,7 @@ h4, .h4 {
 }
 
 .navbar-right {
-	margin-right: 0;
+	margin-right: 0 !important;
 }
 
 .navbar-btn {

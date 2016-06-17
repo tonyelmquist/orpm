@@ -287,4 +287,4 @@
 	$Translation['permalink'] = 'Permalink';
 	$Translation['invalid provider'] = 'Invalid provider!';
 	$Translation['invalid url'] = 'Invalid URL!';
-	$Translation['cant retrieve coorsinates from url'] = 'Can\'t retrieve coorsinates from URL!';
+	$Translation['cant retrieve coordinates from url'] = 'Can\'t retrieve coordinates from URL!';

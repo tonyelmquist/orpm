@@ -444,7 +444,7 @@
 					<ul id="next-actions" class="nav nav-pills nav-stacked">
 						<li class="acive"><a href="index.php"><i class="glyphicon glyphicon-play"></i> <b><?php echo $Translation['setup next 1']; ?></b></a></li>
 						<li><a href="admin/pageUploadCSV.php"><i class="glyphicon glyphicon-upload"></i> <?php echo $Translation['setup next 2']; ?></a></li>
-						<li><a href="admin/pageHome.php"><i class="glyphicon glyphicon-wrench"></i> <?php echo $Translation['setup next 3']; ?></a></li>
+						<li><a href="admin/pageHome.php"><i class="glyphicon glyphicon-cog"></i> <?php echo $Translation['setup next 3']; ?></a></li>
 					</ul>
 				</div>
 			</div>

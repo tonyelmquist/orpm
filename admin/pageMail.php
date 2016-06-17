@@ -1,18 +1,16 @@
 <?php
-	$currDir=dirname(__FILE__);
-	require("$currDir/incCommon.php");
-	include("$currDir/incHeader.php");
+	$currDir = dirname(__FILE__);
+	require("{$currDir}/incCommon.php");
+	include("{$currDir}/incHeader.php");
 
 	// check configured sender
 	if(!isEmail($adminConfig['senderEmail'])){
 		?>
 		<div class="alert alert-danger">
-			You can not send emails currently. 
-			The configured sender email address is not valid.
-			Please <a href="pageSettings.php">correct it first</a> then try again.
-			</div>
+				<?php echo $Translation["can not send mail"]; ?>
+		</div>
 		<?php
-		include("$currDir/incFooter.php");
+		include("{$currDir}/incFooter.php");
 	}
 
 	// determine and validate recipients
@@ -22,14 +20,14 @@
 		$sendToAll=intval($_GET['sendToAll']);
 
 		$isGroup=($memberID!='' ? FALSE : TRUE);
-		$recipient=($sendToAll ? "All groups" : ($isGroup ? sqlValue("select name from membership_groups where groupID='$groupID'") : sqlValue("select memberID from membership_users where lcase(memberID)='$memberID'")));
+		$recipient=($sendToAll ? $Translation["all groups"] : ($isGroup ? sqlValue("select name from membership_groups where groupID='$groupID'") : sqlValue("select memberID from membership_users where lcase(memberID)='$memberID'")));
 		if(!$recipient){
 			?>
 			<div class="alert alert-danger">
-				Couldn't find recipient. Please make sure you provide a valid recipient.
-				</div>
+				<?php echo $Translation["no recipient"];  ?>
+			</div>
 			<?php
-			include("$currDir/incFooter.php");
+			include("{$currDir}/incFooter.php");
 		}
 	}else{
 	// begin sending emails
@@ -44,19 +42,19 @@
 
 		// validate that subject is a single line
 		if(preg_match("/(%0A|%0D|\n+|\r+)/i", $mailSubject)){
-			echo "<div class=\"status\">Invalid subject line.</div>";
+			echo "<div class=\"status\">{$Translation["invalid subject line"]}</div>";
 			exit;
 		}
 
 		$isGroup=($memberID!='' ? FALSE : TRUE);
-		$recipient=($sendToAll ? "All groups" : ($isGroup ? sqlValue("select name from membership_groups where groupID='$groupID'") : sqlValue("select lcase(memberID) from membership_users where lcase(memberID)='$memberID'")));
+		$recipient=($sendToAll ? $Translation["all groups"] : ($isGroup ? sqlValue("select name from membership_groups where groupID='$groupID'") : sqlValue("select lcase(memberID) from membership_users where lcase(memberID)='$memberID'")));
 		if(!$recipient){
 			?>
 			<div class="alert alert-danger">
-				Couldn't find recipient. Please make sure you provide a valid recipient.
-				</div>
+				<?php echo $Translation["no recipient"];  ?>
+			</div>
 			<?php
-			include("$currDir/incFooter.php");
+			include("{$currDir}/incFooter.php");
 		}
 
 		// create a recipients array
@@ -75,22 +73,22 @@
 		if(count($to)<1){
 			?>
 			<div class="alert alert-danger">
-				Couldn't find any recipients. Please make sure you provide a valid recipient.
-				</div>
+				<?php echo $Translation["no recipient found"] ;  ?>
+			</div>
 			<?php
-			include("$currDir/incFooter.php");
+			include("{$currDir}/incFooter.php");
 		}
 
 		// save mail queue
 		$queueFile=md5(microtime());
-		$currDir=dirname(__FILE__);
-		if(!$fp=fopen("$currDir/$queueFile.php", "w")){
+		$currDir = dirname(__FILE__);
+		if(!$fp=fopen("{$currDir}/$queueFile.php", "w")){
 			?>
 			<div class="alert alert-danger">
-				Couldn't save mail queue. Please make sure the directory '<?php echo $currDir; ?>' is writeable (chmod 755 or chmod 777).
-				</div>
+				<?php echo str_replace ( "<CURRDIR>" , $currDir , $Translation["mail queue not saved"] ); ?>
+			</div>
 			<?php
-			include("$currDir/incFooter.php");
+			include("{$currDir}/incFooter.php");
 		}else{
 			fwrite($fp, "<?php\n");
 			foreach($to as $recip){
@@ -104,16 +102,16 @@
 
 		// redirect to mail queue processor
 		redirect("admin/pageSender.php?queue=$queueFile");
-		include("$currDir/incFooter.php");
+		include("{$currDir}/incFooter.php");
 	}
 
 
 ?>
 
-<div class="page-header"><h1>Send mail message to a member/group</h1></div>
+<div class="page-header"><h1><?php echo $Translation["send mail"] ;  ?></h1></div>
 
 <?php if($sendToAll){ ?>
-	<div class="alert alert-warning"><u>Attention!</u><br>You are sending an email to all members. This could take a lot of time and affect your server performance. If you have a huge number of members, we don't recommend sending an email to all of them at once.</div>
+	<div class="alert alert-warning"><u><?php echo $Translation["attention"] ;  ?></u><br><?php echo $Translation["send mail to all members"] ; ?></div>
 <?php } ?>
 
 <form method="post" action="pageMail.php">
@@ -122,49 +120,49 @@
 	<input type="hidden" name="sendToAll" value="<?php echo $sendToAll; ?>">
 	<table class="table table-striped">
 		<tr>
-			<td align="right" class="tdFormCaption" valign="top">
-				<div class="formFieldCaption">From</div>
+			<td class="tdFormCaption text-right flip" valign="top">
+				<div class="formFieldCaption"><?php echo $Translation["from"] ; ?></div>
 				</td>
-			<td align="left" class="tdFormInput">
+			<td class="tdFormInput text-left flip">
 				<?php echo $adminConfig['senderName']." &lt;".$adminConfig['senderEmail']."&gt;"; ?>
-				<br><a href="pageSettings.php">Change this setting</a>
+				<br><a href="pageSettings.php"><?php echo $Translation["change setting"] ; ?></a>
 				</td>
 			</tr>
 
 		<tr>
-			<td align="right" class="tdFormCaption" valign="top">
-				<div class="formFieldCaption">To</div>
+			<td class="tdFormCaption text-right flip" valign="top">
+				<div class="formFieldCaption"><?php echo $Translation["to"] ; ?></div>
 				</td>
-			<td align="left" class="tdFormInput">
+			<td class="tdFormInput text-left flip">
 				<a href="<?php echo ($sendToAll ? "pageViewMembers.php" : ($isGroup ? "pageViewMembers.php?groupID=$groupID" : "pageEditMember.php?memberID=$memberID")); ?>"><img src="images/<?php echo (($isGroup||$sendToAll) ? "members_icon.gif" : "member_icon.gif"); ?>" border="0"></a> <?php echo $recipient; ?>
 				</td>
 			</tr>
 
 		<tr>
-			<td align="right" class="tdFormCaption" valign="top">
-				<div class="formFieldCaption">Subject</div>
+			<td class="tdFormCaption text-right flip" valign="top">
+				<div class="formFieldCaption"><?php echo $Translation["subject"] ; ?></div>
 				</td>
-			<td align="left" class="tdFormInput">
+			<td class="tdFormInput text-left flip">
 				<input type="text" name="mailSubject" value="" size="60" class="formTextBox">
 				</td>
 			</tr>
 
 		<tr>
-			<td align="right" class="tdFormCaption" valign="top">
-				<div class="formFieldCaption">Message</div>
+			<td class="tdFormCaption text-right flip" valign="top">
+				<div class="formFieldCaption"><?php echo $Translation["message"] ; ?></div>
 				</td>
-			<td align="left" class="tdFormInput">
+			<td class="tdFormInput text-left flip">
 				<textarea name="mailMessage" cols="60" rows="10" class="formTextBox"></textarea>
 				</td>
 			</tr>
 
 		<tr>
-			<td colspan="2" align="right" class="tdFormFooter">
-				<input type="submit" name="saveChanges" value="Send Message" onClick="return jsShowWait();">
+			<td colspan="2" class="tdFormFooter text-right flip">
+				<input type="submit" name="saveChanges" value="<?php echo $Translation["send message"] ; ?>" onClick="return jsShowWait();">
 				</td>
 			</tr>
 		</table>
 </form>
 <?php
-	include("$currDir/incFooter.php");
+	include("{$currDir}/incFooter.php");
 ?>

@@ -57,7 +57,7 @@ class DataCombo{
 		$combo->AllowNull = ($this->ListType == 2 ? 0 : $this->AllowNull);
 
 		while($row = db_fetch_row($result)){
-			$combo->ListData[] = htmlspecialchars($row[0], ENT_QUOTES);
+			$combo->ListData[] = htmlspecialchars($row[0], ENT_QUOTES, 'UTF-8');
 			$combo->ListItem[] = $row[1];
 		}
 		$combo->Render();

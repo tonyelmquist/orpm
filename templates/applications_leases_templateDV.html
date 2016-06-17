@@ -27,7 +27,7 @@
 				</div>
 
 				<div class="form-group">
-					<label for="tenants" class="control-label col-lg-3">Applicant/ Tenant</label>
+					<label for="tenants" class="control-label col-lg-3" data-parent_link="view_parent_modal">Applicant/ Tenant</label>
 					<div class="col-lg-9">
 						<div class="row form-control-static"><div class="col-xs-11"><%%COMBO(tenants)%%><%%PLINK(tenants)%%><%%ADDNEW(applicants_and_tenants)%%></div></div>
 					</div>
@@ -43,7 +43,7 @@
 				</div>
 
 				<div class="form-group">
-					<label for="property" class="control-label col-lg-3">Property <button class="btn btn-info btn-xs vspacer-sm" type="button" data-toggle="collapse" tabindex="-1" data-target="#property-description"><i class="glyphicon glyphicon-info-sign"></i></button></label>
+					<label for="property" class="control-label col-lg-3" data-parent_link="view_parent_modal">Property <button class="btn btn-info btn-xs vspacer-sm" type="button" data-toggle="collapse" tabindex="-1" data-target="#property-description"><i class="glyphicon glyphicon-info-sign"></i></button></label>
 					<div class="col-lg-9">
 						<span class="help-block collapse" id="property-description"><div class="alert alert-info">The property containing the unit for which the applicant/tenant is applying for a lease.</div></span>
 
@@ -52,7 +52,7 @@
 				</div>
 
 				<div class="form-group">
-					<label for="unit" class="control-label col-lg-3">Unit applied for</label>
+					<label for="unit" class="control-label col-lg-3" data-parent_link="view_parent_modal">Unit applied for</label>
 					<div class="col-lg-9">
 						<div class="row form-control-static"><div class="col-xs-11"><%%COMBO(unit)%%><%%PLINK(unit)%%><%%ADDNEW(units)%%></div></div>
 					</div>
@@ -226,9 +226,18 @@
 				});
 			}
 
+			/* find and hide parent links if field label has data 'parent_link' set to 'view_parent_hidden' */
+			$j('label[data-parent_link=view_parent_hidden]').each(function(){
+				$j(this).parents('.form-group').find('.view_parent').hide();
+			});
+
 			$j('form').on('click', '.view_parent', function(){
 				var pt = $j(this).attr('id').replace(/_view_parent$/, '');
-				var parent_id = $j(this).prevAll('input:hidden').eq(0).val();
+				if($j(this).prevAll('input:hidden').length){
+					var parent_id = $j(this).prevAll('input:hidden').eq(0).val();
+				}else{
+					var parent_id = $j(this).prevAll().children('input:hidden').eq(0).val();
+				}
 
 				/* handle radio lookups */
 				if($j(this).prevAll('[type=radio]').length){
@@ -236,16 +245,31 @@
 				}
 
 				if(parent_id != '{empty_value}'){
-					modal_window({
-						url: pt + '_view.php?Embedded=1&SelectedID=' + encodeURIComponent(parent_id),
-						close: function(){
-							var field_id = $j('#' + pt + '_view_parent').prevAll('input:hidden').eq(0).attr('id');
-							$j('#' + field_id + '-container').select2('focus').select2('focus');
-						},
-						size: 'full',
-						title: $j(this).attr('title')
-					});
+					var parent_link = $j(this).parents('.form-group').children('label').data('parent_link');
+					switch(parent_link){
+						case 'view_parent_hidden':
+							break;
+						case 'view_parent_modal':
+							modal_window({
+								url: pt + '_view.php?Embedded=1&SelectedID=' + encodeURIComponent(parent_id),
+								close: function(){
+									var field_id = $j('#' + pt + '_view_parent').prevAll('input:hidden').eq(0).attr('id');
+									$j('#' + field_id + '-container').select2('focus').select2('focus');
+								},
+								size: 'full',
+								title: $j(this).attr('title')
+							});
+							break;
+						case 'view_parent_same_window':
+							window.location = pt + '_view.php?Embedded=' + (embedded_mode ? '1' : '') + '&SelectedID=' + encodeURIComponent(parent_id);
+							break;
+						case 'view_parent_new_window':
+							window.open(pt + '_view.php?SelectedID=' + encodeURIComponent(parent_id));
+							break;
+					}
+
 				}
 			});
+
 		});
 	</script>

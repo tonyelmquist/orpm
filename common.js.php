@@ -28,8 +28,8 @@ jQuery(function(){
 	jQuery(document).ajaxStart(function(){ jQuery('#update, #insert').prop('disabled', true); });
 	jQuery(document).ajaxStop(function(){ jQuery('#update, #insert').prop('disabled', false); });
 
-	/* don't allow responsive images to initially exceed the smaller of their actual dimensions, or .6 detail view width */
-	jQuery('.img-responsive').each(function(){
+	/* don't allow responsive images to initially exceed the smaller of their actual dimensions, or .6 container width */
+	jQuery('.detail_view .img-responsive').each(function(){
 		 var pic_real_width, pic_real_height;
 		 var img = jQuery(this);
 		 jQuery('<img/>') // Make in memory copy of image to avoid css issues
@@ -39,6 +39,20 @@ jQuery(function(){
 					pic_real_height = this.height;
 
 					if(pic_real_width > $j('.detail_view').width() * .6) pic_real_width = $j('.detail_view').width() * .6;
+					img.css({ "max-width": pic_real_width });
+				});
+	});
+
+	jQuery('.table-responsive .img-responsive').each(function(){
+		 var pic_real_width, pic_real_height;
+		 var img = jQuery(this);
+		 jQuery('<img/>') // Make in memory copy of image to avoid css issues
+				.attr('src', img.attr('src'))
+				.load(function() {
+					pic_real_width = this.width;
+					pic_real_height = this.height;
+
+					if(pic_real_width > $j('.table-responsive').width() * .6) pic_real_width = $j('.table-responsive').width() * .6;
 					img.css({ "max-width": pic_real_width });
 				});
 	});
@@ -90,9 +104,9 @@ function fix_table_responsive_width(){
 
 function applications_leases_validateData(){
 	$j('.has-error').removeClass('has-error');
-	if($j('#status').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Application status", close: function(){ $j('#status').focus(); $j('#status').parents('.form-group').addClass('has-error'); } }); return false; };
-	if($j('#type').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Lease type", close: function(){ $j('#type').focus(); $j('#type').parents('.form-group').addClass('has-error'); } }); return false; };
-	if($j('#recurring_charges_frequency').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Recurring charges frequency", close: function(){ $j('#recurring_charges_frequency').focus(); $j('#recurring_charges_frequency').parents('.form-group').addClass('has-error'); } }); return false; };
+	if(!$j('[name=status]:checked').length){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Application status", close: function(){ $j('[name=status]').focus(); $j('[name=status]').parents('.form-group').addClass('has-error'); } }); return false; };
+	if(!$j('[name=type]:checked').length){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Lease type", close: function(){ $j('[name=type]').focus(); $j('[name=type]').parents('.form-group').addClass('has-error'); } }); return false; };
+	if($j('#recurring_charges_frequency').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Recurring charges frequency", close: function(){ $j('[name=recurring_charges_frequency]').focus(); $j('[name=recurring_charges_frequency]').parents('.form-group').addClass('has-error'); } }); return false; };
 	return true;
 }
 function residence_and_rental_history_validateData(){
@@ -109,18 +123,18 @@ function references_validateData(){
 }
 function applicants_and_tenants_validateData(){
 	$j('.has-error').removeClass('has-error');
-	if($j('#status').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Status", close: function(){ $j('#status').focus(); $j('#status').parents('.form-group').addClass('has-error'); } }); return false; };
+	if(!$j('[name=status]:checked').length){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Status", close: function(){ $j('[name=status]').focus(); $j('[name=status]').parents('.form-group').addClass('has-error'); } }); return false; };
 	return true;
 }
 function properties_validateData(){
 	$j('.has-error').removeClass('has-error');
-	if($j('#property_name').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Property Name", close: function(){ $j('#property_name').focus(); $j('#property_name').parents('.form-group').addClass('has-error'); } }); return false; };
-	if($j('#type').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Type", close: function(){ $j('#type').focus(); $j('#type').parents('.form-group').addClass('has-error'); } }); return false; };
+	if($j('#property_name').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Property Name", close: function(){ $j('[name=property_name]').focus(); $j('[name=property_name]').parents('.form-group').addClass('has-error'); } }); return false; };
+	if(!$j('[name=type]:checked').length){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Type", close: function(){ $j('[name=type]').focus(); $j('[name=type]').parents('.form-group').addClass('has-error'); } }); return false; };
 	return true;
 }
 function units_validateData(){
 	$j('.has-error').removeClass('has-error');
-	if($j('#status').val() == ''){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Status", close: function(){ $j('#status').focus(); $j('#status').parents('.form-group').addClass('has-error'); } }); return false; };
+	if(!$j('[name=status]:checked').length){ modal_window({ message: '<div class="alert alert-danger"><?php echo addslashes($Translation['field not null']); ?></div>', title: "<?php echo addslashes($Translation['error:']); ?> Status", close: function(){ $j('[name=status]').focus(); $j('[name=status]').parents('.form-group').addClass('has-error'); } }); return false; };
 	return true;
 }
 function rental_owners_validateData(){
@@ -285,7 +299,7 @@ function modal_window(options){
 					) +
 					'<div class="modal-body" style="-webkit-overflow-scrolling:touch !important; overflow-y: auto;">' +
 						( url != undefined ?
-							'<iframe width="100%" height="100%" sandbox="allow-forms allow-scripts allow-same-origin allow-popups" src="' + url + '"></iframe>'
+							'<iframe width="100%" height="100%" sandbox="allow-modals allow-forms allow-scripts allow-same-origin allow-popups" src="' + url + '"></iframe>'
 							: message
 						) +
 					'</div>' +
@@ -585,4 +599,46 @@ function mass_change_owner(t, ids){
 
 function add_more_actions_link(){
 	window.open('http://bigprof.com/appgini/help/advanced-topics/hooks/multiple-record-batch-actions?r=appgini-action-menu');
+}
+
+/* detect current screen size (xs, sm, md or lg) */
+function screen_size(sz){
+	if(!$j('.device-xs').length){
+		$j('body').append(
+			'<div class="device-xs visible-xs"></div>' +
+			'<div class="device-sm visible-sm"></div>' +
+			'<div class="device-md visible-md"></div>' +
+			'<div class="device-lg visible-lg"></div>'
+		);
+	}
+	return $j('.device-' + sz).is(':visible');
+}
+
+/* enable floating of action buttons in DV so they are visible on vertical scrolling */
+function enable_dvab_floating(){
+	/* already run? */
+	if(window.enable_dvab_floating_run != undefined) return;
+
+	/* scroll action buttons of DV on scrolling DV */
+	$j(window).scroll(function(){
+		if(!screen_size('md') && !screen_size('lg')) return;
+		if(!$j('.detail_view').length) return;
+
+		/* get vscroll amount, DV form height, button toolbar height and position */
+		var vscroll = $j(window).scrollTop();
+		var dv_height = $j('[id$="_dv_form"]').eq(0).height();
+		var bt_height = $j('.detail_view .btn-toolbar').height();
+		var form_top = $j('.detail_view .form-group').eq(0).offset().top;
+		var bt_top_max = dv_height - bt_height - 10;
+
+		if(vscroll > form_top){
+			var tm = parseInt(vscroll - form_top) + 60;
+			if(tm > bt_top_max) tm = bt_top_max;
+
+			$j('.detail_view .btn-toolbar').css({ 'margin-top': tm + 'px' });
+		}else{
+			$j('.detail_view .btn-toolbar').css({ 'margin-top': 0 });
+		}
+	});
+	window.enable_dvab_floating_run = true;
 }

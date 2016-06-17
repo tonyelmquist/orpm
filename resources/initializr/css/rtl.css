@@ -1167,7 +1167,7 @@ th {
   }
   .navbar-right.flip {
     float: left !important;
-    margin-left: -15px;
+    margin-left: 15px;
     margin-right: auto;
   }
   .navbar-right .dropdown-menu {
@@ -1464,4 +1464,34 @@ th {
 }
 .pull-left.flip {
   float: right !important;
+}
+
+.text-right.flip {
+	text-align: left !important;
+}
+
+.text-left.flip {
+	text-align: right !important;
+}
+
+@font-face {
+  font-family: 'Droid Arabic Kufi';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/DroidKufi-Regular.eot');
+  src: url('../fonts/DroidKufi-Regular.eot?#iefix') format('embedded-opentype'), url('../fonts/DroidKufi-Regular.woff') format('woff'), url('../fonts/DroidKufi-Regular.woff2') format('woff2'), url('../fonts/DroidKufi-Regular.ttf') format('truetype'), url('../fonts/DroidKufi-Regular.svg#Droid Arabic Kufi') format('svg');
+}
+
+@font-face {
+  font-family: 'Droid Arabic Kufi';
+  font-style: normal;
+  font-weight: 700;
+  src: url('../fonts/DroidKufi-Bold.eot');
+  src: url('../fonts/DroidKufi-Bold.eot?#iefix') format('embedded-opentype'), url('../fonts/DroidKufi-Bold.woff') format('woff'), url('../fonts/DroidKufi-Bold.woff2') format('woff2'), url('../fonts/DroidKufi-Bold.ttf') format('truetype'), url('../fonts/DroidKufi-Bold.svg#Droid Arabic Kufi') format('svg');
+}
+
+body{ font-family: 'Droid Arabic Kufi', "Helvetica Neue", Helvetica, Arial, sans-serif; }
+
+h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6 {
+  font-family: 'Droid Arabic Kufi', "Helvetica Neue", Helvetica, Arial, sans-serif;
 }

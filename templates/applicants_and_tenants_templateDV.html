@@ -40,16 +40,16 @@
 				</div>
 
 				<div class="form-group">
-					<label for="last_name" class="control-label col-lg-3">Last name</label>
+					<label for="last_name" class="control-label col-lg-3">Surname</label>
 					<div class="col-lg-9">
 						<input maxlength="15" type="text" class="form-control" name="last_name" id="last_name" value="<%%VALUE(last_name)%%>">
 					</div>
 				</div>
 
 				<div class="form-group">
-					<label for="first_name" class="control-label col-lg-3">First name</label>
+					<label for="first_name" class="control-label col-lg-3">Othernames</label>
 					<div class="col-lg-9">
-						<input maxlength="15" type="text" class="form-control" name="first_name" id="first_name" value="<%%VALUE(first_name)%%>">
+						<input maxlength="100" type="text" class="form-control" name="first_name" id="first_name" value="<%%VALUE(first_name)%%>">
 					</div>
 				</div>
 
@@ -57,7 +57,7 @@
 					<label for="email" class="control-label col-lg-3">Email</label>
 					<div class="col-lg-9">
 						
-						<div class="form-control-static">
+						<div>
 							<a id="email-link" href="mailto:<%%VALUE(email)%%>" target="_blank"><i class="glyphicon glyphicon-envelope text-info" title="<%%VALUE(email)%%>"></i></a>
 							<label for="email"><button type="button" id="email-edit-link" class="btn btn-default hspacer-lg vspacer-sm" data-toggle="collapse" data-target="#email" title="<%%TRANSLATION(Edit)%%>"><i class="glyphicon glyphicon-pencil"></i></button></label>
 						</div>
@@ -76,34 +76,6 @@
 					<label for="birth_date" class="control-label col-lg-3">Birth date</label>
 					<div class="col-lg-9">
 						<%%COMBO(birth_date)%%>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<label for="driver_license_number" class="control-label col-lg-3">Driver license number</label>
-					<div class="col-lg-9">
-						<input maxlength="15" type="text" class="form-control" name="driver_license_number" id="driver_license_number" value="<%%VALUE(driver_license_number)%%>">
-					</div>
-				</div>
-
-				<div class="form-group">
-					<label for="monthly_gross_pay" class="control-label col-lg-3">Monthly gross pay</label>
-					<div class="col-lg-9">
-						<input maxlength="11" type="text" class="form-control" name="monthly_gross_pay" id="monthly_gross_pay" value="<%%VALUE(monthly_gross_pay)%%>">
-					</div>
-				</div>
-
-				<div class="form-group">
-					<label for="additional_income" class="control-label col-lg-3">Additional income</label>
-					<div class="col-lg-9">
-						<input maxlength="11" type="text" class="form-control" name="additional_income" id="additional_income" value="<%%VALUE(additional_income)%%>">
-					</div>
-				</div>
-
-				<div class="form-group">
-					<label for="assets" class="control-label col-lg-3">Assets</label>
-					<div class="col-lg-9">
-						<input maxlength="11" type="text" class="form-control" name="assets" id="assets" value="<%%VALUE(assets)%%>">
 					</div>
 				</div>
 
@@ -165,7 +137,7 @@
 
 				/* append embedded mode to all links */
 				var append_embedded = function(){
-					$j('a[href]:not([href^=#]):not([href^=javascript]):not([href$="Embedded=1"])').each(
+					$j('a[href]:not([href^=#]):not([href^=javascript]):not([href$="Embedded=1"]):not([href*="link.php?t="]):not([href^="mailto:"])').each(
 						function(){
 							$j(this).attr('href', $j(this).attr('href') + '&Embedded=1');
 						}
@@ -210,9 +182,18 @@
 				});
 			}
 
+			/* find and hide parent links if field label has data 'parent_link' set to 'view_parent_hidden' */
+			$j('label[data-parent_link=view_parent_hidden]').each(function(){
+				$j(this).parents('.form-group').find('.view_parent').hide();
+			});
+
 			$j('form').on('click', '.view_parent', function(){
 				var pt = $j(this).attr('id').replace(/_view_parent$/, '');
-				var parent_id = $j(this).prevAll('input:hidden').eq(0).val();
+				if($j(this).prevAll('input:hidden').length){
+					var parent_id = $j(this).prevAll('input:hidden').eq(0).val();
+				}else{
+					var parent_id = $j(this).prevAll().children('input:hidden').eq(0).val();
+				}
 
 				/* handle radio lookups */
 				if($j(this).prevAll('[type=radio]').length){
@@ -220,16 +201,31 @@
 				}
 
 				if(parent_id != '{empty_value}'){
-					modal_window({
-						url: pt + '_view.php?Embedded=1&SelectedID=' + encodeURIComponent(parent_id),
-						close: function(){
-							var field_id = $j('#' + pt + '_view_parent').prevAll('input:hidden').eq(0).attr('id');
-							$j('#' + field_id + '-container').select2('focus').select2('focus');
-						},
-						size: 'full',
-						title: $j(this).attr('title')
-					});
+					var parent_link = $j(this).parents('.form-group').children('label').data('parent_link');
+					switch(parent_link){
+						case 'view_parent_hidden':
+							break;
+						case 'view_parent_modal':
+							modal_window({
+								url: pt + '_view.php?Embedded=1&SelectedID=' + encodeURIComponent(parent_id),
+								close: function(){
+									var field_id = $j('#' + pt + '_view_parent').prevAll('input:hidden').eq(0).attr('id');
+									$j('#' + field_id + '-container').select2('focus').select2('focus');
+								},
+								size: 'full',
+								title: $j(this).attr('title')
+							});
+							break;
+						case 'view_parent_same_window':
+							window.location = pt + '_view.php?Embedded=' + (embedded_mode ? '1' : '') + '&SelectedID=' + encodeURIComponent(parent_id);
+							break;
+						case 'view_parent_new_window':
+							window.open(pt + '_view.php?SelectedID=' + encodeURIComponent(parent_id));
+							break;
+					}
+
 				}
 			});
+
 		});
 	</script>

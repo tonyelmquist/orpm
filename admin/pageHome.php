@@ -1,7 +1,7 @@
 <?php
-	$currDir=dirname(__FILE__);
-	require("$currDir/incCommon.php");
-	include("$currDir/incHeader.php");
+	$currDir = dirname(__FILE__);
+	require("{$currDir}/incCommon.php");
+	include("{$currDir}/incHeader.php");
 ?>
 
 <?php
@@ -9,10 +9,8 @@
 		$noSignup=TRUE;
 		?>
 		<div class="alert alert-info">
-			<i>Attention!</i>
-			<br><a href="../membership_signup.php" target="_blank">Visitor sign up</a> 
-			is disabled because there are no groups where visitors can sign up currently.
-			To enable visitor sign-up, set at least one group to allow visitor sign-up.
+			<i><?php echo $Translation["attention"]; ?></i>
+			<br><?php echo $Translation["visitor sign up"]; ?>
 			</div>
 		<?php
 	}
@@ -29,8 +27,7 @@
 		if($countAll>$countOwned){
 			?>
 			<div class="alert alert-info">
-				You have data in one or more tables that doesn't have an owner.
-				To assign an owner group for this data, <a href="pageAssignOwners.php">click here</a>.
+				<?php echo $Translation["table data without owner"]; ?>
 				</div>
 			<?php
 			break;
@@ -38,7 +35,7 @@
 	}
 ?>
 
-<div class="page-header"><h1>Membership Management Homepage</h1></div>
+<div class="page-header"><h1><?php echo $Translation["membership management homepage"]; ?></h1></div>
 
 <?php if(!$adminConfig['hide_twitter_feed']){ ?>
 	<div class="row" id="outer-row"><div class="col-md-8">
@@ -50,7 +47,7 @@
 <div class="col-md-6">
 <div class="panel panel-info">
 	<div class="panel-heading">
-		<h3 class="panel-title">Newest Updates <a class="btn btn-default btn-sm" href="pageViewRecords.php?sort=dateUpdated&sortDir=desc"><i class="glyphicon glyphicon-chevron-right"></i></a></h3>
+		<h3 class="panel-title"><?php echo $Translation["newest updates"]; ?> <a class="btn btn-default btn-sm" href="pageViewRecords.php?sort=dateUpdated&sortDir=desc"><i class="glyphicon glyphicon-chevron-right"></i></a></h3>
 	</div>
 	<div class="panel-body">
 	<table class="table table-striped">
@@ -60,7 +57,7 @@
 			?>
 			<tr>
 				<td class="tdCaptionCell"><?php echo @date($adminConfig['PHPDateTimeFormat'], $row[2]); ?></td>
-				<td class="tdCell" align="left"><a href="pageEditOwnership.php?recID=<?php echo $row[3]; ?>"><img src="images/data_icon.gif" border="0" alt="View record details" title="View record details"></a> <?php echo substr(getCSVData($row[0], $row[1]), 0, 15); ?> ...</td>
+				<td class="tdCell" align="left"><a href="pageEditOwnership.php?recID=<?php echo $row[3]; ?>"><img src="images/data_icon.gif" border="0" alt="<?php echo $Translation["view record details"]; ?>" title="<?php echo $Translation["view record details"]; ?>"></a> <?php echo substr(getCSVData($row[0], $row[1]), 0, 15); ?> ...</td>
 				</tr>
 			<?php
 		}
@@ -76,7 +73,7 @@
 <div class="col-md-6">
 <div class="panel panel-info">
 	<div class="panel-heading">
-		<h3 class="panel-title">Newest Entries <a class="btn btn-default btn-sm" href="pageViewRecords.php?sort=dateAdded&sortDir=desc"><i class="glyphicon glyphicon-chevron-right"></i></a></h3>
+		<h3 class="panel-title"><?php echo $Translation["newest entries"]; ?> <a class="btn btn-default btn-sm" href="pageViewRecords.php?sort=dateAdded&sortDir=desc"><i class="glyphicon glyphicon-chevron-right"></i></a></h3>
 	</div>
 	<div class="panel-body">
 	<table class="table table-striped">
@@ -86,7 +83,7 @@
 			?>
 			<tr>
 				<td class="tdCaptionCell"><?php echo @date($adminConfig['PHPDateTimeFormat'], $row[2]); ?></td>
-				<td class="tdCell" align="left"><a href="pageEditOwnership.php?recID=<?php echo $row[3]; ?>"><img src="images/data_icon.gif" border="0" alt="View record details" title="View record details"></a> <?php echo substr(getCSVData($row[0], $row[1]), 0, 15); ?> ...</td>
+				<td class="tdCell" align="left"><a href="pageEditOwnership.php?recID=<?php echo $row[3]; ?>"><img src="images/data_icon.gif" border="0" alt="<?php echo $Translation["view record details"]; ?>" title="<?php echo $Translation["view record details"]; ?>"></a> <?php echo substr(getCSVData($row[0], $row[1]), 0, 15); ?> ...</td>
 				</tr>
 			<?php
 		}
@@ -101,7 +98,7 @@
 <!-- ################# Add-ons available ######################## -->
 	<?php
 		// do we have a cache file that was recently updated?
-		$addOnsCache = "$currDir/add-ons.cache";
+		$addOnsCache = "{$currDir}/add-ons.cache";
 		$addOnXML = '';
 		if(is_file($addOnsCache) && filemtime($addOnsCache) >= (time() - 86400 * 2)){
 			// read feed from cache
@@ -119,7 +116,7 @@
 		<div class="col-md-6">
 		<div class="panel panel-info">
 			<div class="panel-heading">
-				<h3 class="panel-title">Available add-ons</h3>
+				<h3 class="panel-title"><?php echo $Translation["available add-ons"]; ?></h3>
 			</div>
 			<div class="panel-body">
 			<table class="table table-striped">
@@ -135,8 +132,8 @@
 								<h3><a href="<?php echo $data->link; ?>" target="_blank"><?php echo $data->title; ?></a></h3>
 								<p><?php echo $data->description; ?></p>
 								<div align="right">
-									[<a href="<?php echo $data->link; ?>" target="_blank">More info</a>]
-									[<a onclick="return hideDialogs();" href="#" target="_blank">Close</a>]
+									[<a href="<?php echo $data->link; ?>" target="_blank"><?php echo $Translation["more info"]; ?></a>]
+									[<a onclick="return hideDialogs();" href="#" target="_blank"><?php echo $Translation["close"]; ?></a>]
 								</div>
 							</div>
 						</td>
@@ -144,7 +141,7 @@
 					<?php
 				}
 			?>
-				<tr><td class="text-center"><a href="http://bigprof.com/appgini/add-ons" target="_blank">View all add-ons</a></td></tr>
+				<tr><td class="text-center"><a href="http://bigprof.com/appgini/add-ons" target="_blank"><?php echo $Translation["view add-ons"]; ?></a></td></tr>
 			</table>
 			</div>
 		</div>
@@ -159,7 +156,7 @@
 <div class="col-md-6">
 <div class="panel panel-info">
 	<div class="panel-heading">
-		<h3 class="panel-title">Top Members</h3>
+		<h3 class="panel-title"><?php echo $Translation["top members"]; ?></h3>
 	</div>
 	<div class="panel-body">
 	<table class="table table-striped">
@@ -168,8 +165,8 @@
 		while($row=db_fetch_row($res)){
 			?>
 			<tr>
-				<td class="tdCaptionCell" align="left"><a href="pageEditMember.php?memberID=<?php echo urlencode($row[0]); ?>"><img src="images/edit_icon.gif" border="0" alt="Edit member details" title="Edit member details"></a> <?php echo $row[0]; ?></td>
-				<td class="tdCell"><a href="pageViewRecords.php?memberID=<?php echo urlencode($row[0]); ?>"><img src="images/data_icon.gif" border="0" alt="View member's data records" title="View member's data records"></a> <?php echo $row[1]; ?> records</td>
+				<td class="tdCaptionCell" align="left"><a href="pageEditMember.php?memberID=<?php echo urlencode($row[0]); ?>"><img src="images/edit_icon.gif" border="0" alt="<?php echo $Translation["edit member details"]; ?>" title="<?php echo $Translation["edit member details"]; ?>"></a> <?php echo $row[0]; ?></td>
+				<td class="tdCell"><a href="pageViewRecords.php?memberID=<?php echo urlencode($row[0]); ?>"><img src="images/data_icon.gif" border="0" alt="<?php echo $Translation["view member records"]; ?>" title="<?php echo $Translation["view member records"]; ?>"></a> <?php echo $row[1]; ?> <?php echo $Translation["records"]; ?></td>
 				</tr>
 			<?php
 		}
@@ -185,32 +182,32 @@
 <div class="col-md-6">
 <div class="panel panel-info">
 	<div class="panel-heading">
-		<h3 class="panel-title">Members Stats</h3>
+		<h3 class="panel-title"><?php echo $Translation["members stats"]; ?></h3>
 	</div>
 	<div class="panel-body">
 	<table class="table table-striped">
 		<tr>
-			<td class="tdCaptionCell">Total groups</td>
-			<td class="tdCell"><a href="pageViewGroups.php"><img src="images/view_icon.gif" border="0" alt="View groups" title="View groups"></a> <?php echo sqlValue("select count(1) from membership_groups"); ?></td>
+			<td class="tdCaptionCell"><?php echo $Translation["total groups"]; ?></td>
+			<td class="tdCell"><a href="pageViewGroups.php"><img src="images/view_icon.gif" border="0" alt="<?php echo $Translation['view groups']; ?>" title="<?php echo $Translation['view groups']; ?>"></a> <?php echo sqlValue("select count(1) from membership_groups"); ?></td>
 			</tr>
 		<tr>
-			<td class="tdCaptionCell">Active members</td>
-			<td class="tdCell"><a href="pageViewMembers.php?status=2"><img src="images/view_icon.gif" border="0" alt="View active members" title="View active members"></a> <?php echo sqlValue("select count(1) from membership_users where isApproved=1 and isBanned=0"); ?></td>
+			<td class="tdCaptionCell"><?php echo $Translation["active members"]; ?></td>
+			<td class="tdCell"><a href="pageViewMembers.php?status=2"><img src="images/view_icon.gif" border="0" alt="<?php echo $Translation["view active members"]; ?>" title="<?php echo $Translation["view active members"]; ?>"></a> <?php echo sqlValue("select count(1) from membership_users where isApproved=1 and isBanned=0"); ?></td>
 			</tr>
 		<tr>
 			<?php
 				$awaiting = intval(sqlValue("select count(1) from membership_users where isApproved=0"));
 			?>
-			<td class="tdCaptionCell" <?php echo ($awaiting ? "style=\"color: red;\"" : ""); ?>>Members awaiting approval</td>
-			<td class="tdCell"><a href="pageViewMembers.php?status=1"><img src="images/view_icon.gif" border="0" alt="View members awaiting approval" title="View members awaiting approval"></a> <?php echo $awaiting; ?></td>
+			<td class="tdCaptionCell" <?php echo ($awaiting ? "style=\"color: red;\"" : ""); ?>><?php echo $Translation["members awaiting approval"]; ?></td>
+			<td class="tdCell"><a href="pageViewMembers.php?status=1"><img src="images/view_icon.gif" border="0" alt="<?php echo $Translation["view members awaiting approval"]; ?>" title="<?php echo $Translation["view members awaiting approval"]; ?>"></a> <?php echo $awaiting; ?></td>
 			</tr>
 		<tr>
-			<td class="tdCaptionCell">Banned members</td>
-			<td class="tdCell"><a href="pageViewMembers.php?status=3"><img src="images/view_icon.gif" border="0" alt="View banned members" title="View banned members"></a> <?php echo sqlValue("select count(1) from membership_users where isApproved=1 and isBanned=1"); ?></td>
+			<td class="tdCaptionCell"><?php echo $Translation["banned members"]; ?></td>
+			<td class="tdCell"><a href="pageViewMembers.php?status=3"><img src="images/view_icon.gif" border="0" alt="<?php echo $Translation["view banned members"]; ?>" title="<?php echo $Translation["view banned members"]; ?>"></a> <?php echo sqlValue("select count(1) from membership_users where isApproved=1 and isBanned=1"); ?></td>
 			</tr>
 		<tr>
-			<td class="tdCaptionCell">Total members</td>
-			<td class="tdCell"><a href="pageViewMembers.php"><img src="images/view_icon.gif" border="0" alt="View all members" title="View all members"></a> <?php echo sqlValue("select count(1) from membership_users"); ?></td>
+			<td class="tdCaptionCell"><?php echo $Translation["total members"]; ?></td>
+			<td class="tdCell"><a href="pageViewMembers.php"><img src="images/view_icon.gif" border="0" alt="<?php echo $Translation["view all members"]; ?>" title="<?php echo $Translation["view all members"]; ?>"></a> <?php echo sqlValue("select count(1) from membership_users"); ?></td>
 			</tr>
 		</table>
 	</div>
@@ -225,9 +222,9 @@
 
 		<div class="col-md-4" id="twitter-feed">
 			<h3>
-				Tweets By BigProf Software
+				<?php echo $Translation["BigProf tweets"]; ?>
 				<span class="pull-right">
-					<a class="twitter-follow-button" href="https://twitter.com/bigprof" data-show-count="false" data-lang="en">Follow @bigprof</a>
+					<a class="twitter-follow-button" href="https://twitter.com/bigprof" data-show-count="false" data-lang="en"><?php echo $Translation["follow BigProf"]; ?></a>
 					<script type="text/javascript">
 						window.twttr = (function (d, s, id) {
 							var t, js, fjs = d.getElementsByTagName(s)[0];
@@ -241,10 +238,10 @@
 				</span>
 			</h3><hr>
 			<div class="text-center">
-				<a class="twitter-timeline" height="400" href="https://twitter.com/bigprof" data-widget-id="552758720300843008" data-chrome="nofooter noheader">Loading @bigprof feed ...</a>
+				<a class="twitter-timeline" height="400" href="https://twitter.com/bigprof" data-widget-id="552758720300843008" data-chrome="nofooter noheader"><?php echo $Translation["loading bigprof feed"]; ?></a>
 				<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 			</div>
-			<div class="text-right hidden" id="remove-feed-link"><a href="pageSettings.php#hide_twitter_feed"><i class="glyphicon glyphicon-remove"></i> Remove this feed</a></div>
+			<div class="text-right hidden" id="remove-feed-link"><a href="pageSettings.php#hide_twitter_feed"><i class="glyphicon glyphicon-remove"></i> <?php echo $Translation["remove feed"]; ?></a></div>
 			<script>
 				$j(function(){
 					show_remove_feed_link = function(){
@@ -263,5 +260,5 @@
 
 
 <?php
-	include("$currDir/incFooter.php");
+	include("{$currDir}/incFooter.php");
 ?>

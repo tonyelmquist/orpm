@@ -4,16 +4,17 @@
 	if(!defined('datalist_db_encoding')) define('datalist_db_encoding', 'UTF-8');
 	if(function_exists('set_magic_quotes_runtime')) @set_magic_quotes_runtime(0);
 	ob_start();
-	$currDir=dirname(__FILE__);
-	include("$currDir/../db.php");
-	include("$currDir/../settings-manager.php");
+	$currDir = dirname(__FILE__);
+	include("{$currDir}/../db.php");
+	include("{$currDir}/../settings-manager.php");
 
 	// check if initial setup was performed or not
 	detect_config();
 	migrate_config();
 
 	$adminConfig = config('adminConfig');
-	include("$currDir/incFunctions.php");
+	include("{$currDir}/incFunctions.php");
+	include("{$currDir}/../language-admin.php");
 
 	/* trim $_POST, $_GET, $_REQUEST */
 	if(count($_POST)) $_POST = array_trim($_POST);

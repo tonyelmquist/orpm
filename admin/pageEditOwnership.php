@@ -1,6 +1,6 @@
 <?php
-	$currDir=dirname(__FILE__);
-	require("$currDir/incCommon.php");
+	$currDir = dirname(__FILE__);
+	require("{$currDir}/incCommon.php");
 
 	// request to save changes?
 	if($_REQUEST['saveChanges']!=''){
@@ -16,22 +16,22 @@
 			$pkValue = $_REQUEST['pkValue'];
 
 			if(!in_array($tableName, array_keys(getTableList()))){
-				die('Invalid table.');
+				die($Translation["invalid table"]);
 			}
 
 			if(!$pkValue){
-				die('Invalid primary key value');
+				die($Translation["invalid primary key"]);
 			}
 
 			$recID = sqlValue("select recID from membership_userrecords where tableName='{$tableName}' and pkValue='" . makeSafe($pkValue) . "'");
 			if(!$recID){
-				die('Record not found ... if it was imported externally, try assigning an owner from the admin area.');
+				die($Translation["record not found"]);
 			}
 
 			/* determine groupID if not provided */
 			if(!$groupID){
 				$groupID = sqlValue("select groupID from membership_users where memberID='{$memberID}'");
-				if(!$groupID) die('Invalid username');
+				if(!$groupID) die($Translation["invalid username"]);
 			}
 		}
 
@@ -52,7 +52,7 @@
 		$recID=makeSafe($_GET['recID']);
 	}
 
-	include("$currDir/incHeader.php");
+	include("{$currDir}/incHeader.php");
 
 	if($recID!=''){
 		// fetch record data to fill in the form below
@@ -67,43 +67,41 @@
 			$groupID=$row['groupID'];
 		}else{
 			// no such record exists
-			die("<div class=\"alert alert-danger\">Error: Record not found!</div>");
+			die("<div class=\"alert alert-danger\">{$Translation["record not found error"]}</div>");
 		}
 	}else{
 		redirect("admin/pageViewRecords.php");
 	}
 ?>
-<div class="page-header"><h1>Edit Record Ownership</h1></div>
+<div class="page-header"><h1><?php echo $Translation["edit Record Ownership"]; ?></h1></div>
 <form method="post" action="pageEditOwnership.php">
 	<input type="hidden" name="recID" value="<?php echo $recID; ?>">
 	<div class="table-responsive"><table class="table table-striped">
 		<tr>
 			<td align="right" class="tdFormCaption" valign="top">
-				<div class="formFieldCaption">Owner group</div>
+				<div class="formFieldCaption"><?php echo $Translation["owner group"]; ?></div>
 				</td>
 			<td align="left" class="tdFormInput">
 				<?php
 					echo htmlSQLSelect('groupID', "select g.groupID, g.name from membership_groups g order by name", $groupID);
 				?>
-				<a href="#" onClick="window.location='pageViewRecords.php?groupID='+escape(document.getElementById('groupID').value);"><img src="images/data_icon.gif" alt="View all records by this group" title="View all records by this group" border="0"></a>
+				<a href="#" onClick="window.location='pageViewRecords.php?groupID='+escape(document.getElementById('groupID').value);"><img src="images/data_icon.gif" alt="<?php echo $Translation["view all records by group"]; ?>" title="<?php echo $Translation["view all records by group"]; ?>" border="0"></a>
 				</td>
 			</tr>
 		<tr>
 			<td align="right" class="tdFormCaption" valign="top">
-				<div class="formFieldCaption">Owner member</div>
+				<div class="formFieldCaption"><?php echo $Translation["owner member"]; ?></div>
 				</td>
 			<td align="left" class="tdFormInput" width="460">
 				<?php
 					echo htmlSQLSelect('memberID', "select lcase(memberID), lcase(memberID) from membership_users where groupID='$groupID' order by memberID", $memberID);
 				?>
-				<a href="#" onClick="window.location='pageViewRecords.php?memberID='+escape(document.getElementById('memberID').value);"><img src="images/data_icon.gif" alt="View all records by this member" title="View all records by this member" border="0"></a>
-				<br>If you want to switch ownership of this record to a member of another group,
-				you must change the owner group and save changes first.
-				</td>
+				<a href="#" onClick="window.location='pageViewRecords.php?memberID='+escape(document.getElementById('memberID').value);"><img src="images/data_icon.gif" alt="<?php echo $Translation["view all records by member"]; ?>" title="<?php echo $Translation["view all records by member"]; ?>" border="0"></a>
+				<br><?php echo $Translation["switch record ownership"]; ?></td>
 			</tr>
 		<tr>
 			<td align="right" class="tdFormCaption" valign="top">
-				<div class="formFieldCaption">Record created on</div>
+				<div class="formFieldCaption"><?php echo $Translation["record created on"]; ?></div>
 				</td>
 			<td align="left" class="tdFormInput">
 				<?php echo $dateAdded; ?>
@@ -111,7 +109,7 @@
 			</tr>
 		<tr>
 			<td align="right" class="tdFormCaption" valign="top">
-				<div class="formFieldCaption">Record modified on</div>
+				<div class="formFieldCaption"><?php echo $Translation["record modified on"]; ?></div>
 				</td>
 			<td align="left" class="tdFormInput">
 				<?php echo $dateUpdated; ?>
@@ -119,17 +117,17 @@
 			</tr>
 		<tr>
 			<td align="right" class="tdFormCaption" valign="top">
-				<div class="formFieldCaption">Table</div>
+				<div class="formFieldCaption"><?php echo $Translation["table"]; ?></div>
 				</td>
 			<td align="left" class="tdFormInput">
 				<?php echo $tableName; ?>
-				<a href="pageViewRecords.php?tableName=<?php echo $tableName; ?>"><img src="images/data_icon.gif" alt="View all records of this table" title="View all records of this table" border="0"></a>
+				<a href="pageViewRecords.php?tableName=<?php echo $tableName; ?>"><img src="images/data_icon.gif" alt="<?php echo $Translation["view all records of table"]; ?>" title="<?php echo $Translation["view all records of table"]; ?>" border="0"></a>
 				</td>
 			</tr>
 		<tr>
 			<td align="right" class="tdFormCaption" valign="top">
-				<div class="formFieldCaption">Record data</div>
-				<input type="button" value="Print" onClick="window.location='pagePrintRecord.php?recID=<?php echo $recID; ?>';"> &nbsp; &nbsp;
+				<div class="formFieldCaption"><?php echo $Translation["record data"]; ?></div>
+				<input type="button" value="<?php echo $Translation["print"]; ?>" onClick="window.location='pagePrintRecord.php?recID=<?php echo $recID; ?>';"> &nbsp; &nbsp;
 				</td>
 			<td align="left" class="tdFormInput">
 				<?php 
@@ -138,7 +136,7 @@
 
 					// get field list
 					if(!$res=sql("show fields from `$tableName`", $eo)){
-						errorMsg("Couldn't retrieve field list from '$tableName'");
+						errorMsg(str_replace ( "<TABLENAME>" , $tableName , $Translation["could not retrieve field list"] ));
 					}
 					while($row=db_fetch_assoc($res)){
 						$field[]=$row['Field'];
@@ -149,13 +147,13 @@
 						?>
 						<table class="table table-striped">
 							<tr>
-								<td class="tdHeader"><div class="ColCaption">Field name</div></td>
-								<td class="tdHeader"><div class="ColCaption">Value</div></td>
+								<td class="tdHeader"><div class="ColCaption"><?php echo $Translation["field name"]; ?></div></td>
+								<td class="tdHeader"><div class="ColCaption"><?php echo $Translation["value"]; ?></div></td>
 								</tr>
 						<?php
-						include("$currDir/../language.php");
+						include("{$currDir}/../language.php");
 						foreach($field as $fn){
-							if(@is_file("$currDir/../".$Translation['ImageFolder'].$row[$fn])){
+							if(@is_file("{$currDir}/../".$Translation['ImageFolder'].$row[$fn])){
 								$op="<a href=\""."../".$Translation['ImageFolder'].$row[$fn]."\" target=\"_blank\">".htmlspecialchars($row[$fn])."</a>";
 							}else{
 								$op=htmlspecialchars($row[$fn]);
@@ -179,7 +177,7 @@
 			</tr>
 		<tr>
 			<td colspan="2" align="right" class="tdFormFooter">
-				<input type="submit" name="saveChanges" value="Save changes">
+				<input type="submit" name="saveChanges" value="<?php echo $Translation["save changes"]; ?>">
 				</td>
 			</tr>
 		</table></div>
@@ -187,5 +185,5 @@
 
 
 <?php
-	include("$currDir/incFooter.php");
+	include("{$currDir}/incFooter.php");
 ?>

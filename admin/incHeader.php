@@ -8,7 +8,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="description" content="">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Membership Management</title>
+		<title><?php echo $Translation['membership management']; ?></title>
 
 		<link id="browser_favicon" rel="shortcut icon" href="../resources/table_icons/administrator.png">
 
@@ -26,7 +26,7 @@
 		<script src="toolTips.js"></script>
 		<script src="../resources/initializr/js/vendor/bootstrap.min.js"></script>
 		<script src="../resources/lightbox/js/prototype.js"></script>
-		<script src="../resources/lightbox/js/scriptaculous.js?load=effects,builder,dragdrop,controls"></script>
+		<script src="../resources/lightbox/js/scriptaculous.js?load=effects"></script>
 		<script>
 
 			// VALIDATION FUNCTIONS FOR VARIOUS PAGES
@@ -37,7 +37,7 @@
 				if(p1=='' || p1==p2){
 					return true;
 				}else{
-					modal_window({message: '<div class="alert alert-danger">Password doesn\'t match.</div>', title: "Error" });
+					modal_window({message: '<div class="alert alert-danger"><?php echo $Translation['password mismatch'] ; ?></div>', title: "<?php echo $Translation['error'] ; ?>" });
 					return false;
 				}
 			}
@@ -45,7 +45,7 @@
 			function jsValidateEmail(address){
 				var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
 				if(reg.test(address) == false){
-					modal_window({ message: '<div class="alert alert-danger">Invalid Email Address</div>', title: "Error" });
+					modal_window({ message: '<div class="alert alert-danger">'+"<?php echo $Translation['invalid email'];?>"+'</div>', title: "<?php echo $Translation['error'] ; ?>"  });
 					return false;
 				}else{
 					return true;
@@ -53,7 +53,7 @@
 			}
 
 			function jsShowWait(){
-				return window.confirm("Sending mails might take some time. Please don't close this page until you see the 'Done' message.");
+				return window.confirm("<?php echo $Translation['sending mails']; ?>");
 			}
 
 			function jsValidateAdminSettings(){
@@ -62,12 +62,13 @@
 				if(p1=='' || p1==p2){
 					return jsValidateEmail(document.getElementById('senderEmail').value);
 				}else{
-					modal_window({ message: '<div class="alert alert-error">Password doesn\'t match.</div>', title: "Error" });
+					modal_window({ message: '<div class="alert alert-error">'+"<?php echo $Translation['password mismatch']; ?>"+'</div>', title: "<?php echo $Translation['error'] ; ?>" });
 					return false;
 				}
 			}
 
 			function jsConfirmTransfer(){
+				var confirmMessage;
 				var sg=document.getElementById('sourceGroupID').options[document.getElementById('sourceGroupID').selectedIndex].text;
 				var sm=document.getElementById('sourceMemberID').value;
 				var dg=document.getElementById('destinationGroupID').options[document.getElementById('destinationGroupID').selectedIndex].text;
@@ -84,23 +85,37 @@
 				//confirm('sg='+sg+'\n'+'sm='+sm+'\n'+'dg='+dg+'\n'+'dm='+dm+'\n'+'mm='+mm+'\n'+'dmm='+dmm+'\n');
 
 				if(dmm && !dm){
-					modal_window({ message: '<div>Please complete step 4 by selecting the member you want to transfer records to.</div>', title: "Info", close: function(){ jQuery('#destinationMemberID').focus(); } });
+					modal_window({ message: '<div>'+"<?php echo $Translation['complete step 4']; ?>"+'</div>', title: "<?php echo $Translation['info']; ?>", close: function(){ jQuery('#destinationMemberID').focus(); } });
 					return false;
 				}
 
 				if(mm && sm!='-1'){
-					return window.confirm('Are you sure you want to move member \''+sm+'\' and his data from group \''+sg+'\' to group \''+dg+'\'?');
+
+					confirmMessage = "<?php echo $Translation['sure move member']; ?>";
+					confirmMessage = confirmMessage.replace(/<MEMBER>/, sm).replace(/<OLDGROUP>/, sg).replace(/<NEWGROUP>/, dg);
+					return window.confirm(confirmMessage);
+
 				}
 				if((dmm || dm) && sm!='-1'){
-					return window.confirm('Are you sure you want to move data of member \''+sm+'\' from group \''+sg+'\' to member \''+dm+'\' from group \''+dg+'\'?');
+
+					confirmMessage = "<?php echo $Translation['sure move data of member']; ?>";
+					confirmMessage = confirmMessage.replace(/<OLDMEMBER>/, sm).replace(/<OLDGROUP>/, sg).replace(/<NEWMEMBER>/, dm).replace(/<NEWGROUP>/, dg);                 
+					return window.confirm(confirmMessage);
 				}
 
 				if(mm){
-					return window.confirm('Are you sure you want to move all members and data from group \''+sg+'\' to group \''+dg+'\'?');
+
+					confirmMessage = "<?php echo $Translation['sure move all members']; ?>";
+					confirmMessage = confirmMessage.replace(/<OLDGROUP>/, sg).replace(/<NEWGROUP>/, dg);
+					return window.confirm(confirmMessage);
 				}
 
 				if(dmm){
-					return window.confirm('Are you sure you want to move data of all members of group \''+sg+'\' to member \''+dm+'\' from group \''+dg+'\'?');
+
+
+					confirmMessage = "<?php echo $Translation['sure move data of all members']; ?>";
+					confirmMessage = confirmMessage.replace(/<OLDGROUP>/, sg).replace(/<MEMBER>/, dm).replace(/<NEWGROUP>/, dg);
+					return window.confirm(confirmMessage);
 				}
 			}
 
@@ -155,55 +170,73 @@
 		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-					<span class="sr-only">Toggle navigation</span>
+					<span class="sr-only"><?php echo $Translation['toggle navigation'];?></span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="pageHome.php"><span class="text-warning"><i class="glyphicon glyphicon-wrench"></i> Admin Area</span></a>
+				<a class="navbar-brand" href="pageHome.php"><span class="text-warning"><i class="glyphicon glyphicon-cog"></i> <?php echo $Translation['admin area']; ?></span></a>
 			</div>
 
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
 				<ul class="nav navbar-nav">
 					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-globe"></i> Groups <b class="caret"></b></a>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-globe"></i> <?php echo $Translation['groups']; ?> <b class="caret"></b></a>
 						<ul class="dropdown-menu">
-							<li><a href="pageViewGroups.php">View Groups</a></li>
-							<li><a href="pageEditGroup.php">Add Group</a></li>
+							<li><a href="pageViewGroups.php"><?php echo $Translation['view groups']; ?></a></li>
+							<li><a href="pageEditGroup.php"><?php echo   $Translation['add group']  ; ?></a></li>
 							<li class="divider"></li>
-							<li><a href="pageEditGroup.php?groupID=<?php echo sqlValue("select groupID from membership_groups where name='" . makeSafe($adminConfig['anonymousGroup']) . "'"); ?>">Edit Anonymous Permissions</a></li>
+							<li><a href="pageEditGroup.php?groupID=<?php echo sqlValue("select groupID from membership_groups where name='" . makeSafe($adminConfig['anonymousGroup']) . "'"); ?>"><?php echo  $Translation['edit anonymous permissions'] ; ?></a></li>
 						</ul>
 					</li>
 
 					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i> Members <b class="caret"></b></a>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i> <?php echo $Translation['members']  ;?> <b class="caret"></b></a>
 						<ul class="dropdown-menu">
-							<li><a href="pageViewMembers.php">View Members</a></li>
-							<li><a href="pageEditMember.php">Add Member</a></li>
+							<li><a href="pageViewMembers.php"><?php echo $Translation['view members'] ; ?></a></li>
+							<li><a href="pageEditMember.php"><?php echo $Translation['add member']  ; ?></a></li>
 							<li class="divider"></li>
-							<li><a href="pageViewRecords.php">View Members' Records</a></li>
+							<li><a href="pageViewRecords.php"><?php echo $Translation["view members' records"]; ?> </a></li>
 						</ul>
 					</li>
 
 					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-cog"></i> Utilities <b class="caret"></b></a>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-cog"></i> <?php echo $Translation["utilities"] ; ?> <b class="caret"></b></a>
 						<ul class="dropdown-menu">
-							<li><a href="pageSettings.php">Admin Settings</a></li>
+							<li><a href="pageSettings.php"><?php echo $Translation["admin settings"]  ; ?></a></li>
 							<li class="divider"></li>
-							<li><a href="pageRebuildThumbnails.php">Rebuild Thumbnails</a></li>
-							<li><a href="pageRebuildFields.php">Rebuild fields</a></li>
-							<li><a href="pageUploadCSV.php">Import CSV data</a></li>
-							<li><a href="pageTransferOwnership.php">Batch Transfer Wizard</a></li>
-							<li><a href="pageMail.php?sendToAll=1">Mail All Users</a></li>
+							<li><a href="pageRebuildThumbnails.php"><?php echo  $Translation["rebuild thumbnails"]  ; ?></a></li>
+							<li><a href="pageRebuildFields.php"><?php echo  $Translation['rebuild fields'] ; ?></a></li>
+							<li><a href="pageUploadCSV.php"><?php echo $Translation['import CSV'] ; ?></a></li>
+							<li><a href="pageTransferOwnership.php"><?php echo $Translation['batch transfer'] ; ?></a></li>
+							<li><a href="pageMail.php?sendToAll=1"><?php echo $Translation['mail all users'] ; ?></a></li>
 							<li class="divider"></li>
-							<li><a href="http://forums.appgini.com" target="_blank"><i class="glyphicon glyphicon-new-window"></i> AppGini Community Forum</a></li>
+							<li><a href="http://forums.appgini.com" target="_blank"><i class="glyphicon glyphicon-new-window"></i> <?php echo $Translation['AppGini forum']; ?></a></li>
 						</ul>
 					</li>
+
+					<?php $plugins = get_plugins(); ?>
+
+					<?php if(count($plugins)){ ?>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-plus"></i> <?php echo $Translation["plugins"] ; ?> <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<?php foreach($plugins as $plugin){ ?>
+									<?php
+										$plugin_icon = '';
+										if($plugin['glyphicon']) $plugin_icon = "<i class=\"glyphicon glyphicon-{$plugin['glyphicon']}\"></i> ";
+										if($plugin['icon']) $plugin_icon = "<img src=\"{$plugin['admin_path']}/{$plugin['icon']}\"> ";
+									?>
+									<li><a target="_blank" href="<?php echo $plugin['admin_path']; ?>"><?php echo $plugin_icon . $plugin['title']; ?></a></li>
+								<?php } ?>
+							</ul>
+						</li>
+					<?php } ?>
 				</ul>
 
 				<div class="navbar-right">
-					<a href="../index.php" class="btn btn-success navbar-btn">User's area</a>
-					<a href="pageHome.php?signOut=1" class="btn btn-warning navbar-btn"><i class="glyphicon glyphicon-log-out"></i> Sign out</a>
+					<a href="../index.php" class="btn btn-success navbar-btn"><?php echo $Translation["user's area"] ; ?></a>
+					<a href="pageHome.php?signOut=1" class="btn btn-warning navbar-btn"><i class="glyphicon glyphicon-log-out"></i> <?php echo $Translation["sign out"] ; ?></a>
 				</div>
 			</div>
 		</nav>
@@ -220,12 +253,12 @@
 		$noSignup=TRUE;
 		?>
 		<div class="alert alert-danger">
-			<p><strong>Attention!</strong></p>
-			<p>You are using the default admin
-			<?php if($adminConfig['adminUsername'] == 'admin'){ ?>username and<?php } ?> password. This is a huge security
-			risk. Please change <?php if($adminConfig['adminUsername'] == 'admin'){ ?> at least <?php } ?>
-			the admin password from the
-			<a href="pageSettings.php">Admin Settings</a> page <em>immediately</em>.</p>
+			<p><strong><?php echo $Translation["attention"] ; ?></strong></p>
+			<p><?php if($adminConfig['adminUsername'] == 'admin'){
+					echo $Translation['security risk admin'];
+			}else{
+					echo $Translation['security risk'];
+			} ?></p>
 		</div>
-	<?php } ?>
+	<?php  } ?>
 
