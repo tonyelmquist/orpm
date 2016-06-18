@@ -57,9 +57,10 @@
 			<?php
 		}
 ?>
-<div class="navbar-fixed-bottom hidden-print alert alert-info">		
-	Powered By : <a href="http://www.google.com" target = "_blank">VirtualDev Software Solutions</a>
+
+<div class="navbar-fixed-bottom hidden-print alert alert-info">
+	Powered By : <a href="#" target = "_blank">VirtualDev Software Solutions</a>
 	<div class="pull-right">
-		<?php echo date('D, j M Y T'); ?>
-	</div>
+	<?php echo date('D, j M Y T'); ?>
+	</div>	
 </div>
