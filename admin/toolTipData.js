@@ -30,22 +30,22 @@ applications_leases_delete2Tip=["",spacer+"This option allows each member of the
 applications_leases_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'Applications/Leases' table."];
 
 // residence_and_rental_history table
-residence_and_rental_history_addTip=["",spacer+"This option allows all members of the group to add records to the 'Residence and rental history' table. A member who adds a record to the table becomes the 'owner' of that record."];
+residence_and_rental_history_addTip=["",spacer+"This option allows all members of the group to add records to the 'Rental history' table. A member who adds a record to the table becomes the 'owner' of that record."];
 
-residence_and_rental_history_view0Tip=["",spacer+"This option prohibits all members of the group from viewing any record in the 'Residence and rental history' table."];
-residence_and_rental_history_view1Tip=["",spacer+"This option allows each member of the group to view only his own records in the 'Residence and rental history' table."];
-residence_and_rental_history_view2Tip=["",spacer+"This option allows each member of the group to view any record owned by any member of the group in the 'Residence and rental history' table."];
-residence_and_rental_history_view3Tip=["",spacer+"This option allows each member of the group to view all records in the 'Residence and rental history' table."];
+residence_and_rental_history_view0Tip=["",spacer+"This option prohibits all members of the group from viewing any record in the 'Rental history' table."];
+residence_and_rental_history_view1Tip=["",spacer+"This option allows each member of the group to view only his own records in the 'Rental history' table."];
+residence_and_rental_history_view2Tip=["",spacer+"This option allows each member of the group to view any record owned by any member of the group in the 'Rental history' table."];
+residence_and_rental_history_view3Tip=["",spacer+"This option allows each member of the group to view all records in the 'Rental history' table."];
 
-residence_and_rental_history_edit0Tip=["",spacer+"This option prohibits all members of the group from modifying any record in the 'Residence and rental history' table."];
-residence_and_rental_history_edit1Tip=["",spacer+"This option allows each member of the group to edit only his own records in the 'Residence and rental history' table."];
-residence_and_rental_history_edit2Tip=["",spacer+"This option allows each member of the group to edit any record owned by any member of the group in the 'Residence and rental history' table."];
-residence_and_rental_history_edit3Tip=["",spacer+"This option allows each member of the group to edit any records in the 'Residence and rental history' table, regardless of their owner."];
+residence_and_rental_history_edit0Tip=["",spacer+"This option prohibits all members of the group from modifying any record in the 'Rental history' table."];
+residence_and_rental_history_edit1Tip=["",spacer+"This option allows each member of the group to edit only his own records in the 'Rental history' table."];
+residence_and_rental_history_edit2Tip=["",spacer+"This option allows each member of the group to edit any record owned by any member of the group in the 'Rental history' table."];
+residence_and_rental_history_edit3Tip=["",spacer+"This option allows each member of the group to edit any records in the 'Rental history' table, regardless of their owner."];
 
-residence_and_rental_history_delete0Tip=["",spacer+"This option prohibits all members of the group from deleting any record in the 'Residence and rental history' table."];
-residence_and_rental_history_delete1Tip=["",spacer+"This option allows each member of the group to delete only his own records in the 'Residence and rental history' table."];
-residence_and_rental_history_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'Residence and rental history' table."];
-residence_and_rental_history_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'Residence and rental history' table."];
+residence_and_rental_history_delete0Tip=["",spacer+"This option prohibits all members of the group from deleting any record in the 'Rental history' table."];
+residence_and_rental_history_delete1Tip=["",spacer+"This option allows each member of the group to delete only his own records in the 'Rental history' table."];
+residence_and_rental_history_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'Rental history' table."];
+residence_and_rental_history_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'Rental history' table."];
 
 // employment_and_income_history table
 employment_and_income_history_addTip=["",spacer+"This option allows all members of the group to add records to the 'Employment and income history' table. A member who adds a record to the table becomes the 'owner' of that record."];
@@ -120,40 +120,40 @@ properties_delete2Tip=["",spacer+"This option allows each member of the group to
 properties_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'Property Center' table."];
 
 // units table
-units_addTip=["",spacer+"This option allows all members of the group to add records to the 'Unit ' table. A member who adds a record to the table becomes the 'owner' of that record."];
+units_addTip=["",spacer+"This option allows all members of the group to add records to the 'Units Center' table. A member who adds a record to the table becomes the 'owner' of that record."];
 
-units_view0Tip=["",spacer+"This option prohibits all members of the group from viewing any record in the 'Unit ' table."];
-units_view1Tip=["",spacer+"This option allows each member of the group to view only his own records in the 'Unit ' table."];
-units_view2Tip=["",spacer+"This option allows each member of the group to view any record owned by any member of the group in the 'Unit ' table."];
-units_view3Tip=["",spacer+"This option allows each member of the group to view all records in the 'Unit ' table."];
+units_view0Tip=["",spacer+"This option prohibits all members of the group from viewing any record in the 'Units Center' table."];
+units_view1Tip=["",spacer+"This option allows each member of the group to view only his own records in the 'Units Center' table."];
+units_view2Tip=["",spacer+"This option allows each member of the group to view any record owned by any member of the group in the 'Units Center' table."];
+units_view3Tip=["",spacer+"This option allows each member of the group to view all records in the 'Units Center' table."];
 
-units_edit0Tip=["",spacer+"This option prohibits all members of the group from modifying any record in the 'Unit ' table."];
-units_edit1Tip=["",spacer+"This option allows each member of the group to edit only his own records in the 'Unit ' table."];
-units_edit2Tip=["",spacer+"This option allows each member of the group to edit any record owned by any member of the group in the 'Unit ' table."];
-units_edit3Tip=["",spacer+"This option allows each member of the group to edit any records in the 'Unit ' table, regardless of their owner."];
+units_edit0Tip=["",spacer+"This option prohibits all members of the group from modifying any record in the 'Units Center' table."];
+units_edit1Tip=["",spacer+"This option allows each member of the group to edit only his own records in the 'Units Center' table."];
+units_edit2Tip=["",spacer+"This option allows each member of the group to edit any record owned by any member of the group in the 'Units Center' table."];
+units_edit3Tip=["",spacer+"This option allows each member of the group to edit any records in the 'Units Center' table, regardless of their owner."];
 
-units_delete0Tip=["",spacer+"This option prohibits all members of the group from deleting any record in the 'Unit ' table."];
-units_delete1Tip=["",spacer+"This option allows each member of the group to delete only his own records in the 'Unit ' table."];
-units_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'Unit ' table."];
-units_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'Unit ' table."];
+units_delete0Tip=["",spacer+"This option prohibits all members of the group from deleting any record in the 'Units Center' table."];
+units_delete1Tip=["",spacer+"This option allows each member of the group to delete only his own records in the 'Units Center' table."];
+units_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'Units Center' table."];
+units_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'Units Center' table."];
 
 // rental_owners table
-rental_owners_addTip=["",spacer+"This option allows all members of the group to add records to the 'Rental owners' table. A member who adds a record to the table becomes the 'owner' of that record."];
+rental_owners_addTip=["",spacer+"This option allows all members of the group to add records to the 'Rental owners Center' table. A member who adds a record to the table becomes the 'owner' of that record."];
 
-rental_owners_view0Tip=["",spacer+"This option prohibits all members of the group from viewing any record in the 'Rental owners' table."];
-rental_owners_view1Tip=["",spacer+"This option allows each member of the group to view only his own records in the 'Rental owners' table."];
-rental_owners_view2Tip=["",spacer+"This option allows each member of the group to view any record owned by any member of the group in the 'Rental owners' table."];
-rental_owners_view3Tip=["",spacer+"This option allows each member of the group to view all records in the 'Rental owners' table."];
+rental_owners_view0Tip=["",spacer+"This option prohibits all members of the group from viewing any record in the 'Rental owners Center' table."];
+rental_owners_view1Tip=["",spacer+"This option allows each member of the group to view only his own records in the 'Rental owners Center' table."];
+rental_owners_view2Tip=["",spacer+"This option allows each member of the group to view any record owned by any member of the group in the 'Rental owners Center' table."];
+rental_owners_view3Tip=["",spacer+"This option allows each member of the group to view all records in the 'Rental owners Center' table."];
 
-rental_owners_edit0Tip=["",spacer+"This option prohibits all members of the group from modifying any record in the 'Rental owners' table."];
-rental_owners_edit1Tip=["",spacer+"This option allows each member of the group to edit only his own records in the 'Rental owners' table."];
-rental_owners_edit2Tip=["",spacer+"This option allows each member of the group to edit any record owned by any member of the group in the 'Rental owners' table."];
-rental_owners_edit3Tip=["",spacer+"This option allows each member of the group to edit any records in the 'Rental owners' table, regardless of their owner."];
+rental_owners_edit0Tip=["",spacer+"This option prohibits all members of the group from modifying any record in the 'Rental owners Center' table."];
+rental_owners_edit1Tip=["",spacer+"This option allows each member of the group to edit only his own records in the 'Rental owners Center' table."];
+rental_owners_edit2Tip=["",spacer+"This option allows each member of the group to edit any record owned by any member of the group in the 'Rental owners Center' table."];
+rental_owners_edit3Tip=["",spacer+"This option allows each member of the group to edit any records in the 'Rental owners Center' table, regardless of their owner."];
 
-rental_owners_delete0Tip=["",spacer+"This option prohibits all members of the group from deleting any record in the 'Rental owners' table."];
-rental_owners_delete1Tip=["",spacer+"This option allows each member of the group to delete only his own records in the 'Rental owners' table."];
-rental_owners_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'Rental owners' table."];
-rental_owners_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'Rental owners' table."];
+rental_owners_delete0Tip=["",spacer+"This option prohibits all members of the group from deleting any record in the 'Rental owners Center' table."];
+rental_owners_delete1Tip=["",spacer+"This option allows each member of the group to delete only his own records in the 'Rental owners Center' table."];
+rental_owners_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'Rental owners Center' table."];
+rental_owners_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'Rental owners Center' table."];
 
 /*
 	Style syntax:

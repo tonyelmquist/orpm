@@ -44,13 +44,13 @@
 		function getTableList($skip_authentication = false){
 			$arrTables = array(   
 				'applications_leases' => 'Applications/Leases',
-				'residence_and_rental_history' => 'Residence and rental history',
+				'residence_and_rental_history' => 'Rental history',
 				'employment_and_income_history' => 'Employment and income history',
 				'references' => 'References',
 				'applicants_and_tenants' => 'Tenant Center',
 				'properties' => 'Property Center',
-				'units' => 'Unit ',
-				'rental_owners' => 'Rental owners'
+				'units' => 'Units Center',
+				'rental_owners' => 'Rental owners Center'
 			);
 
 			return $arrTables;

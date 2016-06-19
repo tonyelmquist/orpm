@@ -27,7 +27,7 @@
 		"`residence_and_rental_history`.`address`" => "address",
 		"`residence_and_rental_history`.`landlord_or_manager_name`" => "landlord_or_manager_name",
 		"`residence_and_rental_history`.`landlord_or_manager_phone`" => "landlord_or_manager_phone",
-		"CONCAT('$', FORMAT(`residence_and_rental_history`.`monthly_rent`, 2))" => "monthly_rent",
+		"CONCAT('Kshs ', FORMAT(`residence_and_rental_history`.`monthly_rent`, 2))" => "monthly_rent",
 		"if(`residence_and_rental_history`.`duration_of_residency_from`,date_format(`residence_and_rental_history`.`duration_of_residency_from`,'%m/%d/%Y'),'')" => "duration_of_residency_from",
 		"if(`residence_and_rental_history`.`to`,date_format(`residence_and_rental_history`.`to`,'%m/%d/%Y'),'')" => "to",
 		"`residence_and_rental_history`.`reason_for_leaving`" => "reason_for_leaving",
@@ -54,7 +54,7 @@
 		"`residence_and_rental_history`.`address`" => "address",
 		"`residence_and_rental_history`.`landlord_or_manager_name`" => "landlord_or_manager_name",
 		"`residence_and_rental_history`.`landlord_or_manager_phone`" => "landlord_or_manager_phone",
-		"CONCAT('$', FORMAT(`residence_and_rental_history`.`monthly_rent`, 2))" => "monthly_rent",
+		"CONCAT('Kshs ', FORMAT(`residence_and_rental_history`.`monthly_rent`, 2))" => "monthly_rent",
 		"if(`residence_and_rental_history`.`duration_of_residency_from`,date_format(`residence_and_rental_history`.`duration_of_residency_from`,'%m/%d/%Y'),'')" => "duration_of_residency_from",
 		"if(`residence_and_rental_history`.`to`,date_format(`residence_and_rental_history`.`to`,'%m/%d/%Y'),'')" => "to",
 		"`residence_and_rental_history`.`reason_for_leaving`" => "reason_for_leaving",
@@ -81,7 +81,7 @@
 		"`residence_and_rental_history`.`address`" => "address",
 		"`residence_and_rental_history`.`landlord_or_manager_name`" => "landlord_or_manager_name",
 		"`residence_and_rental_history`.`landlord_or_manager_phone`" => "landlord_or_manager_phone",
-		"CONCAT('$', FORMAT(`residence_and_rental_history`.`monthly_rent`, 2))" => "monthly_rent",
+		"CONCAT('Kshs ', FORMAT(`residence_and_rental_history`.`monthly_rent`, 2))" => "monthly_rent",
 		"if(`residence_and_rental_history`.`duration_of_residency_from`,date_format(`residence_and_rental_history`.`duration_of_residency_from`,'%m/%d/%Y'),'')" => "duration_of_residency_from",
 		"if(`residence_and_rental_history`.`to`,date_format(`residence_and_rental_history`.`to`,'%m/%d/%Y'),'')" => "to",
 		"`residence_and_rental_history`.`reason_for_leaving`" => "reason_for_leaving",
@@ -114,7 +114,7 @@
 	$x->QuickSearchText = $Translation["quick search"];
 	$x->ScriptFileName = "residence_and_rental_history_view.php";
 	$x->RedirectAfterInsert = "residence_and_rental_history_view.php?SelectedID=#ID#";
-	$x->TableTitle = "Residence and rental history";
+	$x->TableTitle = "Rental history";
 	$x->TableIcon = "resources/table_icons/document_comment_above.png";
 	$x->PrimaryKey = "`residence_and_rental_history`.`id`";
 

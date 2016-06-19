@@ -27,7 +27,7 @@
 		"`rental_owners`.`last_name`" => "last_name",
 		"if(`rental_owners`.`date_of_birth`,date_format(`rental_owners`.`date_of_birth`,'%m/%d/%Y'),'')" => "date_of_birth",
 		"`rental_owners`.`primary_email`" => "primary_email",
-		"CONCAT_WS('-', LEFT(`rental_owners`.`phone`,3), MID(`rental_owners`.`phone`,4,3), RIGHT(`rental_owners`.`phone`,4))" => "phone",
+		"FORMAT(`rental_owners`.`phone`, 3)" => "phone",
 		"`rental_owners`.`country`" => "country"
 	);
 	// mapping incoming sort by requests to actual query fields
@@ -48,7 +48,7 @@
 		"`rental_owners`.`last_name`" => "last_name",
 		"if(`rental_owners`.`date_of_birth`,date_format(`rental_owners`.`date_of_birth`,'%m/%d/%Y'),'')" => "date_of_birth",
 		"`rental_owners`.`primary_email`" => "primary_email",
-		"CONCAT_WS('-', LEFT(`rental_owners`.`phone`,3), MID(`rental_owners`.`phone`,4,3), RIGHT(`rental_owners`.`phone`,4))" => "phone",
+		"FORMAT(`rental_owners`.`phone`, 3)" => "phone",
 		"`rental_owners`.`country`" => "country"
 	);
 	// Fields that can be filtered
@@ -69,7 +69,7 @@
 		"`rental_owners`.`last_name`" => "last_name",
 		"if(`rental_owners`.`date_of_birth`,date_format(`rental_owners`.`date_of_birth`,'%m/%d/%Y'),'')" => "date_of_birth",
 		"`rental_owners`.`primary_email`" => "primary_email",
-		"CONCAT_WS('-', LEFT(`rental_owners`.`phone`,3), MID(`rental_owners`.`phone`,4,3), RIGHT(`rental_owners`.`phone`,4))" => "phone",
+		"FORMAT(`rental_owners`.`phone`, 3)" => "phone",
 		"`rental_owners`.`country`" => "country"
 	);
 
@@ -99,7 +99,7 @@
 	$x->QuickSearchText = $Translation["quick search"];
 	$x->ScriptFileName = "rental_owners_view.php";
 	$x->RedirectAfterInsert = "rental_owners_view.php?SelectedID=#ID#";
-	$x->TableTitle = "Rental owners";
+	$x->TableTitle = "Rental owners Center";
 	$x->TableIcon = "resources/table_icons/administrator.png";
 	$x->PrimaryKey = "`rental_owners`.`id`";
 

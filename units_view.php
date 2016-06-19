@@ -29,8 +29,8 @@
 		"`units`.`status`" => "status",
 		"`units`.`rooms`" => "rooms",
 		"`units`.`features`" => "features",
-		"CONCAT('$', FORMAT(`units`.`rental_amount`, 2))" => "rental_amount",
-		"CONCAT('$', FORMAT(`units`.`deposit_amount`, 2))" => "deposit_amount",
+		"CONCAT('Kshs ', FORMAT(`units`.`rental_amount`, 2))" => "rental_amount",
+		"CONCAT('Kshs ', FORMAT(`units`.`deposit_amount`, 2))" => "deposit_amount",
 		"`units`.`description`" => "description"
 	);
 	// mapping incoming sort by requests to actual query fields
@@ -56,8 +56,8 @@
 		"`units`.`status`" => "status",
 		"`units`.`rooms`" => "rooms",
 		"`units`.`features`" => "features",
-		"CONCAT('$', FORMAT(`units`.`rental_amount`, 2))" => "rental_amount",
-		"CONCAT('$', FORMAT(`units`.`deposit_amount`, 2))" => "deposit_amount",
+		"CONCAT('Kshs ', FORMAT(`units`.`rental_amount`, 2))" => "rental_amount",
+		"CONCAT('Kshs ', FORMAT(`units`.`deposit_amount`, 2))" => "deposit_amount",
 		"`units`.`description`" => "description"
 	);
 	// Fields that can be filtered
@@ -81,8 +81,8 @@
 		"`units`.`status`" => "status",
 		"`units`.`rooms`" => "rooms",
 		"`units`.`features`" => "features",
-		"CONCAT('$', FORMAT(`units`.`rental_amount`, 2))" => "rental_amount",
-		"CONCAT('$', FORMAT(`units`.`deposit_amount`, 2))" => "deposit_amount",
+		"CONCAT('Kshs ', FORMAT(`units`.`rental_amount`, 2))" => "rental_amount",
+		"CONCAT('Kshs ', FORMAT(`units`.`deposit_amount`, 2))" => "deposit_amount",
 		"`units`.`description`" => "description"
 	);
 
@@ -112,7 +112,7 @@
 	$x->QuickSearchText = $Translation["quick search"];
 	$x->ScriptFileName = "units_view.php";
 	$x->RedirectAfterInsert = "units_view.php";
-	$x->TableTitle = "Unit ";
+	$x->TableTitle = "Units Center";
 	$x->TableIcon = "resources/table_icons/change_password.png";
 	$x->PrimaryKey = "`units`.`id`";
 

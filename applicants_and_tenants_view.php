@@ -26,7 +26,7 @@
 		"`applicants_and_tenants`.`last_name`" => "last_name",
 		"`applicants_and_tenants`.`first_name`" => "first_name",
 		"`applicants_and_tenants`.`email`" => "email",
-		"CONCAT_WS('-', LEFT(`applicants_and_tenants`.`phone`,3), MID(`applicants_and_tenants`.`phone`,4,3), RIGHT(`applicants_and_tenants`.`phone`,4))" => "phone",
+		"FORMAT(`applicants_and_tenants`.`phone`, 3)" => "phone",
 		"if(`applicants_and_tenants`.`birth_date`,date_format(`applicants_and_tenants`.`birth_date`,'%m/%d/%Y'),'')" => "birth_date",
 		"`applicants_and_tenants`.`status`" => "status"
 	);
@@ -47,7 +47,7 @@
 		"`applicants_and_tenants`.`last_name`" => "last_name",
 		"`applicants_and_tenants`.`first_name`" => "first_name",
 		"`applicants_and_tenants`.`email`" => "email",
-		"CONCAT_WS('-', LEFT(`applicants_and_tenants`.`phone`,3), MID(`applicants_and_tenants`.`phone`,4,3), RIGHT(`applicants_and_tenants`.`phone`,4))" => "phone",
+		"FORMAT(`applicants_and_tenants`.`phone`, 3)" => "phone",
 		"if(`applicants_and_tenants`.`birth_date`,date_format(`applicants_and_tenants`.`birth_date`,'%m/%d/%Y'),'')" => "birth_date",
 		"`applicants_and_tenants`.`status`" => "status"
 	);
@@ -68,7 +68,7 @@
 		"`applicants_and_tenants`.`last_name`" => "last_name",
 		"`applicants_and_tenants`.`first_name`" => "first_name",
 		"`applicants_and_tenants`.`email`" => "email",
-		"CONCAT_WS('-', LEFT(`applicants_and_tenants`.`phone`,3), MID(`applicants_and_tenants`.`phone`,4,3), RIGHT(`applicants_and_tenants`.`phone`,4))" => "phone",
+		"FORMAT(`applicants_and_tenants`.`phone`, 3)" => "phone",
 		"if(`applicants_and_tenants`.`birth_date`,date_format(`applicants_and_tenants`.`birth_date`,'%m/%d/%Y'),'')" => "birth_date",
 		"`applicants_and_tenants`.`status`" => "status"
 	);
