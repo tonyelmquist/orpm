@@ -62,7 +62,9 @@
 			'email' => array('appgini' => 'VARCHAR(80) '),
 			'phone' => array('appgini' => 'VARCHAR(15) '),
 			'birth_date' => array('appgini' => 'DATE '),
-			'status' => array('appgini' => 'VARCHAR(40) not null default \'Applicant\' ')
+			'status' => array('appgini' => 'VARCHAR(40) not null default \'Applicant\' '),
+			'property' => array('appgini' => 'INT unsigned '),
+			'unit' => array('appgini' => 'INT unsigned ')
 		),
 		'properties' => array(   
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),

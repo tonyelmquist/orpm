@@ -36,7 +36,7 @@
 				'parent_table' => 'applicants_and_tenants',
 				'parent_pk_field' => 'id',
 				'parent_caption' => 'IF(CHAR_LENGTH(`applicants_and_tenants`.`first_name`) || CHAR_LENGTH(`applicants_and_tenants`.`last_name`), CONCAT_WS(\'\', `applicants_and_tenants`.`first_name`, \' \', `applicants_and_tenants`.`last_name`), \'\')',
-				'parent_from' => '`applicants_and_tenants` ',
+				'parent_from' => '`applicants_and_tenants` LEFT JOIN `properties` as properties1 ON `properties1`.`id`=`applicants_and_tenants`.`property` LEFT JOIN `units` as units1 ON `units1`.`id`=`applicants_and_tenants`.`unit` LEFT JOIN `properties` as properties2 ON `properties2`.`id`=`units1`.`property` ',
 				'filterers' => array(),
 				'custom_query' => '',
 				'inherit_permissions' => false,
@@ -71,7 +71,7 @@
 				'parent_table' => 'applicants_and_tenants',
 				'parent_pk_field' => 'id',
 				'parent_caption' => 'IF(CHAR_LENGTH(`applicants_and_tenants`.`first_name`) || CHAR_LENGTH(`applicants_and_tenants`.`last_name`), CONCAT_WS(\'\', `applicants_and_tenants`.`first_name`, \' \', `applicants_and_tenants`.`last_name`), \'\')',
-				'parent_from' => '`applicants_and_tenants` ',
+				'parent_from' => '`applicants_and_tenants` LEFT JOIN `properties` as properties1 ON `properties1`.`id`=`applicants_and_tenants`.`property` LEFT JOIN `units` as units1 ON `units1`.`id`=`applicants_and_tenants`.`unit` LEFT JOIN `properties` as properties2 ON `properties2`.`id`=`units1`.`property` ',
 				'filterers' => array(),
 				'custom_query' => '',
 				'inherit_permissions' => false,
@@ -84,7 +84,7 @@
 				'parent_table' => 'applicants_and_tenants',
 				'parent_pk_field' => 'id',
 				'parent_caption' => 'IF(CHAR_LENGTH(`applicants_and_tenants`.`first_name`) || CHAR_LENGTH(`applicants_and_tenants`.`last_name`), CONCAT_WS(\'\', `applicants_and_tenants`.`first_name`, \' \', `applicants_and_tenants`.`last_name`), \'\')',
-				'parent_from' => '`applicants_and_tenants` ',
+				'parent_from' => '`applicants_and_tenants` LEFT JOIN `properties` as properties1 ON `properties1`.`id`=`applicants_and_tenants`.`property` LEFT JOIN `units` as units1 ON `units1`.`id`=`applicants_and_tenants`.`unit` LEFT JOIN `properties` as properties2 ON `properties2`.`id`=`units1`.`property` ',
 				'filterers' => array(),
 				'custom_query' => '',
 				'inherit_permissions' => false,
@@ -97,7 +97,7 @@
 				'parent_table' => 'applicants_and_tenants',
 				'parent_pk_field' => 'id',
 				'parent_caption' => 'IF(CHAR_LENGTH(`applicants_and_tenants`.`first_name`) || CHAR_LENGTH(`applicants_and_tenants`.`last_name`), CONCAT_WS(\'\', `applicants_and_tenants`.`first_name`, \' \', `applicants_and_tenants`.`last_name`), \'\')',
-				'parent_from' => '`applicants_and_tenants` ',
+				'parent_from' => '`applicants_and_tenants` LEFT JOIN `properties` as properties1 ON `properties1`.`id`=`applicants_and_tenants`.`property` LEFT JOIN `units` as units1 ON `units1`.`id`=`applicants_and_tenants`.`unit` LEFT JOIN `properties` as properties2 ON `properties2`.`id`=`units1`.`property` ',
 				'filterers' => array(),
 				'custom_query' => '',
 				'inherit_permissions' => false,
@@ -105,7 +105,29 @@
 				'not_null' => false
 			)
 		),
-		'applicants_and_tenants' => array(  
+		'applicants_and_tenants' => array(   
+			'property' => array(
+				'parent_table' => 'properties',
+				'parent_pk_field' => 'id',
+				'parent_caption' => 'IF(CHAR_LENGTH(`properties`.`property_name`) || CHAR_LENGTH(`properties`.`City`), CONCAT_WS(\'\', `properties`.`property_name`, \' - \', `properties`.`City`), \'\')',
+				'parent_from' => '`properties` LEFT JOIN `rental_owners` as rental_owners1 ON `rental_owners1`.`id`=`properties`.`owner` ',
+				'filterers' => array(),
+				'custom_query' => '',
+				'inherit_permissions' => false,
+				'list_type' => 0,
+				'not_null' => false
+			),
+			'unit' => array(
+				'parent_table' => 'units',
+				'parent_pk_field' => 'id',
+				'parent_caption' => 'IF(CHAR_LENGTH(`units`.`property`) || CHAR_LENGTH(`units`.`unit_number`), CONCAT_WS(\'\', IF(    CHAR_LENGTH(`properties1`.`property_name`), CONCAT_WS(\'\',   `properties1`.`property_name`), \'\'), \' - \', `units`.`unit_number`), \'\')',
+				'parent_from' => '`units` LEFT JOIN `properties` as properties1 ON `properties1`.`id`=`units`.`property` ',
+				'filterers' => array('property' => 'property'),
+				'custom_query' => '',
+				'inherit_permissions' => false,
+				'list_type' => 0,
+				'not_null' => false
+			)
 		),
 		'properties' => array(   
 			'owner' => array(

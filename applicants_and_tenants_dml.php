@@ -26,6 +26,10 @@ function applicants_and_tenants_insert(){
 	$data['birth_date'] = parseMySQLDate($data['birth_date'], '');
 	$data['status'] = makeSafe($_REQUEST['status']);
 		if($data['status'] == empty_lookup_value){ $data['status'] = ''; }
+	$data['property'] = makeSafe($_REQUEST['property']);
+		if($data['property'] == empty_lookup_value){ $data['property'] = ''; }
+	$data['unit'] = makeSafe($_REQUEST['unit']);
+		if($data['unit'] == empty_lookup_value){ $data['unit'] = ''; }
 	if($data['status'] == '') $data['status'] = "Applicant";
 	if($data['status']== ''){
 		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'Status': " . $Translation['field not null'] . '<br><br>';
@@ -40,7 +44,7 @@ function applicants_and_tenants_insert(){
 	}
 
 	$o=array('silentErrors' => true);
-	sql('insert into `applicants_and_tenants` set       `last_name`=' . (($data['last_name'] !== '' && $data['last_name'] !== NULL) ? "'{$data['last_name']}'" : 'NULL') . ', `first_name`=' . (($data['first_name'] !== '' && $data['first_name'] !== NULL) ? "'{$data['first_name']}'" : 'NULL') . ', `email`=' . (($data['email'] !== '' && $data['email'] !== NULL) ? "'{$data['email']}'" : 'NULL') . ', `phone`=' . (($data['phone'] !== '' && $data['phone'] !== NULL) ? "'{$data['phone']}'" : 'NULL') . ', `birth_date`=' . (($data['birth_date'] !== '' && $data['birth_date'] !== NULL) ? "'{$data['birth_date']}'" : 'NULL') . ', `status`=' . (($data['status'] !== '' && $data['status'] !== NULL) ? "'{$data['status']}'" : 'NULL'), $o);
+	sql('insert into `applicants_and_tenants` set       `last_name`=' . (($data['last_name'] !== '' && $data['last_name'] !== NULL) ? "'{$data['last_name']}'" : 'NULL') . ', `first_name`=' . (($data['first_name'] !== '' && $data['first_name'] !== NULL) ? "'{$data['first_name']}'" : 'NULL') . ', `email`=' . (($data['email'] !== '' && $data['email'] !== NULL) ? "'{$data['email']}'" : 'NULL') . ', `phone`=' . (($data['phone'] !== '' && $data['phone'] !== NULL) ? "'{$data['phone']}'" : 'NULL') . ', `birth_date`=' . (($data['birth_date'] !== '' && $data['birth_date'] !== NULL) ? "'{$data['birth_date']}'" : 'NULL') . ', `status`=' . (($data['status'] !== '' && $data['status'] !== NULL) ? "'{$data['status']}'" : 'NULL') . ', `property`=' . (($data['property'] !== '' && $data['property'] !== NULL) ? "'{$data['property']}'" : 'NULL') . ', `unit`=' . (($data['unit'] !== '' && $data['unit'] !== NULL) ? "'{$data['unit']}'" : 'NULL'), $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo "<a href=\"applicants_and_tenants_view.php?addNew_x=1\">{$Translation['< back']}</a>";
@@ -206,6 +210,10 @@ function applicants_and_tenants_update($selected_id){
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
 		exit;
 	}
+	$data['property'] = makeSafe($_REQUEST['property']);
+		if($data['property'] == empty_lookup_value){ $data['property'] = ''; }
+	$data['unit'] = makeSafe($_REQUEST['unit']);
+		if($data['unit'] == empty_lookup_value){ $data['unit'] = ''; }
 	$data['selectedID']=makeSafe($selected_id);
 
 	// hook: applicants_and_tenants_before_update
@@ -215,7 +223,7 @@ function applicants_and_tenants_update($selected_id){
 	}
 
 	$o=array('silentErrors' => true);
-	sql('update `applicants_and_tenants` set       `last_name`=' . (($data['last_name'] !== '' && $data['last_name'] !== NULL) ? "'{$data['last_name']}'" : 'NULL') . ', `first_name`=' . (($data['first_name'] !== '' && $data['first_name'] !== NULL) ? "'{$data['first_name']}'" : 'NULL') . ', `email`=' . (($data['email'] !== '' && $data['email'] !== NULL) ? "'{$data['email']}'" : 'NULL') . ', `phone`=' . (($data['phone'] !== '' && $data['phone'] !== NULL) ? "'{$data['phone']}'" : 'NULL') . ', `birth_date`=' . (($data['birth_date'] !== '' && $data['birth_date'] !== NULL) ? "'{$data['birth_date']}'" : 'NULL') . ', `status`=' . (($data['status'] !== '' && $data['status'] !== NULL) ? "'{$data['status']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
+	sql('update `applicants_and_tenants` set       `last_name`=' . (($data['last_name'] !== '' && $data['last_name'] !== NULL) ? "'{$data['last_name']}'" : 'NULL') . ', `first_name`=' . (($data['first_name'] !== '' && $data['first_name'] !== NULL) ? "'{$data['first_name']}'" : 'NULL') . ', `email`=' . (($data['email'] !== '' && $data['email'] !== NULL) ? "'{$data['email']}'" : 'NULL') . ', `phone`=' . (($data['phone'] !== '' && $data['phone'] !== NULL) ? "'{$data['phone']}'" : 'NULL') . ', `birth_date`=' . (($data['birth_date'] !== '' && $data['birth_date'] !== NULL) ? "'{$data['birth_date']}'" : 'NULL') . ', `status`=' . (($data['status'] !== '' && $data['status'] !== NULL) ? "'{$data['status']}'" : 'NULL') . ', `property`=' . (($data['property'] !== '' && $data['property'] !== NULL) ? "'{$data['property']}'" : 'NULL') . ', `unit`=' . (($data['unit'] !== '' && $data['unit'] !== NULL) ? "'{$data['unit']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo '<a href="applicants_and_tenants_view.php?SelectedID='.urlencode($selected_id)."\">{$Translation['< back']}</a>";
@@ -257,8 +265,11 @@ function applicants_and_tenants_form($selected_id = '', $AllowUpdate = 1, $Allow
 		$dvprint = true;
 	}
 
+	$filterer_property = thisOr(undo_magic_quotes($_REQUEST['filterer_property']), '');
+	$filterer_unit = thisOr(undo_magic_quotes($_REQUEST['filterer_unit']), '');
 
 	// populate filterers, starting from children to grand-parents
+	if($filterer_unit && !$filterer_property) $filterer_property = sqlValue("select property from units where id='" . makeSafe($filterer_unit) . "'");
 
 	// unique random identifier
 	$rnd1 = ($dvprint ? rand(1000000, 9999999) : '');
@@ -286,6 +297,10 @@ function applicants_and_tenants_form($selected_id = '', $AllowUpdate = 1, $Allow
 	}
 	$combo_status->SelectName = 'status';
 	$combo_status->AllowNull = false;
+	// combobox: property
+	$combo_property = new DataCombo;
+	// combobox: unit, filterable by: property
+	$combo_unit = new DataCombo;
 
 	if($selected_id){
 		// mm: check member permissions
@@ -318,19 +333,171 @@ function applicants_and_tenants_form($selected_id = '', $AllowUpdate = 1, $Allow
 		$row = $hc->xss_clean($row); /* sanitize data */
 		$combo_birth_date->DefaultDate = $row['birth_date'];
 		$combo_status->SelectedData = $row['status'];
+		$combo_property->SelectedData = $row['property'];
+		$combo_unit->SelectedData = $row['unit'];
 	}else{
 		$combo_status->SelectedText = ( $_REQUEST['FilterField'][1]=='7' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "Applicant");
+		$combo_property->SelectedData = $filterer_property;
+		$combo_unit->SelectedData = $filterer_unit;
 	}
 	$combo_status->Render();
+	$combo_property->HTML = '<span id="property-container' . $rnd1 . '"></span><input type="hidden" name="property" id="property' . $rnd1 . '" value="' . htmlspecialchars($combo_property->SelectedData, ENT_QUOTES, 'UTF-8') . '">';
+	$combo_property->MatchText = '<span id="property-container-readonly' . $rnd1 . '"></span><input type="hidden" name="property" id="property' . $rnd1 . '" value="' . htmlspecialchars($combo_property->SelectedData, ENT_QUOTES, 'UTF-8') . '">';
+	$combo_unit->HTML = '<span id="unit-container' . $rnd1 . '"></span><input type="hidden" name="unit" id="unit' . $rnd1 . '" value="' . htmlspecialchars($combo_unit->SelectedData, ENT_QUOTES, 'UTF-8') . '">';
+	$combo_unit->MatchText = '<span id="unit-container-readonly' . $rnd1 . '"></span><input type="hidden" name="unit" id="unit' . $rnd1 . '" value="' . htmlspecialchars($combo_unit->SelectedData, ENT_QUOTES, 'UTF-8') . '">';
 
 	ob_start();
 	?>
 
 	<script>
 		// initial lookup values
+		var current_property__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['property'] : $filterer_property); ?>"};
+		var current_unit__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['unit'] : $filterer_unit); ?>"};
 
 		jQuery(function() {
+			if(typeof(property_reload__RAND__) == 'function') property_reload__RAND__();
+			<?php echo (!$AllowUpdate || $dvprint ? 'if(typeof(unit_reload__RAND__) == \'function\') unit_reload__RAND__(current_property__RAND__.value);' : ''); ?>
 		});
+		function property_reload__RAND__(){
+		<?php if(($AllowUpdate || $AllowInsert) && !$dvprint){ ?>
+
+			jQuery("#property-container__RAND__").select2({
+				/* initial default value */
+				initSelection: function(e, c){
+					jQuery.ajax({
+						url: 'ajax_combo.php',
+						dataType: 'json',
+						data: { id: current_property__RAND__.value, t: 'applicants_and_tenants', f: 'property' }
+					}).done(function(resp){
+						c({
+							id: resp.results[0].id,
+							text: resp.results[0].text
+						});
+						jQuery('[name="property"]').val(resp.results[0].id);
+						jQuery('[id=property-container-readonly__RAND__]').html('<span id="property-match-text">' + resp.results[0].text + '</span>');
+
+						if(typeof(unit_reload__RAND__) == 'function') unit_reload__RAND__(current_property__RAND__.value);
+
+						if(typeof(property_update_autofills__RAND__) == 'function') property_update_autofills__RAND__();
+					});
+				},
+				width: ($j('fieldset .col-xs-11').width() - 99) + 'px',
+				formatNoMatches: function(term){ return '<?php echo addslashes($Translation['No matches found!']); ?>'; },
+				minimumResultsForSearch: 10,
+				loadMorePadding: 200,
+				ajax: {
+					url: 'ajax_combo.php',
+					dataType: 'json',
+					cache: true,
+					data: function(term, page){ return { s: term, p: page, t: 'applicants_and_tenants', f: 'property' }; },
+					results: function(resp, page){ return resp; }
+				}
+			}).on('change', function(e){
+				current_property__RAND__.value = e.added.id;
+				current_property__RAND__.text = e.added.text;
+				jQuery('[name="property"]').val(e.added.id);
+
+						if(typeof(unit_reload__RAND__) == 'function') unit_reload__RAND__(current_property__RAND__.value);
+
+				if(typeof(property_update_autofills__RAND__) == 'function') property_update_autofills__RAND__();
+			});
+
+			if(!$j("#property-container__RAND__").length){
+				$j.ajax({
+					url: 'ajax_combo.php',
+					dataType: 'json',
+					data: { id: current_property__RAND__.value, t: 'applicants_and_tenants', f: 'property' }
+				}).done(function(resp){
+					$j('[name="property"]').val(resp.results[0].id);
+					$j('[id=property-container-readonly__RAND__]').html('<span id="property-match-text">' + resp.results[0].text + '</span>');
+
+					if(typeof(property_update_autofills__RAND__) == 'function') property_update_autofills__RAND__();
+				});
+			}
+
+		<?php }else{ ?>
+
+			jQuery.ajax({
+				url: 'ajax_combo.php',
+				dataType: 'json',
+				data: { id: current_property__RAND__.value, t: 'applicants_and_tenants', f: 'property' }
+			}).done(function(resp){
+				jQuery('[id=property-container__RAND__], [id=property-container-readonly__RAND__]').html('<span id="property-match-text">' + resp.results[0].text + '</span>');
+
+				if(typeof(property_update_autofills__RAND__) == 'function') property_update_autofills__RAND__();
+			});
+		<?php } ?>
+
+		}
+		function unit_reload__RAND__(filterer_property){
+		<?php if(($AllowUpdate || $AllowInsert) && !$dvprint){ ?>
+
+			jQuery("#unit-container__RAND__").select2({
+				/* initial default value */
+				initSelection: function(e, c){
+					jQuery.ajax({
+						url: 'ajax_combo.php',
+						dataType: 'json',
+						data: { filterer_property: filterer_property, id: current_unit__RAND__.value, t: 'applicants_and_tenants', f: 'unit' }
+					}).done(function(resp){
+						c({
+							id: resp.results[0].id,
+							text: resp.results[0].text
+						});
+						jQuery('[name="unit"]').val(resp.results[0].id);
+						jQuery('[id=unit-container-readonly__RAND__]').html('<span id="unit-match-text">' + resp.results[0].text + '</span>');
+
+
+						if(typeof(unit_update_autofills__RAND__) == 'function') unit_update_autofills__RAND__();
+					});
+				},
+				width: ($j('fieldset .col-xs-11').width() - 99) + 'px',
+				formatNoMatches: function(term){ return '<?php echo addslashes($Translation['No matches found!']); ?>'; },
+				minimumResultsForSearch: 10,
+				loadMorePadding: 200,
+				ajax: {
+					url: 'ajax_combo.php',
+					dataType: 'json',
+					cache: true,
+					data: function(term, page){ return { filterer_property: filterer_property, s: term, p: page, t: 'applicants_and_tenants', f: 'unit' }; },
+					results: function(resp, page){ return resp; }
+				}
+			}).on('change', function(e){
+				current_unit__RAND__.value = e.added.id;
+				current_unit__RAND__.text = e.added.text;
+				jQuery('[name="unit"]').val(e.added.id);
+
+
+				if(typeof(unit_update_autofills__RAND__) == 'function') unit_update_autofills__RAND__();
+			});
+
+			if(!$j("#unit-container__RAND__").length){
+				$j.ajax({
+					url: 'ajax_combo.php',
+					dataType: 'json',
+					data: { id: current_unit__RAND__.value, t: 'applicants_and_tenants', f: 'unit' }
+				}).done(function(resp){
+					$j('[name="unit"]').val(resp.results[0].id);
+					$j('[id=unit-container-readonly__RAND__]').html('<span id="unit-match-text">' + resp.results[0].text + '</span>');
+
+					if(typeof(unit_update_autofills__RAND__) == 'function') unit_update_autofills__RAND__();
+				});
+			}
+
+		<?php }else{ ?>
+
+			jQuery.ajax({
+				url: 'ajax_combo.php',
+				dataType: 'json',
+				data: { id: current_unit__RAND__.value, t: 'applicants_and_tenants', f: 'unit' }
+			}).done(function(resp){
+				jQuery('[id=unit-container__RAND__], [id=unit-container-readonly__RAND__]').html('<span id="unit-match-text">' + resp.results[0].text + '</span>');
+
+				if(typeof(unit_update_autofills__RAND__) == 'function') unit_update_autofills__RAND__();
+			});
+		<?php } ?>
+
+		}
 	</script>
 	<?php
 
@@ -395,6 +562,10 @@ function applicants_and_tenants_form($selected_id = '', $AllowUpdate = 1, $Allow
 		$jsReadOnly .= "\tjQuery('#birth_date').prop('readonly', true);\n";
 		$jsReadOnly .= "\tjQuery('#birth_dateDay, #birth_dateMonth, #birth_dateYear').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
 		$jsReadOnly .= "\tjQuery('input[name=status]').parent().html('<div class=\"form-control-static\">' + jQuery('input[name=status]:checked').next().text() + '</div>')\n";
+		$jsReadOnly .= "\tjQuery('#property').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
+		$jsReadOnly .= "\tjQuery('#property_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
+		$jsReadOnly .= "\tjQuery('#unit').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
+		$jsReadOnly .= "\tjQuery('#unit_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
 		$jsReadOnly .= "\tjQuery('.select2-container').hide();\n";
 
 		$noUploads = true;
@@ -408,9 +579,15 @@ function applicants_and_tenants_form($selected_id = '', $AllowUpdate = 1, $Allow
 	$templateCode=str_replace('<%%COMBOTEXT(birth_date)%%>', $combo_birth_date->GetHTML(true), $templateCode);
 	$templateCode=str_replace('<%%COMBO(status)%%>', $combo_status->HTML, $templateCode);
 	$templateCode=str_replace('<%%COMBOTEXT(status)%%>', $combo_status->SelectedData, $templateCode);
+	$templateCode=str_replace('<%%COMBO(property)%%>', $combo_property->HTML, $templateCode);
+	$templateCode=str_replace('<%%COMBOTEXT(property)%%>', $combo_property->MatchText, $templateCode);
+	$templateCode=str_replace('<%%URLCOMBOTEXT(property)%%>', urlencode($combo_property->MatchText), $templateCode);
+	$templateCode=str_replace('<%%COMBO(unit)%%>', $combo_unit->HTML, $templateCode);
+	$templateCode=str_replace('<%%COMBOTEXT(unit)%%>', $combo_unit->MatchText, $templateCode);
+	$templateCode=str_replace('<%%URLCOMBOTEXT(unit)%%>', urlencode($combo_unit->MatchText), $templateCode);
 
 	/* lookup fields array: 'lookup field name' => array('parent table name', 'lookup field caption') */
-	$lookup_fields = array();
+	$lookup_fields = array(  'property' => array('properties', 'Rented Property'), 'unit' => array('units', 'Rented Unit'));
 	foreach($lookup_fields as $luf => $ptfc){
 		$pt_perm = getTablePermissions($ptfc[0]);
 
@@ -433,6 +610,8 @@ function applicants_and_tenants_form($selected_id = '', $AllowUpdate = 1, $Allow
 	$templateCode=str_replace('<%%UPLOADFILE(phone)%%>', '', $templateCode);
 	$templateCode=str_replace('<%%UPLOADFILE(birth_date)%%>', '', $templateCode);
 	$templateCode=str_replace('<%%UPLOADFILE(status)%%>', '', $templateCode);
+	$templateCode=str_replace('<%%UPLOADFILE(property)%%>', '', $templateCode);
+	$templateCode=str_replace('<%%UPLOADFILE(unit)%%>', '', $templateCode);
 
 	// process values
 	if($selected_id){
@@ -450,6 +629,10 @@ function applicants_and_tenants_form($selected_id = '', $AllowUpdate = 1, $Allow
 		$templateCode=str_replace('<%%URLVALUE(birth_date)%%>', urlencode(@date('m/d/Y', @strtotime(htmlspecialchars($urow['birth_date'], ENT_QUOTES, 'UTF-8')))), $templateCode);
 		$templateCode=str_replace('<%%VALUE(status)%%>', htmlspecialchars($row['status'], ENT_QUOTES, 'UTF-8'), $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(status)%%>', urlencode($urow['status']), $templateCode);
+		$templateCode=str_replace('<%%VALUE(property)%%>', htmlspecialchars($row['property'], ENT_QUOTES, 'UTF-8'), $templateCode);
+		$templateCode=str_replace('<%%URLVALUE(property)%%>', urlencode($urow['property']), $templateCode);
+		$templateCode=str_replace('<%%VALUE(unit)%%>', htmlspecialchars($row['unit'], ENT_QUOTES, 'UTF-8'), $templateCode);
+		$templateCode=str_replace('<%%URLVALUE(unit)%%>', urlencode($urow['unit']), $templateCode);
 	}else{
 		$templateCode=str_replace('<%%VALUE(id)%%>', '', $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(id)%%>', urlencode(''), $templateCode);
@@ -465,6 +648,10 @@ function applicants_and_tenants_form($selected_id = '', $AllowUpdate = 1, $Allow
 		$templateCode=str_replace('<%%URLVALUE(birth_date)%%>', urlencode(''), $templateCode);
 		$templateCode=str_replace('<%%VALUE(status)%%>', 'Applicant', $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(status)%%>', urlencode('Applicant'), $templateCode);
+		$templateCode=str_replace('<%%VALUE(property)%%>', '', $templateCode);
+		$templateCode=str_replace('<%%URLVALUE(property)%%>', urlencode(''), $templateCode);
+		$templateCode=str_replace('<%%VALUE(unit)%%>', '', $templateCode);
+		$templateCode=str_replace('<%%URLVALUE(unit)%%>', urlencode(''), $templateCode);
 	}
 
 	// process translations

@@ -28,7 +28,9 @@
 		"`applicants_and_tenants`.`email`" => "email",
 		"`applicants_and_tenants`.`phone`" => "phone",
 		"if(`applicants_and_tenants`.`birth_date`,date_format(`applicants_and_tenants`.`birth_date`,'%m/%d/%Y'),'')" => "birth_date",
-		"`applicants_and_tenants`.`status`" => "status"
+		"`applicants_and_tenants`.`status`" => "status",
+		"IF(    CHAR_LENGTH(`properties1`.`property_name`) || CHAR_LENGTH(`properties1`.`City`), CONCAT_WS('',   `properties1`.`property_name`, ' - ', `properties1`.`City`), '') /* Rented Property */" => "property",
+		"IF(    CHAR_LENGTH(`properties2`.`property_name`) || CHAR_LENGTH(`units1`.`unit_number`), CONCAT_WS('',   `properties2`.`property_name`, ' - ', `units1`.`unit_number`), '') /* Rented Unit */" => "unit"
 	);
 	// mapping incoming sort by requests to actual query fields
 	$x->SortFields = array(   
@@ -38,7 +40,9 @@
 		4 => 4,
 		5 => 5,
 		6 => '`applicants_and_tenants`.`birth_date`',
-		7 => 7
+		7 => 7,
+		8 => 8,
+		9 => 9
 	);
 
 	// Fields that can be displayed in the csv file
@@ -49,7 +53,9 @@
 		"`applicants_and_tenants`.`email`" => "email",
 		"`applicants_and_tenants`.`phone`" => "phone",
 		"if(`applicants_and_tenants`.`birth_date`,date_format(`applicants_and_tenants`.`birth_date`,'%m/%d/%Y'),'')" => "birth_date",
-		"`applicants_and_tenants`.`status`" => "status"
+		"`applicants_and_tenants`.`status`" => "status",
+		"IF(    CHAR_LENGTH(`properties1`.`property_name`) || CHAR_LENGTH(`properties1`.`City`), CONCAT_WS('',   `properties1`.`property_name`, ' - ', `properties1`.`City`), '') /* Rented Property */" => "property",
+		"IF(    CHAR_LENGTH(`properties2`.`property_name`) || CHAR_LENGTH(`units1`.`unit_number`), CONCAT_WS('',   `properties2`.`property_name`, ' - ', `units1`.`unit_number`), '') /* Rented Unit */" => "unit"
 	);
 	// Fields that can be filtered
 	$x->QueryFieldsFilters=array(   
@@ -59,7 +65,9 @@
 		"`applicants_and_tenants`.`email`" => "Email",
 		"`applicants_and_tenants`.`phone`" => "Phone",
 		"`applicants_and_tenants`.`birth_date`" => "Birth date",
-		"`applicants_and_tenants`.`status`" => "Status"
+		"`applicants_and_tenants`.`status`" => "Status",
+		"IF(    CHAR_LENGTH(`properties1`.`property_name`) || CHAR_LENGTH(`properties1`.`City`), CONCAT_WS('',   `properties1`.`property_name`, ' - ', `properties1`.`City`), '') /* Rented Property */" => "Rented Property",
+		"IF(    CHAR_LENGTH(`properties2`.`property_name`) || CHAR_LENGTH(`units1`.`unit_number`), CONCAT_WS('',   `properties2`.`property_name`, ' - ', `units1`.`unit_number`), '') /* Rented Unit */" => "Rented Unit"
 	);
 
 	// Fields that can be quick searched
@@ -70,13 +78,15 @@
 		"`applicants_and_tenants`.`email`" => "email",
 		"`applicants_and_tenants`.`phone`" => "phone",
 		"if(`applicants_and_tenants`.`birth_date`,date_format(`applicants_and_tenants`.`birth_date`,'%m/%d/%Y'),'')" => "birth_date",
-		"`applicants_and_tenants`.`status`" => "status"
+		"`applicants_and_tenants`.`status`" => "status",
+		"IF(    CHAR_LENGTH(`properties1`.`property_name`) || CHAR_LENGTH(`properties1`.`City`), CONCAT_WS('',   `properties1`.`property_name`, ' - ', `properties1`.`City`), '') /* Rented Property */" => "property",
+		"IF(    CHAR_LENGTH(`properties2`.`property_name`) || CHAR_LENGTH(`units1`.`unit_number`), CONCAT_WS('',   `properties2`.`property_name`, ' - ', `units1`.`unit_number`), '') /* Rented Unit */" => "unit"
 	);
 
 	// Lookup fields that can be used as filterers
-	$x->filterers = array();
+	$x->filterers = array(  'property' => 'Rented Property', 'unit' => 'Rented Unit');
 
-	$x->QueryFrom="`applicants_and_tenants` ";
+	$x->QueryFrom="`applicants_and_tenants` LEFT JOIN `properties` as properties1 ON `properties1`.`id`=`applicants_and_tenants`.`property` LEFT JOIN `units` as units1 ON `units1`.`id`=`applicants_and_tenants`.`unit` LEFT JOIN `properties` as properties2 ON `properties2`.`id`=`units1`.`property` ";
 	$x->QueryWhere='';
 	$x->QueryOrder='';
 
@@ -105,10 +115,10 @@
 	$x->DefaultSortField = '2';
 	$x->DefaultSortDirection = 'asc';
 
-	$x->ColWidth   = array(  100, 100, 100, 100, 100, 100);
-	$x->ColCaption = array("Surname", "Othernames", "Email", "Phone", "Birth date", "Status");
-	$x->ColFieldName = array('last_name', 'first_name', 'email', 'phone', 'birth_date', 'status');
-	$x->ColNumber  = array(2, 3, 4, 5, 6, 7);
+	$x->ColWidth   = array(  100, 100, 100, 100, 100, 100, 150, 150);
+	$x->ColCaption = array("Surname", "Othernames", "Email", "Phone", "Birth date", "Status", "Rented Property", "Rented Unit");
+	$x->ColFieldName = array('last_name', 'first_name', 'email', 'phone', 'birth_date', 'status', 'property', 'unit');
+	$x->ColNumber  = array(2, 3, 4, 5, 6, 7, 8, 9);
 
 	$x->Template = 'templates/applicants_and_tenants_templateTV.html';
 	$x->SelectedTemplate = 'templates/applicants_and_tenants_templateTVS.html';
