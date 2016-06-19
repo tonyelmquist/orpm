@@ -113,32 +113,32 @@
 				array(
 						'title' => 'Generate Rent Reminders',
 						'function' => 'generate_rent_reminder',
-						'icon' => 'th-list'
+						'icon' => 'calendar'
 				),
 				array(
 						'title' => 'Generate Rent Invoices',
 						'function' => 'generate_rent_Invoice',
-						'icon' => 'th-list'
+						'icon' => 'list-alt'
 				),
 				array(
 						'title' => 'Generate Rent Receipts',
 						'function' => 'generate_rent_receipt',
-						'icon' => 'th-list'
+						'icon' => 'list-alt'
 				),				
 				array(
 						'title' => 'Generate Late Rent Notices',
 						'function' => 'late_rent_notice',
-						'icon' => 'th-list'
+						'icon' => 'time'
 				),
 				array(
 						'title' => 'View Tenant Balance History',
 						'function' => 'tenant_balance_history',
-						'icon' => 'th-list'
+						'icon' => 'minus'
 				),
 				array(
 						'title' => 'View Tenant Rent Record',
 						'function' => 'tenant_rent_record',
-						'icon' => 'th-list'
+						'icon' => 'paperclip'
 				),
 				array(
 						'title' => 'View Details',
