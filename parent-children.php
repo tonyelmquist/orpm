@@ -65,9 +65,9 @@
 					'display-refresh' => true,
 					'display-add-new' => true,
 					'forced-where' => '',
-					'display-fields' => array(2 => 'Address', 3 => 'Landlord/manager name', 4 => 'Landlord/manager phone', 5 => 'Monthly rent', 6 => 'Duration of residency from', 7 => 'to', 8 => 'Reason for leaving'),
-					'display-field-names' => array(2 => 'address', 3 => 'landlord_or_manager_name', 4 => 'landlord_or_manager_phone', 5 => 'monthly_rent', 6 => 'duration_of_residency_from', 7 => 'to', 8 => 'reason_for_leaving'),
-					'sortable-fields' => array(2 => '3', 3 => '4', 4 => '5', 5 => '6', 6 => '`residence_and_rental_history`.`duration_of_residency_from`', 7 => '`residence_and_rental_history`.`to`', 8 => '9'),
+					'display-fields' => array(2 => 'Monthly rent', 3 => 'Rent Paid', 4 => 'Rent Balance', 5 => 'Rent Reminder Date', 6 => 'Late Rent Reminder Date', 7 => 'Duration of residency from', 8 => 'to', 9 => 'Reason for leaving'),
+					'display-field-names' => array(2 => 'monthly_rent', 3 => 'rent_paid', 4 => 'rent_balance', 5 => 'rent_reminder', 6 => 'late_rent_reminder', 7 => 'duration_of_residency_from', 8 => 'to', 9 => 'reason_for_leaving'),
+					'sortable-fields' => array(2 => '3', 3 => '4', 4 => '5', 5 => '`residence_and_rental_history`.`rent_reminder`', 6 => '`residence_and_rental_history`.`late_rent_reminder`', 7 => '`residence_and_rental_history`.`duration_of_residency_from`', 8 => '`residence_and_rental_history`.`to`', 9 => '10'),
 					'records-per-page' => 10,
 					'default-sort-by' => false,
 					'default-sort-direction' => 'asc',
@@ -76,7 +76,7 @@
 					'show-page-progress' => true,
 					'template' => 'children-residence_and_rental_history',
 					'template-printable' => 'children-residence_and_rental_history-printable',
-					'query' => "SELECT `residence_and_rental_history`.`id` as 'id', IF(    CHAR_LENGTH(`applicants_and_tenants1`.`first_name`) || CHAR_LENGTH(`applicants_and_tenants1`.`last_name`), CONCAT_WS('',   `applicants_and_tenants1`.`first_name`, ' ', `applicants_and_tenants1`.`last_name`), '') as 'tenant', `residence_and_rental_history`.`address` as 'address', `residence_and_rental_history`.`landlord_or_manager_name` as 'landlord_or_manager_name', `residence_and_rental_history`.`landlord_or_manager_phone` as 'landlord_or_manager_phone', CONCAT('Kshs ', FORMAT(`residence_and_rental_history`.`monthly_rent`, 2)) as 'monthly_rent', if(`residence_and_rental_history`.`duration_of_residency_from`,date_format(`residence_and_rental_history`.`duration_of_residency_from`,'%m/%d/%Y'),'') as 'duration_of_residency_from', if(`residence_and_rental_history`.`to`,date_format(`residence_and_rental_history`.`to`,'%m/%d/%Y'),'') as 'to', `residence_and_rental_history`.`reason_for_leaving` as 'reason_for_leaving', `residence_and_rental_history`.`notes` as 'notes' FROM `residence_and_rental_history` LEFT JOIN `applicants_and_tenants` as applicants_and_tenants1 ON `applicants_and_tenants1`.`id`=`residence_and_rental_history`.`tenant` "
+					'query' => "SELECT `residence_and_rental_history`.`id` as 'id', IF(    CHAR_LENGTH(`applicants_and_tenants1`.`first_name`) || CHAR_LENGTH(`applicants_and_tenants1`.`last_name`), CONCAT_WS('',   `applicants_and_tenants1`.`first_name`, ' ', `applicants_and_tenants1`.`last_name`), '') as 'tenant', CONCAT('Kshs ', FORMAT(`residence_and_rental_history`.`monthly_rent`, 2)) as 'monthly_rent', CONCAT('Kshs ', FORMAT(`residence_and_rental_history`.`rent_paid`, 2)) as 'rent_paid', CONCAT('Kshs ', FORMAT(`residence_and_rental_history`.`rent_balance`, 2)) as 'rent_balance', if(`residence_and_rental_history`.`rent_reminder`,date_format(`residence_and_rental_history`.`rent_reminder`,'%m/%d/%Y'),'') as 'rent_reminder', if(`residence_and_rental_history`.`late_rent_reminder`,date_format(`residence_and_rental_history`.`late_rent_reminder`,'%m/%d/%Y'),'') as 'late_rent_reminder', if(`residence_and_rental_history`.`duration_of_residency_from`,date_format(`residence_and_rental_history`.`duration_of_residency_from`,'%m/%d/%Y'),'') as 'duration_of_residency_from', if(`residence_and_rental_history`.`to`,date_format(`residence_and_rental_history`.`to`,'%m/%d/%Y'),'') as 'to', `residence_and_rental_history`.`reason_for_leaving` as 'reason_for_leaving', `residence_and_rental_history`.`notes` as 'notes' FROM `residence_and_rental_history` LEFT JOIN `applicants_and_tenants` as applicants_and_tenants1 ON `applicants_and_tenants1`.`id`=`residence_and_rental_history`.`tenant` "
 				)
 			),
 			'employment_and_income_history' => array(   
@@ -167,9 +167,9 @@
 					'display-refresh' => true,
 					'display-add-new' => true,
 					'forced-where' => '',
-					'display-fields' => array(1 => 'Property', 2 => 'Unit', 3 => 'Photo', 4 => 'Status', 5 => 'Rooms', 6 => 'Features', 7 => 'Rental amount'),
-					'display-field-names' => array(1 => 'property', 2 => 'unit_number', 3 => 'photo', 4 => 'status', 5 => 'rooms', 6 => 'features', 7 => 'rental_amount'),
-					'sortable-fields' => array(1 => '2', 2 => '3', 3 => '4', 4 => '5', 5 => '6', 6 => '7', 7 => '8'),
+					'display-fields' => array(1 => 'Property', 2 => 'Unit', 3 => 'Photo', 4 => 'Status', 5 => 'Features', 6 => 'Rental amount'),
+					'display-field-names' => array(1 => 'property', 2 => 'unit_number', 3 => 'photo', 4 => 'status', 5 => 'features', 6 => 'rental_amount'),
+					'sortable-fields' => array(1 => '2', 2 => '3', 3 => '4', 4 => '5', 5 => '6', 6 => '7'),
 					'records-per-page' => 10,
 					'default-sort-by' => false,
 					'default-sort-direction' => 'asc',
@@ -178,7 +178,7 @@
 					'show-page-progress' => true,
 					'template' => 'children-units',
 					'template-printable' => 'children-units-printable',
-					'query' => "SELECT `units`.`id` as 'id', IF(    CHAR_LENGTH(`properties1`.`property_name`), CONCAT_WS('',   `properties1`.`property_name`), '') as 'property', `units`.`unit_number` as 'unit_number', `units`.`photo` as 'photo', `units`.`status` as 'status', `units`.`rooms` as 'rooms', `units`.`features` as 'features', CONCAT('Kshs ', FORMAT(`units`.`rental_amount`, 2)) as 'rental_amount', CONCAT('Kshs ', FORMAT(`units`.`deposit_amount`, 2)) as 'deposit_amount', `units`.`description` as 'description' FROM `units` LEFT JOIN `properties` as properties1 ON `properties1`.`id`=`units`.`property` "
+					'query' => "SELECT `units`.`id` as 'id', IF(    CHAR_LENGTH(`properties1`.`property_name`), CONCAT_WS('',   `properties1`.`property_name`), '') as 'property', `units`.`unit_number` as 'unit_number', `units`.`photo` as 'photo', `units`.`status` as 'status', `units`.`features` as 'features', CONCAT('Kshs ', FORMAT(`units`.`rental_amount`, 2)) as 'rental_amount', CONCAT('Kshs ', FORMAT(`units`.`deposit_amount`, 2)) as 'deposit_amount', `units`.`description` as 'description' FROM `units` LEFT JOIN `properties` as properties1 ON `properties1`.`id`=`units`.`property` "
 				)
 			),
 			'rental_owners' => array(   

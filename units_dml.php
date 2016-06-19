@@ -20,8 +20,6 @@ function units_insert(){
 		if($data['unit_number'] == empty_lookup_value){ $data['unit_number'] = ''; }
 	$data['status'] = makeSafe($_REQUEST['status']);
 		if($data['status'] == empty_lookup_value){ $data['status'] = ''; }
-	$data['rooms'] = makeSafe($_REQUEST['rooms']);
-		if($data['rooms'] == empty_lookup_value){ $data['rooms'] = ''; }
 	if(is_array($_REQUEST['features'])){
 		$MultipleSeparator=', ';
 		foreach($_REQUEST['features'] as $k => $v)
@@ -60,7 +58,7 @@ function units_insert(){
 	}
 
 	$o=array('silentErrors' => true);
-	sql('insert into `units` set       `property`=' . (($data['property'] !== '' && $data['property'] !== NULL) ? "'{$data['property']}'" : 'NULL') . ', `unit_number`=' . (($data['unit_number'] !== '' && $data['unit_number'] !== NULL) ? "'{$data['unit_number']}'" : 'NULL') . ', ' . ($data['photo'] != '' ? "`photo`='{$data['photo']}'" : '`photo`=NULL') . ', `status`=' . (($data['status'] !== '' && $data['status'] !== NULL) ? "'{$data['status']}'" : 'NULL') . ', `rooms`=' . (($data['rooms'] !== '' && $data['rooms'] !== NULL) ? "'{$data['rooms']}'" : 'NULL') . ', `features`=' . (($data['features'] !== '' && $data['features'] !== NULL) ? "'{$data['features']}'" : 'NULL') . ', `rental_amount`=' . (($data['rental_amount'] !== '' && $data['rental_amount'] !== NULL) ? "'{$data['rental_amount']}'" : 'NULL') . ', `description`=' . (($data['description'] !== '' && $data['description'] !== NULL) ? "'{$data['description']}'" : 'NULL'), $o);
+	sql('insert into `units` set       `property`=' . (($data['property'] !== '' && $data['property'] !== NULL) ? "'{$data['property']}'" : 'NULL') . ', `unit_number`=' . (($data['unit_number'] !== '' && $data['unit_number'] !== NULL) ? "'{$data['unit_number']}'" : 'NULL') . ', ' . ($data['photo'] != '' ? "`photo`='{$data['photo']}'" : '`photo`=NULL') . ', `status`=' . (($data['status'] !== '' && $data['status'] !== NULL) ? "'{$data['status']}'" : 'NULL') . ', `features`=' . (($data['features'] !== '' && $data['features'] !== NULL) ? "'{$data['features']}'" : 'NULL') . ', `rental_amount`=' . (($data['rental_amount'] !== '' && $data['rental_amount'] !== NULL) ? "'{$data['rental_amount']}'" : 'NULL') . ', `description`=' . (($data['description'] !== '' && $data['description'] !== NULL) ? "'{$data['description']}'" : 'NULL'), $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo "<a href=\"units_view.php?addNew_x=1\">{$Translation['< back']}</a>";
@@ -163,8 +161,6 @@ function units_update($selected_id){
 		echo '<a href="" onclick="history.go(-1); return false;">'.$Translation['< back'].'</a></div>';
 		exit;
 	}
-	$data['rooms'] = makeSafe($_REQUEST['rooms']);
-		if($data['rooms'] == empty_lookup_value){ $data['rooms'] = ''; }
 	if(is_array($_REQUEST['features'])){
 		$MultipleSeparator = ', ';
 		foreach($_REQUEST['features'] as $k => $v)
@@ -195,7 +191,7 @@ function units_update($selected_id){
 	}
 
 	$o=array('silentErrors' => true);
-	sql('update `units` set       `property`=' . (($data['property'] !== '' && $data['property'] !== NULL) ? "'{$data['property']}'" : 'NULL') . ', `unit_number`=' . (($data['unit_number'] !== '' && $data['unit_number'] !== NULL) ? "'{$data['unit_number']}'" : 'NULL') . ', ' . ($data['photo']!='' ? "`photo`='{$data['photo']}'" : ($_REQUEST['photo_remove'] != 1 ? '`photo`=`photo`' : '`photo`=NULL')) . ', `status`=' . (($data['status'] !== '' && $data['status'] !== NULL) ? "'{$data['status']}'" : 'NULL') . ', `rooms`=' . (($data['rooms'] !== '' && $data['rooms'] !== NULL) ? "'{$data['rooms']}'" : 'NULL') . ', `features`=' . (($data['features'] !== '' && $data['features'] !== NULL) ? "'{$data['features']}'" : 'NULL') . ', `rental_amount`=' . (($data['rental_amount'] !== '' && $data['rental_amount'] !== NULL) ? "'{$data['rental_amount']}'" : 'NULL') . ', `description`=' . (($data['description'] !== '' && $data['description'] !== NULL) ? "'{$data['description']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
+	sql('update `units` set       `property`=' . (($data['property'] !== '' && $data['property'] !== NULL) ? "'{$data['property']}'" : 'NULL') . ', `unit_number`=' . (($data['unit_number'] !== '' && $data['unit_number'] !== NULL) ? "'{$data['unit_number']}'" : 'NULL') . ', ' . ($data['photo']!='' ? "`photo`='{$data['photo']}'" : ($_REQUEST['photo_remove'] != 1 ? '`photo`=`photo`' : '`photo`=NULL')) . ', `status`=' . (($data['status'] !== '' && $data['status'] !== NULL) ? "'{$data['status']}'" : 'NULL') . ', `features`=' . (($data['features'] !== '' && $data['features'] !== NULL) ? "'{$data['features']}'" : 'NULL') . ', `rental_amount`=' . (($data['rental_amount'] !== '' && $data['rental_amount'] !== NULL) ? "'{$data['rental_amount']}'" : 'NULL') . ', `description`=' . (($data['description'] !== '' && $data['description'] !== NULL) ? "'{$data['description']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo '<a href="units_view.php?SelectedID='.urlencode($selected_id)."\">{$Translation['< back']}</a>";
@@ -256,7 +252,7 @@ function units_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Allo
 		$combo_status->ListItem = explode('||', entitiesToUTF8(convertLegacyOptions($status_data)));
 		$combo_status->ListData = $combo_status->ListItem;
 	}else{
-		$combo_status->ListItem = explode('||', entitiesToUTF8(convertLegacyOptions("Occupied;;Listed;;Unlisted")));
+		$combo_status->ListItem = explode('||', entitiesToUTF8(convertLegacyOptions("Occupied;;Vacant;;Booked")));
 		$combo_status->ListData = $combo_status->ListItem;
 	}
 	$combo_status->SelectName = 'status';
@@ -272,7 +268,7 @@ function units_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Allo
 		$combo_features->ListItem = explode('||', entitiesToUTF8(convertLegacyOptions($features_data)));
 		$combo_features->ListData = $combo_features->ListItem;
 	}else{
-		$combo_features->ListItem = explode('||', entitiesToUTF8(convertLegacyOptions("Cable ready;; Micorwave;;Hardwood floors;; High speed internet;;Air conditioning;;Refrigerator;;Dishwasher;;Walk-in closets;;Balcony;;Deck;;Patio;;Garage parking;;Carport;;Fenced yard;;Laundry room / hookups;; Fireplace;;Oven / range;;Heat - electric;; Heat - gas;; Heat - oil")));
+		$combo_features->ListItem = explode('||', entitiesToUTF8(convertLegacyOptions("Four-Bedroom;;Three-Bedroom;;Two-Bedroom;;One-Bedroom;;Bed-Sitter;;GuestWing")));
 		$combo_features->ListData = $combo_features->ListItem;
 	}
 	$combo_features->SelectName = 'features';
@@ -458,7 +454,6 @@ function units_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Allo
 		$jsReadOnly .= "\tjQuery('#unit_number').replaceWith('<div class=\"form-control-static\" id=\"unit_number\">' + (jQuery('#unit_number').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#photo').replaceWith('<div class=\"form-control-static\" id=\"photo\">' + (jQuery('#photo').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('input[name=status]').parent().html('<div class=\"form-control-static\">' + jQuery('input[name=status]:checked').next().text() + '</div>')\n";
-		$jsReadOnly .= "\tjQuery('#rooms').replaceWith('<div class=\"form-control-static\" id=\"rooms\">' + (jQuery('#rooms').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#features').replaceWith('<div class=\"form-control-static\" id=\"features\">' + (jQuery('#features').val() || '') + '</div>'); jQuery('#features-multi-selection-help').hide();\n";
 		$jsReadOnly .= "\tjQuery('#s2id_features').remove();\n";
 		$jsReadOnly .= "\tjQuery('#rental_amount').replaceWith('<div class=\"form-control-static\" id=\"rental_amount\">' + (jQuery('#rental_amount').val() || '') + '</div>');\n";
@@ -506,7 +501,6 @@ function units_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Allo
 		$templateCode=str_replace('<%%REMOVEFILE(photo)%%>', '', $templateCode);
 	}
 	$templateCode=str_replace('<%%UPLOADFILE(status)%%>', '', $templateCode);
-	$templateCode=str_replace('<%%UPLOADFILE(rooms)%%>', '', $templateCode);
 	$templateCode=str_replace('<%%UPLOADFILE(features)%%>', '', $templateCode);
 	$templateCode=str_replace('<%%UPLOADFILE(rental_amount)%%>', '', $templateCode);
 	$templateCode=str_replace('<%%UPLOADFILE(deposit_amount)%%>', '', $templateCode);
@@ -525,8 +519,6 @@ function units_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Allo
 		$templateCode=str_replace('<%%URLVALUE(photo)%%>', urlencode($urow['photo']), $templateCode);
 		$templateCode=str_replace('<%%VALUE(status)%%>', htmlspecialchars($row['status'], ENT_QUOTES, 'UTF-8'), $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(status)%%>', urlencode($urow['status']), $templateCode);
-		$templateCode=str_replace('<%%VALUE(rooms)%%>', htmlspecialchars($row['rooms'], ENT_QUOTES, 'UTF-8'), $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(rooms)%%>', urlencode($urow['rooms']), $templateCode);
 		$templateCode=str_replace('<%%VALUE(features)%%>', htmlspecialchars($row['features'], ENT_QUOTES, 'UTF-8'), $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(features)%%>', urlencode($urow['features']), $templateCode);
 		$templateCode=str_replace('<%%VALUE(rental_amount)%%>', htmlspecialchars($row['rental_amount'], ENT_QUOTES, 'UTF-8'), $templateCode);
@@ -550,8 +542,6 @@ function units_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Allo
 		$templateCode=str_replace('<%%VALUE(photo)%%>', 'blank.gif', $templateCode);
 		$templateCode=str_replace('<%%VALUE(status)%%>', '', $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(status)%%>', urlencode(''), $templateCode);
-		$templateCode=str_replace('<%%VALUE(rooms)%%>', '', $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(rooms)%%>', urlencode(''), $templateCode);
 		$templateCode=str_replace('<%%VALUE(features)%%>', '', $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(features)%%>', urlencode(''), $templateCode);
 		$templateCode=str_replace('<%%VALUE(rental_amount)%%>', '', $templateCode);

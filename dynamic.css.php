@@ -70,10 +70,11 @@ img[src="blank.gif"] { max-height: 10px !important; }
 .applications_leases-co_signer_details{ white-space: normal !important; max-width: 100px !important; min-width: 100px !important; overflow: hidden;  }
 .applications_leases-notes{ white-space: normal !important; max-width: 100px !important; min-width: 100px !important; overflow: hidden;  }
 .applications_leases-agreement{ white-space: normal !important; max-width: 70px !important; min-width: 70px !important; overflow: hidden;  }
-.residence_and_rental_history-address{ white-space: normal !important; max-width: 180px !important; min-width: 180px !important; overflow: hidden;  }
-.residence_and_rental_history-landlord_or_manager_name{ white-space: normal !important; max-width: 120px !important; min-width: 120px !important; overflow: hidden;  }
-.residence_and_rental_history-landlord_or_manager_phone{ white-space: normal !important; max-width: 100px !important; min-width: 100px !important; overflow: hidden;  }
 .residence_and_rental_history-monthly_rent{ white-space: normal !important; max-width: 80px !important; min-width: 80px !important; overflow: hidden;  }
+.residence_and_rental_history-rent_paid{ white-space: normal !important; max-width: 80px !important; min-width: 80px !important; overflow: hidden;  }
+.residence_and_rental_history-rent_balance{ white-space: normal !important; max-width: 80px !important; min-width: 80px !important; overflow: hidden;  }
+.residence_and_rental_history-rent_reminder{ white-space: normal !important; max-width: 100px !important; min-width: 100px !important; overflow: hidden;  }
+.residence_and_rental_history-late_rent_reminder{ white-space: normal !important; max-width: 100px !important; min-width: 100px !important; overflow: hidden;  }
 .residence_and_rental_history-duration_of_residency_from{ white-space: normal !important; max-width: 100px !important; min-width: 100px !important; overflow: hidden;  }
 .residence_and_rental_history-to{ white-space: normal !important; max-width: 80px !important; min-width: 80px !important; overflow: hidden;  }
 .residence_and_rental_history-reason_for_leaving{ white-space: normal !important; max-width: 120px !important; min-width: 120px !important; overflow: hidden;  }
@@ -106,7 +107,6 @@ img[src="blank.gif"] { max-height: 10px !important; }
 .units-unit_number{ white-space: normal !important; max-width: 40px !important; min-width: 40px !important; overflow: hidden;  }
 .units-photo{ white-space: normal !important; max-width: 60px !important; min-width: 60px !important; overflow: hidden;  }
 .units-status{ white-space: normal !important; max-width: 60px !important; min-width: 60px !important; overflow: hidden;  }
-.units-rooms{ white-space: normal !important; max-width: 45px !important; min-width: 45px !important; overflow: hidden;  }
 .units-features{ white-space: normal !important; max-width: 150px !important; min-width: 150px !important; overflow: hidden;  }
 .units-rental_amount{ white-space: normal !important; max-width: 60px !important; min-width: 60px !important; overflow: hidden;  }
 .units-deposit_amount{ white-space: normal !important; max-width: 50px !important; min-width: 50px !important; overflow: hidden;  }
