@@ -25,7 +25,7 @@
 		"`references`.`id`" => "id",
 		"IF(    CHAR_LENGTH(`applicants_and_tenants1`.`first_name`) || CHAR_LENGTH(`applicants_and_tenants1`.`last_name`), CONCAT_WS('',   `applicants_and_tenants1`.`first_name`, ' ', `applicants_and_tenants1`.`last_name`), '') /* Tenant */" => "tenant",
 		"`references`.`reference_name`" => "reference_name",
-		"FORMAT(`references`.`phone`, 3)" => "phone"
+		"`references`.`phone`" => "phone"
 	);
 	// mapping incoming sort by requests to actual query fields
 	$x->SortFields = array(   
@@ -40,7 +40,7 @@
 		"`references`.`id`" => "id",
 		"IF(    CHAR_LENGTH(`applicants_and_tenants1`.`first_name`) || CHAR_LENGTH(`applicants_and_tenants1`.`last_name`), CONCAT_WS('',   `applicants_and_tenants1`.`first_name`, ' ', `applicants_and_tenants1`.`last_name`), '') /* Tenant */" => "tenant",
 		"`references`.`reference_name`" => "reference_name",
-		"FORMAT(`references`.`phone`, 3)" => "phone"
+		"`references`.`phone`" => "phone"
 	);
 	// Fields that can be filtered
 	$x->QueryFieldsFilters=array(   
@@ -55,7 +55,7 @@
 		"`references`.`id`" => "id",
 		"IF(    CHAR_LENGTH(`applicants_and_tenants1`.`first_name`) || CHAR_LENGTH(`applicants_and_tenants1`.`last_name`), CONCAT_WS('',   `applicants_and_tenants1`.`first_name`, ' ', `applicants_and_tenants1`.`last_name`), '') /* Tenant */" => "tenant",
 		"`references`.`reference_name`" => "reference_name",
-		"FORMAT(`references`.`phone`, 3)" => "phone"
+		"`references`.`phone`" => "phone"
 	);
 
 	// Lookup fields that can be used as filterers

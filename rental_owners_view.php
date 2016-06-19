@@ -27,7 +27,7 @@
 		"`rental_owners`.`last_name`" => "last_name",
 		"if(`rental_owners`.`date_of_birth`,date_format(`rental_owners`.`date_of_birth`,'%m/%d/%Y'),'')" => "date_of_birth",
 		"`rental_owners`.`primary_email`" => "primary_email",
-		"FORMAT(`rental_owners`.`phone`, 3)" => "phone",
+		"`rental_owners`.`phone`" => "phone",
 		"`rental_owners`.`country`" => "country"
 	);
 	// mapping incoming sort by requests to actual query fields
@@ -48,7 +48,7 @@
 		"`rental_owners`.`last_name`" => "last_name",
 		"if(`rental_owners`.`date_of_birth`,date_format(`rental_owners`.`date_of_birth`,'%m/%d/%Y'),'')" => "date_of_birth",
 		"`rental_owners`.`primary_email`" => "primary_email",
-		"FORMAT(`rental_owners`.`phone`, 3)" => "phone",
+		"`rental_owners`.`phone`" => "phone",
 		"`rental_owners`.`country`" => "country"
 	);
 	// Fields that can be filtered
@@ -69,7 +69,7 @@
 		"`rental_owners`.`last_name`" => "last_name",
 		"if(`rental_owners`.`date_of_birth`,date_format(`rental_owners`.`date_of_birth`,'%m/%d/%Y'),'')" => "date_of_birth",
 		"`rental_owners`.`primary_email`" => "primary_email",
-		"FORMAT(`rental_owners`.`phone`, 3)" => "phone",
+		"`rental_owners`.`phone`" => "phone",
 		"`rental_owners`.`country`" => "country"
 	);
 
