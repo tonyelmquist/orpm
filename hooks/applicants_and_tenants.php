@@ -109,5 +109,41 @@
 	}
 	function applicants_and_tenants_batch_actions(&$args){
 
-		return array();
+		return array(
+				array(
+						'title' => 'Generate Rent Reminders',
+						'function' => 'generate_rent_reminder',
+						'icon' => 'th-list'
+				),
+				array(
+						'title' => 'Generate Rent Invoices',
+						'function' => 'generate_rent_Invoice',
+						'icon' => 'th-list'
+				),
+				array(
+						'title' => 'Generate Rent Receipts',
+						'function' => 'generate_rent_receipt',
+						'icon' => 'th-list'
+				),				
+				array(
+						'title' => 'Generate Late Rent Notices',
+						'function' => 'late_rent_notice',
+						'icon' => 'th-list'
+				),
+				array(
+						'title' => 'View Tenant Balance History',
+						'function' => 'tenant_balance_history',
+						'icon' => 'th-list'
+				),
+				array(
+						'title' => 'View Tenant Rent Record',
+						'function' => 'tenant_rent_record',
+						'icon' => 'th-list'
+				),
+				array(
+						'title' => 'View Details',
+						'function' => 'print_mail_labels',
+						'icon' => 'th-list'
+				)
+		);
 	}
