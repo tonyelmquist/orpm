@@ -71,6 +71,7 @@ img[src="blank.gif"] { max-height: 10px !important; }
 .applications_leases-notes{ white-space: normal !important; max-width: 100px !important; min-width: 100px !important; overflow: hidden;  }
 .applications_leases-agreement{ white-space: normal !important; max-width: 70px !important; min-width: 70px !important; overflow: hidden;  }
 .residence_and_rental_history-monthly_rent{ white-space: normal !important; max-width: 80px !important; min-width: 80px !important; overflow: hidden;  }
+.residence_and_rental_history-security_deposit{ white-space: normal !important; max-width: 80px !important; min-width: 80px !important; overflow: hidden;  }
 .residence_and_rental_history-rent_paid{ white-space: normal !important; max-width: 80px !important; min-width: 80px !important; overflow: hidden;  }
 .residence_and_rental_history-rent_balance{ white-space: normal !important; max-width: 80px !important; min-width: 80px !important; overflow: hidden;  }
 .residence_and_rental_history-rent_reminder{ white-space: normal !important; max-width: 100px !important; min-width: 100px !important; overflow: hidden;  }

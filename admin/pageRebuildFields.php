@@ -29,6 +29,7 @@
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),
 			'tenant' => array('appgini' => 'INT unsigned '),
 			'monthly_rent' => array('appgini' => 'DECIMAL(6,2) '),
+			'security_deposit' => array('appgini' => 'DECIMAL(6,2) '),
 			'rent_paid' => array('appgini' => 'DECIMAL(6,2) '),
 			'rent_balance' => array('appgini' => 'DECIMAL(6,2) '),
 			'rent_reminder' => array('appgini' => 'DATE '),
