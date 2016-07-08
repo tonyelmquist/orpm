@@ -111,8 +111,8 @@
 
 		return array(
 				array(
-						'title' => 'Generate Rent Reminders',
-						'function' => 'generate_rent_reminder',
+						'title' => 'Send Rent Reminders',
+						'function' => 'send_rent_reminder',
 						'icon' => 'calendar'
 				),
 				array(
