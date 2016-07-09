@@ -36,28 +36,35 @@
 				<div class="form-group">
 					<label for="monthly_rent" class="control-label col-lg-3">Monthly rent</label>
 					<div class="col-lg-9">
-						<input maxlength="9" type="text" class="form-control" name="monthly_rent" id="monthly_rent" value="<%%VALUE(monthly_rent)%%>">
+						<input maxlength="13" type="text" class="form-control" name="monthly_rent" id="monthly_rent" value="<%%VALUE(monthly_rent)%%>">
 					</div>
 				</div>
 
 				<div class="form-group">
 					<label for="security_deposit" class="control-label col-lg-3">Security deposit</label>
 					<div class="col-lg-9">
-						<input maxlength="9" type="text" class="form-control" name="security_deposit" id="security_deposit" value="<%%VALUE(security_deposit)%%>">
+						<input maxlength="13" type="text" class="form-control" name="security_deposit" id="security_deposit" value="<%%VALUE(security_deposit)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="other_charges" class="control-label col-lg-3">Other charges</label>
+					<div class="col-lg-9">
+						<input maxlength="13" type="text" class="form-control" name="other_charges" id="other_charges" value="<%%VALUE(other_charges)%%>">
 					</div>
 				</div>
 
 				<div class="form-group">
 					<label for="rent_paid" class="control-label col-lg-3">Rent Paid</label>
 					<div class="col-lg-9">
-						<input maxlength="9" type="text" class="form-control" name="rent_paid" id="rent_paid" value="<%%VALUE(rent_paid)%%>">
+						<input maxlength="13" type="text" class="form-control" name="rent_paid" id="rent_paid" value="<%%VALUE(rent_paid)%%>">
 					</div>
 				</div>
 
 				<div class="form-group">
 					<label for="rent_balance" class="control-label col-lg-3">Rent Balance</label>
 					<div class="col-lg-9">
-						<input maxlength="9" type="text" class="form-control" name="rent_balance" id="rent_balance" value="<%%VALUE(rent_balance)%%>">
+						<input maxlength="13" type="text" class="form-control" name="rent_balance" id="rent_balance" value="<%%VALUE(rent_balance)%%>">
 					</div>
 				</div>
 
@@ -65,6 +72,13 @@
 					<label for="rent_reminder" class="control-label col-lg-3">Rent Reminder Date</label>
 					<div class="col-lg-9">
 						<%%COMBO(rent_reminder)%%>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="due_date" class="control-label col-lg-3">Due date</label>
+					<div class="col-lg-9">
+						<%%COMBO(due_date)%%>
 					</div>
 				</div>
 

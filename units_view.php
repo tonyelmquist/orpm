@@ -28,8 +28,8 @@
 		"`units`.`photo`" => "photo",
 		"`units`.`status`" => "status",
 		"`units`.`features`" => "features",
-		"CONCAT('Kshs ', FORMAT(`units`.`rental_amount`, 2))" => "rental_amount",
-		"CONCAT('Kshs ', FORMAT(`units`.`deposit_amount`, 2))" => "deposit_amount",
+		"CONCAT('Kshs', FORMAT(`units`.`rental_amount`, 2))" => "rental_amount",
+		"CONCAT('Kshs', FORMAT(`units`.`deposit_amount`, 2))" => "deposit_amount",
 		"`units`.`description`" => "description"
 	);
 	// mapping incoming sort by requests to actual query fields
@@ -53,8 +53,8 @@
 		"`units`.`photo`" => "photo",
 		"`units`.`status`" => "status",
 		"`units`.`features`" => "features",
-		"CONCAT('Kshs ', FORMAT(`units`.`rental_amount`, 2))" => "rental_amount",
-		"CONCAT('Kshs ', FORMAT(`units`.`deposit_amount`, 2))" => "deposit_amount",
+		"CONCAT('Kshs', FORMAT(`units`.`rental_amount`, 2))" => "rental_amount",
+		"CONCAT('Kshs', FORMAT(`units`.`deposit_amount`, 2))" => "deposit_amount",
 		"`units`.`description`" => "description"
 	);
 	// Fields that can be filtered
@@ -76,8 +76,8 @@
 		"`units`.`unit_number`" => "unit_number",
 		"`units`.`status`" => "status",
 		"`units`.`features`" => "features",
-		"CONCAT('Kshs ', FORMAT(`units`.`rental_amount`, 2))" => "rental_amount",
-		"CONCAT('Kshs ', FORMAT(`units`.`deposit_amount`, 2))" => "deposit_amount",
+		"CONCAT('Kshs', FORMAT(`units`.`rental_amount`, 2))" => "rental_amount",
+		"CONCAT('Kshs', FORMAT(`units`.`deposit_amount`, 2))" => "deposit_amount",
 		"`units`.`description`" => "description"
 	);
 

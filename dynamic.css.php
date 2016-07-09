@@ -75,6 +75,7 @@ img[src="blank.gif"] { max-height: 10px !important; }
 .residence_and_rental_history-rent_paid{ white-space: normal !important; max-width: 80px !important; min-width: 80px !important; overflow: hidden;  }
 .residence_and_rental_history-rent_balance{ white-space: normal !important; max-width: 80px !important; min-width: 80px !important; overflow: hidden;  }
 .residence_and_rental_history-rent_reminder{ white-space: normal !important; max-width: 100px !important; min-width: 100px !important; overflow: hidden;  }
+.residence_and_rental_history-due_date{ white-space: normal !important; max-width: 100px !important; min-width: 100px !important; overflow: hidden;  }
 .residence_and_rental_history-late_rent_reminder{ white-space: normal !important; max-width: 100px !important; min-width: 100px !important; overflow: hidden;  }
 .residence_and_rental_history-duration_of_residency_from{ white-space: normal !important; max-width: 100px !important; min-width: 100px !important; overflow: hidden;  }
 .residence_and_rental_history-to{ white-space: normal !important; max-width: 80px !important; min-width: 80px !important; overflow: hidden;  }
