@@ -100,6 +100,36 @@
 	}
 
 	function applicants_and_tenants_dv($selectedID, $memberInfo, &$html, &$args){
+		/*If this is the print preview, dont modify the detail view */
+		if (isset($_REQUEST['dvprint_x'])) return ;
+		
+		ob_start(); ?>
+		
+		 <script>
+			$j(function(){
+				<?php if($selectedID){ ?>
+				$j('#applicants_and_tenants_dv_action_buttons .btn-toolbar').append(
+				   '<div class="btn-group-vertical btn-group-lg" style="width: 100%;">' +
+						'<button type="button" class="btn btn-primary btn-lg" onclick="print_invoice()">' +
+					       '<i class="glyphicon glyphicon-print"></i>View Invoice</button>' + 
+					'</div>'
+						);
+				<?php } ?>
+			});
+
+			function print_invoice()
+			{
+				var selectedID = '<?php echo urlencode($selectedID); ?>';
+				window.open('invoice.php?id=' + selectedID, '_blank');
+			}
+
+		 </script>
+		
+		<?php 
+		$form_code = ob_get_contents();
+		ob_end_clean();
+		
+		$html .= $form_code;
 
 	}
 
