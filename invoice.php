@@ -49,7 +49,7 @@ while ($row = db_fetch_assoc($res)) {
 	<div class="col-sm-6">
 		<!-- company info -->
 		<h1>Rental Unit : <?php echo  $tenant['unit']; ?></h1>
-		<h5><?php echo  $tenant['email']; ?><br><?php echo  $tenant['phone']; ?><br>Nairobi</h5>
+		<h5><?php echo  $tenant['last_name']; ?>&nbsp;<?php echo  $tenant['first_name']; ?><br><?php echo  $tenant['email']; ?><br><?php echo  $tenant['phone']; ?><br>Nairobi</h5>
 	</div>
 	<div class="col-sm-6 text-right">
 		<!-- invoice info -->
@@ -101,7 +101,5 @@ while ($row = db_fetch_assoc($res)) {
 
 
 <?php
-
-
 include_once("$currDir/footer.php");
 ?>
