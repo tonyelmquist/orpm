@@ -39,7 +39,7 @@
 			}
 
 			// redirect to member editing page
-			redirect("admin/pageEditMember.php?memberID=$memberID&new_member=1");
+			redirect("admin/pageEditMember.php?saved=1&memberID=$memberID&new_member=1");
 
 		}else{ // old member
 
@@ -56,20 +56,28 @@
 			if($anonMemberID == $memberID){
 				$password = '';
 				$email = '';
-				$groupID = sqlValue("select groupID from membership_groups where name='".$adminConfig['anonymousGroup']."'");
+				$groupID = sqlValue("select groupID from membership_groups where name='{$adminConfig['anonymousGroup']}'");
 				$isApproved = 1;
 			}
 
 			// get current approval state
-			$oldIsApproved = sqlValue("select isApproved from membership_users where lcase(memberID)='$memberID'");
+			$oldIsApproved = sqlValue("select isApproved from membership_users where lcase(memberID)='{$memberID}'");
+
+			// get member group ID
+			$oldGroupID = sqlValue("select groupID from membership_users where lcase(memberID)='{$memberID}'");
 
 			// update member
-			$upQry = "UPDATE `membership_users` set memberID='$memberID', passMD5=".($password!='' ? "'".md5($password)."'" : "passMD5").", email='$email', groupID='$groupID', isBanned='$isBanned', isApproved='$isApproved', custom1='$custom1', custom2='$custom2', custom3='$custom3', custom4='$custom4', comments='$comments' WHERE lcase(memberID)='$oldMemberID'";
+			$upQry = "UPDATE `membership_users` set memberID='{$memberID}', passMD5=" . ($password != '' ? "'" . md5($password) . "'" : "passMD5").", email='{$email}', groupID='{$groupID}', isBanned='{$isBanned}', isApproved='{$isApproved}', custom1='{$custom1}', custom2='{$custom2}', custom3='{$custom3}', custom4='{$custom4}', comments='{$comments}' WHERE lcase(memberID)='{$oldMemberID}'";
 			sql($upQry, $eo);
 
 			// if memberID was changed, update membership_userrecords
 			if($oldMemberID != $memberID){
-				sql("update membership_userrecords set memberID='$memberID' where lcase(memberID)='$oldMemberID'", $eo);
+				sql("update membership_userrecords set memberID='{$memberID}' where lcase(memberID)='{$oldMemberID}'", $eo);
+			}
+
+			// if groupID was changed, update membership_userrecords
+			if($oldGroupID != $groupID){
+				sql("update membership_userrecords set groupID='{$groupID}' where lcase(memberID)='{$oldMemberID}'", $eo);
 			}
 
 			// is member was approved, notify him
@@ -78,9 +86,9 @@
 			}
 
 			// redirect to member editing page
-			redirect("admin/pageEditMember.php?memberID=$memberID");
-		}
+			redirect("admin/pageEditMember.php?saved=1&memberID=" . urlencode($memberID));
 
+		}
 
 	}elseif($_GET['memberID']!=''){
 		// we have an edit request for a member
@@ -104,15 +112,15 @@
 		$res=sql("select * from membership_users where lcase(memberID)='$memberID'", $eo);
 		if($row=db_fetch_assoc($res)){
 			// get member data
-			$email=$row['email'];
-			$groupID=$row['groupID'];
-			$isApproved=$row['isApproved'];
-			$isBanned=$row['isBanned'];
-			$custom1=htmlspecialchars($row['custom1']);
-			$custom2=htmlspecialchars($row['custom2']);
-			$custom3=htmlspecialchars($row['custom3']);
-			$custom4=htmlspecialchars($row['custom4']);
-			$comments=htmlspecialchars($row['comments']);
+			$email = $row['email'];
+			$groupID = $row['groupID'];
+			$isApproved = $row['isApproved'];
+			$isBanned = $row['isBanned'];
+			$custom1 = html_attr($row['custom1']);
+			$custom2 = html_attr($row['custom2']);
+			$custom3 = html_attr($row['custom3']);
+			$custom4 = html_attr($row['custom4']);
+			$comments = html_attr($row['comments']);
 
 
 			//display dismissible alert if it is a new member

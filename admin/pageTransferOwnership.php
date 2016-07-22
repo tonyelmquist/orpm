@@ -200,7 +200,7 @@
 						$arrVal[]='';
 						$arrCap[]='';
 						$arrVal[]='-1';
-						$arrCap[]= str_replace ('<GROUPNAME>' , htmlspecialchars(sqlValue("select name from membership_groups where groupID='$sourceGroupID'")) , $Translation['all group members'] );
+						$arrCap[]= str_replace ('<GROUPNAME>' , html_attr(sqlValue("select name from membership_groups where groupID='$sourceGroupID'")) , $Translation['all group members'] );
 						if($res=sql("select lcase(memberID), lcase(memberID) from membership_users where groupID='$sourceGroupID' order by memberID", $eo)){
 							while($row=db_fetch_row($res)){
 								$arrVal[]=$row[0];

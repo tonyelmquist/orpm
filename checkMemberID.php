@@ -8,6 +8,8 @@
 	include("$currDir/language.php");
 	include("$currDir/lib.php");
 
+	handle_maintenance();
+
 	$username = is_allowed_username($_GET['memberID']);
 	if($username){
 		echo "<b>".str_replace("<MemberID>", $username, $Translation['user available'])."</b><!-- AVAILABLE -->";

@@ -6,6 +6,8 @@
 	.container{ width: 98% !important; }
 }
 
+.navbar-brand{ text-transform: capitalize; }
+
 table a, .table a { text-decoration: none !important; }
 
 #children-tabs li a{ display: block !important; }
@@ -213,11 +215,6 @@ h4, .h4 {
 
 .navbar-right {
 	margin-right: 0 !important;
-}
-
-.navbar-btn {
-	margin-bottom: 9px;
-	margin-top: 9px;
 }
 
 .page-header {

@@ -71,11 +71,11 @@
 						</div>
 						<div class="form-group">
 							<label for="newPassword" class="control-label"><?php echo $Translation['new password']; ?></label>
-							<input type="password" class="form-control" id="newPassword" name="newPassword" placeholder="<?php echo htmlspecialchars($Translation['new password']); ?>">
+							<input type="password" class="form-control" id="newPassword" name="newPassword" placeholder="<?php echo html_attr($Translation['new password']); ?>">
 						</div>
 						<div class="form-group">
 							<label for="confirmPassword" class="control-label"><?php echo $Translation['confirm password']; ?></label>
-							<input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="<?php echo htmlspecialchars($Translation['confirm password']); ?>">
+							<input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="<?php echo html_attr($Translation['confirm password']); ?>">
 						</div>
 
 						<div class="row">
@@ -183,17 +183,17 @@
 
 				<div class="form-group">
 					<label for="username" class="control-label"><?php echo $Translation['username']; ?></label>
-					<input type="text" class="form-control" id="username" name="username" placeholder="<?php echo htmlspecialchars($Translation['username']); ?>">
+					<input type="text" class="form-control" id="username" name="username" placeholder="<?php echo html_attr($Translation['username']); ?>">
 				</div>
 
 				<div class="form-group">
 					<label for="email" class="control-label"><?php echo '<i>'.$Translation['or'].':</i> '.$Translation['email']; ?></label>
-					<input type="email" class="form-control" id="email" name="email" placeholder="<?php echo htmlspecialchars($Translation['email']); ?>">
+					<input type="email" class="form-control" id="email" name="email" placeholder="<?php echo html_attr($Translation['email']); ?>">
 				</div>
 
 				<div class="row">
 					<div class="col-sm-offset-3 col-sm-6">
-						<button class="btn btn-primary btn-lg btn-block" value="<?php echo htmlspecialchars($Translation['ok']); ?>" id="reset" type="submit" name="reset"><?php echo $Translation['ok']; ?></button>
+						<button class="btn btn-primary btn-lg btn-block" value="<?php echo html_attr($Translation['ok']); ?>" id="reset" type="submit" name="reset"><?php echo $Translation['ok']; ?></button>
 					</div>
 				</div>
 

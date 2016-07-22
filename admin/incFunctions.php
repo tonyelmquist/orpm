@@ -35,6 +35,9 @@
 		array_trim($arr) -- recursively trim provided value/array
 		csrf_token($validate) -- csrf-proof a form
 		get_plugins() -- scans for installed plugins and returns them in an array ('name', 'title', 'icon' or 'glyphicon', 'admin_path')
+		maintenance_mode($new_status = '') -- retrieves (and optionally sets) maintenance mode status
+		html_attr($str) -- prepare $str to be placed inside an HTML attribute
+		Request($var) -- class for providing sanitized values of given request variable (->sql, ->attr, ->html, ->url, and ->raw)
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	*/
 	########################################################################
@@ -213,7 +216,7 @@
 			}
 
 			if(!$result = @db_query($statment)){
-				echo "An error occured while attempting to execute:<br><pre>".htmlspecialchars($statment)."</pre><br>MySQL said:<br><pre>".db_error(db_link())."</pre>";
+				echo "An error occured while attempting to execute:<br><pre>".html_attr($statment)."</pre><br>MySQL said:<br><pre>".db_error(db_link())."</pre>";
 				exit;
 			}
 
@@ -280,17 +283,18 @@
 	function getPKFieldName($tn){
 		// get pk field name of given table
 
-		if(!$res=sql("show fields from `$tn`", $eo)){
-			return FALSE;
+		$stn = makeSafe($tn, false);
+		if(!$res = sql("show fields from `$stn`", $eo)){
+			return false;
 		}
 
-		while($row=db_fetch_assoc($res)){
-			if($row['Key']=='PRI'){
+		while($row = db_fetch_assoc($res)){
+			if($row['Key'] == 'PRI'){
 				return $row['Field'];
 			}
 		}
 
-		return FALSE;
+		return false;
 	}
 	########################################################################
 	function getCSVData($tn, $pkValue, $stripTags=true){
@@ -364,7 +368,7 @@
 	}
 	########################################################################
 	function isEmail($email){
-		if(preg_match('/^([*+!.&#$¦\'\\%\/0-9a-z^_`{}=?~:-]+)@(([0-9a-z-]+\.)+[0-9a-z]{2,4})$/i', $email)){
+		if(preg_match('/^([*+!.&#$¦\'\\%\/0-9a-z^_`{}=?~:-]+)@(([0-9a-z-]+\.)+[0-9a-z]{2,45})$/i', $email)){
 			return $email;
 		}else{
 			return FALSE;
@@ -626,12 +630,12 @@
 	}
 	########################################################################
 	function time24($t = false){
-		if($t === false) $t = time();
+		if($t === false) $t = date('Y-m-d H:i:s');
 		return date('H:i:s', strtotime($t));
 	}
 	########################################################################
 	function time12($t = false){
-		if($t === false) $t = time();
+		if($t === false) $t = date('Y-m-d H:i:s');
 		return date('h:i:s A', strtotime($t));
 	}
 	########################################################################
@@ -728,3 +732,62 @@
 
 		return $plugins;
 	}
+	########################################################################
+	function maintenance_mode($new_status = ''){
+		$maintenance_file = dirname(__FILE__) . '/.maintenance';
+
+		if($new_status === true){
+			/* turn on maintenance mode */
+			@touch($maintenance_file);
+		}elseif($new_status === false){
+			/* turn off maintenance mode */
+			@unlink($maintenance_file);
+		}
+
+		/* return current maintenance mode status */
+		return is_file($maintenance_file);
+	}
+	########################################################################
+	function handle_maintenance($echo = false){
+		if(!maintenance_mode()) return;
+
+		global $Translation;
+		$adminConfig = config('adminConfig');
+
+		$admin = getLoggedAdmin();
+		if($admin){
+			return ($echo ? '<div class="alert alert-danger" style="margin: 5em auto -5em;"><b>' . $Translation['maintenance mode admin notification'] . '</b></div>' : '');
+		}
+
+		if(!$echo) exit;
+
+		exit('<div class="alert alert-danger" style="margin-top: 5em; font-size: 2em;"><i class="glyphicon glyphicon-exclamation-sign"></i> ' . $adminConfig['maintenance_mode_message'] . '</div>');
+	}
+	#########################################################
+	function html_attr($str){
+		return htmlspecialchars($str, ENT_QUOTES, 'UTF-8');
+	}
+	#########################################################
+	class Request{
+		var $sql, $url, $attr, $html, $raw;
+
+		function __construct($var, $filter = false){
+			$this->Request($var, $filter);
+		}
+
+		function Request($var, $filter = false){
+			$unsafe = (isset($_REQUEST[$var]) ? $_REQUEST[$var] : '');
+			if(get_magic_quotes_gpc()) $unsafe = stripslashes($unsafe);
+
+			if($filter){
+				$unsafe = call_user_func($filter, $unsafe);
+			}
+
+			$this->sql = makeSafe($unsafe, false);
+			$this->url = urlencode($unsafe);
+			$this->attr = html_attr($unsafe);
+			$this->html = html_attr($unsafe);
+			$this->raw = $unsafe;
+		}
+	}
+

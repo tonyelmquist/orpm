@@ -1,18 +1,18 @@
-function print_mail_labels(table_name, ids){
-	//alert("IDs selected from " + table_name + ": " + ids);
+function send_rent_Invoice(table_name, ids){
+	alert("IDs selected from " + table_name + ": " + ids);
 	/* 
 	  we'll open the mail labels page in a new window
 	  that page is a server-side PHP script named mail-labels.php
 	  but first, let's prepare the parameters to send to that script
 	*/
-	var url = 'mail-labels.php?table=' + table_name;
+/*	var url = 'mail-labels.php?table=' + table_name;
 	for(var i = 0; i < ids.length; i++){
 		url = url + '&' 
 			+ encodeURI('ids[]') + '=' 
 			+ encodeURIComponent(ids[i]);
 	}
 	
-	window.open(url);
+	window.open(url);*/
 }
 
 function send_rent_reminder(table_name, ids){	
@@ -46,3 +46,15 @@ function send_rent_reminder(table_name, ids){
 	}
 	// ******** End send email if checkbox is checked *******	
 }
+
+/*function send_rent_Invoice(table_name, ids){
+	alert("IDs selected from " + table_name + ": " + ids);
+		var url = 'admin/pageMail.php?table=' + table_name;
+		for(var i = 0; i < ids.length; i++){
+			url = url + '&' 
+				+ encodeURI('ids[]') + '=' 
+				+ encodeURIComponent(ids[i]);
+		}
+		
+		window.open(url);
+}*/

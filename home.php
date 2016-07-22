@@ -58,8 +58,11 @@
 		$i = 0; $current_group = '';
 		foreach($tg as $tn => $tgroup){
 			$tc = $arrTables[$tn];
+			/* is the current table filter-first? */
 			$tChkFF = array_search($tn, array());
+			/* hide current table in homepage? */
 			$tChkHL = array_search($tn, array('residence_and_rental_history','employment_and_income_history','references'));
+			/* allow homepage 'add new' for current table? */
 			$tChkAHAN = array_search($tn, array('applicants_and_tenants','properties','units','rental_owners'));
 
 			$t_perm = getTablePermissions($tn);
@@ -97,12 +100,12 @@
 									<?php if($can_insert && $tChkAHAN !== false && $tChkAHAN !== null){ ?>
 
 										<div class="btn-group" style="width: 100%;">
-										   <a style="width: 85%;" class="btn btn-lg <?php echo (!$i ? $block_classes['first']['link'] : $block_classes['other']['link']); ?>" title="<?php echo preg_replace("/&amp;(#[0-9]+|[a-z]+);/i", "&$1;", htmlspecialchars(strip_tags($tc[1]))); ?>" href="<?php echo $tn; ?>_view.php<?php echo $searchFirst; ?>"><?php echo ($tc[2] ? '<img src="' . $tc[2] . '">' : '');?><strong><?php echo $tc[0]; ?></strong></a>
-										   <a id="<?php echo $tn; ?>_add_new" style="width: 15%;" class="btn btn-add-new btn-lg <?php echo (!$i ? $block_classes['first']['link'] : $block_classes['other']['link']); ?>" title="<?php echo htmlspecialchars($Translation['Add New']); ?>" href="<?php echo $tn; ?>_view.php?addNew_x=1"><i style="vertical-align: bottom;" class="glyphicon glyphicon-plus"></i></a>
+										   <a style="width: 85%;" class="btn btn-lg <?php echo (!$i ? $block_classes['first']['link'] : $block_classes['other']['link']); ?>" title="<?php echo preg_replace("/&amp;(#[0-9]+|[a-z]+);/i", "&$1;", html_attr(strip_tags($tc[1]))); ?>" href="<?php echo $tn; ?>_view.php<?php echo $searchFirst; ?>"><?php echo ($tc[2] ? '<img src="' . $tc[2] . '">' : '');?><strong><?php echo $tc[0]; ?></strong></a>
+										   <a id="<?php echo $tn; ?>_add_new" style="width: 15%;" class="btn btn-add-new btn-lg <?php echo (!$i ? $block_classes['first']['link'] : $block_classes['other']['link']); ?>" title="<?php echo html_attr($Translation['Add New']); ?>" href="<?php echo $tn; ?>_view.php?addNew_x=1"><i style="vertical-align: bottom;" class="glyphicon glyphicon-plus"></i></a>
 										</div>
 									<?php }else{ ?>
 
-										<a class="btn btn-block btn-lg <?php echo (!$i ? $block_classes['first']['link'] : $block_classes['other']['link']); ?>" title="<?php echo preg_replace("/&amp;(#[0-9]+|[a-z]+);/i", "&$1;", htmlspecialchars(strip_tags($tc[1]))); ?>" href="<?php echo $tn; ?>_view.php<?php echo $searchFirst; ?>"><?php echo ($tc[2] ? '<img src="' . $tc[2] . '">' : '');?><strong><?php echo $tc[0]; ?></strong></a>
+										<a class="btn btn-block btn-lg <?php echo (!$i ? $block_classes['first']['link'] : $block_classes['other']['link']); ?>" title="<?php echo preg_replace("/&amp;(#[0-9]+|[a-z]+);/i", "&$1;", html_attr(strip_tags($tc[1]))); ?>" href="<?php echo $tn; ?>_view.php<?php echo $searchFirst; ?>"><?php echo ($tc[2] ? '<img src="' . $tc[2] . '">' : '');?><strong><?php echo $tc[0]; ?></strong></a>
 									<?php } ?>
 
 									<div class="panel-body-description"><?php echo $tc[1]; ?></div>
@@ -162,7 +165,7 @@
 			modal_window({
 				url: tn + '_view.php?addNew_x=1&Embedded=1',
 				size: 'full',
-				title: $j(this).prev().text() + ": <?php echo htmlspecialchars($Translation['Add New']); ?>" 
+				title: $j(this).prev().text() + ": <?php echo html_attr($Translation['Add New']); ?>" 
 			});
 			return false;
 		});
@@ -171,7 +174,13 @@
 		$j('.collapser').click(function(){
 			$j(this).children('.glyphicon').toggleClass('glyphicon-chevron-right glyphicon-chevron-down');
 		});
-		$j('.collapser').eq(0).click();
+
+		/* hide empty table groups */
+		$j('.collapser').each(function(){
+			var target = $j(this).attr('href');
+			if(!$j(target + " .row div").length) $j(this).hide();
+		});
+		$j('.collapser:visible').eq(0).click();
 	});
 </script>
 

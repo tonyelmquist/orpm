@@ -279,3 +279,7 @@
 	$Translation['invalid url'] = 'Invalid URL!';
 	$Translation['cant retrieve coordinates from url'] = 'Can\'t retrieve coordinates from URL!';
 
+	/* Added in AppGini 5.51 */
+	$Translation['maintenance mode admin notification'] = 'Maintenance mode is enabled! You can disable it from the admin home page.';
+	$Translation['unique field error'] = 'This value already exists or is invalid. Please make sure to specify a unique valid value.';
+

@@ -43,6 +43,47 @@
 
 <div class="row" id="inner-row">
 
+<!-- ################# Maintenance mode ###################### -->
+<?php
+	if(maintenance_mode()){
+		$off_classes = 'btn-default locked_inactive';
+		$on_classes = 'btn-danger unlocked_active';
+	}else{
+		$off_classes = 'btn-success locked_active';
+		$on_classes = 'btn-default unlocked_inactive';
+	}
+?>
+<div class="col-md-12 text-right vspacer-lg">
+	<label><?php echo $Translation['maintenance mode']; ?></label>
+	<div class="btn-group" id="toggle_maintenance_mode">
+		<button type="button" class="btn <?php echo $off_classes; ?>"><?php echo $Translation['OFF']; ?></button>
+		<button type="button" class="btn <?php echo $on_classes; ?>"><?php echo $Translation['ON']; ?></button>
+	</div>
+</div>
+<script>
+	$j('#toggle_maintenance_mode button').click(function(){
+		if($j(this).hasClass('locked_active') || $j(this).hasClass('unlocked_inactive')){
+			if(confirm('<?php echo html_attr($Translation['enable maintenance mode?']); ?>')){
+				$j.ajax({
+					url: 'ajax-maintenance-mode.php?status=on', 
+					complete: function(){
+						location.reload();
+					}
+				});
+			}
+		}else{
+			if(confirm('<?php echo html_attr($Translation['disable maintenance mode?']); ?>')){
+				$j.ajax({
+					url: 'ajax-maintenance-mode.php?status=off', 
+					complete: function(){
+						location.reload();
+					}
+				});
+			}
+		}
+	});
+</script>
+
 <!-- ################# Newest Updates ######################## -->
 <div class="col-md-6">
 <div class="panel panel-info">

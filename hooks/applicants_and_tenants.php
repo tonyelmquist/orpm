@@ -146,8 +146,8 @@
 						'icon' => 'calendar'
 				),
 				array(
-						'title' => 'Generate Rent Invoices',
-						'function' => 'generate_rent_Invoice',
+						'title' => 'Send Rent Invoices',
+						'function' => 'send_rent_Invoice',
 						'icon' => 'list-alt'
 				),
 				array(
@@ -169,11 +169,6 @@
 						'title' => 'View Tenant Rent Record',
 						'function' => 'tenant_rent_record',
 						'icon' => 'paperclip'
-				),
-				array(
-						'title' => 'View Details',
-						'function' => 'print_mail_labels',
-						'icon' => 'th-list'
 				)
 		);
 	}

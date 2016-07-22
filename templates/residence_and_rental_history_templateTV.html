@@ -1,9 +1,11 @@
 <!-- Edit this file to change the layout of each record in the table view -->
-<!-- To disable clicking of a field, remove the <%%select%%> and <%%endselect%%> formatters around it-->
+<!-- To disable clicking of a field, remove the <%%SELECT%%> and <%%ENDSELECT%%> formatters around it-->
 
-<!-- If you wish to hide the table view header that contains the column titles, -->
-<!-- open the generated 'residence_and_rental_history_view.php' file in your text editor and -->
-<!-- change the value of $x->ShowTableHeader to 0 -->
+<!--
+	If you wish to hide the table view header that contains the column titles,
+	add the following to the residence_and_rental_history_init() hook (in hooks/residence_and_rental_history.php file)
+	  $options->ShowTableHeader = 0;
+-->
 
 		<td id="residence_and_rental_history-monthly_rent-<%%VALUE(id)%%>" class="residence_and_rental_history-monthly_rent text-right"><%%SELECT%%><%%VALUE(monthly_rent)%%><%%ENDSELECT%%></td>
 		<td id="residence_and_rental_history-security_deposit-<%%VALUE(id)%%>" class="residence_and_rental_history-security_deposit text-right"><%%SELECT%%><%%VALUE(security_deposit)%%><%%ENDSELECT%%></td>

@@ -6,7 +6,8 @@
 	// process search
 	if($_GET['searchMembers'] != ""){
 		$searchSQL = makeSafe($_GET['searchMembers']);
-		$searchHTML = htmlspecialchars($_GET['searchMembers']);
+		$searchHTML = html_attr($_GET['searchMembers']);
+		$searchURL = urlencode($_GET['searchMembers']);
 		$searchField = intval($_GET['searchField']);
 		$searchFieldName = array_search($searchField, array(
 			'm.memberID' => 1,
@@ -64,25 +65,21 @@
 		}
 	}
 
-# NEXT: Add a dateAfter and dateBefore filter [??]
-
-	$numMembers=sqlValue("select count(1) from membership_users m left join membership_groups g on m.groupID=g.groupID $where");
+	$numMembers = sqlValue("select count(1) from membership_users m left join membership_groups g on m.groupID=g.groupID {$where}");
 	if(!$numMembers){
 		echo "<div class=\"status\">{$Translation['no matching results found']}</div>";
-		$noResults=TRUE;
-		$page=1;
+		$noResults = true;
+		$page = 1;
 	}else{
-		$noResults=FALSE;
+		$noResults = false;
 	}
 
-	$page=intval($_GET['page']);
-	if($page<1){
-		$page=1;
-	}elseif($page>ceil($numMembers/$adminConfig['membersPerPage']) && !$noResults){
-		redirect("admin/pageViewMembers.php?page=".ceil($numMembers/$adminConfig['membersPerPage']));
+	$page = max(1, intval($_GET['page']));
+	if($page > ceil($numMembers / $adminConfig['membersPerPage']) && !$noResults){
+		redirect("admin/pageViewMembers.php?page=" . ceil($numMembers/$adminConfig['membersPerPage']));
 	}
 
-	$start=($page-1)*$adminConfig['membersPerPage'];
+	$start = ($page - 1) * $adminConfig['membersPerPage'];
 
 ?>
 <div class="page-header"><h1><?php echo $Translation['members'] ; ?></h1></div>
@@ -97,12 +94,12 @@
 							<input type="hidden" name="page" value="1">
 							<?php 
 								$originalValues =  array ('<SEARCH>','<HTMLSELECT>');
-								$searchValue = "<input class='formTextBox' type='text' name='searchMembers' value='$searchHTML' size='20'>";
-								$arrFields=array(0, 1, 2, 3, 4, 5, 6, 7, 8);
-								$arrFieldCaptions=array( $Translation['all fields'] , $Translation['username'] , $Translation["group"] , $Translation["email"] , $adminConfig['custom1'], $adminConfig['custom2'], $adminConfig['custom3'], $adminConfig['custom4'], $Translation["comments"] );
+								$searchValue = "<input class='formTextBox' type='text' name='searchMembers' value='{$searchHTML}' size='20'>";
+								$arrFields = array(0, 1, 2, 3, 4, 5, 6, 7, 8);
+								$arrFieldCaptions = array($Translation['all fields'], $Translation['username'], $Translation["group"], $Translation["email"], $adminConfig['custom1'], $adminConfig['custom2'], $adminConfig['custom3'], $adminConfig['custom4'], $Translation["comments"]);
 								$htmlSelect = htmlSelect('searchField', $arrFields, $arrFieldCaptions, $searchField);
-								$replaceValues = array ( $searchValue , $htmlSelect );
-								echo str_replace ( $originalValues , $replaceValues , $Translation['search members'] );
+								$replaceValues = array($searchValue, $htmlSelect);
+								echo str_replace($originalValues, $replaceValues, $Translation['search members']);
 							?>
 							</td>
 						<td valign="bottom" rowspan="2">
@@ -143,8 +140,8 @@
 		</tr>
 <?php
 
-	$res=sql("select lcase(m.memberID), g.name, DATE_FORMAT(m.signupDate, '".$adminConfig['MySQLDateFormat']."'), m.custom1, m.custom2, m.custom3, m.custom4, m.isBanned, m.isApproved from membership_users m left join membership_groups g on m.groupID=g.groupID $where order by m.signupDate limit $start, ".$adminConfig['membersPerPage'], $eo);
-	while($row=db_fetch_row($res)){
+	$res=sql("select lcase(m.memberID), g.name, DATE_FORMAT(m.signupDate, '" . makeSafe($adminConfig['MySQLDateFormat'], false) . "'), m.custom1, m.custom2, m.custom3, m.custom4, m.isBanned, m.isApproved from membership_users m left join membership_groups g on m.groupID=g.groupID $where order by m.signupDate limit $start, " . intval($adminConfig['membersPerPage']), $eo);
+	while($row = db_fetch_row($res)){
 		?>
 		<tr>
 			<td class="tdCaptionCell" align="left">
@@ -187,7 +184,7 @@
 			<table width="100%" cellspacing="0">
 				<tr>
 				<td align="left" class="tdFooter">
-					<input type="button" onClick="window.location='pageViewMembers.php?searchMembers=<?php echo $searchHTML; ?>&groupID=<?php echo $groupID; ?>&status=<?php echo $status; ?>&searchField=<?php echo $searchField; ?>&page=<?php echo ($page>1 ? $page-1 : 1); ?>';" value="<?php echo $Translation['previous'] ; ?>">
+					<input type="button" onClick="window.location='pageViewMembers.php?searchMembers=<?php echo $searchURL; ?>&groupID=<?php echo $groupID; ?>&status=<?php echo $status; ?>&searchField=<?php echo $searchField; ?>&page=<?php echo ($page>1 ? $page-1 : 1); ?>';" value="<?php echo $Translation['previous'] ; ?>">
 					</td>
 				<td align="center" class="tdFooter">
 					<?php 
@@ -197,7 +194,7 @@
 					?>
 				</td>
 				<td align="right" class="tdFooter">
-					<input type="button" onClick="window.location='pageViewMembers.php?searchMembers=<?php echo $searchHTML; ?>&groupID=<?php echo $groupID; ?>&status=<?php echo $status; ?>&searchField=<?php echo $searchField; ?>&page=<?php echo ($page<ceil($numMembers/$adminConfig['membersPerPage']) ? $page+1 : ceil($numMembers/$adminConfig['membersPerPage'])); ?>';" value="<?php echo $Translation['next'] ; ?>">
+					<input type="button" onClick="window.location='pageViewMembers.php?searchMembers=<?php echo $searchURL; ?>&groupID=<?php echo $groupID; ?>&status=<?php echo $status; ?>&searchField=<?php echo $searchField; ?>&page=<?php echo ($page<ceil($numMembers/$adminConfig['membersPerPage']) ? $page+1 : ceil($numMembers/$adminConfig['membersPerPage'])); ?>';" value="<?php echo $Translation['next'] ; ?>">
 					</td>
 			</tr></table></td>
 		</tr>
@@ -230,4 +227,3 @@
 
 <?php
 	include("{$currDir}/incFooter.php");
-?>

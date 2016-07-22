@@ -9,7 +9,7 @@
 				<div style="height: 60px;" class="hidden-print"></div>
 				<nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
 					<p class="navbar-text"><small>
-						Powered by <a class="navbar-link" href="http://bigprof.com/appgini/" target="_blank">BigProf AppGini 5.50</a>
+						Powered by <a class="navbar-link" href="http://bigprof.com/appgini/" target="_blank">BigProf AppGini 5.51</a>
 					</small></p>
 				</nav>
 			<?php } ?>

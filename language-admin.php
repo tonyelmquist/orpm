@@ -428,3 +428,12 @@
 	$Translation['sure delete record'] = "Are you sure you want to delete this record?";
 	$Translation['delete record'] = "Delete this record";
 	$Translation['displaying records'] = "Displaying records <RECORDNUM1> to <RECORDNUM2> of <RECORDS>";
+
+	/* Added in AppGini 5.51 */
+	$Translation['maintenance mode admin notification'] = 'Maintenance mode is enabled! You can disable it from the admin home page.';
+	$Translation['maintenance mode message'] = 'Maintenance mode message';
+	$Translation['maintenance mode'] = 'Maintenance mode';
+	$Translation['OFF'] = 'OFF';
+	$Translation['ON'] = 'ON';
+	$Translation['enable maintenance mode?'] = 'Are you sure you want to enable maintenance mode? Only admin users can access the site in this mode!';
+	$Translation['disable maintenance mode?'] = 'Are you sure you want to disable maintenance mode? All users will be able to access the site!';

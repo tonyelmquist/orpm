@@ -107,20 +107,17 @@
 </div><!-- /div class="panel-body" -->
 	<script src="nicEdit.js"></script>
 	<script>
-		bkLib.onDomLoaded(function(){
-			if(document.getElementById('notes')!=undefined)
-				new nicEditor().panelInstance('notes');
-
-			$j(function(){
-				$j('.nicEdit-panelContain').parent().width('90%');
-				$j('.nicEdit-panelContain').parent().next().width('88%');
-				$j('.nicEdit-main').width('99%');
-			});
-		});
 		$j(function() {
 			var add_new_mode = (!$j('input[name=SelectedID]').val());
 			var embedded_mode = ($j('input[name=Embedded]').val() == 1);
 
+			bkLib.onDomLoaded(function(){
+				if($j('textarea#notes').length) new nicEditor().panelInstance('notes');
+
+				$j('.nicEdit-panelContain').parent().width('90%');
+				$j('.nicEdit-panelContain').parent().next().width('88%');
+				$j('.nicEdit-main').width('99%');
+			});
 			$j('select, input[type=text], textarea').not(':disabled').eq(0).focus();
 			$j('form').eq(0).change(function(){
 				if($j(this).data('already_changed')) return;
@@ -133,7 +130,7 @@
 
 			if(!embedded_mode){
 				/* add a horizontal spacer to [add new parent] buttons that don't have a spacered element before them */
-				$j('.add_new_parent').prev(':not(.hspacer-lg)').next().addClass('hspacer-lg');
+				$j('.add_new_parent').prev(':not(.hspacer-md)').next().addClass('hspacer-md');
 
 				$j('.add_new_parent').click(function(){
 					var pt = $j(this).attr('id').replace(/_add_new$/, '');
@@ -193,6 +190,7 @@
 
 				}
 			});
+
 
 		});
 	</script>

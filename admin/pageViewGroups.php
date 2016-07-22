@@ -5,7 +5,7 @@
 
 	if($_GET['searchGroups'] != ""){
 		$searchSQL = makeSafe($_GET['searchGroups']);
-		$searchHTML = htmlspecialchars($_GET['searchGroups']);
+		$searchHTML = html_attr($_GET['searchGroups']);
 		$where = "where name like '%$searchSQL%' or description like '%$searchSQL%'";
 	}else{
 		$searchSQL = '';

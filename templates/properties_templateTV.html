@@ -1,9 +1,11 @@
 <!-- Edit this file to change the layout of each record in the table view -->
-<!-- To disable clicking of a field, remove the <%%select%%> and <%%endselect%%> formatters around it-->
+<!-- To disable clicking of a field, remove the <%%SELECT%%> and <%%ENDSELECT%%> formatters around it-->
 
-<!-- If you wish to hide the table view header that contains the column titles, -->
-<!-- open the generated 'properties_view.php' file in your text editor and -->
-<!-- change the value of $x->ShowTableHeader to 0 -->
+<!--
+	If you wish to hide the table view header that contains the column titles,
+	add the following to the properties_init() hook (in hooks/properties.php file)
+	  $options->ShowTableHeader = 0;
+-->
 
 		<td id="properties-property_name-<%%VALUE(id)%%>" class="properties-property_name "><%%SELECT%%><%%VALUE(property_name)%%><%%ENDSELECT%%></td>
 		<td id="properties-type-<%%VALUE(id)%%>" class="properties-type "><%%SELECT%%><%%VALUE(type)%%><%%ENDSELECT%%></td>

@@ -4,12 +4,13 @@
 	include("{$currDir}/incHeader.php");
 
 	// process search
-	$memberID = makeSafe(strtolower($_GET['memberID']));
-	$groupID = intval($_GET['groupID']);
-	$tableName = makeSafe($_GET['tableName']);
+	$memberID = new Request('memberID', 'strtolower');
+	$groupID = max(0, intval($_GET['groupID']));
+	$tableName = new Request('tableName');
+	$page = max(1, intval($_GET['page']));
 
 	// process sort
-	$sortDir = ($_GET['sortDir'] ? 'desc' : '');
+	$sortDir = ($_GET['sortDir'] == 'desc' ? 'desc' : '');
 	$sort = makeSafe($_GET['sort']);
 	if($sort != 'dateAdded' && $sort != 'dateUpdated'){ // default sort is newly created first
 		$sort = 'dateAdded';
@@ -20,39 +21,35 @@
 		$sortClause = "order by {$sort} {$sortDir}";
 	}
 
-	if($memberID != ''){
-		$where .= ($where ? " and " : "") . "r.memberID like '{$memberID}%'";
+	if($memberID->sql != ''){
+		$where .= ($where ? " and " : "") . "r.memberID like '{$memberID->sql}%'";
 	}
 
-	if($groupID != ''){
+	if($groupID){
 		$where .= ($where ? " and " : "") . "g.groupID='{$groupID}'";
 	}
 
-	if($tableName != ''){
-		$where .= ($where ? " and " : "") . "r.tableName='{$tableName}'";
+	if($tableName->sql != ''){
+		$where .= ($where ? " and " : "") . "r.tableName='{$tableName->sql}'";
 	}
 
 	if($where){
 		$where = "where {$where}";
 	}
 
-	$numRecords=sqlValue("select count(1) from membership_userrecords r left join membership_groups g on r.groupID=g.groupID $where");
+	$numRecords = sqlValue("select count(1) from membership_userrecords r left join membership_groups g on r.groupID=g.groupID {$where}");
+	$noResults = false;
 	if(!$numRecords){
-		echo "<div class=\"status\">{$Translation['no matching results found']}</div>";
-		$noResults=TRUE;
-		$page=1;
-	}else{
-		$noResults=FALSE;
+		echo "<div class=\"alert alert-warning\">{$Translation['no matching results found']}</div>";
+		$noResults = true;
+		$page = 1;
 	}
 
-	$page=intval($_GET['page']);
-	if($page<1){
-		$page=1;
-	}elseif($page>ceil($numRecords/$adminConfig['recordsPerPage']) && !$noResults){
-		redirect("admin/pageViewRecords.php?page=".ceil($numRecords/$adminConfig['recordsPerPage']));
+	if($page > ceil($numRecords / $adminConfig['recordsPerPage']) && !$noResults){
+		redirect("admin/pageViewRecords.php?page=" . ceil($numRecords/$adminConfig['recordsPerPage']));
 	}
 
-	$start=($page-1)*$adminConfig['recordsPerPage'];
+	$start = ($page - 1) * $adminConfig['recordsPerPage'];
 
 ?>
 <div class="page-header"><h1><?php echo $Translation['data records'] ; ?></h1></div>
@@ -70,7 +67,7 @@
 							?>
 							&nbsp; &nbsp; &nbsp; 
 							<?php echo $Translation["member username"] ; ?>
-							<input class="formTextBox" type="text" name="memberID" value="<?php echo $memberID; ?>" size="20">
+							<input class="formTextBox" type="text" name="memberID" value="<?php echo $memberID->attr; ?>" size="20">
 							<input type="hidden" name="page" value="1">
 							</td>
 						<td valign="bottom" rowspan="3">
@@ -84,7 +81,7 @@
 							<?php
 								$arrFields = array('', 'applications_leases', 'residence_and_rental_history', 'employment_and_income_history', 'references', 'applicants_and_tenants', 'properties', 'units', 'rental_owners');
 								$arrFieldCaptions = array('All tables', 'Applications/Leases', 'Rental history', 'Employment and income history', 'References', 'Tenant Center', 'Property Center', 'Units Center', 'Rental owners Center');
-								echo htmlSelect('tableName', $arrFields, $arrFieldCaptions, $tableName);
+								echo htmlSelect('tableName', $arrFields, $arrFieldCaptions, $tableName->raw);
 							?>
 							</td>
 						</tr>
@@ -117,7 +114,7 @@
 		</tr>
 <?php
 
-	$res = sql("select r.recID, r.memberID, g.name, r.tableName, r.dateAdded, r.dateUpdated, r.pkValue from membership_userrecords r left join membership_groups g on r.groupID=g.groupID $where $sortClause limit $start, ".$adminConfig['recordsPerPage'], $eo);
+	$res = sql("select r.recID, r.memberID, g.name, r.tableName, r.dateAdded, r.dateUpdated, r.pkValue from membership_userrecords r left join membership_groups g on r.groupID=g.groupID $where $sortClause limit $start, " . $adminConfig['recordsPerPage'], $eo);
 	while($row = db_fetch_row($res)){
 		?>
 		<tr>
@@ -140,17 +137,17 @@
 			<table width="100%" cellspacing="0">
 				<tr>
 				<td class="tdFooter text-left flip">
-					<input type="button" onClick="window.location='pageViewRecords.php?groupID=<?php echo $groupID; ?>&memberID=<?php echo $memberID; ?>&tableName=<?php echo $tableName; ?>&page=<?php echo ($page>1 ? $page-1 : 1); ?>&sort=<?php echo $sort; ?>&sortDir=<?php echo $sortDir; ?>';" value="<?php echo $Translation['previous'] ; ?>">
+					<input type="button" onClick="window.location='pageViewRecords.php?groupID=<?php echo $groupID; ?>&memberID=<?php echo $memberID->url; ?>&tableName=<?php echo $tableName->url; ?>&page=<?php echo ($page > 1 ? $page - 1 : 1); ?>&sort=<?php echo $sort; ?>&sortDir=<?php echo $sortDir; ?>';" value="<?php echo $Translation['previous'] ; ?>">
 				</td>
 				<td class="text-center tdFooter">
 					<?php 
 						$originalValues =  array ('<RECORDNUM1>','<RECORDNUM2>','<RECORDS>' );
 						$replaceValues = array ( $start+1 , $start+db_num_rows($res) , $numRecords );
-						echo str_replace ( $originalValues , $replaceValues , $Translation['displaying records'] );
+						echo str_replace($originalValues, $replaceValues, $Translation['displaying records']);
 					?>
 				</td>
 				<td class="tdFooter text-right flip">
-					<input type="button" onClick="window.location='pageViewRecords.php?groupID=<?php echo $groupID; ?>&memberID=<?php echo $memberID; ?>&tableName=<?php echo $tableName; ?>&page=<?php echo ($page<ceil($numRecords/$adminConfig['recordsPerPage']) ? $page+1 : ceil($numRecords/$adminConfig['recordsPerPage'])); ?>&sort=<?php echo $sort; ?>&sortDir=<?php echo $sortDir; ?>';" value="<?php echo $Translation['next'] ; ?>">
+					<input type="button" onClick="window.location='pageViewRecords.php?groupID=<?php echo $groupID; ?>&memberID=<?php echo $memberID->url; ?>&tableName=<?php echo $tableName->url; ?>&page=<?php echo ($page<ceil($numRecords/$adminConfig['recordsPerPage']) ? $page+1 : ceil($numRecords/$adminConfig['recordsPerPage'])); ?>&sort=<?php echo $sort; ?>&sortDir=<?php echo $sortDir; ?>';" value="<?php echo $Translation['next'] ; ?>">
 				</td>
 			</tr><table></td>
 		</tr>
@@ -158,4 +155,3 @@
 
 <?php
 	include("{$currDir}/incFooter.php");
-?>

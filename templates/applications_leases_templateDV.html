@@ -34,7 +34,7 @@
 				</div>
 
 				<div class="form-group">
-					<label for="status" class="control-label col-lg-3">Application status<span class="text-danger"><%%TRANSLATION(*)%%></span> <button class="btn btn-info btn-xs vspacer-sm" type="button" data-toggle="collapse" tabindex="-1" data-target="#status-description"><i class="glyphicon glyphicon-info-sign"></i></button></label>
+					<label for="status" class="control-label col-lg-3">Application status<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#status-description"></i></label>
 					<div class="col-lg-9">
 						<span class="help-block collapse" id="status-description"><div class="alert alert-info">After an application is approved, set this to "Lease". When the lease expires or is terminated, set it to "Historical lease"</div></span>
 
@@ -43,7 +43,7 @@
 				</div>
 
 				<div class="form-group">
-					<label for="property" class="control-label col-lg-3" data-parent_link="view_parent_modal">Property <button class="btn btn-info btn-xs vspacer-sm" type="button" data-toggle="collapse" tabindex="-1" data-target="#property-description"><i class="glyphicon glyphicon-info-sign"></i></button></label>
+					<label for="property" class="control-label col-lg-3" data-parent_link="view_parent_modal">Property <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#property-description"></i></label>
 					<div class="col-lg-9">
 						<span class="help-block collapse" id="property-description"><div class="alert alert-info">The property containing the unit for which the applicant/tenant is applying for a lease.</div></span>
 
@@ -59,7 +59,7 @@
 				</div>
 
 				<div class="form-group">
-					<label for="type" class="control-label col-lg-3">Lease type<span class="text-danger"><%%TRANSLATION(*)%%></span> <button class="btn btn-info btn-xs vspacer-sm" type="button" data-toggle="collapse" tabindex="-1" data-target="#type-description"><i class="glyphicon glyphicon-info-sign"></i></button></label>
+					<label for="type" class="control-label col-lg-3">Lease type<span class="text-danger"><%%TRANSLATION(*)%%></span> <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#type-description"></i></label>
 					<div class="col-lg-9">
 						<span class="help-block collapse" id="type-description"><div class="alert alert-info">Specify the type of lease term.</div></span>
 
@@ -124,7 +124,7 @@
 				</div>
 
 				<div class="form-group">
-					<label for="emergency_contact" class="control-label col-lg-3">Emergency contact <button class="btn btn-info btn-xs vspacer-sm" type="button" data-toggle="collapse" tabindex="-1" data-target="#emergency_contact-description"><i class="glyphicon glyphicon-info-sign"></i></button></label>
+					<label for="emergency_contact" class="control-label col-lg-3">Emergency contact <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#emergency_contact-description"></i></label>
 					<div class="col-lg-9">
 						<span class="help-block collapse" id="emergency_contact-description"><div class="alert alert-info">Add all details of whom to contact in case of emergency</div></span>
 
@@ -133,7 +133,7 @@
 				</div>
 
 				<div class="form-group">
-					<label for="co_signer_details" class="control-label col-lg-3">Co signer details <button class="btn btn-info btn-xs vspacer-sm" type="button" data-toggle="collapse" tabindex="-1" data-target="#co_signer_details-description"><i class="glyphicon glyphicon-info-sign"></i></button></label>
+					<label for="co_signer_details" class="control-label col-lg-3">Co signer details <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#co_signer_details-description"></i></label>
 					<div class="col-lg-9">
 						<span class="help-block collapse" id="co_signer_details-description"><div class="alert alert-info">Add all details to your co-signer, for example name, e-mail, address, phone... etc.</div></span>
 
@@ -142,7 +142,7 @@
 				</div>
 
 				<div class="form-group">
-					<label for="notes" class="control-label col-lg-3">Notes <button class="btn btn-info btn-xs vspacer-sm" type="button" data-toggle="collapse" tabindex="-1" data-target="#notes-description"><i class="glyphicon glyphicon-info-sign"></i></button></label>
+					<label for="notes" class="control-label col-lg-3">Notes <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#notes-description"></i></label>
 					<div class="col-lg-9">
 						<span class="help-block collapse" id="notes-description"><div class="alert alert-info">You can type any notes regarding this applicaton/lease here, for example rejected or cancelled by user or any other notes.</div></span>
 
@@ -184,20 +184,17 @@
 </div><!-- /div class="panel-body" -->
 	<script src="nicEdit.js"></script>
 	<script>
-		bkLib.onDomLoaded(function(){
-			if(document.getElementById('notes')!=undefined)
-				new nicEditor().panelInstance('notes');
-
-			$j(function(){
-				$j('.nicEdit-panelContain').parent().width('90%');
-				$j('.nicEdit-panelContain').parent().next().width('88%');
-				$j('.nicEdit-main').width('99%');
-			});
-		});
 		$j(function() {
 			var add_new_mode = (!$j('input[name=SelectedID]').val());
 			var embedded_mode = ($j('input[name=Embedded]').val() == 1);
 
+			bkLib.onDomLoaded(function(){
+				if($j('textarea#notes').length) new nicEditor().panelInstance('notes');
+
+				$j('.nicEdit-panelContain').parent().width('90%');
+				$j('.nicEdit-panelContain').parent().next().width('88%');
+				$j('.nicEdit-main').width('99%');
+			});
 			$j('select, input[type=text], textarea').not(':disabled').eq(0).focus();
 			$j('form').eq(0).change(function(){
 				if($j(this).data('already_changed')) return;
@@ -210,7 +207,7 @@
 
 			if(!embedded_mode){
 				/* add a horizontal spacer to [add new parent] buttons that don't have a spacered element before them */
-				$j('.add_new_parent').prev(':not(.hspacer-lg)').next().addClass('hspacer-lg');
+				$j('.add_new_parent').prev(':not(.hspacer-md)').next().addClass('hspacer-md');
 
 				$j('.add_new_parent').click(function(){
 					var pt = $j(this).attr('id').replace(/_add_new$/, '');
@@ -270,6 +267,7 @@
 
 				}
 			});
+
 
 		});
 	</script>

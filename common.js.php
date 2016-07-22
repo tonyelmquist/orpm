@@ -73,6 +73,12 @@ jQuery(function(){
 	/* fix behavior of select2 in bootstrap modal. See: https://github.com/ivaynberg/select2/issues/1436 */
 	jQuery.fn.modal.Constructor.prototype.enforceFocus = function(){};
 
+	/* remove empty navbar menus */
+	$j('nav li.dropdown').each(function(){
+		var num_items = $j(this).children('.dropdown-menu').children('li').length;
+		if(!num_items) $j(this).remove();
+	})
+
 	update_action_buttons();
 });
 
@@ -641,4 +647,34 @@ function enable_dvab_floating(){
 		}
 	});
 	window.enable_dvab_floating_run = true;
+}
+
+/* check if a given field's value is unique and reflect this in the DV form */
+function enforce_uniqueness(table, field){
+	$j('#' + field).on('change', function(){
+		/* check uniqueness of field */
+		var data = {
+			t: table,
+			f: field,
+			value: $j('#' + field).val()
+		};
+
+		if($j('[name=SelectedID]').val().length) data.id = $j('[name=SelectedID]').val();
+
+		$j.ajax({
+			url: 'ajax_check_unique.php',
+			data: data,
+			complete: function(resp){
+				if(resp.responseJSON.result == 'ok'){
+					$j('#' + field + '-uniqueness-note').hide();
+					$j('#' + field).parents('.form-group').removeClass('has-error');
+				}else{
+					$j('#' + field + '-uniqueness-note').show();
+					$j('#' + field).parents('.form-group').addClass('has-error');
+					$j('#' + field).focus();
+					setTimeout(function(){ $j('#update, #insert').prop('disabled', true); }, 500);
+				}
+			}
+		})
+	});
 }

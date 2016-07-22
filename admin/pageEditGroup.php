@@ -122,7 +122,7 @@
 		}
 	}
 ?>
-<div class="page-header"><h1><?php echo ($groupID ? str_replace ('<GROUPNAME>' , $name, $Translation["edit group"] ) : $Translation["add new group"]); ?></h1></div>
+<div class="page-header"><h1><?php echo ($groupID ? str_replace ('<GROUPNAME>' , html_attr($name), $Translation['edit group'] ) : $Translation['add new group']); ?></h1></div>
 <?php if($anonGroupID==$groupID){ ?>
 	<div class="alert alert-warning"><?php echo $Translation["anonymous group attention"]; ?></div>
 <?php } ?>
@@ -135,7 +135,7 @@
 				<div class="formFieldCaption"><?php echo $Translation["group name"]; ?></div>
 				</td>
 			<td class="tdFormInput text-left flip">
-				<input type="text" name="name" <?php echo ($anonGroupID == $groupID ? "readonly" : ""); ?> value="<?php echo htmlspecialchars($name); ?>" size="20" class="formTextBox">
+				<input type="text" name="name" <?php echo ($anonGroupID == $groupID ? "readonly" : ""); ?> value="<?php echo html_attr($name); ?>" size="20" class="formTextBox">
 				<br>
 				<?php if($anonGroupID == $groupID){ 
 							echo $Translation["readonly group name"]; 
@@ -150,7 +150,7 @@
 				<div class="formFieldCaption"><?php echo $Translation["description"] ; ?></div>
 			</td>
 			<td class="tdFormInput text-left flip">
-				<textarea name="description" cols="50" rows="5" class="formTextBox"><?php echo htmlspecialchars($description); ?></textarea>
+				<textarea name="description" cols="50" rows="5" class="formTextBox"><?php echo html_attr($description); ?></textarea>
 			</td>
 		</tr>
 		<?php if($anonGroupID != $groupID){ ?>

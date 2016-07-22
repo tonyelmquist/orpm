@@ -54,6 +54,11 @@ class CI_Input {
 										"Redirect\s+302"			=> '[removed]'
 									);
 
+
+	function __construct(){
+		$this->CI_Input();
+	}
+
 	/**
 	* Constructor
 	*

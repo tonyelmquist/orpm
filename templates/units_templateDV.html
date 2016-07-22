@@ -45,7 +45,7 @@
 				</div>
 
 				<div class="form-group">
-					<label class="control-label col-lg-3">Photo <button class="btn btn-info btn-xs vspacer-sm" type="button" data-toggle="collapse" tabindex="-1" data-target="#photo-description"><i class="glyphicon glyphicon-info-sign"></i></button></label>
+					<label class="control-label col-lg-3">Photo <i class="glyphicon glyphicon-info-sign text-info" data-toggle="collapse" data-target="#photo-description"></i></label>
 					<div class="col-lg-9">
 						<span class="help-block collapse" id="photo-description"><div class="alert alert-info">Maximum file size allowed: 1000 KB.<br />Allowed file types: jpg, jpeg, gif, png</div></span>
 
@@ -125,20 +125,17 @@
 </div><!-- /div class="panel-body" -->
 	<script src="nicEdit.js"></script>
 	<script>
-		bkLib.onDomLoaded(function(){
-			if(document.getElementById('description')!=undefined)
-				new nicEditor().panelInstance('description');
-
-			$j(function(){
-				$j('.nicEdit-panelContain').parent().width('90%');
-				$j('.nicEdit-panelContain').parent().next().width('88%');
-				$j('.nicEdit-main').width('99%');
-			});
-		});
 		$j(function() {
 			var add_new_mode = (!$j('input[name=SelectedID]').val());
 			var embedded_mode = ($j('input[name=Embedded]').val() == 1);
 
+			bkLib.onDomLoaded(function(){
+				if($j('textarea#description').length) new nicEditor().panelInstance('description');
+
+				$j('.nicEdit-panelContain').parent().width('90%');
+				$j('.nicEdit-panelContain').parent().next().width('88%');
+				$j('.nicEdit-main').width('99%');
+			});
 			$j('select, input[type=text], textarea').not(':disabled').eq(0).focus();
 			$j('form').eq(0).change(function(){
 				if($j(this).data('already_changed')) return;
@@ -183,7 +180,7 @@
 
 			if(!embedded_mode){
 				/* add a horizontal spacer to [add new parent] buttons that don't have a spacered element before them */
-				$j('.add_new_parent').prev(':not(.hspacer-lg)').next().addClass('hspacer-lg');
+				$j('.add_new_parent').prev(':not(.hspacer-md)').next().addClass('hspacer-md');
 
 				$j('.add_new_parent').click(function(){
 					var pt = $j(this).attr('id').replace(/_add_new$/, '');
@@ -243,6 +240,7 @@
 
 				}
 			});
+
 
 		});
 	</script>

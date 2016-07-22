@@ -154,9 +154,9 @@
 						include("{$currDir}/../language.php");
 						foreach($field as $fn){
 							if(@is_file("{$currDir}/../".$Translation['ImageFolder'].$row[$fn])){
-								$op="<a href=\""."../".$Translation['ImageFolder'].$row[$fn]."\" target=\"_blank\">".htmlspecialchars($row[$fn])."</a>";
+								$op="<a href=\""."../".$Translation['ImageFolder'].$row[$fn]."\" target=\"_blank\">".html_attr($row[$fn])."</a>";
 							}else{
-								$op=htmlspecialchars($row[$fn]);
+								$op=html_attr($row[$fn]);
 							}
 							?>
 							<tr>

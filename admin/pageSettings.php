@@ -86,7 +86,8 @@
 				'senderEmail' => $_POST['senderEmail'],
 				'approvalSubject' => undo_magic_quotes($_POST['approvalSubject']),
 				'approvalMessage' => undo_magic_quotes($_POST['approvalMessage']),
-				'hide_twitter_feed' => ($_POST['hide_twitter_feed'] ? true : false)
+				'hide_twitter_feed' => ($_POST['hide_twitter_feed'] ? true : false),
+				'maintenance_mode_message' => $_POST['maintenance_mode_message']
 			)
 		);
 
@@ -131,7 +132,7 @@
 				<div class="formFieldCaption"><?php echo $Translation['admin username'] ; ?></div>
 				</td>
 			<td align="left" class="tdFormInput">
-				<input type="text" name="adminUsername" id="adminUsername" value="<?php echo htmlspecialchars($adminConfig['adminUsername']); ?>" size="20" class="formTextBox">
+				<input type="text" name="adminUsername" id="adminUsername" value="<?php echo html_attr($adminConfig['adminUsername']); ?>" size="20" class="formTextBox">
 				</td>
 			</tr>
 		<tr>
@@ -157,7 +158,7 @@
 				<div class="formFieldCaption"><?php echo $Translation['sender email'] ; ?></div>
 				</td>
 			<td align="left" class="tdFormInput">
-				<input type="text" name="senderEmail" id="senderEmail" value="<?php echo htmlspecialchars($adminConfig['senderEmail']); ?>" size="40" class="formTextBox">
+				<input type="text" name="senderEmail" id="senderEmail" value="<?php echo html_attr($adminConfig['senderEmail']); ?>" size="40" class="formTextBox">
 				<br><?php echo $Translation['sender name and email'] ; ?> 
 				<br><?php echo $Translation['email messages'] ; ?>
 				</td>
@@ -187,7 +188,7 @@
 				<div class="formFieldCaption"><?php echo $Translation['sender name'] ; ?></div>
 				</td>
 			<td align="left" class="tdFormInput">
-				<input type="text" name="senderName" id="senderName" value="<?php echo htmlspecialchars($adminConfig['senderName']); ?>" size="40" class="formTextBox">
+				<input type="text" name="senderName" id="senderName" value="<?php echo html_attr($adminConfig['senderName']); ?>" size="40" class="formTextBox">
 				</td>
 			</tr>
 
@@ -196,7 +197,7 @@
 				<div class="formFieldCaption"><?php echo $Translation['members custom field 1'] ; ?></div>
 				</td>
 			<td align="left" class="tdFormInput">
-				<input type="text" name="custom1" id="custom1" value="<?php echo htmlspecialchars($adminConfig['custom1']); ?>" size="20" class="formTextBox">
+				<input type="text" name="custom1" id="custom1" value="<?php echo html_attr($adminConfig['custom1']); ?>" size="20" class="formTextBox">
 				</td>
 			</tr>
 		<tr>
@@ -204,7 +205,7 @@
 				<div class="formFieldCaption"><?php echo $Translation['members custom field 2'] ; ?></div>
 				</td>
 			<td align="left" class="tdFormInput">
-				<input type="text" name="custom2" id="custom2" value="<?php echo htmlspecialchars($adminConfig['custom2']); ?>" size="20" class="formTextBox">
+				<input type="text" name="custom2" id="custom2" value="<?php echo html_attr($adminConfig['custom2']); ?>" size="20" class="formTextBox">
 				</td>
 			</tr>
 		<tr>
@@ -212,7 +213,7 @@
 				<div class="formFieldCaption"><?php echo $Translation['members custom field 3'] ; ?></div>
 				</td>
 			<td align="left" class="tdFormInput">
-				<input type="text" name="custom3" id="custom3" value="<?php echo htmlspecialchars($adminConfig['custom3']); ?>" size="20" class="formTextBox">
+				<input type="text" name="custom3" id="custom3" value="<?php echo html_attr($adminConfig['custom3']); ?>" size="20" class="formTextBox">
 				</td>
 			</tr>
 		<tr>
@@ -220,7 +221,7 @@
 				<div class="formFieldCaption"><?php echo $Translation['members custom field 4'] ; ?></div>
 				</td>
 			<td align="left" class="tdFormInput">
-				<input type="text" name="custom4" id="custom4" value="<?php echo htmlspecialchars($adminConfig['custom4']); ?>" size="20" class="formTextBox">
+				<input type="text" name="custom4" id="custom4" value="<?php echo html_attr($adminConfig['custom4']); ?>" size="20" class="formTextBox">
 				</td>
 			</tr>
 
@@ -229,7 +230,7 @@
 				<div class="formFieldCaption"><?php echo $Translation['member approval email subject'] ; ?></div>
 				</td>
 			<td align="left" class="tdFormInput">
-				<input type="text" name="approvalSubject" id="approvalSubject" value="<?php echo htmlspecialchars($adminConfig['approvalSubject']); ?>" size="40" class="formTextBox">
+				<input type="text" name="approvalSubject" id="approvalSubject" value="<?php echo html_attr($adminConfig['approvalSubject']); ?>" size="40" class="formTextBox">
 				<br><?php echo $Translation['member approval email subject control'] ; ?>
 				</td>
 			</tr>
@@ -239,7 +240,7 @@
 				<div class="formFieldCaption"><?php echo $Translation['member approval email message'] ; ?></div>
 				</td>
 			<td align="left" class="tdFormInput">
-				<textarea wrap="virtual" name="approvalMessage" cols="60" rows="6" class="formTextBox"><?php echo htmlspecialchars(str_replace(array('\r', '\n'), array("", "\n"), $adminConfig['approvalMessage'])); ?></textarea>
+				<textarea wrap="virtual" name="approvalMessage" cols="60" rows="6" class="formTextBox"><?php echo html_attr(str_replace(array('\r', '\n'), array("", "\n"), $adminConfig['approvalMessage'])); ?></textarea>
 				</td>
 			</tr>
 
@@ -248,7 +249,7 @@
 				<div class="formFieldCaption"><?php echo $Translation['MySQL date'] ; ?></div>
 				</td>
 			<td align="left" class="tdFormInput">
-				<input type="text" name="MySQLDateFormat" id="MySQLDateFormat" value="<?php echo htmlspecialchars($adminConfig['MySQLDateFormat']); ?>" size="30" class="formTextBox">
+				<input type="text" name="MySQLDateFormat" id="MySQLDateFormat" value="<?php echo html_attr($adminConfig['MySQLDateFormat']); ?>" size="30" class="formTextBox">
 				<br><?php echo $Translation['MySQL reference'] ; ?>
 				</td>
 			</tr>
@@ -257,7 +258,7 @@
 				<div class="formFieldCaption"><?php echo $Translation['PHP short date'] ; ?></div>
 				</td>
 			<td align="left" class="tdFormInput">
-				<input type="text" name="PHPDateFormat" id="PHPDateFormat" value="<?php echo htmlspecialchars($adminConfig['PHPDateFormat']); ?>" size="30" class="formTextBox">
+				<input type="text" name="PHPDateFormat" id="PHPDateFormat" value="<?php echo html_attr($adminConfig['PHPDateFormat']); ?>" size="30" class="formTextBox">
 				<br><?php echo $Translation['PHP manual'] ; ?> 
 				</td>
 			</tr>
@@ -266,7 +267,7 @@
 				<div class="formFieldCaption"><?php echo $Translation['PHP long date'] ; ?></div>
 				</td>
 			<td align="left" class="tdFormInput">
-				<input type="text" name="PHPDateTimeFormat" id="PHPDateTimeFormat" value="<?php echo htmlspecialchars($adminConfig['PHPDateTimeFormat']); ?>" size="30" class="formTextBox">
+				<input type="text" name="PHPDateTimeFormat" id="PHPDateTimeFormat" value="<?php echo html_attr($adminConfig['PHPDateTimeFormat']); ?>" size="30" class="formTextBox">
 				<br><?php echo $Translation['PHP manual'] ; ?>
 				</td>
 			</tr>
@@ -276,7 +277,7 @@
 				<div class="formFieldCaption"><?php echo $Translation['groups per page'] ; ?></div>
 				</td>
 			<td align="left" class="tdFormInput">
-				<input type="text" name="groupsPerPage" id="groupsPerPage" value="<?php echo htmlspecialchars($adminConfig['groupsPerPage']); ?>" size="5" class="formTextBox">
+				<input type="text" name="groupsPerPage" id="groupsPerPage" value="<?php echo html_attr($adminConfig['groupsPerPage']); ?>" size="5" class="formTextBox">
 				</td>
 			</tr>
 		<tr>
@@ -322,7 +323,7 @@
 				<div class="formFieldCaption"><?php echo $Translation['anonymous group'] ; ?></div>
 				</td>
 			<td align="left" class="tdFormInput">
-				<input type="text" name="anonymousGroup" id="anonymousGroup" value="<?php echo htmlspecialchars($adminConfig['anonymousGroup']); ?>" size="30" class="formTextBox">
+				<input type="text" name="anonymousGroup" id="anonymousGroup" value="<?php echo html_attr($adminConfig['anonymousGroup']); ?>" size="30" class="formTextBox">
 				</td>
 			</tr>
 
@@ -331,7 +332,7 @@
 				<div class="formFieldCaption"><?php echo $Translation['anonymous user name'] ; ?></div>
 				</td>
 			<td align="left" class="tdFormInput">
-				<input type="text" name="anonymousMember" id="anonymousMember" value="<?php echo htmlspecialchars($adminConfig['anonymousMember']); ?>" size="30" class="formTextBox">
+				<input type="text" name="anonymousMember" id="anonymousMember" value="<?php echo html_attr($adminConfig['anonymousMember']); ?>" size="30" class="formTextBox">
 				</td>
 			</tr>
 
@@ -344,6 +345,15 @@
 				<div class="text-info"><?php echo $Translation['twitter feed'] ; ?></div>
 			</td>
 		</tr>
+
+		<tr>
+			<td align="right" class="tdFormCaption" valign="top">
+				<div class="formFieldCaption"><?php echo $Translation['maintenance mode message']; ?></div>
+				</td>
+			<td align="left" class="tdFormInput">
+				<textarea wrap="virtual" name="maintenance_mode_message" cols="60" rows="6" class="formTextBox"><?php echo html_attr(str_replace(array('\r', '\n'), array("", "\n"), $adminConfig['maintenance_mode_message'])); ?></textarea>
+				</td>
+			</tr>
 
 		<tr>
 			<td colspan="2" align="right" class="tdFormFooter">

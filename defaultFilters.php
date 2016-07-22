@@ -15,7 +15,7 @@
 				<div class="col-md-offset-3 col-md-7">
 					<div class="checkbox">
 						<label>
-							<input type="checkbox" id="<?php echo $fltrr_name; ?>" name="<?php echo $fltrr_name; ?>" value="<?php echo htmlspecialchars($fltrr_val); ?>" checked>
+							<input type="checkbox" id="<?php echo $fltrr_name; ?>" name="<?php echo $fltrr_name; ?>" value="<?php echo html_attr($fltrr_val); ?>" checked>
 							<strong><?php printf($Translation['Only show records having filterer'], $caption, "<span class=\"text-info\" id=\"{$fltrr_name}_display_value\"></span>"); ?></strong>
 						</label>
 						<script>
@@ -272,7 +272,7 @@
 		if(jQuery('#FilterAnd_' + (    FiltersPerGroup + 1) + '_').val()){ filterGroupDisplay(2); }
 		if(jQuery('#FilterAnd_' + (2 * FiltersPerGroup + 1) + '_').val()){ filterGroupDisplay(3); }
 
-		var DisplayRecords = '<?php echo $_REQUEST['DisplayRecords']; ?>';
+		var DisplayRecords = '<?php echo html_attr($_REQUEST['DisplayRecords']); ?>';
 
 		switch(DisplayRecords){
 			case 'user':

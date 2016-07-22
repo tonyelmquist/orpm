@@ -13,9 +13,6 @@
 		<link id="browser_favicon" rel="shortcut icon" href="../resources/table_icons/administrator.png">
 
 		<link rel="stylesheet" href="../resources/initializr/css/bootstrap.css">
-		<!--[if gt IE 8]><!-->
-			<link rel="stylesheet" href="../resources/initializr/css/bootstrap-theme.css">
-		<!--<![endif]-->
 		<link rel="stylesheet" href="../dynamic.css.php">
 
 		<!--[if lt IE 9]>
@@ -241,6 +238,7 @@
 			</div>
 		</nav>
 
+		<?php echo handle_maintenance(true); ?>
 		<div style="height: 80px;"></div>
 
 		<!-- tool tips support -->

@@ -1,9 +1,11 @@
 <!-- Edit this file to change the layout of each record in the table view -->
-<!-- To disable clicking of a field, remove the <%%select%%> and <%%endselect%%> formatters around it-->
+<!-- To disable clicking of a field, remove the <%%SELECT%%> and <%%ENDSELECT%%> formatters around it-->
 
-<!-- If you wish to hide the table view header that contains the column titles, -->
-<!-- open the generated 'rental_owners_view.php' file in your text editor and -->
-<!-- change the value of $x->ShowTableHeader to 0 -->
+<!--
+	If you wish to hide the table view header that contains the column titles,
+	add the following to the rental_owners_init() hook (in hooks/rental_owners.php file)
+	  $options->ShowTableHeader = 0;
+-->
 
 		<td id="rental_owners-first_name-<%%VALUE(id)%%>" class="rental_owners-first_name "><%%SELECT%%><%%VALUE(first_name)%%><%%ENDSELECT%%></td>
 		<td id="rental_owners-last_name-<%%VALUE(id)%%>" class="rental_owners-last_name "><%%SELECT%%><%%VALUE(last_name)%%><%%ENDSELECT%%></td>

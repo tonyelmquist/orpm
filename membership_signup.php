@@ -182,13 +182,13 @@
 
 				if(ps == 'strong'){
 					jQuery('#password').parents('.form-group').removeClass('has-error has-warning').addClass('has-success');
-					jQuery('#password').attr('title', '<?php echo htmlspecialchars($Translation['Password strength: strong']); ?>');
+					jQuery('#password').attr('title', '<?php echo html_attr($Translation['Password strength: strong']); ?>');
 				}else if(ps == 'good'){
 					jQuery('#password').parents('.form-group').removeClass('has-success has-error').addClass('has-warning');
-					jQuery('#password').attr('title', '<?php echo htmlspecialchars($Translation['Password strength: good']); ?>');
+					jQuery('#password').attr('title', '<?php echo html_attr($Translation['Password strength: good']); ?>');
 				}else{
 					jQuery('#password').parents('.form-group').removeClass('has-success has-warning').addClass('has-error');
-					jQuery('#password').attr('title', '<?php echo htmlspecialchars($Translation['Password strength: weak']); ?>');
+					jQuery('#password').attr('title', '<?php echo html_attr($Translation['Password strength: weak']); ?>');
 				}
 			});
 
