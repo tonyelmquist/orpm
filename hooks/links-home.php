@@ -14,3 +14,11 @@
 		);
 	 */
 
+	$homeLinks[] = array(
+         'url' => 'reports" target="blank"',
+         'title' => 'Reports Module',
+         'description' => 'View all the desired reports',
+         'groups' => array('*')
+      );
+
+
