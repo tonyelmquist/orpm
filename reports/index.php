@@ -1,6 +1,6 @@
 <?php
 //added for AppGini Security
-$d="C:/xampp/htdocs/orpm/"; //eg: /home/user/html_public/myproj/"
+$d="C:/xampp/htdocs/orpm"; //eg: /home/user/html_public/myproj/"
 require_once("$d/incCommon.php");
 
     include("$d/defaultLang.php");
