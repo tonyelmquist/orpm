@@ -140,35 +140,40 @@
 	function applicants_and_tenants_batch_actions(&$args){
 
 		return array(
-				array(
-						'title' => 'Send Rent Reminders',
-						'function' => 'send_rent_reminder',
-						'icon' => 'calendar'
-				),
-				array(
-						'title' => 'Send Rent Invoices',
-						'function' => 'send_rent_Invoice',
-						'icon' => 'list-alt'
-				),
-				array(
-						'title' => 'Generate Rent Receipts',
-						'function' => 'generate_rent_receipt',
-						'icon' => 'list-alt'
-				),				
-				array(
-						'title' => 'Generate Late Rent Notices',
-						'function' => 'late_rent_notice',
-						'icon' => 'time'
-				),
-				array(
-						'title' => 'View Tenant Balance History',
-						'function' => 'tenant_balance_history',
-						'icon' => 'minus'
-				),
-				array(
-						'title' => 'View Tenant Rent Record',
-						'function' => 'tenant_rent_record',
-						'icon' => 'paperclip'
-				)
+			array(
+			'title' => 'Send Rent Reminders',
+			'function' => 'send_rent_reminder',
+			'icon' => 'calendar'
+			),
+
+			array(
+			'title' => 'Send Rent Invoices',
+			'function' => 'send_rent_Invoice',
+			'icon' => 'list-alt'
+			),
+
+			array(
+			'title' => 'Generate Rent Receipts',
+			'function' => 'generate_rent_receipt',
+			'icon' => 'list-alt'
+			),
+
+			array(
+			'title' => 'Generate Late Rent Notices',
+			'function' => 'late_rent_notice',
+			'icon' => 'time'
+			),
+
+			array(
+			'title' => 'View Tenant Balance History',
+			'function' => 'tenant_balance_history',
+			'icon' => 'minus'
+			),
+			
+			array(
+			'title' => 'View Tenant Rent Record',
+			'function' => 'tenant_rent_record',
+			'icon' => 'paperclip'
+			)
 		);
 	}
