@@ -111,7 +111,7 @@
     // ONEPROJECT - allows entry to a single project and no access to the admin page
     // ONEREPORT - limits user to single report, crtieria entry and report execution ( requires initial project/report )
     // REPORTOUTPUT - executes a report and allows to "Return" button to crtieria entry ( requires initial project/report )
-    //$q->access_mode = "<MODE>";
+    $q->access_mode = "ONEPROJECT";
 
     // Generate report definition from SQL  and set some column / report attributes
     // Also the full report definition can be built up programmatically
@@ -170,7 +170,7 @@
     //$q->embedded_report = false;
 
     // Set to true if you want to clear the report session whenever you call this script
-    // $q->clear_reportico_session = true;
+     $q->clear_reportico_session = true;
 
     // Specify an alternative AJAX runner from the stanfdard run.php
     //$q->reportico_ajax_script_url = $_SERVER["SCRIPT_NAME"];

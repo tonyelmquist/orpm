@@ -59,14 +59,17 @@
 // 		window.open(url);
 // }*/
 function send_rent_reminder(table_name, ids){
-	//alert("IDs selected from " + table_name + ": " + ids);
-	var url = 'reportico/run.php?project=admin&execute_mode=ADMIN&clear_session=1#';
-	//alert("url : " + url);
+	alert("IDs selected from " + table_name + ": " + ids);
+	//var url = 'reportico/run.php?project=rentals&execute_mode=PREPARE&xmlin=invoice.xml';	
 
-	window.open(url);
+	//window.open(url);
 }
 function send_rent_Invoice(table_name, ids){
-	alert("IDs selected from " + table_name + ": " + ids);
+	//alert("IDs selected from " + table_name + ": " + ids);
+	var url = 'reportico/noadmin.php?execute_mode=EXECUTE&project=rentals&xmlin=invoice.xml&target_format=HTML';	
+	//var url = 'reportico/run.php?project=rentals&execute_mode=&xmlin=invoice.xml';	
+
+	window.open(url);
 }
 function generate_rent_receipt(table_name, ids){
 	alert("IDs selected from " + table_name + ": " + ids);

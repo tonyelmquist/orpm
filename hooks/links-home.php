@@ -15,7 +15,7 @@
 	 */
 
 	$homeLinks[] = array(
-         'url' => 'reportico" target="blank"',
+         'url' => 'reportico/run.php?project=rentals&execute_mode=MENU&target_format=HTML" target="blank"',
          'title' => 'Reports Module',
          'description' => 'View all the desired reports...',
          'groups' => array('*')
