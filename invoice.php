@@ -13,7 +13,7 @@ include_once("$currDir/header.php");
  exit;
  }
  */
-
+ 
 /* grant access to all users who have access to the applicants_and_tenants table*/
 $tenant_from = get_sql_from('applicants_and_tenants'); //AppGini function to select data from applicants_and_tenants table
 if (!$tenant_from) exit(error_message('Access denied!', false));
