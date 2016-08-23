@@ -60,11 +60,8 @@
 // }*/
 function send_rent_reminder(table_name, ids){
 	//alert("IDs selected from " + table_name + ": " + ids);
-	//var url = pageMail.php?memberID=<?php echo $row[0]; ?>"><img border="0" src="images/mail_icon.gif" alt="<?php echo $Translation["send message to member"] ; ?>" title="<?php echo $Translation["send message to member"] ;
+	var url = "email";
 	window.open(url);
-	// if ($adminConfig['anonymousMember']!=$row[0]) {
-
-	// }
 }
 function send_rent_Invoice(table_name, ids){
 	//alert("IDs selected from " + table_name + ": " + ids);
