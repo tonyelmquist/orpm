@@ -1,13 +1,13 @@
 <html>
 <head>
 	<meta charset="UTF-8" />
-	<title>Contact form</title>
+	<title>Rental Reminder Form</title>
 	<link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 <body>
 
 	<div class="contact-form">
-        <h1>Contact Us</h1>
+        <h2>Rental Reminder Form</h2>
 		<form id="contact-form" method="POST" action="form-to-email.php">
 
 			<div class="control-group">
@@ -33,14 +33,13 @@
 			<div id="errors"></div>
 
 			<div class="control-group no-margin">
-				<input type="submit" name="submit" value="Submit" id="submit" />
+				<input type="submit" name="submit" value="Send" id="submit" />
 			</div>
 
 		</form>
         <div id='msg_submitting'><h2>Submitting ...</h2></div>
         <div id='msg_submitted'><h2>Thank you !<br> The form was submitted Successfully.</h2></div>
 	</div>
-
 
 	<!-- JavaScript Files -->
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>

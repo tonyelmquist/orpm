@@ -2,7 +2,7 @@
 /* font-family: 'Open Sans', 'sans-serif'; */
 
 body {
-	background: url(images/bg.png);
+	background: url(imagesmail/bg.png);
 }
 
 .contact-form {
@@ -121,7 +121,7 @@ div#errors{
 }
 
 /* Input icons */
-.control-group .fullname { background: url(images/user.png) no-repeat 4px center; }
-.control-group .email {	background: url(images/mail.png) no-repeat 4px center; }
-.control-group .phone {	background: url(images/phone.png) no-repeat 4px center; }
-.control-group .message { background: url(images/message.png) no-repeat 4px 4px; }
+.control-group .fullname { background: url(imagesmail/user.png) no-repeat 4px center; }
+.control-group .email {	background: url(imagesmail/mail.png) no-repeat 4px center; }
+.control-group .phone {	background: url(imagesmail/phone.png) no-repeat 4px center; }
+.control-group .message { background: url(imagesmail/message.png) no-repeat 4px 4px; }

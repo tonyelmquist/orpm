@@ -4,6 +4,7 @@ Configuration
 You are to edit these configuration values. Not all of them need to be edited.
 However, the first few obviously need to be edited.
 EMAIL_RECIPIENTS - your email address where you want to get the form submission.
+
 */
 
 $email_recipients = "yourname@yourwebsite.com";//<<=== enter your email address here
