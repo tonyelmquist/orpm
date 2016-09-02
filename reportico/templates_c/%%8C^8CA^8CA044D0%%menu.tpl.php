@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.26, created on 2016-07-28 09:50:54
+<?php /* Smarty version 2.6.26, created on 2016-09-03 01:04:26
          compiled from menu.tpl */ ?>
 <?php if (! $this->_tpl_vars['REPORTICO_AJAX_CALLED']): ?>
 <?php if (! $this->_tpl_vars['EMBEDDED_REPORT']): ?>
@@ -563,9 +563,9 @@ $this->_sections['menuitem']['last']       = ($this->_sections['menuitem']['iter
 			</TABLE>
 <?php endif; ?>
 </FORM>
-<div class="smallbanner">Powered by <a href="http://www.reportico.org/" target="_blank">reportico <?php echo $this->_tpl_vars['REPORTICO_VERSION']; ?>
+<!-- <div class="smallbanner">Powered by <a href="http://www.reportico.org/" target="_blank">reportico <?php echo $this->_tpl_vars['REPORTICO_VERSION']; ?>
 </a></div>
-</div>
+</div> -->
 <?php if (! $this->_tpl_vars['REPORTICO_AJAX_CALLED']): ?>
 <?php if (! $this->_tpl_vars['EMBEDDED_REPORT']): ?> 
 </BODY>
