@@ -10,7 +10,7 @@ $dropdown_menu = array(
                         "title" => "Financials",
                         "items" => array (
                             array ( "reportfile" => "invoice.xml" ),
-                            // array ( "reportfile" => "tut2_loanhistory.xml" )
+                            array ( "reportfile" => "receipt.xml" ),
                             )
                         ),
                     array ( 

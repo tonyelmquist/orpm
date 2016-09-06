@@ -147,8 +147,8 @@
 			),
 
 			array(
-			'title' => 'Send Rent Invoices',
-			'function' => 'send_rent_Invoice',
+			'title' => 'Generate Rent Invoices',
+			'function' => 'generate_rent_Invoice',
 			'icon' => 'list-alt'
 			),
 
@@ -159,7 +159,7 @@
 			),
 
 			array(
-			'title' => 'Generate Late Rent Notices',
+			'title' => 'Send Late Rent Notices',
 			'function' => 'late_rent_notice',
 			'icon' => 'time'
 			),

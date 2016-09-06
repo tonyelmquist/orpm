@@ -10,3 +10,10 @@
 		);
 	*/
 
+		$navLinks[] = array(
+			'url' => 'reportico/noadmin.php?project=rentals&execute_mode=MENU&target_format=HTML" target="blank"', 
+			'title' => 'Reports Module', 
+			'groups' => array('*'), // groups allowed to see this link, use '*' if you want to show the link to all groups
+			// 'icon' => 'path/to/icon'
+		);
+

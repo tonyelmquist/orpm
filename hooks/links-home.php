@@ -15,6 +15,7 @@
 	 */
 
 	$homeLinks[] = array(
+         //'url' => 'reportico/run.php?project=admin&execute_mode=admin&target_format=HTML" 
          'url' => 'reportico/noadmin.php?project=rentals&execute_mode=MENU&target_format=HTML" target="blank"',
          'title' => 'Reports Module',
          'description' => 'View all the desired reports...',
