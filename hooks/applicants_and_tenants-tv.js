@@ -82,7 +82,14 @@ function generate_rent_receipt(table_name, ids){
 		window.open(url);
 }
 function late_rent_notice(table_name, ids){
-	alert("IDs selected from " + table_name + ": " + ids);
+	var url = 'laterent.php?table=' + table_name;
+
+	for(var i = 0; i < ids.length; i++){
+			url = url + '&' 
+				+ encodeURI('ids[]') + '=' 
+				+ encodeURIComponent(ids[i]);
+		}
+	window.open(url);
 }
 function tenant_balance_history(table_name, ids){
 	alert("IDs selected from " + table_name + ": " + ids);
