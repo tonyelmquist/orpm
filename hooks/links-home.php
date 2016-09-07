@@ -19,7 +19,8 @@
          'url' => 'reportico/noadmin.php?project=rentals&execute_mode=MENU&target_format=HTML" target="blank"',
          'title' => 'Reports Module',
          'description' => 'View all the desired reports...',
-         'groups' => array('*')
+         'groups' => array('*'),
+         'icon' => 'resources/table_icons/report_stack.png'
       );
 
 

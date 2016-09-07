@@ -24,6 +24,7 @@
 	$x->QueryFieldsTV=array(   
 		"`residence_and_rental_history`.`id`" => "id",
 		"IF(    CHAR_LENGTH(`applicants_and_tenants1`.`first_name`) || CHAR_LENGTH(`applicants_and_tenants1`.`last_name`), CONCAT_WS('',   `applicants_and_tenants1`.`first_name`, ' ', `applicants_and_tenants1`.`last_name`), '') /* Tenant */" => "tenant",
+		"if(`residence_and_rental_history`.`month`,date_format(`residence_and_rental_history`.`month`,'%m/%d/%Y'),'')" => "month",
 		"`residence_and_rental_history`.`monthly_rent`" => "monthly_rent",
 		"`residence_and_rental_history`.`security_deposit`" => "security_deposit",
 		"`residence_and_rental_history`.`other_charges`" => "other_charges",
@@ -41,24 +42,26 @@
 	$x->SortFields = array(   
 		1 => '`residence_and_rental_history`.`id`',
 		2 => 2,
-		3 => '`residence_and_rental_history`.`monthly_rent`',
-		4 => '`residence_and_rental_history`.`security_deposit`',
-		5 => '`residence_and_rental_history`.`other_charges`',
-		6 => '`residence_and_rental_history`.`rent_paid`',
-		7 => '`residence_and_rental_history`.`rent_balance`',
-		8 => '`residence_and_rental_history`.`rent_reminder`',
-		9 => '`residence_and_rental_history`.`due_date`',
-		10 => '`residence_and_rental_history`.`late_rent_reminder`',
-		11 => '`residence_and_rental_history`.`duration_of_residency_from`',
-		12 => '`residence_and_rental_history`.`to`',
-		13 => 13,
-		14 => 14
+		3 => '`residence_and_rental_history`.`month`',
+		4 => '`residence_and_rental_history`.`monthly_rent`',
+		5 => '`residence_and_rental_history`.`security_deposit`',
+		6 => '`residence_and_rental_history`.`other_charges`',
+		7 => '`residence_and_rental_history`.`rent_paid`',
+		8 => '`residence_and_rental_history`.`rent_balance`',
+		9 => '`residence_and_rental_history`.`rent_reminder`',
+		10 => '`residence_and_rental_history`.`due_date`',
+		11 => '`residence_and_rental_history`.`late_rent_reminder`',
+		12 => '`residence_and_rental_history`.`duration_of_residency_from`',
+		13 => '`residence_and_rental_history`.`to`',
+		14 => 14,
+		15 => 15
 	);
 
 	// Fields that can be displayed in the csv file
 	$x->QueryFieldsCSV=array(   
 		"`residence_and_rental_history`.`id`" => "id",
 		"IF(    CHAR_LENGTH(`applicants_and_tenants1`.`first_name`) || CHAR_LENGTH(`applicants_and_tenants1`.`last_name`), CONCAT_WS('',   `applicants_and_tenants1`.`first_name`, ' ', `applicants_and_tenants1`.`last_name`), '') /* Tenant */" => "tenant",
+		"if(`residence_and_rental_history`.`month`,date_format(`residence_and_rental_history`.`month`,'%m/%d/%Y'),'')" => "month",
 		"`residence_and_rental_history`.`monthly_rent`" => "monthly_rent",
 		"`residence_and_rental_history`.`security_deposit`" => "security_deposit",
 		"`residence_and_rental_history`.`other_charges`" => "other_charges",
@@ -76,6 +79,7 @@
 	$x->QueryFieldsFilters=array(   
 		"`residence_and_rental_history`.`id`" => "ID",
 		"IF(    CHAR_LENGTH(`applicants_and_tenants1`.`first_name`) || CHAR_LENGTH(`applicants_and_tenants1`.`last_name`), CONCAT_WS('',   `applicants_and_tenants1`.`first_name`, ' ', `applicants_and_tenants1`.`last_name`), '') /* Tenant */" => "Tenant",
+		"`residence_and_rental_history`.`month`" => "Month",
 		"`residence_and_rental_history`.`monthly_rent`" => "Monthly rent",
 		"`residence_and_rental_history`.`security_deposit`" => "Security deposit",
 		"`residence_and_rental_history`.`other_charges`" => "Other charges",
@@ -94,6 +98,7 @@
 	$x->QueryFieldsQS=array(   
 		"`residence_and_rental_history`.`id`" => "id",
 		"IF(    CHAR_LENGTH(`applicants_and_tenants1`.`first_name`) || CHAR_LENGTH(`applicants_and_tenants1`.`last_name`), CONCAT_WS('',   `applicants_and_tenants1`.`first_name`, ' ', `applicants_and_tenants1`.`last_name`), '') /* Tenant */" => "tenant",
+		"if(`residence_and_rental_history`.`month`,date_format(`residence_and_rental_history`.`month`,'%m/%d/%Y'),'')" => "month",
 		"`residence_and_rental_history`.`monthly_rent`" => "monthly_rent",
 		"`residence_and_rental_history`.`security_deposit`" => "security_deposit",
 		"`residence_and_rental_history`.`other_charges`" => "other_charges",
@@ -138,10 +143,10 @@
 	$x->TableIcon = "resources/table_icons/document_comment_above.png";
 	$x->PrimaryKey = "`residence_and_rental_history`.`id`";
 
-	$x->ColWidth   = array(  80, 80, 150, 80, 80, 100, 100, 100, 100, 80, 120);
-	$x->ColCaption = array("Monthly rent", "Security deposit", "Other charges", "Rent Paid", "Rent Balance", "Rent Reminder Date", "Due date", "Late Rent Reminder Date", "Duration of residency from", "to", "Reason for leaving");
-	$x->ColFieldName = array('monthly_rent', 'security_deposit', 'other_charges', 'rent_paid', 'rent_balance', 'rent_reminder', 'due_date', 'late_rent_reminder', 'duration_of_residency_from', 'to', 'reason_for_leaving');
-	$x->ColNumber  = array(3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13);
+	$x->ColWidth   = array(  100, 80, 80, 150, 80, 80, 100, 100, 100, 100, 80, 120);
+	$x->ColCaption = array("Month", "Monthly rent", "Security deposit", "Other charges", "Rent Paid", "Rent Balance", "Rent Reminder Date", "Due date", "Late Rent Reminder Date", "Duration of residency from", "to", "Reason for leaving");
+	$x->ColFieldName = array('month', 'monthly_rent', 'security_deposit', 'other_charges', 'rent_paid', 'rent_balance', 'rent_reminder', 'due_date', 'late_rent_reminder', 'duration_of_residency_from', 'to', 'reason_for_leaving');
+	$x->ColNumber  = array(3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14);
 
 	$x->Template = 'templates/residence_and_rental_history_templateTV.html';
 	$x->SelectedTemplate = 'templates/residence_and_rental_history_templateTVS.html';

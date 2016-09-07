@@ -28,6 +28,7 @@
 		'residence_and_rental_history' => array(   
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),
 			'tenant' => array('appgini' => 'INT unsigned '),
+			'month' => array('appgini' => 'DATE '),
 			'monthly_rent' => array('appgini' => 'DECIMAL(10,2) '),
 			'security_deposit' => array('appgini' => 'DECIMAL(10,2) '),
 			'other_charges' => array('appgini' => 'DECIMAL(10,2) '),

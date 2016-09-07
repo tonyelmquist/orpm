@@ -279,6 +279,7 @@
 	$Translation['Add more actions'] = 'Add more actions';
 	$Translation['Update progress'] = 'Update progress';
 	$Translation['Change owner'] = 'Change owner';
+	$Translation['Tenant Rent Record'] = 'Tenant Rent Record';
 	$Translation['Updating record <i> of <n>'] = 'Updating record <i> of <n>';
 	$Translation['Change owner of <n> selected records to'] = 'Change owner of <n> selected records to';
 
