@@ -125,3 +125,55 @@ div#errors{
 .control-group .email {	background: url(imagesmail/mail.png) no-repeat 4px center; }
 .control-group .phone {	background: url(imagesmail/phone.png) no-repeat 4px center; }
 .control-group .message { background: url(imagesmail/message.png) no-repeat 4px 4px; }
+.control-group span.email {
+    display: block;
+    font-size: 13px;
+    
+    max-width: 465px;
+    outline: medium none;
+    padding-left: 40px;
+    padding-top: 5px;
+}
+.control-group span.email {
+    background: rgba(0, 0, 0, 0) url("imagesmail/emails.png") no-repeat scroll 5px 5px;
+}
+
+.control-group span.fullname {
+    display: block;
+    font-size: 13x;
+    max-width: 465px;
+    outline: medium none;
+
+    padding-left: 40px;
+    padding-top: 5px;
+}
+.control-group span.fullname {
+    background: rgba(0, 0, 0, 0) url("imagesmail/user.png") no-repeat scroll 5px 5px;
+}
+
+.control-group span.subject {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    max-width: 465px;
+    outline: medium none;
+    height: 30px;
+    padding-left: 40px;
+    padding-top: 5px;
+}
+.control-group span.subject {
+    background: rgba(0, 0, 0, 0) url("imagesmail/subject.png") no-repeat scroll 5px 5px;
+}
+
+.control-group label {
+    font-family: "Open Sans","sans-serif";
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.rent_message {
+    height: 155px;
+}
+.success-section .alert {
+    text-align: center;
+}

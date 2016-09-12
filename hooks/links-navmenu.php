@@ -11,7 +11,7 @@
 	*/
 
 		$navLinks[] = array(
-			'url' => 'reportico/noadmin.php?project=rentals&execute_mode=MENU&target_format=HTML" target="blank"', 
+			'url' => 'repo/noadmin.php?project=rentals&execute_mode=MENU&target_format=HTML" target="blank"', 
 			'title' => 'Reports Module', 
 			'groups' => array('*'),
 			'icon' => 'resources/table_icons/report_stack.png'

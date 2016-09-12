@@ -49,6 +49,7 @@ define("E_VAL_NUM_CHECK_FAILED","Please provide numeric input for %s");
 define("E_VAL_ALPHA_CHECK_FAILED","Please provide alphabetic input for %s");
 define("E_VAL_ALPHA_S_CHECK_FAILED","Please provide alphabetic input for %s");
 define("E_VAL_EMAIL_CHECK_FAILED","Please provide a valida email address");
+define("E_VAL_EMAILS_CHECK_FAILED","One or more of the emails added is invalid");
 define("E_VAL_LESSTHAN_CHECK_FAILED","Enter a value less than %f for %s");
 define("E_VAL_GREATERTHAN_CHECK_FAILED","Enter a value greater than %f for %s");
 define("E_VAL_REGEXP_CHECK_FAILED","Please provide a valid input for %s");
@@ -235,6 +236,20 @@ class FormValidator
 	function validate_email($email) 
 	{
 		return preg_match("/^[_\.0-9a-zA-Z-]+@([0-9a-zA-Z][0-9a-zA-Z-]+\.)+[a-zA-Z]{2,6}$/i", $email);
+	}
+
+	function validate_emails($emails){
+		if ($emails) {
+			$emails_array = explode(",", $emails);
+			foreach ($emails_array as $email) {
+				if (preg_match("/^[_\.0-9a-zA-Z-]+@([0-9a-zA-Z][0-9a-zA-Z-]+\.)+[a-zA-Z]{2,6}$/i", $email)) {
+					# code...
+				}else{
+					return false;
+				}
+			}			
+		}
+		return false;
 	}
 
 	function validate_for_numeric_input($input_value,&$validation_success)
@@ -445,6 +460,18 @@ class FormValidator
 								if(false == $bret)
 								{
 									$default_error_message = E_VAL_EMAIL_CHECK_FAILED;
+								}
+							}
+							break;
+						}
+			case 'emails':
+						{
+							if(isset($input_value) && strlen($input_value)>0)
+							{
+								$bret= $this->validate_emails($input_value);
+								if(false == $bret)
+								{
+									$default_error_message = E_VAL_EMAILS_CHECK_FAILED;
 								}
 							}
 							break;

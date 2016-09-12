@@ -7,16 +7,19 @@ EMAIL_RECIPIENTS - your email address where you want to get the form submission.
 
 */
 
-$email_recipients = "yourname@yourwebsite.com";//<<=== enter your email address here
+//$email_recipients = "yourname@yourwebsite.com";//<<=== enter your email address here
 //$email_recipients =  "mymanager@gmail.com,his.manager@yahoo.com"; <<=== more than one recipients like this
 
-
+$email_recipients='';
+$email_recipients_fields ='email';
 $visitors_email_field = 'email';//The name of the field where your user enters their email address
                                         //This is handy when you want to reply to your users via email
                                         //The script will set the reply-to header of the email to this email
                                         //Leave blank if there is no email field in your form
-$email_subject = "New Form submission";
-
+//$email_subject = "New Form submission";
+$email_subject ="";
+$email_body = "";
+//$email_subject_field = 'email_subject';
 $enable_auto_response = true;//Make this false if you donot want auto-response.
 
 //Update the following auto-response to the user
@@ -27,12 +30,12 @@ Hi
 Thanks for contacting us. We will get back to you soon!
 
 Regards
-Your website
+Landlord
 ";
 
 /*optional settings. better leave it as is for the first time*/
 $email_from = ''; /*From address for the emails*/
-$thank_you_url = 'thank-you.html';/*URL to redirect to, after successful form submission*/
+$thank_you_url = 'thankyou.php';/*URL to redirect to, after successful form submission*/
 
 /*
 This is the PHP back-end script that processes the form submission.
@@ -71,12 +74,28 @@ if(!empty($visitors_email_field))
 {
     $visitor_email = $_POST[$visitors_email_field];
 }
+if(!empty($email_recipients_fields))
+{
+    $email_recipients = $_POST[$email_recipients_fields];
+    // var_dump($email_recipients);
+    // die;
+}
+if(!empty($_POST['email_subject']))
+{
+    $email_subject = $_POST['email_subject'];
+}
+if(!empty($_POST['email_body']))
+{
+    $email_body = $_POST['email_body'];
+}
 
 if(empty($email_from))
 {
     $host = $_SERVER['SERVER_NAME'];
-    $email_from ="forms@$host";
+    $email_from ="ndech90@gmail.com";
 }
+
+$thank_you_url .= "?success=Your Email was sent Successfully..." ;
 
 $fieldtable = '';
 foreach ($_POST as $field => $value)
@@ -97,7 +116,7 @@ $extra_info = "User's IP Address: ".$_SERVER['REMOTE_ADDR']."\n";
 $email_body = "You have received a new form submission. Details below:\n$fieldtable\n $extra_info";
     
 $headers = "From: $email_from \r\n";
-$headers .= "Reply-To: $visitor_email \r\n";
+//$headers .= "Reply-To: $visitor_email \r\n";
 //Send the email!
 @mail(/*to*/$email_recipients, $email_subject, $email_body,$headers);
 
