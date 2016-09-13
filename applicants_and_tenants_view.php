@@ -30,7 +30,8 @@
 		"if(`applicants_and_tenants`.`birth_date`,date_format(`applicants_and_tenants`.`birth_date`,'%m/%d/%Y'),'')" => "birth_date",
 		"`applicants_and_tenants`.`status`" => "status",
 		"IF(    CHAR_LENGTH(`properties1`.`property_name`) || CHAR_LENGTH(`properties1`.`City`), CONCAT_WS('',   `properties1`.`property_name`, ' - ', `properties1`.`City`), '') /* Rented Property */" => "property",
-		"IF(    CHAR_LENGTH(`properties2`.`property_name`) || CHAR_LENGTH(`units1`.`unit_number`), CONCAT_WS('',   `properties2`.`property_name`, ' - ', `units1`.`unit_number`), '') /* Rented Unit */" => "unit"
+		"IF(    CHAR_LENGTH(`properties2`.`property_name`) || CHAR_LENGTH(`units1`.`unit_number`), CONCAT_WS('',   `properties2`.`property_name`, ' - ', `units1`.`unit_number`), '') /* Rented Unit */" => "unit",
+		"`applicants_and_tenants`.`current_month_rent_status`" => "current_month_rent_status"
 	);
 	// mapping incoming sort by requests to actual query fields
 	$x->SortFields = array(   
@@ -42,7 +43,8 @@
 		6 => '`applicants_and_tenants`.`birth_date`',
 		7 => 7,
 		8 => 8,
-		9 => 9
+		9 => 9,
+		10 => '`applicants_and_tenants`.`current_month_rent_status`'
 	);
 
 	// Fields that can be displayed in the csv file
@@ -55,7 +57,8 @@
 		"if(`applicants_and_tenants`.`birth_date`,date_format(`applicants_and_tenants`.`birth_date`,'%m/%d/%Y'),'')" => "birth_date",
 		"`applicants_and_tenants`.`status`" => "status",
 		"IF(    CHAR_LENGTH(`properties1`.`property_name`) || CHAR_LENGTH(`properties1`.`City`), CONCAT_WS('',   `properties1`.`property_name`, ' - ', `properties1`.`City`), '') /* Rented Property */" => "property",
-		"IF(    CHAR_LENGTH(`properties2`.`property_name`) || CHAR_LENGTH(`units1`.`unit_number`), CONCAT_WS('',   `properties2`.`property_name`, ' - ', `units1`.`unit_number`), '') /* Rented Unit */" => "unit"
+		"IF(    CHAR_LENGTH(`properties2`.`property_name`) || CHAR_LENGTH(`units1`.`unit_number`), CONCAT_WS('',   `properties2`.`property_name`, ' - ', `units1`.`unit_number`), '') /* Rented Unit */" => "unit",
+		"`applicants_and_tenants`.`current_month_rent_status`" => "current_month_rent_status"
 	);
 	// Fields that can be filtered
 	$x->QueryFieldsFilters=array(   
@@ -67,7 +70,8 @@
 		"`applicants_and_tenants`.`birth_date`" => "Birth date",
 		"`applicants_and_tenants`.`status`" => "Status",
 		"IF(    CHAR_LENGTH(`properties1`.`property_name`) || CHAR_LENGTH(`properties1`.`City`), CONCAT_WS('',   `properties1`.`property_name`, ' - ', `properties1`.`City`), '') /* Rented Property */" => "Rented Property",
-		"IF(    CHAR_LENGTH(`properties2`.`property_name`) || CHAR_LENGTH(`units1`.`unit_number`), CONCAT_WS('',   `properties2`.`property_name`, ' - ', `units1`.`unit_number`), '') /* Rented Unit */" => "Rented Unit"
+		"IF(    CHAR_LENGTH(`properties2`.`property_name`) || CHAR_LENGTH(`units1`.`unit_number`), CONCAT_WS('',   `properties2`.`property_name`, ' - ', `units1`.`unit_number`), '') /* Rented Unit */" => "Rented Unit",
+		"`applicants_and_tenants`.`current_month_rent_status`" => "Current month rent status"
 	);
 
 	// Fields that can be quick searched
@@ -80,7 +84,8 @@
 		"if(`applicants_and_tenants`.`birth_date`,date_format(`applicants_and_tenants`.`birth_date`,'%m/%d/%Y'),'')" => "birth_date",
 		"`applicants_and_tenants`.`status`" => "status",
 		"IF(    CHAR_LENGTH(`properties1`.`property_name`) || CHAR_LENGTH(`properties1`.`City`), CONCAT_WS('',   `properties1`.`property_name`, ' - ', `properties1`.`City`), '') /* Rented Property */" => "property",
-		"IF(    CHAR_LENGTH(`properties2`.`property_name`) || CHAR_LENGTH(`units1`.`unit_number`), CONCAT_WS('',   `properties2`.`property_name`, ' - ', `units1`.`unit_number`), '') /* Rented Unit */" => "unit"
+		"IF(    CHAR_LENGTH(`properties2`.`property_name`) || CHAR_LENGTH(`units1`.`unit_number`), CONCAT_WS('',   `properties2`.`property_name`, ' - ', `units1`.`unit_number`), '') /* Rented Unit */" => "unit",
+		"`applicants_and_tenants`.`current_month_rent_status`" => "current_month_rent_status"
 	);
 
 	// Lookup fields that can be used as filterers
@@ -115,10 +120,10 @@
 	$x->DefaultSortField = '2';
 	$x->DefaultSortDirection = 'asc';
 
-	$x->ColWidth   = array(  100, 100, 100, 100, 100, 100, 150, 150);
-	$x->ColCaption = array("Surname", "Othernames", "Email", "Phone", "Birth date", "Status", "Rented Property", "Rented Unit");
-	$x->ColFieldName = array('last_name', 'first_name', 'email', 'phone', 'birth_date', 'status', 'property', 'unit');
-	$x->ColNumber  = array(2, 3, 4, 5, 6, 7, 8, 9);
+	$x->ColWidth   = array(  100, 100, 100, 100, 100, 100, 150, 150, 150);
+	$x->ColCaption = array("Surname", "Othernames", "Email", "Phone", "Birth date", "Status", "Rented Property", "Rented Unit", "Current month rent status");
+	$x->ColFieldName = array('last_name', 'first_name', 'email', 'phone', 'birth_date', 'status', 'property', 'unit', 'current_month_rent_status');
+	$x->ColNumber  = array(2, 3, 4, 5, 6, 7, 8, 9, 10);
 
 	$x->Template = 'templates/applicants_and_tenants_templateTV.html';
 	$x->SelectedTemplate = 'templates/applicants_and_tenants_templateTVS.html';

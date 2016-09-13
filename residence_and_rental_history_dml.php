@@ -513,6 +513,7 @@ function residence_and_rental_history_form($selected_id = '', $AllowUpdate = 1, 
 	$templateCode=str_replace('<%%UPLOADFILE(rent_reminder)%%>', '', $templateCode);
 	$templateCode=str_replace('<%%UPLOADFILE(due_date)%%>', '', $templateCode);
 	$templateCode=str_replace('<%%UPLOADFILE(late_rent_reminder)%%>', '', $templateCode);
+	$templateCode=str_replace('<%%UPLOADFILE(status)%%>', '', $templateCode);
 	$templateCode=str_replace('<%%UPLOADFILE(duration_of_residency_from)%%>', '', $templateCode);
 	$templateCode=str_replace('<%%UPLOADFILE(to)%%>', '', $templateCode);
 	$templateCode=str_replace('<%%UPLOADFILE(reason_for_leaving)%%>', '', $templateCode);
@@ -542,6 +543,8 @@ function residence_and_rental_history_form($selected_id = '', $AllowUpdate = 1, 
 		$templateCode=str_replace('<%%URLVALUE(due_date)%%>', urlencode(@date('m/d/Y', @strtotime(html_attr($urow['due_date'])))), $templateCode);
 		$templateCode=str_replace('<%%VALUE(late_rent_reminder)%%>', @date('m/d/Y', @strtotime(html_attr($row['late_rent_reminder']))), $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(late_rent_reminder)%%>', urlencode(@date('m/d/Y', @strtotime(html_attr($urow['late_rent_reminder'])))), $templateCode);
+		$templateCode=str_replace('<%%VALUE(status)%%>', html_attr($row['status']), $templateCode);
+		$templateCode=str_replace('<%%URLVALUE(status)%%>', urlencode($urow['status']), $templateCode);
 		$templateCode=str_replace('<%%VALUE(duration_of_residency_from)%%>', @date('m/d/Y', @strtotime(html_attr($row['duration_of_residency_from']))), $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(duration_of_residency_from)%%>', urlencode(@date('m/d/Y', @strtotime(html_attr($urow['duration_of_residency_from'])))), $templateCode);
 		$templateCode=str_replace('<%%VALUE(to)%%>', @date('m/d/Y', @strtotime(html_attr($row['to']))), $templateCode);
@@ -578,6 +581,8 @@ function residence_and_rental_history_form($selected_id = '', $AllowUpdate = 1, 
 		$templateCode=str_replace('<%%URLVALUE(due_date)%%>', urlencode(''), $templateCode);
 		$templateCode=str_replace('<%%VALUE(late_rent_reminder)%%>', '', $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(late_rent_reminder)%%>', urlencode(''), $templateCode);
+		$templateCode=str_replace('<%%VALUE(status)%%>', '', $templateCode);
+		$templateCode=str_replace('<%%URLVALUE(status)%%>', urlencode(''), $templateCode);
 		$templateCode=str_replace('<%%VALUE(duration_of_residency_from)%%>', '', $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(duration_of_residency_from)%%>', urlencode(''), $templateCode);
 		$templateCode=str_replace('<%%VALUE(to)%%>', '', $templateCode);

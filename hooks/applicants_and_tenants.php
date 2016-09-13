@@ -175,12 +175,12 @@
 			'title' => 'View Tenant Rent Record',
 			'function' => 'tenant_rent_record',
 			'icon' => 'paperclip'
-			),
+			)
 
-			array(
+			/*array(
 			'title' => 'Test Records',
 			'function' => 'test_record',
 			'icon' => 'paperclip'
-			)
+			)*/
 		);
 	}
