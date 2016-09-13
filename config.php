@@ -25,5 +25,6 @@
 		'senderEmail' => "ndech90@gmail.com",
 		'approvalSubject' => "Your membership is now approved",
 		'approvalMessage' => "Dear member,\r\n\r\nYour membership is now approved by the admin. You can log in to your account here:\r\nhttp://localhost:8080/orpm\r\n\r\nRegards,\r\nAdmin",
-		'hide_twitter_feed' => ""
+		'hide_twitter_feed' => "1",
+		'maintenance_mode_message' => ""
 	);

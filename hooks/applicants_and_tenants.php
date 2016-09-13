@@ -140,6 +140,7 @@
 	function applicants_and_tenants_batch_actions(&$args){
 
 		return array(
+			
 			array(
 			'title' => 'Send Rent Reminders',
 			'function' => 'send_rent_reminder',
@@ -173,6 +174,12 @@
 			array(
 			'title' => 'View Tenant Rent Record',
 			'function' => 'tenant_rent_record',
+			'icon' => 'paperclip'
+			),
+
+			array(
+			'title' => 'Test Records',
+			'function' => 'test_record',
 			'icon' => 'paperclip'
 			)
 		);
