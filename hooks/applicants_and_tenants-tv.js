@@ -38,14 +38,67 @@ function late_rent_notice(table_name, ids){
 
 function tenant_balance_history(table_name, ids){
 
-	var url = 'tenantbalancehistory.php?table=' + table_name;
+	var populate_new_owner_dropdown = function(callback){
 
-	for(var i = 0; i < ids.length; i++){
-			url = url + '&' 
-				+ encodeURI('ids[]') + '=' 
-				+ encodeURIComponent(ids[i]);
-		}
-	window.open(url);
+		jQuery.ajax({
+		    type: "GET",  
+		    contentType: "application/json; charset=utf-8",
+		    url: 'getTenantsBalance.php',
+			dataType: 'json',
+			data: {table:table_name ,ids: ids},
+	        success: function (response) {
+	        	var my_tenants = response.results;
+	        	var tenantrow = jQuery('<div />');
+	        		jQuery.each(my_tenants,function( i ,item ) {
+					   	tenantrow.append(		              
+		                '<table class="table table-striped">'+
+				            '<thead>'+
+				              '<tr>'+
+				              	'<th>Month</th>'+
+				                '<th>Tenant Name</th>'+
+				                '<th>Email Address</th>'+
+				                '<th>Mobile No.</th>'+
+				                '<th>Rent Balance</th>'+
+				              '</tr>'+
+				            '</thead>'+
+				            '<tbody>'+
+				              '<tr>'+
+				              '<td>August</td>'+
+				                '<td>' + my_tenants[i].last_name + ' ' + my_tenants[i].first_name + '</td>'+
+				                '<td>' + my_tenants[i].email + '</td>'+
+				                '<td>' + my_tenants[i].phone + '</td>'+
+				                '<td class="text-danger">5000</td>'+
+				              '</tr>'+				              
+				            '</tbody>'+
+				          '</table>'
+		                );  	
+
+					});
+				setTimeout(function(){			  		
+				  	jQuery('#tenants_section').html(tenantrow);
+				}, 10);	
+				console.log(tenantrow);
+	        	var confirm_title = 'Tenant Balance History';
+				
+				modal_window({
+					message: '<div id="tenants_section">' + response.success + '</div>',
+					title: confirm_title,
+					footer: [
+								{
+									label: '<i class="glyphicon glyphicon-remove"></i> <?php echo "Cancel"; ?>',
+									bs_class: 'warning'
+								}
+							]
+						});
+	        },
+	        error: function (response) {
+	 
+	            console.log(response);
+	        }
+	   });  
+
+	}
+	populate_new_owner_dropdown();	
 }
 
 function tenant_rent_record(table_name, ids){	
@@ -86,7 +139,7 @@ function tenant_rent_record(table_name, ids){
 				                '<td>' + my_tenants[i].email + '</td>'+
 				                '<td>' + my_tenants[i].phone + '</td>'+
 				                '<td>' + my_tenants[i].birth_date + '</td>'+
-				                '<td class="text-danger">Paid</td>'+
+				                '<td class="text-danger">PAID</td>'+
 				                // '<td class="text-right">45001</td>'+
 				              '</tr>'+				              
 				            '</tbody>'+
@@ -127,7 +180,7 @@ function tenant_rent_record(table_name, ids){
 
 /*function test_record(table_name, ids){
 	//alert('selected table = ' + table_name + 'selected ids = ' + ids );
-	var url = 'getTenants.php?table=' + table_name;
+	var url = 'getTenantsBalance.php?table=' + table_name;
 
 	for(var i = 0; i < ids.length; i++){
 			url = url + '&' 
