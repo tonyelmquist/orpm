@@ -20,16 +20,9 @@
 			<fieldset class="form-horizontal">
 
 				<div class="form-group">
-					<label for="id" class="control-label col-lg-3">ID</label>
-					<div class="col-lg-9">
-						<div class="form-control-static" id="id"><%%VALUE(id)%%></div>
-					</div>
-				</div>
-
-				<div class="form-group">
 					<label for="tenant" class="control-label col-lg-3" data-parent_link="view_parent_modal">Tenant</label>
 					<div class="col-lg-9">
-						<div class="row form-control-static"><div class="col-xs-11"><%%COMBO(tenant)%%><%%PLINK(tenant)%%><%%ADDNEW(applicants_and_tenants)%%></div></div>
+						<div class="form-control-static"><span id="tenant-readonly"><%%COMBOTEXT(tenant)%%></span> <%%PLINK(tenant)%%></div>
 					</div>
 				</div>
 
@@ -41,23 +34,23 @@
 				</div>
 
 				<div class="form-group">
-					<label for="monthly_rent" class="control-label col-lg-3">Monthly rent</label>
+					<label for="monthly_rent" class="control-label col-lg-3" data-parent_link="view_parent_modal">Monthly rent</label>
 					<div class="col-lg-9">
-						<input maxlength="13" type="text" class="form-control" name="monthly_rent" id="monthly_rent" value="<%%VALUE(monthly_rent)%%>">
+						<div class="row form-control-static"><div class="col-xs-11"><%%COMBO(monthly_rent)%%><%%PLINK(monthly_rent)%%><%%ADDNEW(applicants_and_tenants)%%></div></div>
 					</div>
 				</div>
 
 				<div class="form-group">
-					<label for="security_deposit" class="control-label col-lg-3">Security deposit</label>
+					<label for="security_deposit" class="control-label col-lg-3" data-parent_link="view_parent_modal">Security Deposit</label>
 					<div class="col-lg-9">
-						<input maxlength="13" type="text" class="form-control" name="security_deposit" id="security_deposit" value="<%%VALUE(security_deposit)%%>">
+						<div class="row form-control-static"><div class="col-xs-11"><%%COMBO(security_deposit)%%><%%PLINK(security_deposit)%%><%%ADDNEW(applicants_and_tenants)%%></div></div>
 					</div>
 				</div>
 
 				<div class="form-group">
-					<label for="other_charges" class="control-label col-lg-3">Other charges</label>
+					<label for="other_charges" class="control-label col-lg-3" data-parent_link="view_parent_modal">Other Charges</label>
 					<div class="col-lg-9">
-						<input maxlength="13" type="text" class="form-control" name="other_charges" id="other_charges" value="<%%VALUE(other_charges)%%>">
+						<div class="row form-control-static"><div class="col-xs-11"><%%COMBO(other_charges)%%><%%PLINK(other_charges)%%><%%ADDNEW(applicants_and_tenants)%%></div></div>
 					</div>
 				</div>
 

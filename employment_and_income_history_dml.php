@@ -14,8 +14,6 @@ function employment_and_income_history_insert(){
 		return false;
 	}
 
-	$data['tenant'] = makeSafe($_REQUEST['tenant']);
-		if($data['tenant'] == empty_lookup_value){ $data['tenant'] = ''; }
 	$data['employer_name'] = makeSafe($_REQUEST['employer_name']);
 		if($data['employer_name'] == empty_lookup_value){ $data['employer_name'] = ''; }
 	$data['city'] = makeSafe($_REQUEST['city']);
@@ -38,7 +36,7 @@ function employment_and_income_history_insert(){
 	}
 
 	$o = array('silentErrors' => true);
-	sql('insert into `employment_and_income_history` set       `tenant`=' . (($data['tenant'] !== '' && $data['tenant'] !== NULL) ? "'{$data['tenant']}'" : 'NULL') . ', `employer_name`=' . (($data['employer_name'] !== '' && $data['employer_name'] !== NULL) ? "'{$data['employer_name']}'" : 'NULL') . ', `city`=' . (($data['city'] !== '' && $data['city'] !== NULL) ? "'{$data['city']}'" : 'NULL') . ', `employer_phone`=' . (($data['employer_phone'] !== '' && $data['employer_phone'] !== NULL) ? "'{$data['employer_phone']}'" : 'NULL') . ', `employed_from`=' . (($data['employed_from'] !== '' && $data['employed_from'] !== NULL) ? "'{$data['employed_from']}'" : 'NULL') . ', `employed_till`=' . (($data['employed_till'] !== '' && $data['employed_till'] !== NULL) ? "'{$data['employed_till']}'" : 'NULL') . ', `occupation`=' . (($data['occupation'] !== '' && $data['occupation'] !== NULL) ? "'{$data['occupation']}'" : 'NULL') . ', `notes`=' . (($data['notes'] !== '' && $data['notes'] !== NULL) ? "'{$data['notes']}'" : 'NULL'), $o);
+	sql('insert into `employment_and_income_history` set       `employer_name`=' . (($data['employer_name'] !== '' && $data['employer_name'] !== NULL) ? "'{$data['employer_name']}'" : 'NULL') . ', `city`=' . (($data['city'] !== '' && $data['city'] !== NULL) ? "'{$data['city']}'" : 'NULL') . ', `employer_phone`=' . (($data['employer_phone'] !== '' && $data['employer_phone'] !== NULL) ? "'{$data['employer_phone']}'" : 'NULL') . ', `employed_from`=' . (($data['employed_from'] !== '' && $data['employed_from'] !== NULL) ? "'{$data['employed_from']}'" : 'NULL') . ', `employed_till`=' . (($data['employed_till'] !== '' && $data['employed_till'] !== NULL) ? "'{$data['employed_till']}'" : 'NULL') . ', `occupation`=' . (($data['occupation'] !== '' && $data['occupation'] !== NULL) ? "'{$data['occupation']}'" : 'NULL') . ', `notes`=' . (($data['notes'] !== '' && $data['notes'] !== NULL) ? "'{$data['notes']}'" : 'NULL'), $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo "<a href=\"employment_and_income_history_view.php?addNew_x=1\">{$Translation['< back']}</a>";
@@ -46,6 +44,11 @@ function employment_and_income_history_insert(){
 	}
 
 	$recID = db_insert_id(db_link());
+
+	// automatic tenant
+	if($_REQUEST['filterer_tenant']){
+		sql("update `employment_and_income_history` set `tenant`='" . makeSafe($_REQUEST['filterer_tenant']) . "' where `id`='" . makeSafe($recID, false) . "'", $eo);
+	}
 
 	// hook: employment_and_income_history_after_insert
 	if(function_exists('employment_and_income_history_after_insert')){
@@ -111,8 +114,6 @@ function employment_and_income_history_update($selected_id){
 		return false;
 	}
 
-	$data['tenant'] = makeSafe($_REQUEST['tenant']);
-		if($data['tenant'] == empty_lookup_value){ $data['tenant'] = ''; }
 	$data['employer_name'] = makeSafe($_REQUEST['employer_name']);
 		if($data['employer_name'] == empty_lookup_value){ $data['employer_name'] = ''; }
 	$data['city'] = makeSafe($_REQUEST['city']);
@@ -136,7 +137,7 @@ function employment_and_income_history_update($selected_id){
 	}
 
 	$o=array('silentErrors' => true);
-	sql('update `employment_and_income_history` set       `tenant`=' . (($data['tenant'] !== '' && $data['tenant'] !== NULL) ? "'{$data['tenant']}'" : 'NULL') . ', `employer_name`=' . (($data['employer_name'] !== '' && $data['employer_name'] !== NULL) ? "'{$data['employer_name']}'" : 'NULL') . ', `city`=' . (($data['city'] !== '' && $data['city'] !== NULL) ? "'{$data['city']}'" : 'NULL') . ', `employer_phone`=' . (($data['employer_phone'] !== '' && $data['employer_phone'] !== NULL) ? "'{$data['employer_phone']}'" : 'NULL') . ', `employed_from`=' . (($data['employed_from'] !== '' && $data['employed_from'] !== NULL) ? "'{$data['employed_from']}'" : 'NULL') . ', `employed_till`=' . (($data['employed_till'] !== '' && $data['employed_till'] !== NULL) ? "'{$data['employed_till']}'" : 'NULL') . ', `occupation`=' . (($data['occupation'] !== '' && $data['occupation'] !== NULL) ? "'{$data['occupation']}'" : 'NULL') . ', `notes`=' . (($data['notes'] !== '' && $data['notes'] !== NULL) ? "'{$data['notes']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
+	sql('update `employment_and_income_history` set       `employer_name`=' . (($data['employer_name'] !== '' && $data['employer_name'] !== NULL) ? "'{$data['employer_name']}'" : 'NULL') . ', `city`=' . (($data['city'] !== '' && $data['city'] !== NULL) ? "'{$data['city']}'" : 'NULL') . ', `employer_phone`=' . (($data['employer_phone'] !== '' && $data['employer_phone'] !== NULL) ? "'{$data['employer_phone']}'" : 'NULL') . ', `employed_from`=' . (($data['employed_from'] !== '' && $data['employed_from'] !== NULL) ? "'{$data['employed_from']}'" : 'NULL') . ', `employed_till`=' . (($data['employed_till'] !== '' && $data['employed_till'] !== NULL) ? "'{$data['employed_till']}'" : 'NULL') . ', `occupation`=' . (($data['occupation'] !== '' && $data['occupation'] !== NULL) ? "'{$data['occupation']}'" : 'NULL') . ', `notes`=' . (($data['notes'] !== '' && $data['notes'] !== NULL) ? "'{$data['notes']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo '<a href="employment_and_income_history_view.php?SelectedID='.urlencode($selected_id)."\">{$Translation['< back']}</a>";
@@ -380,8 +381,6 @@ function employment_and_income_history_form($selected_id = '', $AllowUpdate = 1,
 
 	// set records to read only if user can't insert new records and can't edit current record
 	if(($selected_id && !$AllowUpdate && !$AllowInsert) || (!$selected_id && !$AllowInsert)){
-		$jsReadOnly .= "\tjQuery('#tenant').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
-		$jsReadOnly .= "\tjQuery('#tenant_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
 		$jsReadOnly .= "\tjQuery('#employer_name').replaceWith('<div class=\"form-control-static\" id=\"employer_name\">' + (jQuery('#employer_name').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#city').replaceWith('<div class=\"form-control-static\" id=\"city\">' + (jQuery('#city').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#employer_phone').replaceWith('<div class=\"form-control-static\" id=\"employer_phone\">' + (jQuery('#employer_phone').val() || '') + '</div>');\n";
@@ -516,6 +515,9 @@ function employment_and_income_history_form($selected_id = '', $AllowUpdate = 1,
 	$templateCode .= $lookups;
 
 	// handle enforced parent values for read-only lookup fields
+	if( $_REQUEST['FilterField'][1]=='2' && $_REQUEST['FilterOperator'][1]=='<=>'){
+		$templateCode.="\n<input type=hidden name=tenant value=\"" . html_attr((get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]))."\">\n";
+	}
 
 	// don't include blank images in lightbox gallery
 	$templateCode = preg_replace('/blank.gif" data-lightbox=".*?"/', 'blank.gif"', $templateCode);

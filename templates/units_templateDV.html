@@ -10,9 +10,9 @@
 			<a class="hidden-xs btn btn-default btn-lg pull-right hidden hspacer-sm" href="applications_leases_view.php?filterer_unit=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>" id="applications_leases_link"><i class="glyphicon glyphicon-list-alt"></i> Applications/Leases</a>
 			<a class="visible-xs btn btn-default btn-lg btn-block hidden vspacer-sm" href="applications_leases_view.php?filterer_unit=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>" id="xs_applications_leases_link"><i class="glyphicon glyphicon-list-alt"></i> Applications/Leases</a>
 			<input type="hidden" id="applications_leases_hclink" value="applications_leases_view.php?filterer_unit=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
-			<a class="hidden-xs btn btn-default btn-lg pull-right hidden hspacer-sm" href="applicants_and_tenants_view.php?filterer_unit=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>" id="applicants_and_tenants_link"><i class="glyphicon glyphicon-list-alt"></i> Tenant Center</a>
-			<a class="visible-xs btn btn-default btn-lg btn-block hidden vspacer-sm" href="applicants_and_tenants_view.php?filterer_unit=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>" id="xs_applicants_and_tenants_link"><i class="glyphicon glyphicon-list-alt"></i> Tenant Center</a>
-			<input type="hidden" id="applicants_and_tenants_hclink" value="applicants_and_tenants_view.php?filterer_unit=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
+			<a class="hidden-xs btn btn-default btn-lg pull-right hidden hspacer-sm" href="applicants_and_tenants_view.php?filterer_property=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>" id="applicants_and_tenants_link"><i class="glyphicon glyphicon-list-alt"></i> Tenant Center</a>
+			<a class="visible-xs btn btn-default btn-lg btn-block hidden vspacer-sm" href="applicants_and_tenants_view.php?filterer_property=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>" id="xs_applicants_and_tenants_link"><i class="glyphicon glyphicon-list-alt"></i> Tenant Center</a>
+			<input type="hidden" id="applicants_and_tenants_hclink" value="applicants_and_tenants_view.php?filterer_property=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
 			<div class="clearfix"></div>
 		</div>
 	</div>
@@ -22,13 +22,6 @@
 		<!-- form inputs -->
 		<div class="col-md-8 col-lg-10" id="units_dv_form">
 			<fieldset class="form-horizontal">
-
-				<div class="form-group">
-					<label for="id" class="control-label col-lg-3">ID</label>
-					<div class="col-lg-9">
-						<div class="form-control-static" id="id"><%%VALUE(id)%%></div>
-					</div>
-				</div>
 
 				<div class="form-group">
 					<label for="property" class="control-label col-lg-3" data-parent_link="view_parent_modal">Property</label>
@@ -81,7 +74,21 @@
 				<div class="form-group">
 					<label for="rental_amount" class="control-label col-lg-3">Rental amount</label>
 					<div class="col-lg-9">
-						<input maxlength="9" type="text" class="form-control" name="rental_amount" id="rental_amount" value="<%%VALUE(rental_amount)%%>">
+						<input maxlength="13" type="text" class="form-control" name="rental_amount" id="rental_amount" value="<%%VALUE(rental_amount)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="deposit_amount" class="control-label col-lg-3">Security Deposit</label>
+					<div class="col-lg-9">
+						<input maxlength="13" type="text" class="form-control" name="deposit_amount" id="deposit_amount" value="<%%VALUE(deposit_amount)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="other_charges" class="control-label col-lg-3">Other Charges</label>
+					<div class="col-lg-9">
+						<input maxlength="13" type="text" class="form-control" name="other_charges" id="other_charges" value="<%%VALUE(other_charges)%%>">
 					</div>
 				</div>
 

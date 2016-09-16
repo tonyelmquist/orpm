@@ -14,8 +14,6 @@ function references_insert(){
 		return false;
 	}
 
-	$data['tenant'] = makeSafe($_REQUEST['tenant']);
-		if($data['tenant'] == empty_lookup_value){ $data['tenant'] = ''; }
 	$data['reference_name'] = makeSafe($_REQUEST['reference_name']);
 		if($data['reference_name'] == empty_lookup_value){ $data['reference_name'] = ''; }
 	$data['phone'] = makeSafe($_REQUEST['phone']);
@@ -28,7 +26,7 @@ function references_insert(){
 	}
 
 	$o = array('silentErrors' => true);
-	sql('insert into `references` set       `tenant`=' . (($data['tenant'] !== '' && $data['tenant'] !== NULL) ? "'{$data['tenant']}'" : 'NULL') . ', `reference_name`=' . (($data['reference_name'] !== '' && $data['reference_name'] !== NULL) ? "'{$data['reference_name']}'" : 'NULL') . ', `phone`=' . (($data['phone'] !== '' && $data['phone'] !== NULL) ? "'{$data['phone']}'" : 'NULL'), $o);
+	sql('insert into `references` set       `reference_name`=' . (($data['reference_name'] !== '' && $data['reference_name'] !== NULL) ? "'{$data['reference_name']}'" : 'NULL') . ', `phone`=' . (($data['phone'] !== '' && $data['phone'] !== NULL) ? "'{$data['phone']}'" : 'NULL'), $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo "<a href=\"references_view.php?addNew_x=1\">{$Translation['< back']}</a>";
@@ -36,6 +34,11 @@ function references_insert(){
 	}
 
 	$recID = db_insert_id(db_link());
+
+	// automatic tenant
+	if($_REQUEST['filterer_tenant']){
+		sql("update `references` set `tenant`='" . makeSafe($_REQUEST['filterer_tenant']) . "' where `id`='" . makeSafe($recID, false) . "'", $eo);
+	}
 
 	// hook: references_after_insert
 	if(function_exists('references_after_insert')){
@@ -101,8 +104,6 @@ function references_update($selected_id){
 		return false;
 	}
 
-	$data['tenant'] = makeSafe($_REQUEST['tenant']);
-		if($data['tenant'] == empty_lookup_value){ $data['tenant'] = ''; }
 	$data['reference_name'] = makeSafe($_REQUEST['reference_name']);
 		if($data['reference_name'] == empty_lookup_value){ $data['reference_name'] = ''; }
 	$data['phone'] = makeSafe($_REQUEST['phone']);
@@ -116,7 +117,7 @@ function references_update($selected_id){
 	}
 
 	$o=array('silentErrors' => true);
-	sql('update `references` set       `tenant`=' . (($data['tenant'] !== '' && $data['tenant'] !== NULL) ? "'{$data['tenant']}'" : 'NULL') . ', `reference_name`=' . (($data['reference_name'] !== '' && $data['reference_name'] !== NULL) ? "'{$data['reference_name']}'" : 'NULL') . ', `phone`=' . (($data['phone'] !== '' && $data['phone'] !== NULL) ? "'{$data['phone']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
+	sql('update `references` set       `reference_name`=' . (($data['reference_name'] !== '' && $data['reference_name'] !== NULL) ? "'{$data['reference_name']}'" : 'NULL') . ', `phone`=' . (($data['phone'] !== '' && $data['phone'] !== NULL) ? "'{$data['phone']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo '<a href="references_view.php?SelectedID='.urlencode($selected_id)."\">{$Translation['< back']}</a>";
@@ -342,8 +343,6 @@ function references_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, 
 
 	// set records to read only if user can't insert new records and can't edit current record
 	if(($selected_id && !$AllowUpdate && !$AllowInsert) || (!$selected_id && !$AllowInsert)){
-		$jsReadOnly .= "\tjQuery('#tenant').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
-		$jsReadOnly .= "\tjQuery('#tenant_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
 		$jsReadOnly .= "\tjQuery('#reference_name').replaceWith('<div class=\"form-control-static\" id=\"reference_name\">' + (jQuery('#reference_name').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#phone').replaceWith('<div class=\"form-control-static\" id=\"phone\">' + (jQuery('#phone').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('.select2-container').hide();\n";
@@ -439,6 +438,9 @@ function references_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, 
 	$templateCode .= $lookups;
 
 	// handle enforced parent values for read-only lookup fields
+	if( $_REQUEST['FilterField'][1]=='2' && $_REQUEST['FilterOperator'][1]=='<=>'){
+		$templateCode.="\n<input type=hidden name=tenant value=\"" . html_attr((get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]))."\">\n";
+	}
 
 	// don't include blank images in lightbox gallery
 	$templateCode = preg_replace('/blank.gif" data-lightbox=".*?"/', 'blank.gif"', $templateCode);

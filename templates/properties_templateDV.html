@@ -8,9 +8,6 @@
 	<div class="row">
 		<div class="col-xs-12">
 			<input type="hidden" id="applications_leases_hclink" value="applications_leases_view.php?filterer_property=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
-			<a class="hidden-xs btn btn-default btn-lg pull-right hidden hspacer-sm" href="applicants_and_tenants_view.php?filterer_property=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>" id="applicants_and_tenants_link"><i class="glyphicon glyphicon-list-alt"></i> Tenant Center</a>
-			<a class="visible-xs btn btn-default btn-lg btn-block hidden vspacer-sm" href="applicants_and_tenants_view.php?filterer_property=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>" id="xs_applicants_and_tenants_link"><i class="glyphicon glyphicon-list-alt"></i> Tenant Center</a>
-			<input type="hidden" id="applicants_and_tenants_hclink" value="applicants_and_tenants_view.php?filterer_property=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
 			<a class="hidden-xs btn btn-default btn-lg pull-right hidden hspacer-sm" href="units_view.php?filterer_property=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>" id="units_link"><i class="glyphicon glyphicon-list-alt"></i> Units Center</a>
 			<a class="visible-xs btn btn-default btn-lg btn-block hidden vspacer-sm" href="units_view.php?filterer_property=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>" id="xs_units_link"><i class="glyphicon glyphicon-list-alt"></i> Units Center</a>
 			<input type="hidden" id="units_hclink" value="units_view.php?filterer_property=<%%URLVALUE(id)%%>&<%%EMBEDDED%%>">
@@ -23,13 +20,6 @@
 		<!-- form inputs -->
 		<div class="col-md-8 col-lg-10" id="properties_dv_form">
 			<fieldset class="form-horizontal">
-
-				<div class="form-group">
-					<label for="id" class="control-label col-lg-3">ID</label>
-					<div class="col-lg-9">
-						<div class="form-control-static" id="id"><%%VALUE(id)%%></div>
-					</div>
-				</div>
 
 				<div class="form-group">
 					<label for="property_name" class="control-label col-lg-3">Property Name<span class="text-danger"><%%TRANSLATION(*)%%></span></label>

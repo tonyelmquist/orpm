@@ -103,10 +103,10 @@
 	$x->TableIcon = "resources/table_icons/administrator.png";
 	$x->PrimaryKey = "`rental_owners`.`id`";
 
-	$x->ColWidth   = array(  150, 150, 150, 150, 150);
-	$x->ColCaption = array("First name", "Last name", "Email", "Phone", "Country");
-	$x->ColFieldName = array('first_name', 'last_name', 'primary_email', 'phone', 'country');
-	$x->ColNumber  = array(2, 3, 5, 6, 7);
+	$x->ColWidth   = array(  150, 150, 150, 150, 150, 150);
+	$x->ColCaption = array("First name", "Last name", "Date of birth", "Email", "Phone", "Country");
+	$x->ColFieldName = array('first_name', 'last_name', 'date_of_birth', 'primary_email', 'phone', 'country');
+	$x->ColNumber  = array(2, 3, 4, 5, 6, 7);
 
 	$x->Template = 'templates/rental_owners_templateTV.html';
 	$x->SelectedTemplate = 'templates/rental_owners_templateTVS.html';

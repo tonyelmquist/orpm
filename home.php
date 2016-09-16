@@ -61,7 +61,7 @@
 			/* is the current table filter-first? */
 			$tChkFF = array_search($tn, array());
 			/* hide current table in homepage? */
-			$tChkHL = array_search($tn, array('residence_and_rental_history','employment_and_income_history','references'));
+			$tChkHL = array_search($tn, array('applications_leases','residence_and_rental_history','employment_and_income_history','references'));
 			/* allow homepage 'add new' for current table? */
 			$tChkAHAN = array_search($tn, array('applicants_and_tenants','properties','units','rental_owners'));
 

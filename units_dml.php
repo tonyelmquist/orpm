@@ -32,6 +32,8 @@ function units_insert(){
 		if($data['rental_amount'] == empty_lookup_value){ $data['rental_amount'] = ''; }
 	$data['deposit_amount'] = makeSafe($_REQUEST['deposit_amount']);
 		if($data['deposit_amount'] == empty_lookup_value){ $data['deposit_amount'] = ''; }
+	$data['other_charges'] = makeSafe($_REQUEST['other_charges']);
+		if($data['other_charges'] == empty_lookup_value){ $data['other_charges'] = ''; }
 	$data['description'] = makeSafe($_REQUEST['description']);
 		if($data['description'] == empty_lookup_value){ $data['description'] = ''; }
 	$data['photo'] = PrepareUploadedFile('photo', 1024000,'jpg|jpeg|gif|png', false, '');
@@ -58,7 +60,7 @@ function units_insert(){
 	}
 
 	$o = array('silentErrors' => true);
-	sql('insert into `units` set       `property`=' . (($data['property'] !== '' && $data['property'] !== NULL) ? "'{$data['property']}'" : 'NULL') . ', `unit_number`=' . (($data['unit_number'] !== '' && $data['unit_number'] !== NULL) ? "'{$data['unit_number']}'" : 'NULL') . ', ' . ($data['photo'] != '' ? "`photo`='{$data['photo']}'" : '`photo`=NULL') . ', `status`=' . (($data['status'] !== '' && $data['status'] !== NULL) ? "'{$data['status']}'" : 'NULL') . ', `features`=' . (($data['features'] !== '' && $data['features'] !== NULL) ? "'{$data['features']}'" : 'NULL') . ', `rental_amount`=' . (($data['rental_amount'] !== '' && $data['rental_amount'] !== NULL) ? "'{$data['rental_amount']}'" : 'NULL') . ', `description`=' . (($data['description'] !== '' && $data['description'] !== NULL) ? "'{$data['description']}'" : 'NULL'), $o);
+	sql('insert into `units` set       `property`=' . (($data['property'] !== '' && $data['property'] !== NULL) ? "'{$data['property']}'" : 'NULL') . ', `unit_number`=' . (($data['unit_number'] !== '' && $data['unit_number'] !== NULL) ? "'{$data['unit_number']}'" : 'NULL') . ', ' . ($data['photo'] != '' ? "`photo`='{$data['photo']}'" : '`photo`=NULL') . ', `status`=' . (($data['status'] !== '' && $data['status'] !== NULL) ? "'{$data['status']}'" : 'NULL') . ', `features`=' . (($data['features'] !== '' && $data['features'] !== NULL) ? "'{$data['features']}'" : 'NULL') . ', `rental_amount`=' . (($data['rental_amount'] !== '' && $data['rental_amount'] !== NULL) ? "'{$data['rental_amount']}'" : 'NULL') . ', `deposit_amount`=' . (($data['deposit_amount'] !== '' && $data['deposit_amount'] !== NULL) ? "'{$data['deposit_amount']}'" : 'NULL') . ', `other_charges`=' . (($data['other_charges'] !== '' && $data['other_charges'] !== NULL) ? "'{$data['other_charges']}'" : 'NULL') . ', `description`=' . (($data['description'] !== '' && $data['description'] !== NULL) ? "'{$data['description']}'" : 'NULL'), $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo "<a href=\"units_view.php?addNew_x=1\">{$Translation['< back']}</a>";
@@ -128,7 +130,83 @@ function units_delete($selected_id, $AllowDeleteOfParents=false, $skipChecks=fal
 	// child table: applicants_and_tenants
 	$res = sql("select `id` from `units` where `id`='$selected_id'", $eo);
 	$id = db_fetch_row($res);
+	$rires = sql("select count(1) from `applicants_and_tenants` where `property`='".addslashes($id[0])."'", $eo);
+	$rirow = db_fetch_row($rires);
+	if($rirow[0] && !$AllowDeleteOfParents && !$skipChecks){
+		$RetMsg = $Translation["couldn't delete"];
+		$RetMsg = str_replace("<RelatedRecords>", $rirow[0], $RetMsg);
+		$RetMsg = str_replace("<TableName>", "applicants_and_tenants", $RetMsg);
+		return $RetMsg;
+	}elseif($rirow[0] && $AllowDeleteOfParents && !$skipChecks){
+		$RetMsg = $Translation["confirm delete"];
+		$RetMsg = str_replace("<RelatedRecords>", $rirow[0], $RetMsg);
+		$RetMsg = str_replace("<TableName>", "applicants_and_tenants", $RetMsg);
+		$RetMsg = str_replace("<Delete>", "<input type=\"button\" class=\"button\" value=\"".$Translation['yes']."\" onClick=\"window.location='units_view.php?SelectedID=".urlencode($selected_id)."&delete_x=1&confirmed=1';\">", $RetMsg);
+		$RetMsg = str_replace("<Cancel>", "<input type=\"button\" class=\"button\" value=\"".$Translation['no']."\" onClick=\"window.location='units_view.php?SelectedID=".urlencode($selected_id)."';\">", $RetMsg);
+		return $RetMsg;
+	}
+
+	// child table: applicants_and_tenants
+	$res = sql("select `id` from `units` where `id`='$selected_id'", $eo);
+	$id = db_fetch_row($res);
 	$rires = sql("select count(1) from `applicants_and_tenants` where `unit`='".addslashes($id[0])."'", $eo);
+	$rirow = db_fetch_row($rires);
+	if($rirow[0] && !$AllowDeleteOfParents && !$skipChecks){
+		$RetMsg = $Translation["couldn't delete"];
+		$RetMsg = str_replace("<RelatedRecords>", $rirow[0], $RetMsg);
+		$RetMsg = str_replace("<TableName>", "applicants_and_tenants", $RetMsg);
+		return $RetMsg;
+	}elseif($rirow[0] && $AllowDeleteOfParents && !$skipChecks){
+		$RetMsg = $Translation["confirm delete"];
+		$RetMsg = str_replace("<RelatedRecords>", $rirow[0], $RetMsg);
+		$RetMsg = str_replace("<TableName>", "applicants_and_tenants", $RetMsg);
+		$RetMsg = str_replace("<Delete>", "<input type=\"button\" class=\"button\" value=\"".$Translation['yes']."\" onClick=\"window.location='units_view.php?SelectedID=".urlencode($selected_id)."&delete_x=1&confirmed=1';\">", $RetMsg);
+		$RetMsg = str_replace("<Cancel>", "<input type=\"button\" class=\"button\" value=\"".$Translation['no']."\" onClick=\"window.location='units_view.php?SelectedID=".urlencode($selected_id)."';\">", $RetMsg);
+		return $RetMsg;
+	}
+
+	// child table: applicants_and_tenants
+	$res = sql("select `id` from `units` where `id`='$selected_id'", $eo);
+	$id = db_fetch_row($res);
+	$rires = sql("select count(1) from `applicants_and_tenants` where `monthly_rent`='".addslashes($id[0])."'", $eo);
+	$rirow = db_fetch_row($rires);
+	if($rirow[0] && !$AllowDeleteOfParents && !$skipChecks){
+		$RetMsg = $Translation["couldn't delete"];
+		$RetMsg = str_replace("<RelatedRecords>", $rirow[0], $RetMsg);
+		$RetMsg = str_replace("<TableName>", "applicants_and_tenants", $RetMsg);
+		return $RetMsg;
+	}elseif($rirow[0] && $AllowDeleteOfParents && !$skipChecks){
+		$RetMsg = $Translation["confirm delete"];
+		$RetMsg = str_replace("<RelatedRecords>", $rirow[0], $RetMsg);
+		$RetMsg = str_replace("<TableName>", "applicants_and_tenants", $RetMsg);
+		$RetMsg = str_replace("<Delete>", "<input type=\"button\" class=\"button\" value=\"".$Translation['yes']."\" onClick=\"window.location='units_view.php?SelectedID=".urlencode($selected_id)."&delete_x=1&confirmed=1';\">", $RetMsg);
+		$RetMsg = str_replace("<Cancel>", "<input type=\"button\" class=\"button\" value=\"".$Translation['no']."\" onClick=\"window.location='units_view.php?SelectedID=".urlencode($selected_id)."';\">", $RetMsg);
+		return $RetMsg;
+	}
+
+	// child table: applicants_and_tenants
+	$res = sql("select `id` from `units` where `id`='$selected_id'", $eo);
+	$id = db_fetch_row($res);
+	$rires = sql("select count(1) from `applicants_and_tenants` where `security_deposit`='".addslashes($id[0])."'", $eo);
+	$rirow = db_fetch_row($rires);
+	if($rirow[0] && !$AllowDeleteOfParents && !$skipChecks){
+		$RetMsg = $Translation["couldn't delete"];
+		$RetMsg = str_replace("<RelatedRecords>", $rirow[0], $RetMsg);
+		$RetMsg = str_replace("<TableName>", "applicants_and_tenants", $RetMsg);
+		return $RetMsg;
+	}elseif($rirow[0] && $AllowDeleteOfParents && !$skipChecks){
+		$RetMsg = $Translation["confirm delete"];
+		$RetMsg = str_replace("<RelatedRecords>", $rirow[0], $RetMsg);
+		$RetMsg = str_replace("<TableName>", "applicants_and_tenants", $RetMsg);
+		$RetMsg = str_replace("<Delete>", "<input type=\"button\" class=\"button\" value=\"".$Translation['yes']."\" onClick=\"window.location='units_view.php?SelectedID=".urlencode($selected_id)."&delete_x=1&confirmed=1';\">", $RetMsg);
+		$RetMsg = str_replace("<Cancel>", "<input type=\"button\" class=\"button\" value=\"".$Translation['no']."\" onClick=\"window.location='units_view.php?SelectedID=".urlencode($selected_id)."';\">", $RetMsg);
+		return $RetMsg;
+	}
+
+	// child table: applicants_and_tenants
+	$res = sql("select `id` from `units` where `id`='$selected_id'", $eo);
+	$id = db_fetch_row($res);
+	$rires = sql("select count(1) from `applicants_and_tenants` where `other_charges`='".addslashes($id[0])."'", $eo);
 	$rirow = db_fetch_row($rires);
 	if($rirow[0] && !$AllowDeleteOfParents && !$skipChecks){
 		$RetMsg = $Translation["couldn't delete"];
@@ -192,6 +270,8 @@ function units_update($selected_id){
 		if($data['rental_amount'] == empty_lookup_value){ $data['rental_amount'] = ''; }
 	$data['deposit_amount'] = makeSafe($_REQUEST['deposit_amount']);
 		if($data['deposit_amount'] == empty_lookup_value){ $data['deposit_amount'] = ''; }
+	$data['other_charges'] = makeSafe($_REQUEST['other_charges']);
+		if($data['other_charges'] == empty_lookup_value){ $data['other_charges'] = ''; }
 	$data['description'] = makeSafe($_REQUEST['description']);
 		if($data['description'] == empty_lookup_value){ $data['description'] = ''; }
 	$data['selectedID']=makeSafe($selected_id);
@@ -210,7 +290,7 @@ function units_update($selected_id){
 	}
 
 	$o=array('silentErrors' => true);
-	sql('update `units` set       `property`=' . (($data['property'] !== '' && $data['property'] !== NULL) ? "'{$data['property']}'" : 'NULL') . ', `unit_number`=' . (($data['unit_number'] !== '' && $data['unit_number'] !== NULL) ? "'{$data['unit_number']}'" : 'NULL') . ', ' . ($data['photo']!='' ? "`photo`='{$data['photo']}'" : ($_REQUEST['photo_remove'] != 1 ? '`photo`=`photo`' : '`photo`=NULL')) . ', `status`=' . (($data['status'] !== '' && $data['status'] !== NULL) ? "'{$data['status']}'" : 'NULL') . ', `features`=' . (($data['features'] !== '' && $data['features'] !== NULL) ? "'{$data['features']}'" : 'NULL') . ', `rental_amount`=' . (($data['rental_amount'] !== '' && $data['rental_amount'] !== NULL) ? "'{$data['rental_amount']}'" : 'NULL') . ', `description`=' . (($data['description'] !== '' && $data['description'] !== NULL) ? "'{$data['description']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
+	sql('update `units` set       `property`=' . (($data['property'] !== '' && $data['property'] !== NULL) ? "'{$data['property']}'" : 'NULL') . ', `unit_number`=' . (($data['unit_number'] !== '' && $data['unit_number'] !== NULL) ? "'{$data['unit_number']}'" : 'NULL') . ', ' . ($data['photo']!='' ? "`photo`='{$data['photo']}'" : ($_REQUEST['photo_remove'] != 1 ? '`photo`=`photo`' : '`photo`=NULL')) . ', `status`=' . (($data['status'] !== '' && $data['status'] !== NULL) ? "'{$data['status']}'" : 'NULL') . ', `features`=' . (($data['features'] !== '' && $data['features'] !== NULL) ? "'{$data['features']}'" : 'NULL') . ', `rental_amount`=' . (($data['rental_amount'] !== '' && $data['rental_amount'] !== NULL) ? "'{$data['rental_amount']}'" : 'NULL') . ', `deposit_amount`=' . (($data['deposit_amount'] !== '' && $data['deposit_amount'] !== NULL) ? "'{$data['deposit_amount']}'" : 'NULL') . ', `other_charges`=' . (($data['other_charges'] !== '' && $data['other_charges'] !== NULL) ? "'{$data['other_charges']}'" : 'NULL') . ', `description`=' . (($data['description'] !== '' && $data['description'] !== NULL) ? "'{$data['description']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo '<a href="units_view.php?SelectedID='.urlencode($selected_id)."\">{$Translation['< back']}</a>";
@@ -480,6 +560,8 @@ function units_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Allo
 		$jsReadOnly .= "\tjQuery('#features').replaceWith('<div class=\"form-control-static\" id=\"features\">' + (jQuery('#features').val() || '') + '</div>'); jQuery('#features-multi-selection-help').hide();\n";
 		$jsReadOnly .= "\tjQuery('#s2id_features').remove();\n";
 		$jsReadOnly .= "\tjQuery('#rental_amount').replaceWith('<div class=\"form-control-static\" id=\"rental_amount\">' + (jQuery('#rental_amount').val() || '') + '</div>');\n";
+		$jsReadOnly .= "\tjQuery('#deposit_amount').replaceWith('<div class=\"form-control-static\" id=\"deposit_amount\">' + (jQuery('#deposit_amount').val() || '') + '</div>');\n";
+		$jsReadOnly .= "\tjQuery('#other_charges').replaceWith('<div class=\"form-control-static\" id=\"other_charges\">' + (jQuery('#other_charges').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('.select2-container').hide();\n";
 
 		$noUploads = true;
@@ -527,6 +609,7 @@ function units_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Allo
 	$templateCode=str_replace('<%%UPLOADFILE(features)%%>', '', $templateCode);
 	$templateCode=str_replace('<%%UPLOADFILE(rental_amount)%%>', '', $templateCode);
 	$templateCode=str_replace('<%%UPLOADFILE(deposit_amount)%%>', '', $templateCode);
+	$templateCode=str_replace('<%%UPLOADFILE(other_charges)%%>', '', $templateCode);
 	$templateCode=str_replace('<%%UPLOADFILE(description)%%>', '', $templateCode);
 
 	// process values
@@ -548,6 +631,8 @@ function units_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Allo
 		$templateCode=str_replace('<%%URLVALUE(rental_amount)%%>', urlencode($urow['rental_amount']), $templateCode);
 		$templateCode=str_replace('<%%VALUE(deposit_amount)%%>', html_attr($row['deposit_amount']), $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(deposit_amount)%%>', urlencode($urow['deposit_amount']), $templateCode);
+		$templateCode=str_replace('<%%VALUE(other_charges)%%>', html_attr($row['other_charges']), $templateCode);
+		$templateCode=str_replace('<%%URLVALUE(other_charges)%%>', urlencode($urow['other_charges']), $templateCode);
 		if($AllowUpdate || $AllowInsert){
 			$templateCode = str_replace('<%%HTMLAREA(description)%%>', '<textarea name="description" id="description" rows="5">' . html_attr($row['description']) . '</textarea>', $templateCode);
 		}else{
@@ -571,6 +656,8 @@ function units_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, $Allo
 		$templateCode=str_replace('<%%URLVALUE(rental_amount)%%>', urlencode(''), $templateCode);
 		$templateCode=str_replace('<%%VALUE(deposit_amount)%%>', '', $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(deposit_amount)%%>', urlencode(''), $templateCode);
+		$templateCode=str_replace('<%%VALUE(other_charges)%%>', '', $templateCode);
+		$templateCode=str_replace('<%%URLVALUE(other_charges)%%>', urlencode(''), $templateCode);
 		$templateCode=str_replace('<%%HTMLAREA(description)%%>', '<textarea name="description" id="description" rows="5"></textarea>', $templateCode);
 	}
 

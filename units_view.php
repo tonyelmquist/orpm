@@ -28,8 +28,9 @@
 		"`units`.`photo`" => "photo",
 		"`units`.`status`" => "status",
 		"`units`.`features`" => "features",
-		"CONCAT('$', FORMAT(`units`.`rental_amount`, 2))" => "rental_amount",
-		"CONCAT('$', FORMAT(`units`.`deposit_amount`, 2))" => "deposit_amount",
+		"`units`.`rental_amount`" => "rental_amount",
+		"`units`.`deposit_amount`" => "deposit_amount",
+		"`units`.`other_charges`" => "other_charges",
 		"`units`.`description`" => "description"
 	);
 	// mapping incoming sort by requests to actual query fields
@@ -42,7 +43,8 @@
 		6 => 6,
 		7 => '`units`.`rental_amount`',
 		8 => '`units`.`deposit_amount`',
-		9 => 9
+		9 => '`units`.`other_charges`',
+		10 => 10
 	);
 
 	// Fields that can be displayed in the csv file
@@ -53,8 +55,9 @@
 		"`units`.`photo`" => "photo",
 		"`units`.`status`" => "status",
 		"`units`.`features`" => "features",
-		"CONCAT('$', FORMAT(`units`.`rental_amount`, 2))" => "rental_amount",
-		"CONCAT('$', FORMAT(`units`.`deposit_amount`, 2))" => "deposit_amount",
+		"`units`.`rental_amount`" => "rental_amount",
+		"`units`.`deposit_amount`" => "deposit_amount",
+		"`units`.`other_charges`" => "other_charges",
 		"`units`.`description`" => "description"
 	);
 	// Fields that can be filtered
@@ -65,7 +68,8 @@
 		"`units`.`status`" => "Status",
 		"`units`.`features`" => "Features",
 		"`units`.`rental_amount`" => "Rental amount",
-		"`units`.`deposit_amount`" => "Deposit amount",
+		"`units`.`deposit_amount`" => "Security Deposit",
+		"`units`.`other_charges`" => "Other Charges",
 		"`units`.`description`" => "Description"
 	);
 
@@ -76,8 +80,9 @@
 		"`units`.`unit_number`" => "unit_number",
 		"`units`.`status`" => "status",
 		"`units`.`features`" => "features",
-		"CONCAT('$', FORMAT(`units`.`rental_amount`, 2))" => "rental_amount",
-		"CONCAT('$', FORMAT(`units`.`deposit_amount`, 2))" => "deposit_amount",
+		"`units`.`rental_amount`" => "rental_amount",
+		"`units`.`deposit_amount`" => "deposit_amount",
+		"`units`.`other_charges`" => "other_charges",
 		"`units`.`description`" => "description"
 	);
 
@@ -111,10 +116,10 @@
 	$x->TableIcon = "resources/table_icons/change_password.png";
 	$x->PrimaryKey = "`units`.`id`";
 
-	$x->ColWidth   = array(  90, 40, 60, 60, 150, 60);
-	$x->ColCaption = array("Property", "Unit", "Photo", "Status", "Features", "Rental amount");
-	$x->ColFieldName = array('property', 'unit_number', 'photo', 'status', 'features', 'rental_amount');
-	$x->ColNumber  = array(2, 3, 4, 5, 6, 7);
+	$x->ColWidth   = array(  90, 40, 60, 60, 150, 60, 50, 150, 80);
+	$x->ColCaption = array("Property", "Unit", "Photo", "Status", "Features", "Rental amount", "Security Deposit", "Other Charges", "Description");
+	$x->ColFieldName = array('property', 'unit_number', 'photo', 'status', 'features', 'rental_amount', 'deposit_amount', 'other_charges', 'description');
+	$x->ColNumber  = array(2, 3, 4, 5, 6, 7, 8, 9, 10);
 
 	$x->Template = 'templates/units_templateTV.html';
 	$x->SelectedTemplate = 'templates/units_templateTVS.html';

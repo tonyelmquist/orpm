@@ -116,10 +116,10 @@
 	$x->TableIcon = "resources/table_icons/application_home.png";
 	$x->PrimaryKey = "`properties`.`id`";
 
-	$x->ColWidth   = array(  50, 80, 50, 60, 100, 120, 70, 50);
-	$x->ColCaption = array("Property Name", "Type", "Number of units", "Photo", "Owner", "County", "Area", "Street / Road");
-	$x->ColFieldName = array('property_name', 'type', 'number_of_units', 'photo', 'owner', 'street', 'City', 'State');
-	$x->ColNumber  = array(2, 3, 4, 5, 6, 8, 9, 10);
+	$x->ColWidth   = array(  50, 80, 50, 60, 100, 150, 120, 70, 50);
+	$x->ColCaption = array("Property Name", "Type", "Number of units", "Photo", "Owner", "Country", "County", "Area", "Street / Road");
+	$x->ColFieldName = array('property_name', 'type', 'number_of_units', 'photo', 'owner', 'country', 'street', 'City', 'State');
+	$x->ColNumber  = array(2, 3, 4, 5, 6, 7, 8, 9, 10);
 
 	$x->Template = 'templates/properties_templateTV.html';
 	$x->SelectedTemplate = 'templates/properties_templateTVS.html';

@@ -14,8 +14,6 @@ function residence_and_rental_history_insert(){
 		return false;
 	}
 
-	$data['tenant'] = makeSafe($_REQUEST['tenant']);
-		if($data['tenant'] == empty_lookup_value){ $data['tenant'] = ''; }
 	$data['month'] = intval($_REQUEST['monthYear']) . '-' . intval($_REQUEST['monthMonth']) . '-' . intval($_REQUEST['monthDay']);
 	$data['month'] = parseMySQLDate($data['month'], '');
 	$data['monthly_rent'] = makeSafe($_REQUEST['monthly_rent']);
@@ -50,7 +48,7 @@ function residence_and_rental_history_insert(){
 	}
 
 	$o = array('silentErrors' => true);
-	sql('insert into `residence_and_rental_history` set       `tenant`=' . (($data['tenant'] !== '' && $data['tenant'] !== NULL) ? "'{$data['tenant']}'" : 'NULL') . ', `month`=' . (($data['month'] !== '' && $data['month'] !== NULL) ? "'{$data['month']}'" : 'NULL') . ', `monthly_rent`=' . (($data['monthly_rent'] !== '' && $data['monthly_rent'] !== NULL) ? "'{$data['monthly_rent']}'" : 'NULL') . ', `security_deposit`=' . (($data['security_deposit'] !== '' && $data['security_deposit'] !== NULL) ? "'{$data['security_deposit']}'" : 'NULL') . ', `other_charges`=' . (($data['other_charges'] !== '' && $data['other_charges'] !== NULL) ? "'{$data['other_charges']}'" : 'NULL') . ', `rent_paid`=' . (($data['rent_paid'] !== '' && $data['rent_paid'] !== NULL) ? "'{$data['rent_paid']}'" : 'NULL') . ', `rent_balance`=' . (($data['rent_balance'] !== '' && $data['rent_balance'] !== NULL) ? "'{$data['rent_balance']}'" : 'NULL') . ', `rent_reminder`=' . (($data['rent_reminder'] !== '' && $data['rent_reminder'] !== NULL) ? "'{$data['rent_reminder']}'" : 'NULL') . ', `due_date`=' . (($data['due_date'] !== '' && $data['due_date'] !== NULL) ? "'{$data['due_date']}'" : 'NULL') . ', `late_rent_reminder`=' . (($data['late_rent_reminder'] !== '' && $data['late_rent_reminder'] !== NULL) ? "'{$data['late_rent_reminder']}'" : 'NULL') . ', `duration_of_residency_from`=' . (($data['duration_of_residency_from'] !== '' && $data['duration_of_residency_from'] !== NULL) ? "'{$data['duration_of_residency_from']}'" : 'NULL') . ', `to`=' . (($data['to'] !== '' && $data['to'] !== NULL) ? "'{$data['to']}'" : 'NULL') . ', `reason_for_leaving`=' . (($data['reason_for_leaving'] !== '' && $data['reason_for_leaving'] !== NULL) ? "'{$data['reason_for_leaving']}'" : 'NULL') . ', `notes`=' . (($data['notes'] !== '' && $data['notes'] !== NULL) ? "'{$data['notes']}'" : 'NULL'), $o);
+	sql('insert into `residence_and_rental_history` set       `month`=' . (($data['month'] !== '' && $data['month'] !== NULL) ? "'{$data['month']}'" : 'NULL') . ', `monthly_rent`=' . (($data['monthly_rent'] !== '' && $data['monthly_rent'] !== NULL) ? "'{$data['monthly_rent']}'" : 'NULL') . ', `security_deposit`=' . (($data['security_deposit'] !== '' && $data['security_deposit'] !== NULL) ? "'{$data['security_deposit']}'" : 'NULL') . ', `other_charges`=' . (($data['other_charges'] !== '' && $data['other_charges'] !== NULL) ? "'{$data['other_charges']}'" : 'NULL') . ', `rent_paid`=' . (($data['rent_paid'] !== '' && $data['rent_paid'] !== NULL) ? "'{$data['rent_paid']}'" : 'NULL') . ', `rent_balance`=' . (($data['rent_balance'] !== '' && $data['rent_balance'] !== NULL) ? "'{$data['rent_balance']}'" : 'NULL') . ', `rent_reminder`=' . (($data['rent_reminder'] !== '' && $data['rent_reminder'] !== NULL) ? "'{$data['rent_reminder']}'" : 'NULL') . ', `due_date`=' . (($data['due_date'] !== '' && $data['due_date'] !== NULL) ? "'{$data['due_date']}'" : 'NULL') . ', `late_rent_reminder`=' . (($data['late_rent_reminder'] !== '' && $data['late_rent_reminder'] !== NULL) ? "'{$data['late_rent_reminder']}'" : 'NULL') . ', `duration_of_residency_from`=' . (($data['duration_of_residency_from'] !== '' && $data['duration_of_residency_from'] !== NULL) ? "'{$data['duration_of_residency_from']}'" : 'NULL') . ', `to`=' . (($data['to'] !== '' && $data['to'] !== NULL) ? "'{$data['to']}'" : 'NULL') . ', `reason_for_leaving`=' . (($data['reason_for_leaving'] !== '' && $data['reason_for_leaving'] !== NULL) ? "'{$data['reason_for_leaving']}'" : 'NULL') . ', `notes`=' . (($data['notes'] !== '' && $data['notes'] !== NULL) ? "'{$data['notes']}'" : 'NULL'), $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo "<a href=\"residence_and_rental_history_view.php?addNew_x=1\">{$Translation['< back']}</a>";
@@ -58,6 +56,11 @@ function residence_and_rental_history_insert(){
 	}
 
 	$recID = db_insert_id(db_link());
+
+	// automatic tenant
+	if($_REQUEST['filterer_tenant']){
+		sql("update `residence_and_rental_history` set `tenant`='" . makeSafe($_REQUEST['filterer_tenant']) . "' where `id`='" . makeSafe($recID, false) . "'", $eo);
+	}
 
 	// hook: residence_and_rental_history_after_insert
 	if(function_exists('residence_and_rental_history_after_insert')){
@@ -123,8 +126,6 @@ function residence_and_rental_history_update($selected_id){
 		return false;
 	}
 
-	$data['tenant'] = makeSafe($_REQUEST['tenant']);
-		if($data['tenant'] == empty_lookup_value){ $data['tenant'] = ''; }
 	$data['month'] = intval($_REQUEST['monthYear']) . '-' . intval($_REQUEST['monthMonth']) . '-' . intval($_REQUEST['monthDay']);
 	$data['month'] = parseMySQLDate($data['month'], '');
 	$data['monthly_rent'] = makeSafe($_REQUEST['monthly_rent']);
@@ -160,7 +161,7 @@ function residence_and_rental_history_update($selected_id){
 	}
 
 	$o=array('silentErrors' => true);
-	sql('update `residence_and_rental_history` set       `tenant`=' . (($data['tenant'] !== '' && $data['tenant'] !== NULL) ? "'{$data['tenant']}'" : 'NULL') . ', `month`=' . (($data['month'] !== '' && $data['month'] !== NULL) ? "'{$data['month']}'" : 'NULL') . ', `monthly_rent`=' . (($data['monthly_rent'] !== '' && $data['monthly_rent'] !== NULL) ? "'{$data['monthly_rent']}'" : 'NULL') . ', `security_deposit`=' . (($data['security_deposit'] !== '' && $data['security_deposit'] !== NULL) ? "'{$data['security_deposit']}'" : 'NULL') . ', `other_charges`=' . (($data['other_charges'] !== '' && $data['other_charges'] !== NULL) ? "'{$data['other_charges']}'" : 'NULL') . ', `rent_paid`=' . (($data['rent_paid'] !== '' && $data['rent_paid'] !== NULL) ? "'{$data['rent_paid']}'" : 'NULL') . ', `rent_balance`=' . (($data['rent_balance'] !== '' && $data['rent_balance'] !== NULL) ? "'{$data['rent_balance']}'" : 'NULL') . ', `rent_reminder`=' . (($data['rent_reminder'] !== '' && $data['rent_reminder'] !== NULL) ? "'{$data['rent_reminder']}'" : 'NULL') . ', `due_date`=' . (($data['due_date'] !== '' && $data['due_date'] !== NULL) ? "'{$data['due_date']}'" : 'NULL') . ', `late_rent_reminder`=' . (($data['late_rent_reminder'] !== '' && $data['late_rent_reminder'] !== NULL) ? "'{$data['late_rent_reminder']}'" : 'NULL') . ', `duration_of_residency_from`=' . (($data['duration_of_residency_from'] !== '' && $data['duration_of_residency_from'] !== NULL) ? "'{$data['duration_of_residency_from']}'" : 'NULL') . ', `to`=' . (($data['to'] !== '' && $data['to'] !== NULL) ? "'{$data['to']}'" : 'NULL') . ', `reason_for_leaving`=' . (($data['reason_for_leaving'] !== '' && $data['reason_for_leaving'] !== NULL) ? "'{$data['reason_for_leaving']}'" : 'NULL') . ', `notes`=' . (($data['notes'] !== '' && $data['notes'] !== NULL) ? "'{$data['notes']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
+	sql('update `residence_and_rental_history` set       `month`=' . (($data['month'] !== '' && $data['month'] !== NULL) ? "'{$data['month']}'" : 'NULL') . ', `monthly_rent`=' . (($data['monthly_rent'] !== '' && $data['monthly_rent'] !== NULL) ? "'{$data['monthly_rent']}'" : 'NULL') . ', `security_deposit`=' . (($data['security_deposit'] !== '' && $data['security_deposit'] !== NULL) ? "'{$data['security_deposit']}'" : 'NULL') . ', `other_charges`=' . (($data['other_charges'] !== '' && $data['other_charges'] !== NULL) ? "'{$data['other_charges']}'" : 'NULL') . ', `rent_paid`=' . (($data['rent_paid'] !== '' && $data['rent_paid'] !== NULL) ? "'{$data['rent_paid']}'" : 'NULL') . ', `rent_balance`=' . (($data['rent_balance'] !== '' && $data['rent_balance'] !== NULL) ? "'{$data['rent_balance']}'" : 'NULL') . ', `rent_reminder`=' . (($data['rent_reminder'] !== '' && $data['rent_reminder'] !== NULL) ? "'{$data['rent_reminder']}'" : 'NULL') . ', `due_date`=' . (($data['due_date'] !== '' && $data['due_date'] !== NULL) ? "'{$data['due_date']}'" : 'NULL') . ', `late_rent_reminder`=' . (($data['late_rent_reminder'] !== '' && $data['late_rent_reminder'] !== NULL) ? "'{$data['late_rent_reminder']}'" : 'NULL') . ', `duration_of_residency_from`=' . (($data['duration_of_residency_from'] !== '' && $data['duration_of_residency_from'] !== NULL) ? "'{$data['duration_of_residency_from']}'" : 'NULL') . ', `to`=' . (($data['to'] !== '' && $data['to'] !== NULL) ? "'{$data['to']}'" : 'NULL') . ', `reason_for_leaving`=' . (($data['reason_for_leaving'] !== '' && $data['reason_for_leaving'] !== NULL) ? "'{$data['reason_for_leaving']}'" : 'NULL') . ', `notes`=' . (($data['notes'] !== '' && $data['notes'] !== NULL) ? "'{$data['notes']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo '<a href="residence_and_rental_history_view.php?SelectedID='.urlencode($selected_id)."\">{$Translation['< back']}</a>";
@@ -203,6 +204,9 @@ function residence_and_rental_history_form($selected_id = '', $AllowUpdate = 1, 
 	}
 
 	$filterer_tenant = thisOr(undo_magic_quotes($_REQUEST['filterer_tenant']), '');
+	$filterer_monthly_rent = thisOr(undo_magic_quotes($_REQUEST['filterer_monthly_rent']), '');
+	$filterer_security_deposit = thisOr(undo_magic_quotes($_REQUEST['filterer_security_deposit']), '');
+	$filterer_other_charges = thisOr(undo_magic_quotes($_REQUEST['filterer_other_charges']), '');
 
 	// populate filterers, starting from children to grand-parents
 
@@ -218,6 +222,12 @@ function residence_and_rental_history_form($selected_id = '', $AllowUpdate = 1, 
 	$combo_month->DefaultDate = parseMySQLDate('', '');
 	$combo_month->MonthNames = $Translation['month names'];
 	$combo_month->NamePrefix = 'month';
+	// combobox: monthly_rent
+	$combo_monthly_rent = new DataCombo;
+	// combobox: security_deposit
+	$combo_security_deposit = new DataCombo;
+	// combobox: other_charges
+	$combo_other_charges = new DataCombo;
 	// combobox: rent_reminder
 	$combo_rent_reminder = new DateCombo;
 	$combo_rent_reminder->DateFormat = "mdy";
@@ -290,6 +300,9 @@ function residence_and_rental_history_form($selected_id = '', $AllowUpdate = 1, 
 		$row = $hc->xss_clean($row); /* sanitize data */
 		$combo_tenant->SelectedData = $row['tenant'];
 		$combo_month->DefaultDate = $row['month'];
+		$combo_monthly_rent->SelectedData = $row['monthly_rent'];
+		$combo_security_deposit->SelectedData = $row['security_deposit'];
+		$combo_other_charges->SelectedData = $row['other_charges'];
 		$combo_rent_reminder->DefaultDate = $row['rent_reminder'];
 		$combo_due_date->DefaultDate = $row['due_date'];
 		$combo_late_rent_reminder->DefaultDate = $row['late_rent_reminder'];
@@ -297,9 +310,18 @@ function residence_and_rental_history_form($selected_id = '', $AllowUpdate = 1, 
 		$combo_to->DefaultDate = $row['to'];
 	}else{
 		$combo_tenant->SelectedData = $filterer_tenant;
+		$combo_monthly_rent->SelectedData = $filterer_monthly_rent;
+		$combo_security_deposit->SelectedData = $filterer_security_deposit;
+		$combo_other_charges->SelectedData = $filterer_other_charges;
 	}
 	$combo_tenant->HTML = '<span id="tenant-container' . $rnd1 . '"></span><input type="hidden" name="tenant" id="tenant' . $rnd1 . '" value="' . html_attr($combo_tenant->SelectedData) . '">';
 	$combo_tenant->MatchText = '<span id="tenant-container-readonly' . $rnd1 . '"></span><input type="hidden" name="tenant" id="tenant' . $rnd1 . '" value="' . html_attr($combo_tenant->SelectedData) . '">';
+	$combo_monthly_rent->HTML = '<span id="monthly_rent-container' . $rnd1 . '"></span><input type="hidden" name="monthly_rent" id="monthly_rent' . $rnd1 . '" value="' . html_attr($combo_monthly_rent->SelectedData) . '">';
+	$combo_monthly_rent->MatchText = '<span id="monthly_rent-container-readonly' . $rnd1 . '"></span><input type="hidden" name="monthly_rent" id="monthly_rent' . $rnd1 . '" value="' . html_attr($combo_monthly_rent->SelectedData) . '">';
+	$combo_security_deposit->HTML = '<span id="security_deposit-container' . $rnd1 . '"></span><input type="hidden" name="security_deposit" id="security_deposit' . $rnd1 . '" value="' . html_attr($combo_security_deposit->SelectedData) . '">';
+	$combo_security_deposit->MatchText = '<span id="security_deposit-container-readonly' . $rnd1 . '"></span><input type="hidden" name="security_deposit" id="security_deposit' . $rnd1 . '" value="' . html_attr($combo_security_deposit->SelectedData) . '">';
+	$combo_other_charges->HTML = '<span id="other_charges-container' . $rnd1 . '"></span><input type="hidden" name="other_charges" id="other_charges' . $rnd1 . '" value="' . html_attr($combo_other_charges->SelectedData) . '">';
+	$combo_other_charges->MatchText = '<span id="other_charges-container-readonly' . $rnd1 . '"></span><input type="hidden" name="other_charges" id="other_charges' . $rnd1 . '" value="' . html_attr($combo_other_charges->SelectedData) . '">';
 
 	ob_start();
 	?>
@@ -307,9 +329,15 @@ function residence_and_rental_history_form($selected_id = '', $AllowUpdate = 1, 
 	<script>
 		// initial lookup values
 		var current_tenant__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['tenant'] : $filterer_tenant); ?>"};
+		var current_monthly_rent__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['monthly_rent'] : $filterer_monthly_rent); ?>"};
+		var current_security_deposit__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['security_deposit'] : $filterer_security_deposit); ?>"};
+		var current_other_charges__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['other_charges'] : $filterer_other_charges); ?>"};
 
 		jQuery(function() {
 			if(typeof(tenant_reload__RAND__) == 'function') tenant_reload__RAND__();
+			if(typeof(monthly_rent_reload__RAND__) == 'function') monthly_rent_reload__RAND__();
+			if(typeof(security_deposit_reload__RAND__) == 'function') security_deposit_reload__RAND__();
+			if(typeof(other_charges_reload__RAND__) == 'function') other_charges_reload__RAND__();
 		});
 		function tenant_reload__RAND__(){
 		<?php if(($AllowUpdate || $AllowInsert) && !$dvprint){ ?>
@@ -384,6 +412,225 @@ function residence_and_rental_history_form($selected_id = '', $AllowUpdate = 1, 
 		<?php } ?>
 
 		}
+		function monthly_rent_reload__RAND__(){
+		<?php if(($AllowUpdate || $AllowInsert) && !$dvprint){ ?>
+
+			jQuery("#monthly_rent-container__RAND__").select2({
+				/* initial default value */
+				initSelection: function(e, c){
+					jQuery.ajax({
+						url: 'ajax_combo.php',
+						dataType: 'json',
+						data: { id: current_monthly_rent__RAND__.value, t: 'residence_and_rental_history', f: 'monthly_rent' }
+					}).done(function(resp){
+						c({
+							id: resp.results[0].id,
+							text: resp.results[0].text
+						});
+						$j('[name="monthly_rent"]').val(resp.results[0].id);
+						$j('[id=monthly_rent-container-readonly__RAND__]').html('<span id="monthly_rent-match-text">' + resp.results[0].text + '</span>');
+						if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=applicants_and_tenants_view_parent]').hide(); }else{ $j('.btn[id=applicants_and_tenants_view_parent]').show(); }
+
+
+						if(typeof(monthly_rent_update_autofills__RAND__) == 'function') monthly_rent_update_autofills__RAND__();
+					});
+				},
+				width: ($j('fieldset .col-xs-11').width() - 99) + 'px',
+				formatNoMatches: function(term){ return '<?php echo addslashes($Translation['No matches found!']); ?>'; },
+				minimumResultsForSearch: 10,
+				loadMorePadding: 200,
+				ajax: {
+					url: 'ajax_combo.php',
+					dataType: 'json',
+					cache: true,
+					data: function(term, page){ return { s: term, p: page, t: 'residence_and_rental_history', f: 'monthly_rent' }; },
+					results: function(resp, page){ return resp; }
+				}
+			}).on('change', function(e){
+				current_monthly_rent__RAND__.value = e.added.id;
+				current_monthly_rent__RAND__.text = e.added.text;
+				$j('[name="monthly_rent"]').val(e.added.id);
+				if(e.added.id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=applicants_and_tenants_view_parent]').hide(); }else{ $j('.btn[id=applicants_and_tenants_view_parent]').show(); }
+
+
+				if(typeof(monthly_rent_update_autofills__RAND__) == 'function') monthly_rent_update_autofills__RAND__();
+			});
+
+			if(!$j("#monthly_rent-container__RAND__").length){
+				$j.ajax({
+					url: 'ajax_combo.php',
+					dataType: 'json',
+					data: { id: current_monthly_rent__RAND__.value, t: 'residence_and_rental_history', f: 'monthly_rent' }
+				}).done(function(resp){
+					$j('[name="monthly_rent"]').val(resp.results[0].id);
+					$j('[id=monthly_rent-container-readonly__RAND__]').html('<span id="monthly_rent-match-text">' + resp.results[0].text + '</span>');
+					if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=applicants_and_tenants_view_parent]').hide(); }else{ $j('.btn[id=applicants_and_tenants_view_parent]').show(); }
+
+					if(typeof(monthly_rent_update_autofills__RAND__) == 'function') monthly_rent_update_autofills__RAND__();
+				});
+			}
+
+		<?php }else{ ?>
+
+			$j.ajax({
+				url: 'ajax_combo.php',
+				dataType: 'json',
+				data: { id: current_monthly_rent__RAND__.value, t: 'residence_and_rental_history', f: 'monthly_rent' }
+			}).done(function(resp){
+				$j('[id=monthly_rent-container__RAND__], [id=monthly_rent-container-readonly__RAND__]').html('<span id="monthly_rent-match-text">' + resp.results[0].text + '</span>');
+				if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=applicants_and_tenants_view_parent]').hide(); }else{ $j('.btn[id=applicants_and_tenants_view_parent]').show(); }
+
+				if(typeof(monthly_rent_update_autofills__RAND__) == 'function') monthly_rent_update_autofills__RAND__();
+			});
+		<?php } ?>
+
+		}
+		function security_deposit_reload__RAND__(){
+		<?php if(($AllowUpdate || $AllowInsert) && !$dvprint){ ?>
+
+			jQuery("#security_deposit-container__RAND__").select2({
+				/* initial default value */
+				initSelection: function(e, c){
+					jQuery.ajax({
+						url: 'ajax_combo.php',
+						dataType: 'json',
+						data: { id: current_security_deposit__RAND__.value, t: 'residence_and_rental_history', f: 'security_deposit' }
+					}).done(function(resp){
+						c({
+							id: resp.results[0].id,
+							text: resp.results[0].text
+						});
+						$j('[name="security_deposit"]').val(resp.results[0].id);
+						$j('[id=security_deposit-container-readonly__RAND__]').html('<span id="security_deposit-match-text">' + resp.results[0].text + '</span>');
+						if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=applicants_and_tenants_view_parent]').hide(); }else{ $j('.btn[id=applicants_and_tenants_view_parent]').show(); }
+
+
+						if(typeof(security_deposit_update_autofills__RAND__) == 'function') security_deposit_update_autofills__RAND__();
+					});
+				},
+				width: ($j('fieldset .col-xs-11').width() - 99) + 'px',
+				formatNoMatches: function(term){ return '<?php echo addslashes($Translation['No matches found!']); ?>'; },
+				minimumResultsForSearch: 10,
+				loadMorePadding: 200,
+				ajax: {
+					url: 'ajax_combo.php',
+					dataType: 'json',
+					cache: true,
+					data: function(term, page){ return { s: term, p: page, t: 'residence_and_rental_history', f: 'security_deposit' }; },
+					results: function(resp, page){ return resp; }
+				}
+			}).on('change', function(e){
+				current_security_deposit__RAND__.value = e.added.id;
+				current_security_deposit__RAND__.text = e.added.text;
+				$j('[name="security_deposit"]').val(e.added.id);
+				if(e.added.id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=applicants_and_tenants_view_parent]').hide(); }else{ $j('.btn[id=applicants_and_tenants_view_parent]').show(); }
+
+
+				if(typeof(security_deposit_update_autofills__RAND__) == 'function') security_deposit_update_autofills__RAND__();
+			});
+
+			if(!$j("#security_deposit-container__RAND__").length){
+				$j.ajax({
+					url: 'ajax_combo.php',
+					dataType: 'json',
+					data: { id: current_security_deposit__RAND__.value, t: 'residence_and_rental_history', f: 'security_deposit' }
+				}).done(function(resp){
+					$j('[name="security_deposit"]').val(resp.results[0].id);
+					$j('[id=security_deposit-container-readonly__RAND__]').html('<span id="security_deposit-match-text">' + resp.results[0].text + '</span>');
+					if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=applicants_and_tenants_view_parent]').hide(); }else{ $j('.btn[id=applicants_and_tenants_view_parent]').show(); }
+
+					if(typeof(security_deposit_update_autofills__RAND__) == 'function') security_deposit_update_autofills__RAND__();
+				});
+			}
+
+		<?php }else{ ?>
+
+			$j.ajax({
+				url: 'ajax_combo.php',
+				dataType: 'json',
+				data: { id: current_security_deposit__RAND__.value, t: 'residence_and_rental_history', f: 'security_deposit' }
+			}).done(function(resp){
+				$j('[id=security_deposit-container__RAND__], [id=security_deposit-container-readonly__RAND__]').html('<span id="security_deposit-match-text">' + resp.results[0].text + '</span>');
+				if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=applicants_and_tenants_view_parent]').hide(); }else{ $j('.btn[id=applicants_and_tenants_view_parent]').show(); }
+
+				if(typeof(security_deposit_update_autofills__RAND__) == 'function') security_deposit_update_autofills__RAND__();
+			});
+		<?php } ?>
+
+		}
+		function other_charges_reload__RAND__(){
+		<?php if(($AllowUpdate || $AllowInsert) && !$dvprint){ ?>
+
+			jQuery("#other_charges-container__RAND__").select2({
+				/* initial default value */
+				initSelection: function(e, c){
+					jQuery.ajax({
+						url: 'ajax_combo.php',
+						dataType: 'json',
+						data: { id: current_other_charges__RAND__.value, t: 'residence_and_rental_history', f: 'other_charges' }
+					}).done(function(resp){
+						c({
+							id: resp.results[0].id,
+							text: resp.results[0].text
+						});
+						$j('[name="other_charges"]').val(resp.results[0].id);
+						$j('[id=other_charges-container-readonly__RAND__]').html('<span id="other_charges-match-text">' + resp.results[0].text + '</span>');
+						if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=applicants_and_tenants_view_parent]').hide(); }else{ $j('.btn[id=applicants_and_tenants_view_parent]').show(); }
+
+
+						if(typeof(other_charges_update_autofills__RAND__) == 'function') other_charges_update_autofills__RAND__();
+					});
+				},
+				width: ($j('fieldset .col-xs-11').width() - 99) + 'px',
+				formatNoMatches: function(term){ return '<?php echo addslashes($Translation['No matches found!']); ?>'; },
+				minimumResultsForSearch: 10,
+				loadMorePadding: 200,
+				ajax: {
+					url: 'ajax_combo.php',
+					dataType: 'json',
+					cache: true,
+					data: function(term, page){ return { s: term, p: page, t: 'residence_and_rental_history', f: 'other_charges' }; },
+					results: function(resp, page){ return resp; }
+				}
+			}).on('change', function(e){
+				current_other_charges__RAND__.value = e.added.id;
+				current_other_charges__RAND__.text = e.added.text;
+				$j('[name="other_charges"]').val(e.added.id);
+				if(e.added.id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=applicants_and_tenants_view_parent]').hide(); }else{ $j('.btn[id=applicants_and_tenants_view_parent]').show(); }
+
+
+				if(typeof(other_charges_update_autofills__RAND__) == 'function') other_charges_update_autofills__RAND__();
+			});
+
+			if(!$j("#other_charges-container__RAND__").length){
+				$j.ajax({
+					url: 'ajax_combo.php',
+					dataType: 'json',
+					data: { id: current_other_charges__RAND__.value, t: 'residence_and_rental_history', f: 'other_charges' }
+				}).done(function(resp){
+					$j('[name="other_charges"]').val(resp.results[0].id);
+					$j('[id=other_charges-container-readonly__RAND__]').html('<span id="other_charges-match-text">' + resp.results[0].text + '</span>');
+					if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=applicants_and_tenants_view_parent]').hide(); }else{ $j('.btn[id=applicants_and_tenants_view_parent]').show(); }
+
+					if(typeof(other_charges_update_autofills__RAND__) == 'function') other_charges_update_autofills__RAND__();
+				});
+			}
+
+		<?php }else{ ?>
+
+			$j.ajax({
+				url: 'ajax_combo.php',
+				dataType: 'json',
+				data: { id: current_other_charges__RAND__.value, t: 'residence_and_rental_history', f: 'other_charges' }
+			}).done(function(resp){
+				$j('[id=other_charges-container__RAND__], [id=other_charges-container-readonly__RAND__]').html('<span id="other_charges-match-text">' + resp.results[0].text + '</span>');
+				if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=applicants_and_tenants_view_parent]').hide(); }else{ $j('.btn[id=applicants_and_tenants_view_parent]').show(); }
+
+				if(typeof(other_charges_update_autofills__RAND__) == 'function') other_charges_update_autofills__RAND__();
+			});
+		<?php } ?>
+
+		}
 	</script>
 	<?php
 
@@ -440,13 +687,14 @@ function residence_and_rental_history_form($selected_id = '', $AllowUpdate = 1, 
 
 	// set records to read only if user can't insert new records and can't edit current record
 	if(($selected_id && !$AllowUpdate && !$AllowInsert) || (!$selected_id && !$AllowInsert)){
-		$jsReadOnly .= "\tjQuery('#tenant').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
-		$jsReadOnly .= "\tjQuery('#tenant_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
 		$jsReadOnly .= "\tjQuery('#month').prop('readonly', true);\n";
 		$jsReadOnly .= "\tjQuery('#monthDay, #monthMonth, #monthYear').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
-		$jsReadOnly .= "\tjQuery('#monthly_rent').replaceWith('<div class=\"form-control-static\" id=\"monthly_rent\">' + (jQuery('#monthly_rent').val() || '') + '</div>');\n";
-		$jsReadOnly .= "\tjQuery('#security_deposit').replaceWith('<div class=\"form-control-static\" id=\"security_deposit\">' + (jQuery('#security_deposit').val() || '') + '</div>');\n";
-		$jsReadOnly .= "\tjQuery('#other_charges').replaceWith('<div class=\"form-control-static\" id=\"other_charges\">' + (jQuery('#other_charges').val() || '') + '</div>');\n";
+		$jsReadOnly .= "\tjQuery('#monthly_rent').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
+		$jsReadOnly .= "\tjQuery('#monthly_rent_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
+		$jsReadOnly .= "\tjQuery('#security_deposit').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
+		$jsReadOnly .= "\tjQuery('#security_deposit_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
+		$jsReadOnly .= "\tjQuery('#other_charges').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
+		$jsReadOnly .= "\tjQuery('#other_charges_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
 		$jsReadOnly .= "\tjQuery('#rent_paid').replaceWith('<div class=\"form-control-static\" id=\"rent_paid\">' + (jQuery('#rent_paid').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#rent_balance').replaceWith('<div class=\"form-control-static\" id=\"rent_balance\">' + (jQuery('#rent_balance').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#rent_reminder').prop('readonly', true);\n";
@@ -474,6 +722,15 @@ function residence_and_rental_history_form($selected_id = '', $AllowUpdate = 1, 
 	$templateCode=str_replace('<%%URLCOMBOTEXT(tenant)%%>', urlencode($combo_tenant->MatchText), $templateCode);
 	$templateCode=str_replace('<%%COMBO(month)%%>', ($selected_id && !$arrPerm[3] ? '<div class="form-control-static">' . $combo_month->GetHTML(true) . '</div>' : $combo_month->GetHTML()), $templateCode);
 	$templateCode=str_replace('<%%COMBOTEXT(month)%%>', $combo_month->GetHTML(true), $templateCode);
+	$templateCode=str_replace('<%%COMBO(monthly_rent)%%>', $combo_monthly_rent->HTML, $templateCode);
+	$templateCode=str_replace('<%%COMBOTEXT(monthly_rent)%%>', $combo_monthly_rent->MatchText, $templateCode);
+	$templateCode=str_replace('<%%URLCOMBOTEXT(monthly_rent)%%>', urlencode($combo_monthly_rent->MatchText), $templateCode);
+	$templateCode=str_replace('<%%COMBO(security_deposit)%%>', $combo_security_deposit->HTML, $templateCode);
+	$templateCode=str_replace('<%%COMBOTEXT(security_deposit)%%>', $combo_security_deposit->MatchText, $templateCode);
+	$templateCode=str_replace('<%%URLCOMBOTEXT(security_deposit)%%>', urlencode($combo_security_deposit->MatchText), $templateCode);
+	$templateCode=str_replace('<%%COMBO(other_charges)%%>', $combo_other_charges->HTML, $templateCode);
+	$templateCode=str_replace('<%%COMBOTEXT(other_charges)%%>', $combo_other_charges->MatchText, $templateCode);
+	$templateCode=str_replace('<%%URLCOMBOTEXT(other_charges)%%>', urlencode($combo_other_charges->MatchText), $templateCode);
 	$templateCode=str_replace('<%%COMBO(rent_reminder)%%>', ($selected_id && !$arrPerm[3] ? '<div class="form-control-static">' . $combo_rent_reminder->GetHTML(true) . '</div>' : $combo_rent_reminder->GetHTML()), $templateCode);
 	$templateCode=str_replace('<%%COMBOTEXT(rent_reminder)%%>', $combo_rent_reminder->GetHTML(true), $templateCode);
 	$templateCode=str_replace('<%%COMBO(due_date)%%>', ($selected_id && !$arrPerm[3] ? '<div class="form-control-static">' . $combo_due_date->GetHTML(true) . '</div>' : $combo_due_date->GetHTML()), $templateCode);
@@ -486,7 +743,7 @@ function residence_and_rental_history_form($selected_id = '', $AllowUpdate = 1, 
 	$templateCode=str_replace('<%%COMBOTEXT(to)%%>', $combo_to->GetHTML(true), $templateCode);
 
 	/* lookup fields array: 'lookup field name' => array('parent table name', 'lookup field caption') */
-	$lookup_fields = array(  'tenant' => array('applicants_and_tenants', 'Tenant'));
+	$lookup_fields = array(  'tenant' => array('applicants_and_tenants', 'Tenant'), 'monthly_rent' => array('applicants_and_tenants', 'Monthly rent'), 'security_deposit' => array('applicants_and_tenants', 'Security Deposit'), 'other_charges' => array('applicants_and_tenants', 'Other Charges'));
 	foreach($lookup_fields as $luf => $ptfc){
 		$pt_perm = getTablePermissions($ptfc[0]);
 
@@ -629,6 +886,9 @@ function residence_and_rental_history_form($selected_id = '', $AllowUpdate = 1, 
 	$templateCode .= $lookups;
 
 	// handle enforced parent values for read-only lookup fields
+	if( $_REQUEST['FilterField'][1]=='2' && $_REQUEST['FilterOperator'][1]=='<=>'){
+		$templateCode.="\n<input type=hidden name=tenant value=\"" . html_attr((get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]))."\">\n";
+	}
 
 	// don't include blank images in lightbox gallery
 	$templateCode = preg_replace('/blank.gif" data-lightbox=".*?"/', 'blank.gif"', $templateCode);

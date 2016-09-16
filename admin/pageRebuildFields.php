@@ -29,9 +29,9 @@
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),
 			'tenant' => array('appgini' => 'INT unsigned '),
 			'month' => array('appgini' => 'DATE '),
-			'monthly_rent' => array('appgini' => 'DECIMAL(10,2) '),
-			'security_deposit' => array('appgini' => 'DECIMAL(10,2) '),
-			'other_charges' => array('appgini' => 'DECIMAL(10,2) '),
+			'monthly_rent' => array('appgini' => 'INT unsigned '),
+			'security_deposit' => array('appgini' => 'INT unsigned '),
+			'other_charges' => array('appgini' => 'INT unsigned '),
 			'rent_paid' => array('appgini' => 'DECIMAL(10,2) '),
 			'rent_balance' => array('appgini' => 'DECIMAL(10,2) '),
 			'rent_reminder' => array('appgini' => 'DATE '),
@@ -70,6 +70,9 @@
 			'status' => array('appgini' => 'VARCHAR(40) not null default \'Applicant\' '),
 			'property' => array('appgini' => 'INT unsigned '),
 			'unit' => array('appgini' => 'INT unsigned '),
+			'monthly_rent' => array('appgini' => 'INT unsigned '),
+			'security_deposit' => array('appgini' => 'INT unsigned '),
+			'other_charges' => array('appgini' => 'INT unsigned '),
 			'current_month_rent_status' => array('appgini' => 'INT unsigned ')
 		),
 		'properties' => array(   
@@ -91,8 +94,9 @@
 			'photo' => array('appgini' => 'VARCHAR(40) '),
 			'status' => array('appgini' => 'VARCHAR(40) not null '),
 			'features' => array('appgini' => 'TEXT '),
-			'rental_amount' => array('appgini' => 'DECIMAL(6,2) '),
-			'deposit_amount' => array('appgini' => 'DECIMAL(6,2) '),
+			'rental_amount' => array('appgini' => 'DECIMAL(10,2) '),
+			'deposit_amount' => array('appgini' => 'DECIMAL(10,2) '),
+			'other_charges' => array('appgini' => 'DECIMAL(10,2) '),
 			'description' => array('appgini' => 'TEXT ')
 		),
 		'rental_owners' => array(   
