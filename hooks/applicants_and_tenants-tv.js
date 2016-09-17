@@ -178,6 +178,10 @@ function tenant_rent_record(table_name, ids){
 	populate_new_owner_dropdown();	
 }
 
+function tenant_id(table_name, ids){
+	alert('selected table = ' + table_name + 'selected ids = ' + ids );
+}
+
 /*function test_record(table_name, ids){
 	//alert('selected table = ' + table_name + 'selected ids = ' + ids );
 	var url = 'getTenantsBalance.php?table=' + table_name;

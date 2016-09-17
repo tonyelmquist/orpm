@@ -30,11 +30,11 @@ function applicants_and_tenants_insert(){
 		if($data['property'] == empty_lookup_value){ $data['property'] = ''; }
 	$data['unit'] = makeSafe($_REQUEST['unit']);
 		if($data['unit'] == empty_lookup_value){ $data['unit'] = ''; }
-	$data['monthly_rent'] = makeSafe($_REQUEST['monthly_rent']);
+	$data['monthly_rent'] = makeSafe($_REQUEST['unit']);
 		if($data['monthly_rent'] == empty_lookup_value){ $data['monthly_rent'] = ''; }
-	$data['security_deposit'] = makeSafe($_REQUEST['security_deposit']);
+	$data['security_deposit'] = makeSafe($_REQUEST['unit']);
 		if($data['security_deposit'] == empty_lookup_value){ $data['security_deposit'] = ''; }
-	$data['other_charges'] = makeSafe($_REQUEST['other_charges']);
+	$data['other_charges'] = makeSafe($_REQUEST['unit']);
 		if($data['other_charges'] == empty_lookup_value){ $data['other_charges'] = ''; }
 	if($data['status'] == '') $data['status'] = "Applicant";
 	if($data['status']== ''){
@@ -136,63 +136,6 @@ function applicants_and_tenants_delete($selected_id, $AllowDeleteOfParents=false
 		return $RetMsg;
 	}
 
-	// child table: residence_and_rental_history
-	$res = sql("select `id` from `applicants_and_tenants` where `id`='$selected_id'", $eo);
-	$id = db_fetch_row($res);
-	$rires = sql("select count(1) from `residence_and_rental_history` where `monthly_rent`='".addslashes($id[0])."'", $eo);
-	$rirow = db_fetch_row($rires);
-	if($rirow[0] && !$AllowDeleteOfParents && !$skipChecks){
-		$RetMsg = $Translation["couldn't delete"];
-		$RetMsg = str_replace("<RelatedRecords>", $rirow[0], $RetMsg);
-		$RetMsg = str_replace("<TableName>", "residence_and_rental_history", $RetMsg);
-		return $RetMsg;
-	}elseif($rirow[0] && $AllowDeleteOfParents && !$skipChecks){
-		$RetMsg = $Translation["confirm delete"];
-		$RetMsg = str_replace("<RelatedRecords>", $rirow[0], $RetMsg);
-		$RetMsg = str_replace("<TableName>", "residence_and_rental_history", $RetMsg);
-		$RetMsg = str_replace("<Delete>", "<input type=\"button\" class=\"button\" value=\"".$Translation['yes']."\" onClick=\"window.location='applicants_and_tenants_view.php?SelectedID=".urlencode($selected_id)."&delete_x=1&confirmed=1';\">", $RetMsg);
-		$RetMsg = str_replace("<Cancel>", "<input type=\"button\" class=\"button\" value=\"".$Translation['no']."\" onClick=\"window.location='applicants_and_tenants_view.php?SelectedID=".urlencode($selected_id)."';\">", $RetMsg);
-		return $RetMsg;
-	}
-
-	// child table: residence_and_rental_history
-	$res = sql("select `id` from `applicants_and_tenants` where `id`='$selected_id'", $eo);
-	$id = db_fetch_row($res);
-	$rires = sql("select count(1) from `residence_and_rental_history` where `security_deposit`='".addslashes($id[0])."'", $eo);
-	$rirow = db_fetch_row($rires);
-	if($rirow[0] && !$AllowDeleteOfParents && !$skipChecks){
-		$RetMsg = $Translation["couldn't delete"];
-		$RetMsg = str_replace("<RelatedRecords>", $rirow[0], $RetMsg);
-		$RetMsg = str_replace("<TableName>", "residence_and_rental_history", $RetMsg);
-		return $RetMsg;
-	}elseif($rirow[0] && $AllowDeleteOfParents && !$skipChecks){
-		$RetMsg = $Translation["confirm delete"];
-		$RetMsg = str_replace("<RelatedRecords>", $rirow[0], $RetMsg);
-		$RetMsg = str_replace("<TableName>", "residence_and_rental_history", $RetMsg);
-		$RetMsg = str_replace("<Delete>", "<input type=\"button\" class=\"button\" value=\"".$Translation['yes']."\" onClick=\"window.location='applicants_and_tenants_view.php?SelectedID=".urlencode($selected_id)."&delete_x=1&confirmed=1';\">", $RetMsg);
-		$RetMsg = str_replace("<Cancel>", "<input type=\"button\" class=\"button\" value=\"".$Translation['no']."\" onClick=\"window.location='applicants_and_tenants_view.php?SelectedID=".urlencode($selected_id)."';\">", $RetMsg);
-		return $RetMsg;
-	}
-
-	// child table: residence_and_rental_history
-	$res = sql("select `id` from `applicants_and_tenants` where `id`='$selected_id'", $eo);
-	$id = db_fetch_row($res);
-	$rires = sql("select count(1) from `residence_and_rental_history` where `other_charges`='".addslashes($id[0])."'", $eo);
-	$rirow = db_fetch_row($rires);
-	if($rirow[0] && !$AllowDeleteOfParents && !$skipChecks){
-		$RetMsg = $Translation["couldn't delete"];
-		$RetMsg = str_replace("<RelatedRecords>", $rirow[0], $RetMsg);
-		$RetMsg = str_replace("<TableName>", "residence_and_rental_history", $RetMsg);
-		return $RetMsg;
-	}elseif($rirow[0] && $AllowDeleteOfParents && !$skipChecks){
-		$RetMsg = $Translation["confirm delete"];
-		$RetMsg = str_replace("<RelatedRecords>", $rirow[0], $RetMsg);
-		$RetMsg = str_replace("<TableName>", "residence_and_rental_history", $RetMsg);
-		$RetMsg = str_replace("<Delete>", "<input type=\"button\" class=\"button\" value=\"".$Translation['yes']."\" onClick=\"window.location='applicants_and_tenants_view.php?SelectedID=".urlencode($selected_id)."&delete_x=1&confirmed=1';\">", $RetMsg);
-		$RetMsg = str_replace("<Cancel>", "<input type=\"button\" class=\"button\" value=\"".$Translation['no']."\" onClick=\"window.location='applicants_and_tenants_view.php?SelectedID=".urlencode($selected_id)."';\">", $RetMsg);
-		return $RetMsg;
-	}
-
 	// child table: employment_and_income_history
 	$res = sql("select `id` from `applicants_and_tenants` where `id`='$selected_id'", $eo);
 	$id = db_fetch_row($res);
@@ -277,11 +220,11 @@ function applicants_and_tenants_update($selected_id){
 		if($data['property'] == empty_lookup_value){ $data['property'] = ''; }
 	$data['unit'] = makeSafe($_REQUEST['unit']);
 		if($data['unit'] == empty_lookup_value){ $data['unit'] = ''; }
-	$data['monthly_rent'] = makeSafe($_REQUEST['monthly_rent']);
+	$data['monthly_rent'] = makeSafe($_REQUEST['unit']);
 		if($data['monthly_rent'] == empty_lookup_value){ $data['monthly_rent'] = ''; }
-	$data['security_deposit'] = makeSafe($_REQUEST['security_deposit']);
+	$data['security_deposit'] = makeSafe($_REQUEST['unit']);
 		if($data['security_deposit'] == empty_lookup_value){ $data['security_deposit'] = ''; }
-	$data['other_charges'] = makeSafe($_REQUEST['other_charges']);
+	$data['other_charges'] = makeSafe($_REQUEST['unit']);
 		if($data['other_charges'] == empty_lookup_value){ $data['other_charges'] = ''; }
 	$data['selectedID']=makeSafe($selected_id);
 
@@ -336,9 +279,6 @@ function applicants_and_tenants_form($selected_id = '', $AllowUpdate = 1, $Allow
 
 	$filterer_property = thisOr(undo_magic_quotes($_REQUEST['filterer_property']), '');
 	$filterer_unit = thisOr(undo_magic_quotes($_REQUEST['filterer_unit']), '');
-	$filterer_monthly_rent = thisOr(undo_magic_quotes($_REQUEST['filterer_monthly_rent']), '');
-	$filterer_security_deposit = thisOr(undo_magic_quotes($_REQUEST['filterer_security_deposit']), '');
-	$filterer_other_charges = thisOr(undo_magic_quotes($_REQUEST['filterer_other_charges']), '');
 
 	// populate filterers, starting from children to grand-parents
 
@@ -372,12 +312,6 @@ function applicants_and_tenants_form($selected_id = '', $AllowUpdate = 1, $Allow
 	$combo_property = new DataCombo;
 	// combobox: unit
 	$combo_unit = new DataCombo;
-	// combobox: monthly_rent
-	$combo_monthly_rent = new DataCombo;
-	// combobox: security_deposit
-	$combo_security_deposit = new DataCombo;
-	// combobox: other_charges
-	$combo_other_charges = new DataCombo;
 
 	if($selected_id){
 		// mm: check member permissions
@@ -412,28 +346,16 @@ function applicants_and_tenants_form($selected_id = '', $AllowUpdate = 1, $Allow
 		$combo_status->SelectedData = $row['status'];
 		$combo_property->SelectedData = $row['property'];
 		$combo_unit->SelectedData = $row['unit'];
-		$combo_monthly_rent->SelectedData = $row['monthly_rent'];
-		$combo_security_deposit->SelectedData = $row['security_deposit'];
-		$combo_other_charges->SelectedData = $row['other_charges'];
 	}else{
 		$combo_status->SelectedText = ( $_REQUEST['FilterField'][1]=='7' && $_REQUEST['FilterOperator'][1]=='<=>' ? (get_magic_quotes_gpc() ? stripslashes($_REQUEST['FilterValue'][1]) : $_REQUEST['FilterValue'][1]) : "Applicant");
 		$combo_property->SelectedData = $filterer_property;
 		$combo_unit->SelectedData = $filterer_unit;
-		$combo_monthly_rent->SelectedData = $filterer_monthly_rent;
-		$combo_security_deposit->SelectedData = $filterer_security_deposit;
-		$combo_other_charges->SelectedData = $filterer_other_charges;
 	}
 	$combo_status->Render();
 	$combo_property->HTML = '<span id="property-container' . $rnd1 . '"></span><input type="hidden" name="property" id="property' . $rnd1 . '" value="' . html_attr($combo_property->SelectedData) . '">';
 	$combo_property->MatchText = '<span id="property-container-readonly' . $rnd1 . '"></span><input type="hidden" name="property" id="property' . $rnd1 . '" value="' . html_attr($combo_property->SelectedData) . '">';
 	$combo_unit->HTML = '<span id="unit-container' . $rnd1 . '"></span><input type="hidden" name="unit" id="unit' . $rnd1 . '" value="' . html_attr($combo_unit->SelectedData) . '">';
 	$combo_unit->MatchText = '<span id="unit-container-readonly' . $rnd1 . '"></span><input type="hidden" name="unit" id="unit' . $rnd1 . '" value="' . html_attr($combo_unit->SelectedData) . '">';
-	$combo_monthly_rent->HTML = '<span id="monthly_rent-container' . $rnd1 . '"></span><input type="hidden" name="monthly_rent" id="monthly_rent' . $rnd1 . '" value="' . html_attr($combo_monthly_rent->SelectedData) . '">';
-	$combo_monthly_rent->MatchText = '<span id="monthly_rent-container-readonly' . $rnd1 . '"></span><input type="hidden" name="monthly_rent" id="monthly_rent' . $rnd1 . '" value="' . html_attr($combo_monthly_rent->SelectedData) . '">';
-	$combo_security_deposit->HTML = '<span id="security_deposit-container' . $rnd1 . '"></span><input type="hidden" name="security_deposit" id="security_deposit' . $rnd1 . '" value="' . html_attr($combo_security_deposit->SelectedData) . '">';
-	$combo_security_deposit->MatchText = '<span id="security_deposit-container-readonly' . $rnd1 . '"></span><input type="hidden" name="security_deposit" id="security_deposit' . $rnd1 . '" value="' . html_attr($combo_security_deposit->SelectedData) . '">';
-	$combo_other_charges->HTML = '<span id="other_charges-container' . $rnd1 . '"></span><input type="hidden" name="other_charges" id="other_charges' . $rnd1 . '" value="' . html_attr($combo_other_charges->SelectedData) . '">';
-	$combo_other_charges->MatchText = '<span id="other_charges-container-readonly' . $rnd1 . '"></span><input type="hidden" name="other_charges" id="other_charges' . $rnd1 . '" value="' . html_attr($combo_other_charges->SelectedData) . '">';
 
 	ob_start();
 	?>
@@ -442,16 +364,10 @@ function applicants_and_tenants_form($selected_id = '', $AllowUpdate = 1, $Allow
 		// initial lookup values
 		var current_property__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['property'] : $filterer_property); ?>"};
 		var current_unit__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['unit'] : $filterer_unit); ?>"};
-		var current_monthly_rent__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['monthly_rent'] : $filterer_monthly_rent); ?>"};
-		var current_security_deposit__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['security_deposit'] : $filterer_security_deposit); ?>"};
-		var current_other_charges__RAND__ = { text: "", value: "<?php echo addslashes($selected_id ? $urow['other_charges'] : $filterer_other_charges); ?>"};
 
 		jQuery(function() {
 			if(typeof(property_reload__RAND__) == 'function') property_reload__RAND__();
 			if(typeof(unit_reload__RAND__) == 'function') unit_reload__RAND__();
-			if(typeof(monthly_rent_reload__RAND__) == 'function') monthly_rent_reload__RAND__();
-			if(typeof(security_deposit_reload__RAND__) == 'function') security_deposit_reload__RAND__();
-			if(typeof(other_charges_reload__RAND__) == 'function') other_charges_reload__RAND__();
 		});
 		function property_reload__RAND__(){
 		<?php if(($AllowUpdate || $AllowInsert) && !$dvprint){ ?>
@@ -470,7 +386,7 @@ function applicants_and_tenants_form($selected_id = '', $AllowUpdate = 1, $Allow
 						});
 						$j('[name="property"]').val(resp.results[0].id);
 						$j('[id=property-container-readonly__RAND__]').html('<span id="property-match-text">' + resp.results[0].text + '</span>');
-						if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=units_view_parent]').hide(); }else{ $j('.btn[id=units_view_parent]').show(); }
+						if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=properties_view_parent]').hide(); }else{ $j('.btn[id=properties_view_parent]').show(); }
 
 
 						if(typeof(property_update_autofills__RAND__) == 'function') property_update_autofills__RAND__();
@@ -491,7 +407,7 @@ function applicants_and_tenants_form($selected_id = '', $AllowUpdate = 1, $Allow
 				current_property__RAND__.value = e.added.id;
 				current_property__RAND__.text = e.added.text;
 				$j('[name="property"]').val(e.added.id);
-				if(e.added.id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=units_view_parent]').hide(); }else{ $j('.btn[id=units_view_parent]').show(); }
+				if(e.added.id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=properties_view_parent]').hide(); }else{ $j('.btn[id=properties_view_parent]').show(); }
 
 
 				if(typeof(property_update_autofills__RAND__) == 'function') property_update_autofills__RAND__();
@@ -505,7 +421,7 @@ function applicants_and_tenants_form($selected_id = '', $AllowUpdate = 1, $Allow
 				}).done(function(resp){
 					$j('[name="property"]').val(resp.results[0].id);
 					$j('[id=property-container-readonly__RAND__]').html('<span id="property-match-text">' + resp.results[0].text + '</span>');
-					if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=units_view_parent]').hide(); }else{ $j('.btn[id=units_view_parent]').show(); }
+					if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=properties_view_parent]').hide(); }else{ $j('.btn[id=properties_view_parent]').show(); }
 
 					if(typeof(property_update_autofills__RAND__) == 'function') property_update_autofills__RAND__();
 				});
@@ -519,7 +435,7 @@ function applicants_and_tenants_form($selected_id = '', $AllowUpdate = 1, $Allow
 				data: { id: current_property__RAND__.value, t: 'applicants_and_tenants', f: 'property' }
 			}).done(function(resp){
 				$j('[id=property-container__RAND__], [id=property-container-readonly__RAND__]').html('<span id="property-match-text">' + resp.results[0].text + '</span>');
-				if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=units_view_parent]').hide(); }else{ $j('.btn[id=units_view_parent]').show(); }
+				if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=properties_view_parent]').hide(); }else{ $j('.btn[id=properties_view_parent]').show(); }
 
 				if(typeof(property_update_autofills__RAND__) == 'function') property_update_autofills__RAND__();
 			});
@@ -599,225 +515,6 @@ function applicants_and_tenants_form($selected_id = '', $AllowUpdate = 1, $Allow
 		<?php } ?>
 
 		}
-		function monthly_rent_reload__RAND__(){
-		<?php if(($AllowUpdate || $AllowInsert) && !$dvprint){ ?>
-
-			jQuery("#monthly_rent-container__RAND__").select2({
-				/* initial default value */
-				initSelection: function(e, c){
-					jQuery.ajax({
-						url: 'ajax_combo.php',
-						dataType: 'json',
-						data: { id: current_monthly_rent__RAND__.value, t: 'applicants_and_tenants', f: 'monthly_rent' }
-					}).done(function(resp){
-						c({
-							id: resp.results[0].id,
-							text: resp.results[0].text
-						});
-						$j('[name="monthly_rent"]').val(resp.results[0].id);
-						$j('[id=monthly_rent-container-readonly__RAND__]').html('<span id="monthly_rent-match-text">' + resp.results[0].text + '</span>');
-						if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=units_view_parent]').hide(); }else{ $j('.btn[id=units_view_parent]').show(); }
-
-
-						if(typeof(monthly_rent_update_autofills__RAND__) == 'function') monthly_rent_update_autofills__RAND__();
-					});
-				},
-				width: ($j('fieldset .col-xs-11').width() - 99) + 'px',
-				formatNoMatches: function(term){ return '<?php echo addslashes($Translation['No matches found!']); ?>'; },
-				minimumResultsForSearch: 10,
-				loadMorePadding: 200,
-				ajax: {
-					url: 'ajax_combo.php',
-					dataType: 'json',
-					cache: true,
-					data: function(term, page){ return { s: term, p: page, t: 'applicants_and_tenants', f: 'monthly_rent' }; },
-					results: function(resp, page){ return resp; }
-				}
-			}).on('change', function(e){
-				current_monthly_rent__RAND__.value = e.added.id;
-				current_monthly_rent__RAND__.text = e.added.text;
-				$j('[name="monthly_rent"]').val(e.added.id);
-				if(e.added.id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=units_view_parent]').hide(); }else{ $j('.btn[id=units_view_parent]').show(); }
-
-
-				if(typeof(monthly_rent_update_autofills__RAND__) == 'function') monthly_rent_update_autofills__RAND__();
-			});
-
-			if(!$j("#monthly_rent-container__RAND__").length){
-				$j.ajax({
-					url: 'ajax_combo.php',
-					dataType: 'json',
-					data: { id: current_monthly_rent__RAND__.value, t: 'applicants_and_tenants', f: 'monthly_rent' }
-				}).done(function(resp){
-					$j('[name="monthly_rent"]').val(resp.results[0].id);
-					$j('[id=monthly_rent-container-readonly__RAND__]').html('<span id="monthly_rent-match-text">' + resp.results[0].text + '</span>');
-					if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=units_view_parent]').hide(); }else{ $j('.btn[id=units_view_parent]').show(); }
-
-					if(typeof(monthly_rent_update_autofills__RAND__) == 'function') monthly_rent_update_autofills__RAND__();
-				});
-			}
-
-		<?php }else{ ?>
-
-			$j.ajax({
-				url: 'ajax_combo.php',
-				dataType: 'json',
-				data: { id: current_monthly_rent__RAND__.value, t: 'applicants_and_tenants', f: 'monthly_rent' }
-			}).done(function(resp){
-				$j('[id=monthly_rent-container__RAND__], [id=monthly_rent-container-readonly__RAND__]').html('<span id="monthly_rent-match-text">' + resp.results[0].text + '</span>');
-				if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=units_view_parent]').hide(); }else{ $j('.btn[id=units_view_parent]').show(); }
-
-				if(typeof(monthly_rent_update_autofills__RAND__) == 'function') monthly_rent_update_autofills__RAND__();
-			});
-		<?php } ?>
-
-		}
-		function security_deposit_reload__RAND__(){
-		<?php if(($AllowUpdate || $AllowInsert) && !$dvprint){ ?>
-
-			jQuery("#security_deposit-container__RAND__").select2({
-				/* initial default value */
-				initSelection: function(e, c){
-					jQuery.ajax({
-						url: 'ajax_combo.php',
-						dataType: 'json',
-						data: { id: current_security_deposit__RAND__.value, t: 'applicants_and_tenants', f: 'security_deposit' }
-					}).done(function(resp){
-						c({
-							id: resp.results[0].id,
-							text: resp.results[0].text
-						});
-						$j('[name="security_deposit"]').val(resp.results[0].id);
-						$j('[id=security_deposit-container-readonly__RAND__]').html('<span id="security_deposit-match-text">' + resp.results[0].text + '</span>');
-						if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=units_view_parent]').hide(); }else{ $j('.btn[id=units_view_parent]').show(); }
-
-
-						if(typeof(security_deposit_update_autofills__RAND__) == 'function') security_deposit_update_autofills__RAND__();
-					});
-				},
-				width: ($j('fieldset .col-xs-11').width() - 99) + 'px',
-				formatNoMatches: function(term){ return '<?php echo addslashes($Translation['No matches found!']); ?>'; },
-				minimumResultsForSearch: 10,
-				loadMorePadding: 200,
-				ajax: {
-					url: 'ajax_combo.php',
-					dataType: 'json',
-					cache: true,
-					data: function(term, page){ return { s: term, p: page, t: 'applicants_and_tenants', f: 'security_deposit' }; },
-					results: function(resp, page){ return resp; }
-				}
-			}).on('change', function(e){
-				current_security_deposit__RAND__.value = e.added.id;
-				current_security_deposit__RAND__.text = e.added.text;
-				$j('[name="security_deposit"]').val(e.added.id);
-				if(e.added.id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=units_view_parent]').hide(); }else{ $j('.btn[id=units_view_parent]').show(); }
-
-
-				if(typeof(security_deposit_update_autofills__RAND__) == 'function') security_deposit_update_autofills__RAND__();
-			});
-
-			if(!$j("#security_deposit-container__RAND__").length){
-				$j.ajax({
-					url: 'ajax_combo.php',
-					dataType: 'json',
-					data: { id: current_security_deposit__RAND__.value, t: 'applicants_and_tenants', f: 'security_deposit' }
-				}).done(function(resp){
-					$j('[name="security_deposit"]').val(resp.results[0].id);
-					$j('[id=security_deposit-container-readonly__RAND__]').html('<span id="security_deposit-match-text">' + resp.results[0].text + '</span>');
-					if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=units_view_parent]').hide(); }else{ $j('.btn[id=units_view_parent]').show(); }
-
-					if(typeof(security_deposit_update_autofills__RAND__) == 'function') security_deposit_update_autofills__RAND__();
-				});
-			}
-
-		<?php }else{ ?>
-
-			$j.ajax({
-				url: 'ajax_combo.php',
-				dataType: 'json',
-				data: { id: current_security_deposit__RAND__.value, t: 'applicants_and_tenants', f: 'security_deposit' }
-			}).done(function(resp){
-				$j('[id=security_deposit-container__RAND__], [id=security_deposit-container-readonly__RAND__]').html('<span id="security_deposit-match-text">' + resp.results[0].text + '</span>');
-				if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=units_view_parent]').hide(); }else{ $j('.btn[id=units_view_parent]').show(); }
-
-				if(typeof(security_deposit_update_autofills__RAND__) == 'function') security_deposit_update_autofills__RAND__();
-			});
-		<?php } ?>
-
-		}
-		function other_charges_reload__RAND__(){
-		<?php if(($AllowUpdate || $AllowInsert) && !$dvprint){ ?>
-
-			jQuery("#other_charges-container__RAND__").select2({
-				/* initial default value */
-				initSelection: function(e, c){
-					jQuery.ajax({
-						url: 'ajax_combo.php',
-						dataType: 'json',
-						data: { id: current_other_charges__RAND__.value, t: 'applicants_and_tenants', f: 'other_charges' }
-					}).done(function(resp){
-						c({
-							id: resp.results[0].id,
-							text: resp.results[0].text
-						});
-						$j('[name="other_charges"]').val(resp.results[0].id);
-						$j('[id=other_charges-container-readonly__RAND__]').html('<span id="other_charges-match-text">' + resp.results[0].text + '</span>');
-						if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=units_view_parent]').hide(); }else{ $j('.btn[id=units_view_parent]').show(); }
-
-
-						if(typeof(other_charges_update_autofills__RAND__) == 'function') other_charges_update_autofills__RAND__();
-					});
-				},
-				width: ($j('fieldset .col-xs-11').width() - 99) + 'px',
-				formatNoMatches: function(term){ return '<?php echo addslashes($Translation['No matches found!']); ?>'; },
-				minimumResultsForSearch: 10,
-				loadMorePadding: 200,
-				ajax: {
-					url: 'ajax_combo.php',
-					dataType: 'json',
-					cache: true,
-					data: function(term, page){ return { s: term, p: page, t: 'applicants_and_tenants', f: 'other_charges' }; },
-					results: function(resp, page){ return resp; }
-				}
-			}).on('change', function(e){
-				current_other_charges__RAND__.value = e.added.id;
-				current_other_charges__RAND__.text = e.added.text;
-				$j('[name="other_charges"]').val(e.added.id);
-				if(e.added.id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=units_view_parent]').hide(); }else{ $j('.btn[id=units_view_parent]').show(); }
-
-
-				if(typeof(other_charges_update_autofills__RAND__) == 'function') other_charges_update_autofills__RAND__();
-			});
-
-			if(!$j("#other_charges-container__RAND__").length){
-				$j.ajax({
-					url: 'ajax_combo.php',
-					dataType: 'json',
-					data: { id: current_other_charges__RAND__.value, t: 'applicants_and_tenants', f: 'other_charges' }
-				}).done(function(resp){
-					$j('[name="other_charges"]').val(resp.results[0].id);
-					$j('[id=other_charges-container-readonly__RAND__]').html('<span id="other_charges-match-text">' + resp.results[0].text + '</span>');
-					if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=units_view_parent]').hide(); }else{ $j('.btn[id=units_view_parent]').show(); }
-
-					if(typeof(other_charges_update_autofills__RAND__) == 'function') other_charges_update_autofills__RAND__();
-				});
-			}
-
-		<?php }else{ ?>
-
-			$j.ajax({
-				url: 'ajax_combo.php',
-				dataType: 'json',
-				data: { id: current_other_charges__RAND__.value, t: 'applicants_and_tenants', f: 'other_charges' }
-			}).done(function(resp){
-				$j('[id=other_charges-container__RAND__], [id=other_charges-container-readonly__RAND__]').html('<span id="other_charges-match-text">' + resp.results[0].text + '</span>');
-				if(resp.results[0].id == '<?php echo empty_lookup_value; ?>'){ $j('.btn[id=units_view_parent]').hide(); }else{ $j('.btn[id=units_view_parent]').show(); }
-
-				if(typeof(other_charges_update_autofills__RAND__) == 'function') other_charges_update_autofills__RAND__();
-			});
-		<?php } ?>
-
-		}
 	</script>
 	<?php
 
@@ -886,12 +583,6 @@ function applicants_and_tenants_form($selected_id = '', $AllowUpdate = 1, $Allow
 		$jsReadOnly .= "\tjQuery('#property_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
 		$jsReadOnly .= "\tjQuery('#unit').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
 		$jsReadOnly .= "\tjQuery('#unit_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
-		$jsReadOnly .= "\tjQuery('#monthly_rent').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
-		$jsReadOnly .= "\tjQuery('#monthly_rent_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
-		$jsReadOnly .= "\tjQuery('#security_deposit').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
-		$jsReadOnly .= "\tjQuery('#security_deposit_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
-		$jsReadOnly .= "\tjQuery('#other_charges').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
-		$jsReadOnly .= "\tjQuery('#other_charges_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
 		$jsReadOnly .= "\tjQuery('.select2-container').hide();\n";
 
 		$noUploads = true;
@@ -911,18 +602,9 @@ function applicants_and_tenants_form($selected_id = '', $AllowUpdate = 1, $Allow
 	$templateCode=str_replace('<%%COMBO(unit)%%>', $combo_unit->HTML, $templateCode);
 	$templateCode=str_replace('<%%COMBOTEXT(unit)%%>', $combo_unit->MatchText, $templateCode);
 	$templateCode=str_replace('<%%URLCOMBOTEXT(unit)%%>', urlencode($combo_unit->MatchText), $templateCode);
-	$templateCode=str_replace('<%%COMBO(monthly_rent)%%>', $combo_monthly_rent->HTML, $templateCode);
-	$templateCode=str_replace('<%%COMBOTEXT(monthly_rent)%%>', $combo_monthly_rent->MatchText, $templateCode);
-	$templateCode=str_replace('<%%URLCOMBOTEXT(monthly_rent)%%>', urlencode($combo_monthly_rent->MatchText), $templateCode);
-	$templateCode=str_replace('<%%COMBO(security_deposit)%%>', $combo_security_deposit->HTML, $templateCode);
-	$templateCode=str_replace('<%%COMBOTEXT(security_deposit)%%>', $combo_security_deposit->MatchText, $templateCode);
-	$templateCode=str_replace('<%%URLCOMBOTEXT(security_deposit)%%>', urlencode($combo_security_deposit->MatchText), $templateCode);
-	$templateCode=str_replace('<%%COMBO(other_charges)%%>', $combo_other_charges->HTML, $templateCode);
-	$templateCode=str_replace('<%%COMBOTEXT(other_charges)%%>', $combo_other_charges->MatchText, $templateCode);
-	$templateCode=str_replace('<%%URLCOMBOTEXT(other_charges)%%>', urlencode($combo_other_charges->MatchText), $templateCode);
 
 	/* lookup fields array: 'lookup field name' => array('parent table name', 'lookup field caption') */
-	$lookup_fields = array(  'property' => array('units', 'Rented Property'), 'unit' => array('units', 'Rented Unit'), 'monthly_rent' => array('units', 'Monthly rent'), 'security_deposit' => array('units', 'Security Deposit'), 'other_charges' => array('units', 'Other Charges'));
+	$lookup_fields = array(  'property' => array('properties', 'Rented Property'), 'unit' => array('units', 'Rented Unit'));
 	foreach($lookup_fields as $luf => $ptfc){
 		$pt_perm = getTablePermissions($ptfc[0]);
 
@@ -947,9 +629,6 @@ function applicants_and_tenants_form($selected_id = '', $AllowUpdate = 1, $Allow
 	$templateCode=str_replace('<%%UPLOADFILE(status)%%>', '', $templateCode);
 	$templateCode=str_replace('<%%UPLOADFILE(property)%%>', '', $templateCode);
 	$templateCode=str_replace('<%%UPLOADFILE(unit)%%>', '', $templateCode);
-	$templateCode=str_replace('<%%UPLOADFILE(monthly_rent)%%>', '', $templateCode);
-	$templateCode=str_replace('<%%UPLOADFILE(security_deposit)%%>', '', $templateCode);
-	$templateCode=str_replace('<%%UPLOADFILE(other_charges)%%>', '', $templateCode);
 	$templateCode=str_replace('<%%UPLOADFILE(current_month_rent_status)%%>', '', $templateCode);
 
 	// process values
@@ -972,12 +651,6 @@ function applicants_and_tenants_form($selected_id = '', $AllowUpdate = 1, $Allow
 		$templateCode=str_replace('<%%URLVALUE(property)%%>', urlencode($urow['property']), $templateCode);
 		$templateCode=str_replace('<%%VALUE(unit)%%>', html_attr($row['unit']), $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(unit)%%>', urlencode($urow['unit']), $templateCode);
-		$templateCode=str_replace('<%%VALUE(monthly_rent)%%>', html_attr($row['monthly_rent']), $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(monthly_rent)%%>', urlencode($urow['monthly_rent']), $templateCode);
-		$templateCode=str_replace('<%%VALUE(security_deposit)%%>', html_attr($row['security_deposit']), $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(security_deposit)%%>', urlencode($urow['security_deposit']), $templateCode);
-		$templateCode=str_replace('<%%VALUE(other_charges)%%>', html_attr($row['other_charges']), $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(other_charges)%%>', urlencode($urow['other_charges']), $templateCode);
 		$templateCode=str_replace('<%%VALUE(current_month_rent_status)%%>', html_attr($row['current_month_rent_status']), $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(current_month_rent_status)%%>', urlencode($urow['current_month_rent_status']), $templateCode);
 	}else{
@@ -999,12 +672,6 @@ function applicants_and_tenants_form($selected_id = '', $AllowUpdate = 1, $Allow
 		$templateCode=str_replace('<%%URLVALUE(property)%%>', urlencode(''), $templateCode);
 		$templateCode=str_replace('<%%VALUE(unit)%%>', '', $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(unit)%%>', urlencode(''), $templateCode);
-		$templateCode=str_replace('<%%VALUE(monthly_rent)%%>', '', $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(monthly_rent)%%>', urlencode(''), $templateCode);
-		$templateCode=str_replace('<%%VALUE(security_deposit)%%>', '', $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(security_deposit)%%>', urlencode(''), $templateCode);
-		$templateCode=str_replace('<%%VALUE(other_charges)%%>', '', $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(other_charges)%%>', urlencode(''), $templateCode);
 		$templateCode=str_replace('<%%VALUE(current_month_rent_status)%%>', '', $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(current_month_rent_status)%%>', urlencode(''), $templateCode);
 	}
@@ -1041,6 +708,19 @@ function applicants_and_tenants_form($selected_id = '', $AllowUpdate = 1, $Allow
 	// ajaxed auto-fill fields
 	$templateCode .= '<script>';
 	$templateCode .= '$j(function() {';
+
+	$templateCode.="\tunit_update_autofills$rnd1 = function(){\n";
+	$templateCode.="\t\tnew Ajax.Request(\n";
+	if($dvprint){
+		$templateCode.="\t\t\t'applicants_and_tenants_autofill.php?rnd1=$rnd1&mfk=unit&id=' + encodeURIComponent('".addslashes($row['unit'])."'),\n";
+		$templateCode.="\t\t\t{encoding: 'UTF-8', method: 'get'}\n";
+	}else{
+		$templateCode.="\t\t\t'applicants_and_tenants_autofill.php?rnd1=$rnd1&mfk=unit&id=' + encodeURIComponent(current_unit{$rnd1}.value),\n";
+		$templateCode.="\t\t\t{encoding: 'UTF-8', method: 'get', onCreate: function(){ \$j('#unit$rnd1').prop('disabled', true); \$j('#unitLoading').html('<img src=loading.gif align=top>'); }, onComplete: function(){".(($arrPerm[1] || (($arrPerm[3] == 1 && $ownerMemberID == getLoggedMemberID()) || ($arrPerm[3] == 2 && $ownerGroupID == getLoggedGroupID()) || $arrPerm[3] == 3)) ? "\$j('#unit$rnd1').prop('disabled', false); " : "\$j('#unit$rnd1').prop('disabled', true); ")."\$j('#unitLoading').html('');}}\n";
+	}
+	$templateCode.="\t\t);\n";
+	$templateCode.="\t};\n";
+	if(!$dvprint) $templateCode.="\tif(\$j('#unit_caption').length) \$j('#unit_caption').click(function(){ unit_update_autofills$rnd1(); });\n";
 
 
 	$templateCode.="});";

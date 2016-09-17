@@ -23,6 +23,24 @@
 
 	switch($mfk){
 
+		case 'unit':
+			if(!$id){
+				?>
+				$('monthly_rent<?php echo $rnd1; ?>').innerHTML='&nbsp;';
+				$('security_deposit<?php echo $rnd1; ?>').innerHTML='&nbsp;';
+				$('other_charges<?php echo $rnd1; ?>').innerHTML='&nbsp;';
+				<?php
+				break;
+			}
+			$res = sql("SELECT `units`.`id` as 'id', IF(    CHAR_LENGTH(`properties1`.`property_name`), CONCAT_WS('',   `properties1`.`property_name`), '') as 'property', `units`.`unit_number` as 'unit_number', `units`.`photo` as 'photo', `units`.`status` as 'status', `units`.`features` as 'features', `units`.`rental_amount` as 'rental_amount', `units`.`deposit_amount` as 'deposit_amount', `units`.`other_charges` as 'other_charges', `units`.`description` as 'description' FROM `units` LEFT JOIN `properties` as properties1 ON `properties1`.`id`=`units`.`property`  WHERE `units`.`id`='$id' limit 1", $eo);
+			$row = db_fetch_assoc($res);
+			?>
+			$j('#monthly_rent<?php echo $rnd1; ?>').html('<?php echo addslashes(str_replace(array("\r", "\n"), '', nl2br($row['rental_amount']))); ?>&nbsp;');
+			$j('#security_deposit<?php echo $rnd1; ?>').html('<?php echo addslashes(str_replace(array("\r", "\n"), '', nl2br($row['deposit_amount']))); ?>&nbsp;');
+			$j('#other_charges<?php echo $rnd1; ?>').html('<?php echo addslashes(str_replace(array("\r", "\n"), '', nl2br($row['other_charges']))); ?>&nbsp;');
+			<?php
+			break;
+
 
 	}
 

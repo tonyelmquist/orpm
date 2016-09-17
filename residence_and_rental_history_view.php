@@ -25,13 +25,13 @@
 		"`residence_and_rental_history`.`id`" => "id",
 		"IF(    CHAR_LENGTH(`applicants_and_tenants1`.`first_name`) || CHAR_LENGTH(`applicants_and_tenants1`.`last_name`), CONCAT_WS('',   `applicants_and_tenants1`.`first_name`, ' ', `applicants_and_tenants1`.`last_name`), '') /* Tenant */" => "tenant",
 		"if(`residence_and_rental_history`.`month`,date_format(`residence_and_rental_history`.`month`,'%m/%d/%Y'),'')" => "month",
-		"IF(    CHAR_LENGTH(`units1`.`rental_amount`), CONCAT_WS('',   `units1`.`rental_amount`), '') /* Monthly rent */" => "monthly_rent",
-		"IF(    CHAR_LENGTH(`units2`.`deposit_amount`), CONCAT_WS('',   `units2`.`deposit_amount`), '') /* Security Deposit */" => "security_deposit",
-		"IF(    CHAR_LENGTH(`units3`.`other_charges`), CONCAT_WS('',   `units3`.`other_charges`), '') /* Other Charges */" => "other_charges",
+		"IF(    CHAR_LENGTH(`applicants_and_tenants1`.`monthly_rent`), CONCAT_WS('',   `applicants_and_tenants1`.`monthly_rent`), '') /* Monthly rent */" => "monthly_rent",
+		"IF(    CHAR_LENGTH(`applicants_and_tenants1`.`security_deposit`), CONCAT_WS('',   `applicants_and_tenants1`.`security_deposit`), '') /* Security Deposit */" => "security_deposit",
+		"IF(    CHAR_LENGTH(`applicants_and_tenants1`.`other_charges`), CONCAT_WS('',   `applicants_and_tenants1`.`other_charges`), '') /* Other Charges */" => "other_charges",
 		"`residence_and_rental_history`.`rent_paid`" => "rent_paid",
 		"`residence_and_rental_history`.`rent_balance`" => "rent_balance",
-		"if(`residence_and_rental_history`.`rent_reminder`,date_format(`residence_and_rental_history`.`rent_reminder`,'%m/%d/%Y'),'')" => "rent_reminder",
 		"if(`residence_and_rental_history`.`due_date`,date_format(`residence_and_rental_history`.`due_date`,'%m/%d/%Y'),'')" => "due_date",
+		"if(`residence_and_rental_history`.`rent_reminder`,date_format(`residence_and_rental_history`.`rent_reminder`,'%m/%d/%Y'),'')" => "rent_reminder",
 		"if(`residence_and_rental_history`.`late_rent_reminder`,date_format(`residence_and_rental_history`.`late_rent_reminder`,'%m/%d/%Y'),'')" => "late_rent_reminder",
 		"`residence_and_rental_history`.`status`" => "status",
 		"if(`residence_and_rental_history`.`duration_of_residency_from`,date_format(`residence_and_rental_history`.`duration_of_residency_from`,'%m/%d/%Y'),'')" => "duration_of_residency_from",
@@ -49,8 +49,8 @@
 		6 => 6,
 		7 => '`residence_and_rental_history`.`rent_paid`',
 		8 => '`residence_and_rental_history`.`rent_balance`',
-		9 => '`residence_and_rental_history`.`rent_reminder`',
-		10 => '`residence_and_rental_history`.`due_date`',
+		9 => '`residence_and_rental_history`.`due_date`',
+		10 => '`residence_and_rental_history`.`rent_reminder`',
 		11 => '`residence_and_rental_history`.`late_rent_reminder`',
 		12 => 12,
 		13 => '`residence_and_rental_history`.`duration_of_residency_from`',
@@ -64,13 +64,13 @@
 		"`residence_and_rental_history`.`id`" => "id",
 		"IF(    CHAR_LENGTH(`applicants_and_tenants1`.`first_name`) || CHAR_LENGTH(`applicants_and_tenants1`.`last_name`), CONCAT_WS('',   `applicants_and_tenants1`.`first_name`, ' ', `applicants_and_tenants1`.`last_name`), '') /* Tenant */" => "tenant",
 		"if(`residence_and_rental_history`.`month`,date_format(`residence_and_rental_history`.`month`,'%m/%d/%Y'),'')" => "month",
-		"IF(    CHAR_LENGTH(`units1`.`rental_amount`), CONCAT_WS('',   `units1`.`rental_amount`), '') /* Monthly rent */" => "monthly_rent",
-		"IF(    CHAR_LENGTH(`units2`.`deposit_amount`), CONCAT_WS('',   `units2`.`deposit_amount`), '') /* Security Deposit */" => "security_deposit",
-		"IF(    CHAR_LENGTH(`units3`.`other_charges`), CONCAT_WS('',   `units3`.`other_charges`), '') /* Other Charges */" => "other_charges",
+		"IF(    CHAR_LENGTH(`applicants_and_tenants1`.`monthly_rent`), CONCAT_WS('',   `applicants_and_tenants1`.`monthly_rent`), '') /* Monthly rent */" => "monthly_rent",
+		"IF(    CHAR_LENGTH(`applicants_and_tenants1`.`security_deposit`), CONCAT_WS('',   `applicants_and_tenants1`.`security_deposit`), '') /* Security Deposit */" => "security_deposit",
+		"IF(    CHAR_LENGTH(`applicants_and_tenants1`.`other_charges`), CONCAT_WS('',   `applicants_and_tenants1`.`other_charges`), '') /* Other Charges */" => "other_charges",
 		"`residence_and_rental_history`.`rent_paid`" => "rent_paid",
 		"`residence_and_rental_history`.`rent_balance`" => "rent_balance",
-		"if(`residence_and_rental_history`.`rent_reminder`,date_format(`residence_and_rental_history`.`rent_reminder`,'%m/%d/%Y'),'')" => "rent_reminder",
 		"if(`residence_and_rental_history`.`due_date`,date_format(`residence_and_rental_history`.`due_date`,'%m/%d/%Y'),'')" => "due_date",
+		"if(`residence_and_rental_history`.`rent_reminder`,date_format(`residence_and_rental_history`.`rent_reminder`,'%m/%d/%Y'),'')" => "rent_reminder",
 		"if(`residence_and_rental_history`.`late_rent_reminder`,date_format(`residence_and_rental_history`.`late_rent_reminder`,'%m/%d/%Y'),'')" => "late_rent_reminder",
 		"`residence_and_rental_history`.`status`" => "status",
 		"if(`residence_and_rental_history`.`duration_of_residency_from`,date_format(`residence_and_rental_history`.`duration_of_residency_from`,'%m/%d/%Y'),'')" => "duration_of_residency_from",
@@ -83,13 +83,13 @@
 		"`residence_and_rental_history`.`id`" => "ID",
 		"IF(    CHAR_LENGTH(`applicants_and_tenants1`.`first_name`) || CHAR_LENGTH(`applicants_and_tenants1`.`last_name`), CONCAT_WS('',   `applicants_and_tenants1`.`first_name`, ' ', `applicants_and_tenants1`.`last_name`), '') /* Tenant */" => "Tenant",
 		"`residence_and_rental_history`.`month`" => "Month",
-		"IF(    CHAR_LENGTH(`units1`.`rental_amount`), CONCAT_WS('',   `units1`.`rental_amount`), '') /* Monthly rent */" => "Monthly rent",
-		"IF(    CHAR_LENGTH(`units2`.`deposit_amount`), CONCAT_WS('',   `units2`.`deposit_amount`), '') /* Security Deposit */" => "Security Deposit",
-		"IF(    CHAR_LENGTH(`units3`.`other_charges`), CONCAT_WS('',   `units3`.`other_charges`), '') /* Other Charges */" => "Other Charges",
+		"IF(    CHAR_LENGTH(`applicants_and_tenants1`.`monthly_rent`), CONCAT_WS('',   `applicants_and_tenants1`.`monthly_rent`), '') /* Monthly rent */" => "Monthly rent",
+		"IF(    CHAR_LENGTH(`applicants_and_tenants1`.`security_deposit`), CONCAT_WS('',   `applicants_and_tenants1`.`security_deposit`), '') /* Security Deposit */" => "Security Deposit",
+		"IF(    CHAR_LENGTH(`applicants_and_tenants1`.`other_charges`), CONCAT_WS('',   `applicants_and_tenants1`.`other_charges`), '') /* Other Charges */" => "Other Charges",
 		"`residence_and_rental_history`.`rent_paid`" => "Rent Paid",
 		"`residence_and_rental_history`.`rent_balance`" => "Rent Balance",
-		"`residence_and_rental_history`.`rent_reminder`" => "Rent Reminder Date",
 		"`residence_and_rental_history`.`due_date`" => "Due date",
+		"`residence_and_rental_history`.`rent_reminder`" => "Rent Reminder Date",
 		"`residence_and_rental_history`.`late_rent_reminder`" => "Late Rent Reminder Date",
 		"`residence_and_rental_history`.`status`" => "Status",
 		"`residence_and_rental_history`.`duration_of_residency_from`" => "Duration of residency from",
@@ -103,13 +103,13 @@
 		"`residence_and_rental_history`.`id`" => "id",
 		"IF(    CHAR_LENGTH(`applicants_and_tenants1`.`first_name`) || CHAR_LENGTH(`applicants_and_tenants1`.`last_name`), CONCAT_WS('',   `applicants_and_tenants1`.`first_name`, ' ', `applicants_and_tenants1`.`last_name`), '') /* Tenant */" => "tenant",
 		"if(`residence_and_rental_history`.`month`,date_format(`residence_and_rental_history`.`month`,'%m/%d/%Y'),'')" => "month",
-		"IF(    CHAR_LENGTH(`units1`.`rental_amount`), CONCAT_WS('',   `units1`.`rental_amount`), '') /* Monthly rent */" => "monthly_rent",
-		"IF(    CHAR_LENGTH(`units2`.`deposit_amount`), CONCAT_WS('',   `units2`.`deposit_amount`), '') /* Security Deposit */" => "security_deposit",
-		"IF(    CHAR_LENGTH(`units3`.`other_charges`), CONCAT_WS('',   `units3`.`other_charges`), '') /* Other Charges */" => "other_charges",
+		"IF(    CHAR_LENGTH(`applicants_and_tenants1`.`monthly_rent`), CONCAT_WS('',   `applicants_and_tenants1`.`monthly_rent`), '') /* Monthly rent */" => "monthly_rent",
+		"IF(    CHAR_LENGTH(`applicants_and_tenants1`.`security_deposit`), CONCAT_WS('',   `applicants_and_tenants1`.`security_deposit`), '') /* Security Deposit */" => "security_deposit",
+		"IF(    CHAR_LENGTH(`applicants_and_tenants1`.`other_charges`), CONCAT_WS('',   `applicants_and_tenants1`.`other_charges`), '') /* Other Charges */" => "other_charges",
 		"`residence_and_rental_history`.`rent_paid`" => "rent_paid",
 		"`residence_and_rental_history`.`rent_balance`" => "rent_balance",
-		"if(`residence_and_rental_history`.`rent_reminder`,date_format(`residence_and_rental_history`.`rent_reminder`,'%m/%d/%Y'),'')" => "rent_reminder",
 		"if(`residence_and_rental_history`.`due_date`,date_format(`residence_and_rental_history`.`due_date`,'%m/%d/%Y'),'')" => "due_date",
+		"if(`residence_and_rental_history`.`rent_reminder`,date_format(`residence_and_rental_history`.`rent_reminder`,'%m/%d/%Y'),'')" => "rent_reminder",
 		"if(`residence_and_rental_history`.`late_rent_reminder`,date_format(`residence_and_rental_history`.`late_rent_reminder`,'%m/%d/%Y'),'')" => "late_rent_reminder",
 		"`residence_and_rental_history`.`status`" => "status",
 		"if(`residence_and_rental_history`.`duration_of_residency_from`,date_format(`residence_and_rental_history`.`duration_of_residency_from`,'%m/%d/%Y'),'')" => "duration_of_residency_from",
@@ -119,9 +119,9 @@
 	);
 
 	// Lookup fields that can be used as filterers
-	$x->filterers = array(  'tenant' => 'Tenant', 'monthly_rent' => 'Monthly rent', 'security_deposit' => 'Security Deposit', 'other_charges' => 'Other Charges');
+	$x->filterers = array(  'tenant' => 'Tenant');
 
-	$x->QueryFrom="`residence_and_rental_history` LEFT JOIN `applicants_and_tenants` as applicants_and_tenants1 ON `applicants_and_tenants1`.`id`=`residence_and_rental_history`.`tenant` LEFT JOIN `applicants_and_tenants` as applicants_and_tenants2 ON `applicants_and_tenants2`.`id`=`residence_and_rental_history`.`monthly_rent` LEFT JOIN `units` as units1 ON `units1`.`id`=`applicants_and_tenants2`.`monthly_rent` LEFT JOIN `applicants_and_tenants` as applicants_and_tenants3 ON `applicants_and_tenants3`.`id`=`residence_and_rental_history`.`security_deposit` LEFT JOIN `units` as units2 ON `units2`.`id`=`applicants_and_tenants3`.`security_deposit` LEFT JOIN `applicants_and_tenants` as applicants_and_tenants4 ON `applicants_and_tenants4`.`id`=`residence_and_rental_history`.`other_charges` LEFT JOIN `units` as units3 ON `units3`.`id`=`applicants_and_tenants4`.`other_charges` ";
+	$x->QueryFrom="`residence_and_rental_history` LEFT JOIN `applicants_and_tenants` as applicants_and_tenants1 ON `applicants_and_tenants1`.`id`=`residence_and_rental_history`.`tenant` ";
 	$x->QueryWhere='';
 	$x->QueryOrder='';
 
@@ -148,10 +148,10 @@
 	$x->TableIcon = "resources/table_icons/document_comment_above.png";
 	$x->PrimaryKey = "`residence_and_rental_history`.`id`";
 
-	$x->ColWidth   = array(  100, 80, 80, 150, 80, 80, 100, 100, 100, 150, 100, 80, 120);
-	$x->ColCaption = array("Month", "Monthly rent", "Security Deposit", "Other Charges", "Rent Paid", "Rent Balance", "Rent Reminder Date", "Due date", "Late Rent Reminder Date", "Status", "Duration of residency from", "to", "Reason for leaving");
-	$x->ColFieldName = array('month', 'monthly_rent', 'security_deposit', 'other_charges', 'rent_paid', 'rent_balance', 'rent_reminder', 'due_date', 'late_rent_reminder', 'status', 'duration_of_residency_from', 'to', 'reason_for_leaving');
-	$x->ColNumber  = array(3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
+	$x->ColWidth   = array(  100, 80, 80, 100, 100, 100, 150, 100, 80, 120);
+	$x->ColCaption = array("Month", "Rent Paid", "Rent Balance", "Due date", "Rent Reminder Date", "Late Rent Reminder Date", "Status", "Duration of residency from", "to", "Reason for leaving");
+	$x->ColFieldName = array('month', 'rent_paid', 'rent_balance', 'due_date', 'rent_reminder', 'late_rent_reminder', 'status', 'duration_of_residency_from', 'to', 'reason_for_leaving');
+	$x->ColNumber  = array(3, 7, 8, 9, 10, 11, 12, 13, 14, 15);
 
 	$x->Template = 'templates/residence_and_rental_history_templateTV.html';
 	$x->SelectedTemplate = 'templates/residence_and_rental_history_templateTVS.html';

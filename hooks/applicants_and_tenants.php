@@ -175,6 +175,12 @@
 			'title' => 'View Tenant Rent Record',
 			'function' => 'tenant_rent_record',
 			'icon' => 'paperclip'
+			),
+
+			array(
+			'title' => 'View Tenant ID',
+			'function' => 'tenant_id',
+			'icon' => 'paperclip'
 			)
 
 			/*array(
