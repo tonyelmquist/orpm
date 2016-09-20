@@ -29,7 +29,7 @@
 				<div class="form-group">
 					<label for="month" class="control-label col-lg-3">Month</label>
 					<div class="col-lg-9">
-						<%%COMBO(month)%%>
+						<div class="form-control-static" id="month"><%%COMBOTEXT(month)%%></div>
 					</div>
 				</div>
 
@@ -92,7 +92,7 @@
 				<div class="form-group">
 					<label for="status" class="control-label col-lg-3">Status</label>
 					<div class="col-lg-9">
-						<div class="form-control-static" id="status"><%%VALUE(status)%%></div>
+						<input maxlength="40" type="text" class="form-control" name="status" id="status" value="<%%VALUE(status)%%>">
 					</div>
 				</div>
 

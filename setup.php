@@ -56,7 +56,7 @@
 
 	/* include page header, unless we're testing db connection (ajax) */
 	if(session_id()){ @session_write_close(); }
-	@session_name('Landlord_Management_System');
+	@session_name('Tenant_Management_System');
 	@session_start();
 	$_REQUEST['Embedded'] = 1; /* to prevent displaying the navigation bar */
 	$x = new StdClass;
@@ -159,9 +159,9 @@
 				'custom2' => 'Address',
 				'custom3' => 'City',
 				'custom4' => 'State',
-				'MySQLDateFormat' => '%m/%d/%Y',
-				'PHPDateFormat' => 'n/j/Y',
-				'PHPDateTimeFormat' => 'm/d/Y, h:i a',
+				'MySQLDateFormat' => '%Y-%m-%d',
+				'PHPDateFormat' => 'Y-n-j',
+				'PHPDateTimeFormat' => 'Y-m-d, h:i a',
 				'senderName' => 'Membership management',
 				'senderEmail' => $email,
 				'approvalSubject' => 'Your membership is now approved',

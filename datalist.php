@@ -6,8 +6,8 @@ define('datalist_max_records_multi_selection', 1000);
 define('datalist_max_page_lump', 50);
 define('datalist_max_records_dv_print', 100);
 define('datalist_auto_complete_size', 1000);
-define('datalist_date_separator', '/');
-define('datalist_date_format', 'mdY');
+define('datalist_date_separator', '-');
+define('datalist_date_format', 'Ymd');
 
 $curr_dir = dirname(__FILE__);
 require_once($curr_dir . '/combo.class.php');

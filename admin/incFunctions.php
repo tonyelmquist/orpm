@@ -274,8 +274,8 @@
 		if(isset($_COOKIE[session_name()])){
 			setcookie(session_name(), '', time()-42000, '/');
 		}
-		if(isset($_COOKIE['Landlord_Management_System_rememberMe'])){
-			setcookie('Landlord_Management_System_rememberMe', '', time()-42000);
+		if(isset($_COOKIE['Tenant_Management_System_rememberMe'])){
+			setcookie('Tenant_Management_System_rememberMe', '', time()-42000);
 		}
 		session_destroy();
 	}

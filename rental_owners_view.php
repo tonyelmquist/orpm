@@ -25,7 +25,7 @@
 		"`rental_owners`.`id`" => "id",
 		"`rental_owners`.`first_name`" => "first_name",
 		"`rental_owners`.`last_name`" => "last_name",
-		"if(`rental_owners`.`date_of_birth`,date_format(`rental_owners`.`date_of_birth`,'%m/%d/%Y'),'')" => "date_of_birth",
+		"if(`rental_owners`.`date_of_birth`,date_format(`rental_owners`.`date_of_birth`,'%Y-%m-%d'),'')" => "date_of_birth",
 		"`rental_owners`.`primary_email`" => "primary_email",
 		"`rental_owners`.`phone`" => "phone",
 		"`rental_owners`.`country`" => "country"
@@ -46,7 +46,7 @@
 		"`rental_owners`.`id`" => "id",
 		"`rental_owners`.`first_name`" => "first_name",
 		"`rental_owners`.`last_name`" => "last_name",
-		"if(`rental_owners`.`date_of_birth`,date_format(`rental_owners`.`date_of_birth`,'%m/%d/%Y'),'')" => "date_of_birth",
+		"if(`rental_owners`.`date_of_birth`,date_format(`rental_owners`.`date_of_birth`,'%Y-%m-%d'),'')" => "date_of_birth",
 		"`rental_owners`.`primary_email`" => "primary_email",
 		"`rental_owners`.`phone`" => "phone",
 		"`rental_owners`.`country`" => "country"
@@ -67,7 +67,7 @@
 		"`rental_owners`.`id`" => "id",
 		"`rental_owners`.`first_name`" => "first_name",
 		"`rental_owners`.`last_name`" => "last_name",
-		"if(`rental_owners`.`date_of_birth`,date_format(`rental_owners`.`date_of_birth`,'%m/%d/%Y'),'')" => "date_of_birth",
+		"if(`rental_owners`.`date_of_birth`,date_format(`rental_owners`.`date_of_birth`,'%Y-%m-%d'),'')" => "date_of_birth",
 		"`rental_owners`.`primary_email`" => "primary_email",
 		"`rental_owners`.`phone`" => "phone",
 		"`rental_owners`.`country`" => "country"

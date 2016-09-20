@@ -292,7 +292,7 @@ function applications_leases_form($selected_id = '', $AllowUpdate = 1, $AllowIns
 	$combo_type->AllowNull = false;
 	// combobox: start_date
 	$combo_start_date = new DateCombo;
-	$combo_start_date->DateFormat = "mdy";
+	$combo_start_date->DateFormat = "ymd";
 	$combo_start_date->MinYear = 1900;
 	$combo_start_date->MaxYear = 2100;
 	$combo_start_date->DefaultDate = parseMySQLDate('1', '1');
@@ -300,7 +300,7 @@ function applications_leases_form($selected_id = '', $AllowUpdate = 1, $AllowIns
 	$combo_start_date->NamePrefix = 'start_date';
 	// combobox: end_date
 	$combo_end_date = new DateCombo;
-	$combo_end_date->DateFormat = "mdy";
+	$combo_end_date->DateFormat = "ymd";
 	$combo_end_date->MinYear = 1900;
 	$combo_end_date->MaxYear = 2100;
 	$combo_end_date->DefaultDate = parseMySQLDate('1', '1');
@@ -324,7 +324,7 @@ function applications_leases_form($selected_id = '', $AllowUpdate = 1, $AllowIns
 	$combo_recurring_charges_frequency->AllowNull = false;
 	// combobox: next_due_date
 	$combo_next_due_date = new DateCombo;
-	$combo_next_due_date->DateFormat = "mdy";
+	$combo_next_due_date->DateFormat = "ymd";
 	$combo_next_due_date->MinYear = 1900;
 	$combo_next_due_date->MaxYear = 2100;
 	$combo_next_due_date->DefaultDate = parseMySQLDate('1', '1');
@@ -332,7 +332,7 @@ function applications_leases_form($selected_id = '', $AllowUpdate = 1, $AllowIns
 	$combo_next_due_date->NamePrefix = 'next_due_date';
 	// combobox: security_deposit_date
 	$combo_security_deposit_date = new DateCombo;
-	$combo_security_deposit_date->DateFormat = "mdy";
+	$combo_security_deposit_date->DateFormat = "ymd";
 	$combo_security_deposit_date->MinYear = 1900;
 	$combo_security_deposit_date->MaxYear = 2100;
 	$combo_security_deposit_date->DefaultDate = parseMySQLDate('', '');
@@ -795,20 +795,20 @@ function applications_leases_form($selected_id = '', $AllowUpdate = 1, $AllowIns
 		$templateCode=str_replace('<%%URLVALUE(type)%%>', urlencode($urow['type']), $templateCode);
 		$templateCode=str_replace('<%%VALUE(total_number_of_occupants)%%>', html_attr($row['total_number_of_occupants']), $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(total_number_of_occupants)%%>', urlencode($urow['total_number_of_occupants']), $templateCode);
-		$templateCode=str_replace('<%%VALUE(start_date)%%>', @date('m/d/Y', @strtotime(html_attr($row['start_date']))), $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(start_date)%%>', urlencode(@date('m/d/Y', @strtotime(html_attr($urow['start_date'])))), $templateCode);
-		$templateCode=str_replace('<%%VALUE(end_date)%%>', @date('m/d/Y', @strtotime(html_attr($row['end_date']))), $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(end_date)%%>', urlencode(@date('m/d/Y', @strtotime(html_attr($urow['end_date'])))), $templateCode);
+		$templateCode=str_replace('<%%VALUE(start_date)%%>', @date('Y-m-d', @strtotime(html_attr($row['start_date']))), $templateCode);
+		$templateCode=str_replace('<%%URLVALUE(start_date)%%>', urlencode(@date('Y-m-d', @strtotime(html_attr($urow['start_date'])))), $templateCode);
+		$templateCode=str_replace('<%%VALUE(end_date)%%>', @date('Y-m-d', @strtotime(html_attr($row['end_date']))), $templateCode);
+		$templateCode=str_replace('<%%URLVALUE(end_date)%%>', urlencode(@date('Y-m-d', @strtotime(html_attr($urow['end_date'])))), $templateCode);
 		$templateCode=str_replace('<%%VALUE(recurring_charges_frequency)%%>', html_attr($row['recurring_charges_frequency']), $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(recurring_charges_frequency)%%>', urlencode($urow['recurring_charges_frequency']), $templateCode);
-		$templateCode=str_replace('<%%VALUE(next_due_date)%%>', @date('m/d/Y', @strtotime(html_attr($row['next_due_date']))), $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(next_due_date)%%>', urlencode(@date('m/d/Y', @strtotime(html_attr($urow['next_due_date'])))), $templateCode);
+		$templateCode=str_replace('<%%VALUE(next_due_date)%%>', @date('Y-m-d', @strtotime(html_attr($row['next_due_date']))), $templateCode);
+		$templateCode=str_replace('<%%URLVALUE(next_due_date)%%>', urlencode(@date('Y-m-d', @strtotime(html_attr($urow['next_due_date'])))), $templateCode);
 		$templateCode=str_replace('<%%VALUE(rent)%%>', html_attr($row['rent']), $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(rent)%%>', urlencode($urow['rent']), $templateCode);
 		$templateCode=str_replace('<%%VALUE(security_deposit)%%>', html_attr($row['security_deposit']), $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(security_deposit)%%>', urlencode($urow['security_deposit']), $templateCode);
-		$templateCode=str_replace('<%%VALUE(security_deposit_date)%%>', @date('m/d/Y', @strtotime(html_attr($row['security_deposit_date']))), $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(security_deposit_date)%%>', urlencode(@date('m/d/Y', @strtotime(html_attr($urow['security_deposit_date'])))), $templateCode);
+		$templateCode=str_replace('<%%VALUE(security_deposit_date)%%>', @date('Y-m-d', @strtotime(html_attr($row['security_deposit_date']))), $templateCode);
+		$templateCode=str_replace('<%%URLVALUE(security_deposit_date)%%>', urlencode(@date('Y-m-d', @strtotime(html_attr($urow['security_deposit_date'])))), $templateCode);
 		if($dvprint){
 			$templateCode = str_replace('<%%VALUE(emergency_contact)%%>', nl2br(html_attr($row['emergency_contact'])), $templateCode);
 		}else{

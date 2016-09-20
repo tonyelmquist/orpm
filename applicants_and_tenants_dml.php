@@ -36,6 +36,8 @@ function applicants_and_tenants_insert(){
 		if($data['security_deposit'] == empty_lookup_value){ $data['security_deposit'] = ''; }
 	$data['other_charges'] = makeSafe($_REQUEST['unit']);
 		if($data['other_charges'] == empty_lookup_value){ $data['other_charges'] = ''; }
+	$data['current_month_rent_status'] = makeSafe($_REQUEST['current_month_rent_status']);
+		if($data['current_month_rent_status'] == empty_lookup_value){ $data['current_month_rent_status'] = ''; }
 	if($data['status'] == '') $data['status'] = "Applicant";
 	if($data['status']== ''){
 		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'Status': " . $Translation['field not null'] . '<br><br>';
@@ -50,7 +52,7 @@ function applicants_and_tenants_insert(){
 	}
 
 	$o = array('silentErrors' => true);
-	sql('insert into `applicants_and_tenants` set       `last_name`=' . (($data['last_name'] !== '' && $data['last_name'] !== NULL) ? "'{$data['last_name']}'" : 'NULL') . ', `first_name`=' . (($data['first_name'] !== '' && $data['first_name'] !== NULL) ? "'{$data['first_name']}'" : 'NULL') . ', `email`=' . (($data['email'] !== '' && $data['email'] !== NULL) ? "'{$data['email']}'" : 'NULL') . ', `phone`=' . (($data['phone'] !== '' && $data['phone'] !== NULL) ? "'{$data['phone']}'" : 'NULL') . ', `birth_date`=' . (($data['birth_date'] !== '' && $data['birth_date'] !== NULL) ? "'{$data['birth_date']}'" : 'NULL') . ', `status`=' . (($data['status'] !== '' && $data['status'] !== NULL) ? "'{$data['status']}'" : 'NULL') . ', `property`=' . (($data['property'] !== '' && $data['property'] !== NULL) ? "'{$data['property']}'" : 'NULL') . ', `unit`=' . (($data['unit'] !== '' && $data['unit'] !== NULL) ? "'{$data['unit']}'" : 'NULL') . ', `monthly_rent`=' . (($data['monthly_rent'] !== '' && $data['monthly_rent'] !== NULL) ? "'{$data['monthly_rent']}'" : 'NULL') . ', `security_deposit`=' . (($data['security_deposit'] !== '' && $data['security_deposit'] !== NULL) ? "'{$data['security_deposit']}'" : 'NULL') . ', `other_charges`=' . (($data['other_charges'] !== '' && $data['other_charges'] !== NULL) ? "'{$data['other_charges']}'" : 'NULL'), $o);
+	sql('insert into `applicants_and_tenants` set       `last_name`=' . (($data['last_name'] !== '' && $data['last_name'] !== NULL) ? "'{$data['last_name']}'" : 'NULL') . ', `first_name`=' . (($data['first_name'] !== '' && $data['first_name'] !== NULL) ? "'{$data['first_name']}'" : 'NULL') . ', `email`=' . (($data['email'] !== '' && $data['email'] !== NULL) ? "'{$data['email']}'" : 'NULL') . ', `phone`=' . (($data['phone'] !== '' && $data['phone'] !== NULL) ? "'{$data['phone']}'" : 'NULL') . ', `birth_date`=' . (($data['birth_date'] !== '' && $data['birth_date'] !== NULL) ? "'{$data['birth_date']}'" : 'NULL') . ', `status`=' . (($data['status'] !== '' && $data['status'] !== NULL) ? "'{$data['status']}'" : 'NULL') . ', `property`=' . (($data['property'] !== '' && $data['property'] !== NULL) ? "'{$data['property']}'" : 'NULL') . ', `unit`=' . (($data['unit'] !== '' && $data['unit'] !== NULL) ? "'{$data['unit']}'" : 'NULL') . ', `monthly_rent`=' . (($data['monthly_rent'] !== '' && $data['monthly_rent'] !== NULL) ? "'{$data['monthly_rent']}'" : 'NULL') . ', `security_deposit`=' . (($data['security_deposit'] !== '' && $data['security_deposit'] !== NULL) ? "'{$data['security_deposit']}'" : 'NULL') . ', `other_charges`=' . (($data['other_charges'] !== '' && $data['other_charges'] !== NULL) ? "'{$data['other_charges']}'" : 'NULL') . ', `current_month_rent_status`=' . (($data['current_month_rent_status'] !== '' && $data['current_month_rent_status'] !== NULL) ? "'{$data['current_month_rent_status']}'" : 'NULL'), $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo "<a href=\"applicants_and_tenants_view.php?addNew_x=1\">{$Translation['< back']}</a>";
@@ -226,6 +228,8 @@ function applicants_and_tenants_update($selected_id){
 		if($data['security_deposit'] == empty_lookup_value){ $data['security_deposit'] = ''; }
 	$data['other_charges'] = makeSafe($_REQUEST['unit']);
 		if($data['other_charges'] == empty_lookup_value){ $data['other_charges'] = ''; }
+	$data['current_month_rent_status'] = makeSafe($_REQUEST['current_month_rent_status']);
+		if($data['current_month_rent_status'] == empty_lookup_value){ $data['current_month_rent_status'] = ''; }
 	$data['selectedID']=makeSafe($selected_id);
 
 	// hook: applicants_and_tenants_before_update
@@ -235,7 +239,7 @@ function applicants_and_tenants_update($selected_id){
 	}
 
 	$o=array('silentErrors' => true);
-	sql('update `applicants_and_tenants` set       `last_name`=' . (($data['last_name'] !== '' && $data['last_name'] !== NULL) ? "'{$data['last_name']}'" : 'NULL') . ', `first_name`=' . (($data['first_name'] !== '' && $data['first_name'] !== NULL) ? "'{$data['first_name']}'" : 'NULL') . ', `email`=' . (($data['email'] !== '' && $data['email'] !== NULL) ? "'{$data['email']}'" : 'NULL') . ', `phone`=' . (($data['phone'] !== '' && $data['phone'] !== NULL) ? "'{$data['phone']}'" : 'NULL') . ', `birth_date`=' . (($data['birth_date'] !== '' && $data['birth_date'] !== NULL) ? "'{$data['birth_date']}'" : 'NULL') . ', `status`=' . (($data['status'] !== '' && $data['status'] !== NULL) ? "'{$data['status']}'" : 'NULL') . ', `property`=' . (($data['property'] !== '' && $data['property'] !== NULL) ? "'{$data['property']}'" : 'NULL') . ', `unit`=' . (($data['unit'] !== '' && $data['unit'] !== NULL) ? "'{$data['unit']}'" : 'NULL') . ', `monthly_rent`=' . (($data['monthly_rent'] !== '' && $data['monthly_rent'] !== NULL) ? "'{$data['monthly_rent']}'" : 'NULL') . ', `security_deposit`=' . (($data['security_deposit'] !== '' && $data['security_deposit'] !== NULL) ? "'{$data['security_deposit']}'" : 'NULL') . ', `other_charges`=' . (($data['other_charges'] !== '' && $data['other_charges'] !== NULL) ? "'{$data['other_charges']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
+	sql('update `applicants_and_tenants` set       `last_name`=' . (($data['last_name'] !== '' && $data['last_name'] !== NULL) ? "'{$data['last_name']}'" : 'NULL') . ', `first_name`=' . (($data['first_name'] !== '' && $data['first_name'] !== NULL) ? "'{$data['first_name']}'" : 'NULL') . ', `email`=' . (($data['email'] !== '' && $data['email'] !== NULL) ? "'{$data['email']}'" : 'NULL') . ', `phone`=' . (($data['phone'] !== '' && $data['phone'] !== NULL) ? "'{$data['phone']}'" : 'NULL') . ', `birth_date`=' . (($data['birth_date'] !== '' && $data['birth_date'] !== NULL) ? "'{$data['birth_date']}'" : 'NULL') . ', `status`=' . (($data['status'] !== '' && $data['status'] !== NULL) ? "'{$data['status']}'" : 'NULL') . ', `property`=' . (($data['property'] !== '' && $data['property'] !== NULL) ? "'{$data['property']}'" : 'NULL') . ', `unit`=' . (($data['unit'] !== '' && $data['unit'] !== NULL) ? "'{$data['unit']}'" : 'NULL') . ', `monthly_rent`=' . (($data['monthly_rent'] !== '' && $data['monthly_rent'] !== NULL) ? "'{$data['monthly_rent']}'" : 'NULL') . ', `security_deposit`=' . (($data['security_deposit'] !== '' && $data['security_deposit'] !== NULL) ? "'{$data['security_deposit']}'" : 'NULL') . ', `other_charges`=' . (($data['other_charges'] !== '' && $data['other_charges'] !== NULL) ? "'{$data['other_charges']}'" : 'NULL') . ', `current_month_rent_status`=' . (($data['current_month_rent_status'] !== '' && $data['current_month_rent_status'] !== NULL) ? "'{$data['current_month_rent_status']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo '<a href="applicants_and_tenants_view.php?SelectedID='.urlencode($selected_id)."\">{$Translation['< back']}</a>";
@@ -286,7 +290,7 @@ function applicants_and_tenants_form($selected_id = '', $AllowUpdate = 1, $Allow
 	$rnd1 = ($dvprint ? rand(1000000, 9999999) : '');
 	// combobox: birth_date
 	$combo_birth_date = new DateCombo;
-	$combo_birth_date->DateFormat = "mdy";
+	$combo_birth_date->DateFormat = "ymd";
 	$combo_birth_date->MinYear = 1900;
 	$combo_birth_date->MaxYear = 2100;
 	$combo_birth_date->DefaultDate = parseMySQLDate('', '');
@@ -583,6 +587,7 @@ function applicants_and_tenants_form($selected_id = '', $AllowUpdate = 1, $Allow
 		$jsReadOnly .= "\tjQuery('#property_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
 		$jsReadOnly .= "\tjQuery('#unit').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
 		$jsReadOnly .= "\tjQuery('#unit_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
+		$jsReadOnly .= "\tjQuery('#current_month_rent_status').replaceWith('<div class=\"form-control-static\" id=\"current_month_rent_status\">' + (jQuery('#current_month_rent_status').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('.select2-container').hide();\n";
 
 		$noUploads = true;
@@ -643,8 +648,8 @@ function applicants_and_tenants_form($selected_id = '', $AllowUpdate = 1, $Allow
 		$templateCode=str_replace('<%%URLVALUE(email)%%>', urlencode($urow['email']), $templateCode);
 		$templateCode=str_replace('<%%VALUE(phone)%%>', html_attr($row['phone']), $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(phone)%%>', urlencode($urow['phone']), $templateCode);
-		$templateCode=str_replace('<%%VALUE(birth_date)%%>', @date('m/d/Y', @strtotime(html_attr($row['birth_date']))), $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(birth_date)%%>', urlencode(@date('m/d/Y', @strtotime(html_attr($urow['birth_date'])))), $templateCode);
+		$templateCode=str_replace('<%%VALUE(birth_date)%%>', @date('Y-m-d', @strtotime(html_attr($row['birth_date']))), $templateCode);
+		$templateCode=str_replace('<%%URLVALUE(birth_date)%%>', urlencode(@date('Y-m-d', @strtotime(html_attr($urow['birth_date'])))), $templateCode);
 		$templateCode=str_replace('<%%VALUE(status)%%>', html_attr($row['status']), $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(status)%%>', urlencode($urow['status']), $templateCode);
 		$templateCode=str_replace('<%%VALUE(property)%%>', html_attr($row['property']), $templateCode);

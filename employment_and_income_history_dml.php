@@ -189,7 +189,7 @@ function employment_and_income_history_form($selected_id = '', $AllowUpdate = 1,
 	$combo_tenant = new DataCombo;
 	// combobox: employed_from
 	$combo_employed_from = new DateCombo;
-	$combo_employed_from->DateFormat = "mdy";
+	$combo_employed_from->DateFormat = "ymd";
 	$combo_employed_from->MinYear = 1900;
 	$combo_employed_from->MaxYear = 2100;
 	$combo_employed_from->DefaultDate = parseMySQLDate('', '');
@@ -197,7 +197,7 @@ function employment_and_income_history_form($selected_id = '', $AllowUpdate = 1,
 	$combo_employed_from->NamePrefix = 'employed_from';
 	// combobox: employed_till
 	$combo_employed_till = new DateCombo;
-	$combo_employed_till->DateFormat = "mdy";
+	$combo_employed_till->DateFormat = "ymd";
 	$combo_employed_till->MinYear = 1900;
 	$combo_employed_till->MaxYear = 2100;
 	$combo_employed_till->DefaultDate = parseMySQLDate('', '');
@@ -445,10 +445,10 @@ function employment_and_income_history_form($selected_id = '', $AllowUpdate = 1,
 		$templateCode=str_replace('<%%URLVALUE(city)%%>', urlencode($urow['city']), $templateCode);
 		$templateCode=str_replace('<%%VALUE(employer_phone)%%>', html_attr($row['employer_phone']), $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(employer_phone)%%>', urlencode($urow['employer_phone']), $templateCode);
-		$templateCode=str_replace('<%%VALUE(employed_from)%%>', @date('m/d/Y', @strtotime(html_attr($row['employed_from']))), $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(employed_from)%%>', urlencode(@date('m/d/Y', @strtotime(html_attr($urow['employed_from'])))), $templateCode);
-		$templateCode=str_replace('<%%VALUE(employed_till)%%>', @date('m/d/Y', @strtotime(html_attr($row['employed_till']))), $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(employed_till)%%>', urlencode(@date('m/d/Y', @strtotime(html_attr($urow['employed_till'])))), $templateCode);
+		$templateCode=str_replace('<%%VALUE(employed_from)%%>', @date('Y-m-d', @strtotime(html_attr($row['employed_from']))), $templateCode);
+		$templateCode=str_replace('<%%URLVALUE(employed_from)%%>', urlencode(@date('Y-m-d', @strtotime(html_attr($urow['employed_from'])))), $templateCode);
+		$templateCode=str_replace('<%%VALUE(employed_till)%%>', @date('Y-m-d', @strtotime(html_attr($row['employed_till']))), $templateCode);
+		$templateCode=str_replace('<%%URLVALUE(employed_till)%%>', urlencode(@date('Y-m-d', @strtotime(html_attr($urow['employed_till'])))), $templateCode);
 		$templateCode=str_replace('<%%VALUE(occupation)%%>', html_attr($row['occupation']), $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(occupation)%%>', urlencode($urow['occupation']), $templateCode);
 		if($AllowUpdate || $AllowInsert){

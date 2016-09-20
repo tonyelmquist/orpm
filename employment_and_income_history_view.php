@@ -27,8 +27,8 @@
 		"`employment_and_income_history`.`employer_name`" => "employer_name",
 		"`employment_and_income_history`.`city`" => "city",
 		"`employment_and_income_history`.`employer_phone`" => "employer_phone",
-		"if(`employment_and_income_history`.`employed_from`,date_format(`employment_and_income_history`.`employed_from`,'%m/%d/%Y'),'')" => "employed_from",
-		"if(`employment_and_income_history`.`employed_till`,date_format(`employment_and_income_history`.`employed_till`,'%m/%d/%Y'),'')" => "employed_till",
+		"if(`employment_and_income_history`.`employed_from`,date_format(`employment_and_income_history`.`employed_from`,'%Y-%m-%d'),'')" => "employed_from",
+		"if(`employment_and_income_history`.`employed_till`,date_format(`employment_and_income_history`.`employed_till`,'%Y-%m-%d'),'')" => "employed_till",
 		"`employment_and_income_history`.`occupation`" => "occupation",
 		"`employment_and_income_history`.`notes`" => "notes"
 	);
@@ -52,8 +52,8 @@
 		"`employment_and_income_history`.`employer_name`" => "employer_name",
 		"`employment_and_income_history`.`city`" => "city",
 		"`employment_and_income_history`.`employer_phone`" => "employer_phone",
-		"if(`employment_and_income_history`.`employed_from`,date_format(`employment_and_income_history`.`employed_from`,'%m/%d/%Y'),'')" => "employed_from",
-		"if(`employment_and_income_history`.`employed_till`,date_format(`employment_and_income_history`.`employed_till`,'%m/%d/%Y'),'')" => "employed_till",
+		"if(`employment_and_income_history`.`employed_from`,date_format(`employment_and_income_history`.`employed_from`,'%Y-%m-%d'),'')" => "employed_from",
+		"if(`employment_and_income_history`.`employed_till`,date_format(`employment_and_income_history`.`employed_till`,'%Y-%m-%d'),'')" => "employed_till",
 		"`employment_and_income_history`.`occupation`" => "occupation",
 		"`employment_and_income_history`.`notes`" => "notes"
 	);
@@ -77,8 +77,8 @@
 		"`employment_and_income_history`.`employer_name`" => "employer_name",
 		"`employment_and_income_history`.`city`" => "city",
 		"`employment_and_income_history`.`employer_phone`" => "employer_phone",
-		"if(`employment_and_income_history`.`employed_from`,date_format(`employment_and_income_history`.`employed_from`,'%m/%d/%Y'),'')" => "employed_from",
-		"if(`employment_and_income_history`.`employed_till`,date_format(`employment_and_income_history`.`employed_till`,'%m/%d/%Y'),'')" => "employed_till",
+		"if(`employment_and_income_history`.`employed_from`,date_format(`employment_and_income_history`.`employed_from`,'%Y-%m-%d'),'')" => "employed_from",
+		"if(`employment_and_income_history`.`employed_till`,date_format(`employment_and_income_history`.`employed_till`,'%Y-%m-%d'),'')" => "employed_till",
 		"`employment_and_income_history`.`occupation`" => "occupation",
 		"`employment_and_income_history`.`notes`" => "notes"
 	);

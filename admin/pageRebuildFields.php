@@ -33,7 +33,7 @@
 			'security_deposit' => array('appgini' => 'INT unsigned '),
 			'other_charges' => array('appgini' => 'INT unsigned '),
 			'rent_paid' => array('appgini' => 'DECIMAL(10,2) '),
-			'rent_balance' => array('appgini' => 'DECIMAL(10,2) '),
+			'rent_balance' => array('appgini' => 'DECIMAL(10,2) default \'0.00\' '),
 			'due_date' => array('appgini' => 'DATE '),
 			'rent_reminder' => array('appgini' => 'DATE '),
 			'late_rent_reminder' => array('appgini' => 'DATE '),
