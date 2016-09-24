@@ -79,39 +79,6 @@
 				'inherit_permissions' => false,
 				'list_type' => 0,
 				'not_null' => false
-			),
-			'monthly_rent' => array(
-				'parent_table' => 'applicants_and_tenants',
-				'parent_pk_field' => 'id',
-				'parent_caption' => 'IF(    CHAR_LENGTH(`units1`.`rental_amount`), CONCAT_WS(\'\',   `units1`.`rental_amount`), \'\')',
-				'parent_from' => '`applicants_and_tenants` LEFT JOIN `properties` as properties1 ON `properties1`.`id`=`applicants_and_tenants`.`property` LEFT JOIN `units` as units1 ON `units1`.`id`=`applicants_and_tenants`.`unit` LEFT JOIN `properties` as properties2 ON `properties2`.`id`=`units1`.`property` ',
-				'filterers' => array(),
-				'custom_query' => '',
-				'inherit_permissions' => false,
-				'list_type' => 0,
-				'not_null' => false
-			),
-			'security_deposit' => array(
-				'parent_table' => 'applicants_and_tenants',
-				'parent_pk_field' => 'id',
-				'parent_caption' => 'IF(    CHAR_LENGTH(`units1`.`deposit_amount`), CONCAT_WS(\'\',   `units1`.`deposit_amount`), \'\')',
-				'parent_from' => '`applicants_and_tenants` LEFT JOIN `properties` as properties1 ON `properties1`.`id`=`applicants_and_tenants`.`property` LEFT JOIN `units` as units1 ON `units1`.`id`=`applicants_and_tenants`.`unit` LEFT JOIN `properties` as properties2 ON `properties2`.`id`=`units1`.`property` ',
-				'filterers' => array(),
-				'custom_query' => '',
-				'inherit_permissions' => false,
-				'list_type' => 0,
-				'not_null' => false
-			),
-			'other_charges' => array(
-				'parent_table' => 'applicants_and_tenants',
-				'parent_pk_field' => 'id',
-				'parent_caption' => 'IF(    CHAR_LENGTH(`units1`.`other_charges`), CONCAT_WS(\'\',   `units1`.`other_charges`), \'\')',
-				'parent_from' => '`applicants_and_tenants` LEFT JOIN `properties` as properties1 ON `properties1`.`id`=`applicants_and_tenants`.`property` LEFT JOIN `units` as units1 ON `units1`.`id`=`applicants_and_tenants`.`unit` LEFT JOIN `properties` as properties2 ON `properties2`.`id`=`units1`.`property` ',
-				'filterers' => array(),
-				'custom_query' => '',
-				'inherit_permissions' => false,
-				'list_type' => 0,
-				'not_null' => false
 			)
 		),
 		'employment_and_income_history' => array(   

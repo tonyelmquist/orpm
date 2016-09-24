@@ -15,11 +15,13 @@ function residence_and_rental_history_insert(){
 	}
 
 	$data['month'] = parseMySQLDate('', '1');
-	$data['monthly_rent'] = makeSafe($_REQUEST['tenant']);
+	$data['unit'] = makeSafe($_REQUEST['unit']);
+		if($data['unit'] == empty_lookup_value){ $data['unit'] = ''; }
+	$data['monthly_rent'] = makeSafe($_REQUEST['monthly_rent']);
 		if($data['monthly_rent'] == empty_lookup_value){ $data['monthly_rent'] = ''; }
-	$data['security_deposit'] = makeSafe($_REQUEST['tenant']);
+	$data['security_deposit'] = makeSafe($_REQUEST['security_deposit']);
 		if($data['security_deposit'] == empty_lookup_value){ $data['security_deposit'] = ''; }
-	$data['other_charges'] = makeSafe($_REQUEST['tenant']);
+	$data['other_charges'] = makeSafe($_REQUEST['other_charges']);
 		if($data['other_charges'] == empty_lookup_value){ $data['other_charges'] = ''; }
 	$data['rent_paid'] = makeSafe($_REQUEST['rent_paid']);
 		if($data['rent_paid'] == empty_lookup_value){ $data['rent_paid'] = ''; }
@@ -50,7 +52,7 @@ function residence_and_rental_history_insert(){
 	}
 
 	$o = array('silentErrors' => true);
-	sql('insert into `residence_and_rental_history` set       `month`=' . (($data['month'] != '') ? "'{$data['month']}'" : 'NULL') . ', `monthly_rent`=' . (($data['monthly_rent'] !== '' && $data['monthly_rent'] !== NULL) ? "'{$data['monthly_rent']}'" : 'NULL') . ', `security_deposit`=' . (($data['security_deposit'] !== '' && $data['security_deposit'] !== NULL) ? "'{$data['security_deposit']}'" : 'NULL') . ', `other_charges`=' . (($data['other_charges'] !== '' && $data['other_charges'] !== NULL) ? "'{$data['other_charges']}'" : 'NULL') . ', `rent_paid`=' . (($data['rent_paid'] !== '' && $data['rent_paid'] !== NULL) ? "'{$data['rent_paid']}'" : 'NULL') . ', `rent_balance`=' . (($data['rent_balance'] !== '' && $data['rent_balance'] !== NULL) ? "'{$data['rent_balance']}'" : 'NULL') . ', `due_date`=' . (($data['due_date'] !== '' && $data['due_date'] !== NULL) ? "'{$data['due_date']}'" : 'NULL') . ', `rent_reminder`=' . (($data['rent_reminder'] !== '' && $data['rent_reminder'] !== NULL) ? "'{$data['rent_reminder']}'" : 'NULL') . ', `late_rent_reminder`=' . (($data['late_rent_reminder'] !== '' && $data['late_rent_reminder'] !== NULL) ? "'{$data['late_rent_reminder']}'" : 'NULL') . ', `status`=' . (($data['status'] !== '' && $data['status'] !== NULL) ? "'{$data['status']}'" : 'NULL') . ', `duration_of_residency_from`=' . (($data['duration_of_residency_from'] !== '' && $data['duration_of_residency_from'] !== NULL) ? "'{$data['duration_of_residency_from']}'" : 'NULL') . ', `to`=' . (($data['to'] !== '' && $data['to'] !== NULL) ? "'{$data['to']}'" : 'NULL') . ', `reason_for_leaving`=' . (($data['reason_for_leaving'] !== '' && $data['reason_for_leaving'] !== NULL) ? "'{$data['reason_for_leaving']}'" : 'NULL') . ', `notes`=' . (($data['notes'] !== '' && $data['notes'] !== NULL) ? "'{$data['notes']}'" : 'NULL'), $o);
+	sql('insert into `residence_and_rental_history` set       `month`=' . (($data['month'] != '') ? "'{$data['month']}'" : 'NULL') . ', `unit`=' . (($data['unit'] !== '' && $data['unit'] !== NULL) ? "'{$data['unit']}'" : 'NULL') . ', `monthly_rent`=' . (($data['monthly_rent'] !== '' && $data['monthly_rent'] !== NULL) ? "'{$data['monthly_rent']}'" : 'NULL') . ', `security_deposit`=' . (($data['security_deposit'] !== '' && $data['security_deposit'] !== NULL) ? "'{$data['security_deposit']}'" : 'NULL') . ', `other_charges`=' . (($data['other_charges'] !== '' && $data['other_charges'] !== NULL) ? "'{$data['other_charges']}'" : 'NULL') . ', `rent_paid`=' . (($data['rent_paid'] !== '' && $data['rent_paid'] !== NULL) ? "'{$data['rent_paid']}'" : 'NULL') . ', `rent_balance`=' . (($data['rent_balance'] !== '' && $data['rent_balance'] !== NULL) ? "'{$data['rent_balance']}'" : 'NULL') . ', `due_date`=' . (($data['due_date'] !== '' && $data['due_date'] !== NULL) ? "'{$data['due_date']}'" : 'NULL') . ', `rent_reminder`=' . (($data['rent_reminder'] !== '' && $data['rent_reminder'] !== NULL) ? "'{$data['rent_reminder']}'" : 'NULL') . ', `late_rent_reminder`=' . (($data['late_rent_reminder'] !== '' && $data['late_rent_reminder'] !== NULL) ? "'{$data['late_rent_reminder']}'" : 'NULL') . ', `status`=' . (($data['status'] !== '' && $data['status'] !== NULL) ? "'{$data['status']}'" : 'NULL') . ', `duration_of_residency_from`=' . (($data['duration_of_residency_from'] !== '' && $data['duration_of_residency_from'] !== NULL) ? "'{$data['duration_of_residency_from']}'" : 'NULL') . ', `to`=' . (($data['to'] !== '' && $data['to'] !== NULL) ? "'{$data['to']}'" : 'NULL') . ', `reason_for_leaving`=' . (($data['reason_for_leaving'] !== '' && $data['reason_for_leaving'] !== NULL) ? "'{$data['reason_for_leaving']}'" : 'NULL') . ', `notes`=' . (($data['notes'] !== '' && $data['notes'] !== NULL) ? "'{$data['notes']}'" : 'NULL'), $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo "<a href=\"residence_and_rental_history_view.php?addNew_x=1\">{$Translation['< back']}</a>";
@@ -129,11 +131,13 @@ function residence_and_rental_history_update($selected_id){
 	}
 
 	$data['month'] = parseMySQLDate('', '1');
-	$data['monthly_rent'] = makeSafe($_REQUEST['tenant']);
+	$data['unit'] = makeSafe($_REQUEST['unit']);
+		if($data['unit'] == empty_lookup_value){ $data['unit'] = ''; }
+	$data['monthly_rent'] = makeSafe($_REQUEST['monthly_rent']);
 		if($data['monthly_rent'] == empty_lookup_value){ $data['monthly_rent'] = ''; }
-	$data['security_deposit'] = makeSafe($_REQUEST['tenant']);
+	$data['security_deposit'] = makeSafe($_REQUEST['security_deposit']);
 		if($data['security_deposit'] == empty_lookup_value){ $data['security_deposit'] = ''; }
-	$data['other_charges'] = makeSafe($_REQUEST['tenant']);
+	$data['other_charges'] = makeSafe($_REQUEST['other_charges']);
 		if($data['other_charges'] == empty_lookup_value){ $data['other_charges'] = ''; }
 	$data['rent_paid'] = makeSafe($_REQUEST['rent_paid']);
 		if($data['rent_paid'] == empty_lookup_value){ $data['rent_paid'] = ''; }
@@ -164,7 +168,7 @@ function residence_and_rental_history_update($selected_id){
 	}
 
 	$o=array('silentErrors' => true);
-	sql('update `residence_and_rental_history` set       `month`=' . (($data['month'] != '') ? "'{$data['month']}'" : 'NULL') . ', `monthly_rent`=' . (($data['monthly_rent'] !== '' && $data['monthly_rent'] !== NULL) ? "'{$data['monthly_rent']}'" : 'NULL') . ', `security_deposit`=' . (($data['security_deposit'] !== '' && $data['security_deposit'] !== NULL) ? "'{$data['security_deposit']}'" : 'NULL') . ', `other_charges`=' . (($data['other_charges'] !== '' && $data['other_charges'] !== NULL) ? "'{$data['other_charges']}'" : 'NULL') . ', `rent_paid`=' . (($data['rent_paid'] !== '' && $data['rent_paid'] !== NULL) ? "'{$data['rent_paid']}'" : 'NULL') . ', `rent_balance`=' . (($data['rent_balance'] !== '' && $data['rent_balance'] !== NULL) ? "'{$data['rent_balance']}'" : 'NULL') . ', `due_date`=' . (($data['due_date'] !== '' && $data['due_date'] !== NULL) ? "'{$data['due_date']}'" : 'NULL') . ', `rent_reminder`=' . (($data['rent_reminder'] !== '' && $data['rent_reminder'] !== NULL) ? "'{$data['rent_reminder']}'" : 'NULL') . ', `late_rent_reminder`=' . (($data['late_rent_reminder'] !== '' && $data['late_rent_reminder'] !== NULL) ? "'{$data['late_rent_reminder']}'" : 'NULL') . ', `status`=' . (($data['status'] !== '' && $data['status'] !== NULL) ? "'{$data['status']}'" : 'NULL') . ', `duration_of_residency_from`=' . (($data['duration_of_residency_from'] !== '' && $data['duration_of_residency_from'] !== NULL) ? "'{$data['duration_of_residency_from']}'" : 'NULL') . ', `to`=' . (($data['to'] !== '' && $data['to'] !== NULL) ? "'{$data['to']}'" : 'NULL') . ', `reason_for_leaving`=' . (($data['reason_for_leaving'] !== '' && $data['reason_for_leaving'] !== NULL) ? "'{$data['reason_for_leaving']}'" : 'NULL') . ', `notes`=' . (($data['notes'] !== '' && $data['notes'] !== NULL) ? "'{$data['notes']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
+	sql('update `residence_and_rental_history` set       `month`=' . (($data['month'] != '') ? "'{$data['month']}'" : 'NULL') . ', `unit`=' . (($data['unit'] !== '' && $data['unit'] !== NULL) ? "'{$data['unit']}'" : 'NULL') . ', `monthly_rent`=' . (($data['monthly_rent'] !== '' && $data['monthly_rent'] !== NULL) ? "'{$data['monthly_rent']}'" : 'NULL') . ', `security_deposit`=' . (($data['security_deposit'] !== '' && $data['security_deposit'] !== NULL) ? "'{$data['security_deposit']}'" : 'NULL') . ', `other_charges`=' . (($data['other_charges'] !== '' && $data['other_charges'] !== NULL) ? "'{$data['other_charges']}'" : 'NULL') . ', `rent_paid`=' . (($data['rent_paid'] !== '' && $data['rent_paid'] !== NULL) ? "'{$data['rent_paid']}'" : 'NULL') . ', `rent_balance`=' . (($data['rent_balance'] !== '' && $data['rent_balance'] !== NULL) ? "'{$data['rent_balance']}'" : 'NULL') . ', `due_date`=' . (($data['due_date'] !== '' && $data['due_date'] !== NULL) ? "'{$data['due_date']}'" : 'NULL') . ', `rent_reminder`=' . (($data['rent_reminder'] !== '' && $data['rent_reminder'] !== NULL) ? "'{$data['rent_reminder']}'" : 'NULL') . ', `late_rent_reminder`=' . (($data['late_rent_reminder'] !== '' && $data['late_rent_reminder'] !== NULL) ? "'{$data['late_rent_reminder']}'" : 'NULL') . ', `status`=' . (($data['status'] !== '' && $data['status'] !== NULL) ? "'{$data['status']}'" : 'NULL') . ', `duration_of_residency_from`=' . (($data['duration_of_residency_from'] !== '' && $data['duration_of_residency_from'] !== NULL) ? "'{$data['duration_of_residency_from']}'" : 'NULL') . ', `to`=' . (($data['to'] !== '' && $data['to'] !== NULL) ? "'{$data['to']}'" : 'NULL') . ', `reason_for_leaving`=' . (($data['reason_for_leaving'] !== '' && $data['reason_for_leaving'] !== NULL) ? "'{$data['reason_for_leaving']}'" : 'NULL') . ', `notes`=' . (($data['notes'] !== '' && $data['notes'] !== NULL) ? "'{$data['notes']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo '<a href="residence_and_rental_history_view.php?SelectedID='.urlencode($selected_id)."\">{$Translation['< back']}</a>";
@@ -444,6 +448,10 @@ function residence_and_rental_history_form($selected_id = '', $AllowUpdate = 1, 
 
 	// set records to read only if user can't insert new records and can't edit current record
 	if(($selected_id && !$AllowUpdate && !$AllowInsert) || (!$selected_id && !$AllowInsert)){
+		$jsReadOnly .= "\tjQuery('#unit').replaceWith('<div class=\"form-control-static\" id=\"unit\">' + (jQuery('#unit').val() || '') + '</div>');\n";
+		$jsReadOnly .= "\tjQuery('#monthly_rent').replaceWith('<div class=\"form-control-static\" id=\"monthly_rent\">' + (jQuery('#monthly_rent').val() || '') + '</div>');\n";
+		$jsReadOnly .= "\tjQuery('#security_deposit').replaceWith('<div class=\"form-control-static\" id=\"security_deposit\">' + (jQuery('#security_deposit').val() || '') + '</div>');\n";
+		$jsReadOnly .= "\tjQuery('#other_charges').replaceWith('<div class=\"form-control-static\" id=\"other_charges\">' + (jQuery('#other_charges').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#rent_paid').replaceWith('<div class=\"form-control-static\" id=\"rent_paid\">' + (jQuery('#rent_paid').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#rent_balance').replaceWith('<div class=\"form-control-static\" id=\"rent_balance\">' + (jQuery('#rent_balance').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#due_date').prop('readonly', true);\n";
@@ -503,6 +511,10 @@ function residence_and_rental_history_form($selected_id = '', $AllowUpdate = 1, 
 	$templateCode=str_replace('<%%UPLOADFILE(id)%%>', '', $templateCode);
 	$templateCode=str_replace('<%%UPLOADFILE(tenant)%%>', '', $templateCode);
 	$templateCode=str_replace('<%%UPLOADFILE(month)%%>', '', $templateCode);
+	$templateCode=str_replace('<%%UPLOADFILE(unit)%%>', '', $templateCode);
+	$templateCode=str_replace('<%%UPLOADFILE(monthly_rent)%%>', '', $templateCode);
+	$templateCode=str_replace('<%%UPLOADFILE(security_deposit)%%>', '', $templateCode);
+	$templateCode=str_replace('<%%UPLOADFILE(other_charges)%%>', '', $templateCode);
 	$templateCode=str_replace('<%%UPLOADFILE(rent_paid)%%>', '', $templateCode);
 	$templateCode=str_replace('<%%UPLOADFILE(rent_balance)%%>', '', $templateCode);
 	$templateCode=str_replace('<%%UPLOADFILE(due_date)%%>', '', $templateCode);
@@ -522,6 +534,14 @@ function residence_and_rental_history_form($selected_id = '', $AllowUpdate = 1, 
 		$templateCode=str_replace('<%%URLVALUE(tenant)%%>', urlencode($urow['tenant']), $templateCode);
 		$templateCode=str_replace('<%%VALUE(month)%%>', @date('Y-m-d', @strtotime(html_attr($row['month']))), $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(month)%%>', urlencode(@date('Y-m-d', @strtotime(html_attr($urow['month'])))), $templateCode);
+		$templateCode=str_replace('<%%VALUE(unit)%%>', html_attr($row['unit']), $templateCode);
+		$templateCode=str_replace('<%%URLVALUE(unit)%%>', urlencode($urow['unit']), $templateCode);
+		$templateCode=str_replace('<%%VALUE(monthly_rent)%%>', html_attr($row['monthly_rent']), $templateCode);
+		$templateCode=str_replace('<%%URLVALUE(monthly_rent)%%>', urlencode($urow['monthly_rent']), $templateCode);
+		$templateCode=str_replace('<%%VALUE(security_deposit)%%>', html_attr($row['security_deposit']), $templateCode);
+		$templateCode=str_replace('<%%URLVALUE(security_deposit)%%>', urlencode($urow['security_deposit']), $templateCode);
+		$templateCode=str_replace('<%%VALUE(other_charges)%%>', html_attr($row['other_charges']), $templateCode);
+		$templateCode=str_replace('<%%URLVALUE(other_charges)%%>', urlencode($urow['other_charges']), $templateCode);
 		$templateCode=str_replace('<%%VALUE(rent_paid)%%>', html_attr($row['rent_paid']), $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(rent_paid)%%>', urlencode($urow['rent_paid']), $templateCode);
 		$templateCode=str_replace('<%%VALUE(rent_balance)%%>', html_attr($row['rent_balance']), $templateCode);
@@ -554,6 +574,14 @@ function residence_and_rental_history_form($selected_id = '', $AllowUpdate = 1, 
 		$templateCode=str_replace('<%%URLVALUE(tenant)%%>', urlencode(''), $templateCode);
 		$templateCode=str_replace('<%%VALUE(month)%%>', '1', $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(month)%%>', urlencode('1'), $templateCode);
+		$templateCode=str_replace('<%%VALUE(unit)%%>', '', $templateCode);
+		$templateCode=str_replace('<%%URLVALUE(unit)%%>', urlencode(''), $templateCode);
+		$templateCode=str_replace('<%%VALUE(monthly_rent)%%>', '', $templateCode);
+		$templateCode=str_replace('<%%URLVALUE(monthly_rent)%%>', urlencode(''), $templateCode);
+		$templateCode=str_replace('<%%VALUE(security_deposit)%%>', '', $templateCode);
+		$templateCode=str_replace('<%%URLVALUE(security_deposit)%%>', urlencode(''), $templateCode);
+		$templateCode=str_replace('<%%VALUE(other_charges)%%>', '', $templateCode);
+		$templateCode=str_replace('<%%URLVALUE(other_charges)%%>', urlencode(''), $templateCode);
 		$templateCode=str_replace('<%%VALUE(rent_paid)%%>', '', $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(rent_paid)%%>', urlencode(''), $templateCode);
 		$templateCode=str_replace('<%%VALUE(rent_balance)%%>', '0.00', $templateCode);
@@ -605,19 +633,6 @@ function residence_and_rental_history_form($selected_id = '', $AllowUpdate = 1, 
 	// ajaxed auto-fill fields
 	$templateCode .= '<script>';
 	$templateCode .= '$j(function() {';
-
-	$templateCode.="\ttenant_update_autofills$rnd1 = function(){\n";
-	$templateCode.="\t\tnew Ajax.Request(\n";
-	if($dvprint){
-		$templateCode.="\t\t\t'residence_and_rental_history_autofill.php?rnd1=$rnd1&mfk=tenant&id=' + encodeURIComponent('".addslashes($row['tenant'])."'),\n";
-		$templateCode.="\t\t\t{encoding: 'UTF-8', method: 'get'}\n";
-	}else{
-		$templateCode.="\t\t\t'residence_and_rental_history_autofill.php?rnd1=$rnd1&mfk=tenant&id=' + encodeURIComponent(current_tenant{$rnd1}.value),\n";
-		$templateCode.="\t\t\t{encoding: 'UTF-8', method: 'get', onCreate: function(){ \$j('#tenant$rnd1').prop('disabled', true); \$j('#tenantLoading').html('<img src=loading.gif align=top>'); }, onComplete: function(){".(($arrPerm[1] || (($arrPerm[3] == 1 && $ownerMemberID == getLoggedMemberID()) || ($arrPerm[3] == 2 && $ownerGroupID == getLoggedGroupID()) || $arrPerm[3] == 3)) ? "\$j('#tenant$rnd1').prop('disabled', false); " : "\$j('#tenant$rnd1').prop('disabled', true); ")."\$j('#tenantLoading').html('');}}\n";
-	}
-	$templateCode.="\t\t);\n";
-	$templateCode.="\t};\n";
-	if(!$dvprint) $templateCode.="\tif(\$j('#tenant_caption').length) \$j('#tenant_caption').click(function(){ tenant_update_autofills$rnd1(); });\n";
 
 
 	$templateCode.="});";
