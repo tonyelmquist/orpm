@@ -2,7 +2,14 @@
 	// For help on using hooks, please refer to http://bigprof.com/appgini/help/working-with-generated-web-database-application/hooks
 
 	function residence_and_rental_history_init(&$options, $memberInfo, &$args){
+		
+		/* if a tenant is selected, update his rent_balance */
+		if (isset($_REQUEST['selectedID'])) {
+			$id = makeSafe($_REQUEST['selectedID']);
+			$balance = monthly_rent + security_deposit + other_charges - rent_paid;
 
+			sql("update residence_and_rental_history set rent_balance = '{$balance}' where id = '{$id}'", $eo);
+		}		
 		return TRUE;
 	}
 

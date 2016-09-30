@@ -90,7 +90,7 @@
 					'display-refresh' => true,
 					'display-add-new' => true,
 					'forced-where' => '',
-					'display-fields' => array(2 => 'Employer name', 3 => 'City', 4 => 'Employer phone', 5 => 'employed from', 6 => 'Employed till', 7 => 'Occupation', 8 => 'Notes'),
+					'display-fields' => array(2 => 'Employer name', 3 => 'County', 4 => 'Employer phone', 5 => 'employed from', 6 => 'Employed till', 7 => 'Occupation', 8 => 'Notes'),
 					'display-field-names' => array(2 => 'employer_name', 3 => 'city', 4 => 'employer_phone', 5 => 'employed_from', 6 => 'employed_till', 7 => 'occupation', 8 => 'notes'),
 					'sortable-fields' => array(0 => '`employment_and_income_history`.`id`', 1 => '`employment_and_income_history`.`tenant`', 2 => '`employment_and_income_history`.`employer_name`', 3 => '`employment_and_income_history`.`city`', 4 => '`employment_and_income_history`.`employer_phone`', 5 => '`employment_and_income_history`.`employed_from`', 6 => '`employment_and_income_history`.`employed_till`', 7 => '`employment_and_income_history`.`occupation`', 8 => '`employment_and_income_history`.`notes`'),
 					'records-per-page' => 10,

@@ -62,7 +62,7 @@
 		"`employment_and_income_history`.`id`" => "ID",
 		"IF(    CHAR_LENGTH(`applicants_and_tenants1`.`first_name`) || CHAR_LENGTH(`applicants_and_tenants1`.`last_name`), CONCAT_WS('',   `applicants_and_tenants1`.`first_name`, ' ', `applicants_and_tenants1`.`last_name`), '') /* Tenant */" => "Tenant",
 		"`employment_and_income_history`.`employer_name`" => "Employer name",
-		"`employment_and_income_history`.`city`" => "City",
+		"`employment_and_income_history`.`city`" => "County",
 		"`employment_and_income_history`.`employer_phone`" => "Employer phone",
 		"`employment_and_income_history`.`employed_from`" => "employed from",
 		"`employment_and_income_history`.`employed_till`" => "Employed till",
@@ -114,7 +114,7 @@
 	$x->PrimaryKey = "`employment_and_income_history`.`id`";
 
 	$x->ColWidth   = array(  80, 100, 100, 80, 80, 100, 50);
-	$x->ColCaption = array("Employer name", "City", "Employer phone", "employed from", "Employed till", "Occupation", "Notes");
+	$x->ColCaption = array("Employer name", "County", "Employer phone", "employed from", "Employed till", "Occupation", "Notes");
 	$x->ColFieldName = array('employer_name', 'city', 'employer_phone', 'employed_from', 'employed_till', 'occupation', 'notes');
 	$x->ColNumber  = array(3, 4, 5, 6, 7, 8, 9);
 
