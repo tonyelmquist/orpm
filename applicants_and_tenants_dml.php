@@ -635,6 +635,7 @@ function applicants_and_tenants_form($selected_id = '', $AllowUpdate = 1, $Allow
 	$templateCode=str_replace('<%%UPLOADFILE(property)%%>', '', $templateCode);
 	$templateCode=str_replace('<%%UPLOADFILE(unit)%%>', '', $templateCode);
 	$templateCode=str_replace('<%%UPLOADFILE(current_month_rent_status)%%>', '', $templateCode);
+	$templateCode=str_replace('<%%UPLOADFILE(total_rent_due)%%>', '', $templateCode);
 
 	// process values
 	if($selected_id){
@@ -658,6 +659,8 @@ function applicants_and_tenants_form($selected_id = '', $AllowUpdate = 1, $Allow
 		$templateCode=str_replace('<%%URLVALUE(unit)%%>', urlencode($urow['unit']), $templateCode);
 		$templateCode=str_replace('<%%VALUE(current_month_rent_status)%%>', html_attr($row['current_month_rent_status']), $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(current_month_rent_status)%%>', urlencode($urow['current_month_rent_status']), $templateCode);
+		$templateCode=str_replace('<%%VALUE(total_rent_due)%%>', html_attr($row['total_rent_due']), $templateCode);
+		$templateCode=str_replace('<%%URLVALUE(total_rent_due)%%>', urlencode($urow['total_rent_due']), $templateCode);
 	}else{
 		$templateCode=str_replace('<%%VALUE(id)%%>', '', $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(id)%%>', urlencode(''), $templateCode);
@@ -679,6 +682,8 @@ function applicants_and_tenants_form($selected_id = '', $AllowUpdate = 1, $Allow
 		$templateCode=str_replace('<%%URLVALUE(unit)%%>', urlencode(''), $templateCode);
 		$templateCode=str_replace('<%%VALUE(current_month_rent_status)%%>', '', $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(current_month_rent_status)%%>', urlencode(''), $templateCode);
+		$templateCode=str_replace('<%%VALUE(total_rent_due)%%>', '', $templateCode);
+		$templateCode=str_replace('<%%URLVALUE(total_rent_due)%%>', urlencode(''), $templateCode);
 	}
 
 	// process translations

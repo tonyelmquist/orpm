@@ -34,7 +34,8 @@
 		"IF(    CHAR_LENGTH(`units1`.`rental_amount`), CONCAT_WS('',   `units1`.`rental_amount`), '') /* Monthly rent */" => "monthly_rent",
 		"IF(    CHAR_LENGTH(`units1`.`deposit_amount`), CONCAT_WS('',   `units1`.`deposit_amount`), '') /* Security Deposit */" => "security_deposit",
 		"IF(    CHAR_LENGTH(`units1`.`other_charges`), CONCAT_WS('',   `units1`.`other_charges`), '') /* Other Charges */" => "other_charges",
-		"`applicants_and_tenants`.`current_month_rent_status`" => "current_month_rent_status"
+		"`applicants_and_tenants`.`current_month_rent_status`" => "current_month_rent_status",
+		"`applicants_and_tenants`.`total_rent_due`" => "total_rent_due"
 	);
 	// mapping incoming sort by requests to actual query fields
 	$x->SortFields = array(   
@@ -50,7 +51,8 @@
 		10 => 10,
 		11 => 11,
 		12 => 12,
-		13 => '`applicants_and_tenants`.`current_month_rent_status`'
+		13 => 13,
+		14 => '`applicants_and_tenants`.`total_rent_due`'
 	);
 
 	// Fields that can be displayed in the csv file
@@ -67,7 +69,8 @@
 		"IF(    CHAR_LENGTH(`units1`.`rental_amount`), CONCAT_WS('',   `units1`.`rental_amount`), '') /* Monthly rent */" => "monthly_rent",
 		"IF(    CHAR_LENGTH(`units1`.`deposit_amount`), CONCAT_WS('',   `units1`.`deposit_amount`), '') /* Security Deposit */" => "security_deposit",
 		"IF(    CHAR_LENGTH(`units1`.`other_charges`), CONCAT_WS('',   `units1`.`other_charges`), '') /* Other Charges */" => "other_charges",
-		"`applicants_and_tenants`.`current_month_rent_status`" => "current_month_rent_status"
+		"`applicants_and_tenants`.`current_month_rent_status`" => "current_month_rent_status",
+		"`applicants_and_tenants`.`total_rent_due`" => "total_rent_due"
 	);
 	// Fields that can be filtered
 	$x->QueryFieldsFilters=array(   
@@ -83,7 +86,8 @@
 		"IF(    CHAR_LENGTH(`units1`.`rental_amount`), CONCAT_WS('',   `units1`.`rental_amount`), '') /* Monthly rent */" => "Monthly rent",
 		"IF(    CHAR_LENGTH(`units1`.`deposit_amount`), CONCAT_WS('',   `units1`.`deposit_amount`), '') /* Security Deposit */" => "Security Deposit",
 		"IF(    CHAR_LENGTH(`units1`.`other_charges`), CONCAT_WS('',   `units1`.`other_charges`), '') /* Other Charges */" => "Other Charges",
-		"`applicants_and_tenants`.`current_month_rent_status`" => "Current month rent status"
+		"`applicants_and_tenants`.`current_month_rent_status`" => "Current month rent status",
+		"`applicants_and_tenants`.`total_rent_due`" => "Total Rent Due"
 	);
 
 	// Fields that can be quick searched
@@ -100,7 +104,8 @@
 		"IF(    CHAR_LENGTH(`units1`.`rental_amount`), CONCAT_WS('',   `units1`.`rental_amount`), '') /* Monthly rent */" => "monthly_rent",
 		"IF(    CHAR_LENGTH(`units1`.`deposit_amount`), CONCAT_WS('',   `units1`.`deposit_amount`), '') /* Security Deposit */" => "security_deposit",
 		"IF(    CHAR_LENGTH(`units1`.`other_charges`), CONCAT_WS('',   `units1`.`other_charges`), '') /* Other Charges */" => "other_charges",
-		"`applicants_and_tenants`.`current_month_rent_status`" => "current_month_rent_status"
+		"`applicants_and_tenants`.`current_month_rent_status`" => "current_month_rent_status",
+		"`applicants_and_tenants`.`total_rent_due`" => "total_rent_due"
 	);
 
 	// Lookup fields that can be used as filterers
@@ -135,10 +140,10 @@
 	$x->DefaultSortField = '2';
 	$x->DefaultSortDirection = 'asc';
 
-	$x->ColWidth   = array(  100, 100, 100, 100, 100, 100, 150, 150, 150, 150, 150, 150);
-	$x->ColCaption = array("Surname", "Othernames", "Email", "Phone", "Birth date", "Status", "Rented Property", "Rented Unit", "Monthly rent", "Security Deposit", "Other Charges", "Current month rent status");
-	$x->ColFieldName = array('last_name', 'first_name', 'email', 'phone', 'birth_date', 'status', 'property', 'unit', 'monthly_rent', 'security_deposit', 'other_charges', 'current_month_rent_status');
-	$x->ColNumber  = array(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13);
+	$x->ColWidth   = array(  100, 100, 100, 100, 100, 100, 150, 150, 150, 150, 150, 150, 150);
+	$x->ColCaption = array("Surname", "Othernames", "Email", "Phone", "Birth date", "Status", "Rented Property", "Rented Unit", "Monthly rent", "Security Deposit", "Other Charges", "Current month rent status", "Total Rent Due");
+	$x->ColFieldName = array('last_name', 'first_name', 'email', 'phone', 'birth_date', 'status', 'property', 'unit', 'monthly_rent', 'security_deposit', 'other_charges', 'current_month_rent_status', 'total_rent_due');
+	$x->ColNumber  = array(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14);
 
 	$x->Template = 'templates/applicants_and_tenants_templateTV.html';
 	$x->SelectedTemplate = 'templates/applicants_and_tenants_templateTVS.html';

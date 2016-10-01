@@ -74,7 +74,8 @@
 			'monthly_rent' => array('appgini' => 'INT unsigned '),
 			'security_deposit' => array('appgini' => 'INT unsigned '),
 			'other_charges' => array('appgini' => 'INT unsigned '),
-			'current_month_rent_status' => array('appgini' => 'INT unsigned ')
+			'current_month_rent_status' => array('appgini' => 'VARCHAR(40) '),
+			'total_rent_due' => array('appgini' => 'DECIMAL(10,2) ')
 		),
 		'properties' => array(   
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),
