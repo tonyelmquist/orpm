@@ -29,8 +29,8 @@
 		"`applicants_and_tenants`.`phone`" => "phone",
 		"if(`applicants_and_tenants`.`birth_date`,date_format(`applicants_and_tenants`.`birth_date`,'%Y-%m-%d'),'')" => "birth_date",
 		"`applicants_and_tenants`.`status`" => "status",
-		"IF(    CHAR_LENGTH(`properties1`.`property_name`), CONCAT_WS('',   `properties1`.`property_name`), '') /* Rented Property */" => "property",
-		"IF(    CHAR_LENGTH(`properties2`.`property_name`) || CHAR_LENGTH(`units1`.`unit_number`), CONCAT_WS('',   `properties2`.`property_name`, ' - ', `units1`.`unit_number`), '') /* Rented Unit */" => "unit",
+		"IF(    CHAR_LENGTH(`properties1`.`property_name`), CONCAT_WS('',   `properties1`.`property_name`), '') /* Property */" => "property",
+		"IF(    CHAR_LENGTH(`properties2`.`property_name`) || CHAR_LENGTH(`units1`.`unit_number`), CONCAT_WS('',   `properties2`.`property_name`, ' - ', `units1`.`unit_number`), '') /* Unit */" => "unit",
 		"IF(    CHAR_LENGTH(`units1`.`rental_amount`), CONCAT_WS('',   `units1`.`rental_amount`), '') /* Monthly rent */" => "monthly_rent",
 		"IF(    CHAR_LENGTH(`units1`.`deposit_amount`), CONCAT_WS('',   `units1`.`deposit_amount`), '') /* Security Deposit */" => "security_deposit",
 		"IF(    CHAR_LENGTH(`units1`.`other_charges`), CONCAT_WS('',   `units1`.`other_charges`), '') /* Other Charges */" => "other_charges",
@@ -64,8 +64,8 @@
 		"`applicants_and_tenants`.`phone`" => "phone",
 		"if(`applicants_and_tenants`.`birth_date`,date_format(`applicants_and_tenants`.`birth_date`,'%Y-%m-%d'),'')" => "birth_date",
 		"`applicants_and_tenants`.`status`" => "status",
-		"IF(    CHAR_LENGTH(`properties1`.`property_name`), CONCAT_WS('',   `properties1`.`property_name`), '') /* Rented Property */" => "property",
-		"IF(    CHAR_LENGTH(`properties2`.`property_name`) || CHAR_LENGTH(`units1`.`unit_number`), CONCAT_WS('',   `properties2`.`property_name`, ' - ', `units1`.`unit_number`), '') /* Rented Unit */" => "unit",
+		"IF(    CHAR_LENGTH(`properties1`.`property_name`), CONCAT_WS('',   `properties1`.`property_name`), '') /* Property */" => "property",
+		"IF(    CHAR_LENGTH(`properties2`.`property_name`) || CHAR_LENGTH(`units1`.`unit_number`), CONCAT_WS('',   `properties2`.`property_name`, ' - ', `units1`.`unit_number`), '') /* Unit */" => "unit",
 		"IF(    CHAR_LENGTH(`units1`.`rental_amount`), CONCAT_WS('',   `units1`.`rental_amount`), '') /* Monthly rent */" => "monthly_rent",
 		"IF(    CHAR_LENGTH(`units1`.`deposit_amount`), CONCAT_WS('',   `units1`.`deposit_amount`), '') /* Security Deposit */" => "security_deposit",
 		"IF(    CHAR_LENGTH(`units1`.`other_charges`), CONCAT_WS('',   `units1`.`other_charges`), '') /* Other Charges */" => "other_charges",
@@ -81,8 +81,8 @@
 		"`applicants_and_tenants`.`phone`" => "Phone",
 		"`applicants_and_tenants`.`birth_date`" => "Birth date",
 		"`applicants_and_tenants`.`status`" => "Status",
-		"IF(    CHAR_LENGTH(`properties1`.`property_name`), CONCAT_WS('',   `properties1`.`property_name`), '') /* Rented Property */" => "Rented Property",
-		"IF(    CHAR_LENGTH(`properties2`.`property_name`) || CHAR_LENGTH(`units1`.`unit_number`), CONCAT_WS('',   `properties2`.`property_name`, ' - ', `units1`.`unit_number`), '') /* Rented Unit */" => "Rented Unit",
+		"IF(    CHAR_LENGTH(`properties1`.`property_name`), CONCAT_WS('',   `properties1`.`property_name`), '') /* Property */" => "Property",
+		"IF(    CHAR_LENGTH(`properties2`.`property_name`) || CHAR_LENGTH(`units1`.`unit_number`), CONCAT_WS('',   `properties2`.`property_name`, ' - ', `units1`.`unit_number`), '') /* Unit */" => "Unit",
 		"IF(    CHAR_LENGTH(`units1`.`rental_amount`), CONCAT_WS('',   `units1`.`rental_amount`), '') /* Monthly rent */" => "Monthly rent",
 		"IF(    CHAR_LENGTH(`units1`.`deposit_amount`), CONCAT_WS('',   `units1`.`deposit_amount`), '') /* Security Deposit */" => "Security Deposit",
 		"IF(    CHAR_LENGTH(`units1`.`other_charges`), CONCAT_WS('',   `units1`.`other_charges`), '') /* Other Charges */" => "Other Charges",
@@ -99,8 +99,8 @@
 		"`applicants_and_tenants`.`phone`" => "phone",
 		"if(`applicants_and_tenants`.`birth_date`,date_format(`applicants_and_tenants`.`birth_date`,'%Y-%m-%d'),'')" => "birth_date",
 		"`applicants_and_tenants`.`status`" => "status",
-		"IF(    CHAR_LENGTH(`properties1`.`property_name`), CONCAT_WS('',   `properties1`.`property_name`), '') /* Rented Property */" => "property",
-		"IF(    CHAR_LENGTH(`properties2`.`property_name`) || CHAR_LENGTH(`units1`.`unit_number`), CONCAT_WS('',   `properties2`.`property_name`, ' - ', `units1`.`unit_number`), '') /* Rented Unit */" => "unit",
+		"IF(    CHAR_LENGTH(`properties1`.`property_name`), CONCAT_WS('',   `properties1`.`property_name`), '') /* Property */" => "property",
+		"IF(    CHAR_LENGTH(`properties2`.`property_name`) || CHAR_LENGTH(`units1`.`unit_number`), CONCAT_WS('',   `properties2`.`property_name`, ' - ', `units1`.`unit_number`), '') /* Unit */" => "unit",
 		"IF(    CHAR_LENGTH(`units1`.`rental_amount`), CONCAT_WS('',   `units1`.`rental_amount`), '') /* Monthly rent */" => "monthly_rent",
 		"IF(    CHAR_LENGTH(`units1`.`deposit_amount`), CONCAT_WS('',   `units1`.`deposit_amount`), '') /* Security Deposit */" => "security_deposit",
 		"IF(    CHAR_LENGTH(`units1`.`other_charges`), CONCAT_WS('',   `units1`.`other_charges`), '') /* Other Charges */" => "other_charges",
@@ -109,7 +109,7 @@
 	);
 
 	// Lookup fields that can be used as filterers
-	$x->filterers = array(  'property' => 'Rented Property', 'unit' => 'Rented Unit');
+	$x->filterers = array(  'property' => 'Property', 'unit' => 'Unit');
 
 	$x->QueryFrom="`applicants_and_tenants` LEFT JOIN `properties` as properties1 ON `properties1`.`id`=`applicants_and_tenants`.`property` LEFT JOIN `units` as units1 ON `units1`.`id`=`applicants_and_tenants`.`unit` LEFT JOIN `properties` as properties2 ON `properties2`.`id`=`units1`.`property` ";
 	$x->QueryWhere='';
@@ -141,7 +141,7 @@
 	$x->DefaultSortDirection = 'asc';
 
 	$x->ColWidth   = array(  100, 100, 100, 100, 100, 100, 150, 150, 150, 150, 150, 150, 150);
-	$x->ColCaption = array("Surname", "Othernames", "Email", "Phone", "Birth date", "Status", "Rented Property", "Rented Unit", "Monthly rent", "Security Deposit", "Other Charges", "Current month rent status", "Total Rent Due");
+	$x->ColCaption = array("Surname", "Othernames", "Email", "Phone", "Birth date", "Status", "Property", "Unit", "Monthly rent", "Security Deposit", "Other Charges", "Current month rent status", "Total Rent Due");
 	$x->ColFieldName = array('last_name', 'first_name', 'email', 'phone', 'birth_date', 'status', 'property', 'unit', 'monthly_rent', 'security_deposit', 'other_charges', 'current_month_rent_status', 'total_rent_due');
 	$x->ColNumber  = array(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14);
 

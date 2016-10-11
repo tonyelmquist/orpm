@@ -609,7 +609,7 @@ function applicants_and_tenants_form($selected_id = '', $AllowUpdate = 1, $Allow
 	$templateCode=str_replace('<%%URLCOMBOTEXT(unit)%%>', urlencode($combo_unit->MatchText), $templateCode);
 
 	/* lookup fields array: 'lookup field name' => array('parent table name', 'lookup field caption') */
-	$lookup_fields = array(  'property' => array('properties', 'Rented Property'), 'unit' => array('units', 'Rented Unit'));
+	$lookup_fields = array(  'property' => array('properties', 'Property'), 'unit' => array('units', 'Unit'));
 	foreach($lookup_fields as $luf => $ptfc){
 		$pt_perm = getTablePermissions($ptfc[0]);
 
