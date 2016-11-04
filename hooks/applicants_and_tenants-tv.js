@@ -36,7 +36,7 @@ function late_rent_notice(table_name, ids){
 	window.open(url);
 }
 
-function tenant_balance_history(table_name, ids){
+function tenant_statement(table_name, ids){
 
 	var populate_new_owner_dropdown = function(callback){
 
@@ -63,10 +63,10 @@ function tenant_balance_history(table_name, ids){
 				            '</thead>'+
 				            '<tbody>'+
 				              '<tr>'+
-				              '<td>August</td>'+
+				              '<td>' + my_tenants[i].month + '</td>'+
 				                '<td>' + my_tenants[i].last_name + ' ' + my_tenants[i].first_name + '</td>'+
 				                '<td>' + my_tenants[i].email + '</td>'+
-				                '<td>' + my_tenants[i].phone + '</td>'+
+				                '<td>' + my_tenants[i].rent_balance + '</td>'+
 				                '<td class="text-danger">5000</td>'+
 				              '</tr>'+				              
 				            '</tbody>'+
@@ -78,7 +78,7 @@ function tenant_balance_history(table_name, ids){
 				  	jQuery('#tenants_section').html(tenantrow);
 				}, 10);	
 				console.log(tenantrow);
-	        	var confirm_title = 'Tenant Balance History';
+	        	var confirm_title = 'Tenant Statement';
 				
 				modal_window({
 					message: '<div id="tenants_section">' + response.success + '</div>',
@@ -95,13 +95,12 @@ function tenant_balance_history(table_name, ids){
 	 
 	            console.log(response);
 	        }
-	   });  
-
+	   }); 
 	}
 	populate_new_owner_dropdown();	
 }
 
-function tenant_rent_record(table_name, ids){	
+/*function tenant_rent_record(table_name, ids){	
 
 	var populate_new_owner_dropdown = function(callback){
 
@@ -176,11 +175,11 @@ function tenant_rent_record(table_name, ids){
 
 	}
 	populate_new_owner_dropdown();	
-}
+}*/
 
-function tenant_id(table_name, ids){
+/*function tenant_id(table_name, ids){
 	alert('selected table = ' + table_name + 'selected ids = ' + ids );
-}
+}*/
 
 /*function test_record(table_name, ids){
 	//alert('selected table = ' + table_name + 'selected ids = ' + ids );

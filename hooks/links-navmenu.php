@@ -17,3 +17,10 @@
 			'icon' => 'resources/table_icons/report_stack.png'
 		);
 
+		$navLinks[] = array(
+			'url' => 'http://localhost:8888/orpm/applicants_and_tenants_view.php?SortField=&SortDirection=&FilterAnd%5B1%5D=&FilterField%5B1%5D=13&FilterOperator%5B1%5D=equal-to&FilterValue%5B1%5D=BALANCE', 
+			'title' => 'Unpaid rent', 
+			'groups' => array('*'),
+			'icon' => 'resources/table_icons/money_delete.png'
+		);
+

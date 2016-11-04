@@ -99,7 +99,7 @@
 	$x->SeparateDV = 1;
 	$x->AllowDeleteOfParents = 0;
 	$x->AllowFilters = 1;
-	$x->AllowSavingFilters = 0;
+	$x->AllowSavingFilters = 1;
 	$x->AllowSorting = 1;
 	$x->AllowNavigation = 1;
 	$x->AllowPrinting = 1;

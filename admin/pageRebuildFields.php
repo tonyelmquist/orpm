@@ -109,6 +109,13 @@
 			'primary_email' => array('appgini' => 'VARCHAR(40) '),
 			'phone' => array('appgini' => 'VARCHAR(40) '),
 			'country' => array('appgini' => 'VARCHAR(40) ')
+		),
+		'audit_trail' => array(   
+			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),
+			'username' => array('appgini' => 'VARCHAR(40) '),
+			'ip' => array('appgini' => 'VARCHAR(40) '),
+			'ts' => array('appgini' => 'DATETIME '),
+			'details' => array('appgini' => 'TEXT ')
 		)
 	);
 

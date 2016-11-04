@@ -138,22 +138,40 @@ units_delete2Tip=["",spacer+"This option allows each member of the group to dele
 units_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'Units Center' table."];
 
 // rental_owners table
-rental_owners_addTip=["",spacer+"This option allows all members of the group to add records to the 'Rental owners Center' table. A member who adds a record to the table becomes the 'owner' of that record."];
+rental_owners_addTip=["",spacer+"This option allows all members of the group to add records to the 'Owners Center' table. A member who adds a record to the table becomes the 'owner' of that record."];
 
-rental_owners_view0Tip=["",spacer+"This option prohibits all members of the group from viewing any record in the 'Rental owners Center' table."];
-rental_owners_view1Tip=["",spacer+"This option allows each member of the group to view only his own records in the 'Rental owners Center' table."];
-rental_owners_view2Tip=["",spacer+"This option allows each member of the group to view any record owned by any member of the group in the 'Rental owners Center' table."];
-rental_owners_view3Tip=["",spacer+"This option allows each member of the group to view all records in the 'Rental owners Center' table."];
+rental_owners_view0Tip=["",spacer+"This option prohibits all members of the group from viewing any record in the 'Owners Center' table."];
+rental_owners_view1Tip=["",spacer+"This option allows each member of the group to view only his own records in the 'Owners Center' table."];
+rental_owners_view2Tip=["",spacer+"This option allows each member of the group to view any record owned by any member of the group in the 'Owners Center' table."];
+rental_owners_view3Tip=["",spacer+"This option allows each member of the group to view all records in the 'Owners Center' table."];
 
-rental_owners_edit0Tip=["",spacer+"This option prohibits all members of the group from modifying any record in the 'Rental owners Center' table."];
-rental_owners_edit1Tip=["",spacer+"This option allows each member of the group to edit only his own records in the 'Rental owners Center' table."];
-rental_owners_edit2Tip=["",spacer+"This option allows each member of the group to edit any record owned by any member of the group in the 'Rental owners Center' table."];
-rental_owners_edit3Tip=["",spacer+"This option allows each member of the group to edit any records in the 'Rental owners Center' table, regardless of their owner."];
+rental_owners_edit0Tip=["",spacer+"This option prohibits all members of the group from modifying any record in the 'Owners Center' table."];
+rental_owners_edit1Tip=["",spacer+"This option allows each member of the group to edit only his own records in the 'Owners Center' table."];
+rental_owners_edit2Tip=["",spacer+"This option allows each member of the group to edit any record owned by any member of the group in the 'Owners Center' table."];
+rental_owners_edit3Tip=["",spacer+"This option allows each member of the group to edit any records in the 'Owners Center' table, regardless of their owner."];
 
-rental_owners_delete0Tip=["",spacer+"This option prohibits all members of the group from deleting any record in the 'Rental owners Center' table."];
-rental_owners_delete1Tip=["",spacer+"This option allows each member of the group to delete only his own records in the 'Rental owners Center' table."];
-rental_owners_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'Rental owners Center' table."];
-rental_owners_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'Rental owners Center' table."];
+rental_owners_delete0Tip=["",spacer+"This option prohibits all members of the group from deleting any record in the 'Owners Center' table."];
+rental_owners_delete1Tip=["",spacer+"This option allows each member of the group to delete only his own records in the 'Owners Center' table."];
+rental_owners_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'Owners Center' table."];
+rental_owners_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'Owners Center' table."];
+
+// audit_trail table
+audit_trail_addTip=["",spacer+"This option allows all members of the group to add records to the 'Audit Trail' table. A member who adds a record to the table becomes the 'owner' of that record."];
+
+audit_trail_view0Tip=["",spacer+"This option prohibits all members of the group from viewing any record in the 'Audit Trail' table."];
+audit_trail_view1Tip=["",spacer+"This option allows each member of the group to view only his own records in the 'Audit Trail' table."];
+audit_trail_view2Tip=["",spacer+"This option allows each member of the group to view any record owned by any member of the group in the 'Audit Trail' table."];
+audit_trail_view3Tip=["",spacer+"This option allows each member of the group to view all records in the 'Audit Trail' table."];
+
+audit_trail_edit0Tip=["",spacer+"This option prohibits all members of the group from modifying any record in the 'Audit Trail' table."];
+audit_trail_edit1Tip=["",spacer+"This option allows each member of the group to edit only his own records in the 'Audit Trail' table."];
+audit_trail_edit2Tip=["",spacer+"This option allows each member of the group to edit any record owned by any member of the group in the 'Audit Trail' table."];
+audit_trail_edit3Tip=["",spacer+"This option allows each member of the group to edit any records in the 'Audit Trail' table, regardless of their owner."];
+
+audit_trail_delete0Tip=["",spacer+"This option prohibits all members of the group from deleting any record in the 'Audit Trail' table."];
+audit_trail_delete1Tip=["",spacer+"This option allows each member of the group to delete only his own records in the 'Audit Trail' table."];
+audit_trail_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'Audit Trail' table."];
+audit_trail_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'Audit Trail' table."];
 
 /*
 	Style syntax:

@@ -24,9 +24,16 @@
 	}
 	$cs_ids = substr($cs_ids, 0, -1); 
 
-	$items = array();
+	/*$items = array();
 	$res = sql( "select * from {$table} " .
 				"where id in ({$cs_ids})", $eo);
+	while($row = db_fetch_assoc($res)){
+		$items[] = $row;
+		}*/
+
+	$tenant = array();
+	$res = sql( "select * from residence_and_rental_history " .
+				"where tenant in ({$cs_ids}) GROUP BY month", $eo);
 	while($row = db_fetch_assoc($res)){
 		$items[] = $row;
 		}

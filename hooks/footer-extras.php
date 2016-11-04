@@ -59,7 +59,8 @@
 ?>
 
 <div class="navbar-fixed-bottom hidden-print alert alert-info">
-	Powered By : <a href="https://www.google.com/" target = "_blank">VirtualDev Software Solutions</a>
+	Powered By : <a href="https://www.google.com/" target = "_blank">VirtualDev Software Solutions</a>&nbsp; || &nbsp;
+	<a href="resources/docs/smartLandlord.pdf" target = "_blank">smartLandlord  Documentation / Online Help</a>&nbsp; || &nbsp; CONTACT US : +254723223005, +254722944615&nbsp; || &nbsp;EMAIL : ndech90@gmail.com, maingiwachira@yahoo.com
 	<div class="pull-right">
 	<?php echo date('D, j M Y T'); ?>
 	</div>	

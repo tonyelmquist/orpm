@@ -79,8 +79,8 @@
 						<td align="center">
 							<?php echo $Translation['show records'] ; ?>
 							<?php
-								$arrFields = array('', 'applications_leases', 'residence_and_rental_history', 'employment_and_income_history', 'references', 'applicants_and_tenants', 'properties', 'units', 'rental_owners');
-								$arrFieldCaptions = array('All tables', 'Applications/Leases', 'Rental history', 'Employment and income history', 'References', 'Tenant Center', 'Property Center', 'Units Center', 'Rental owners Center');
+								$arrFields = array('', 'applications_leases', 'residence_and_rental_history', 'employment_and_income_history', 'references', 'applicants_and_tenants', 'properties', 'units', 'rental_owners', 'audit_trail');
+								$arrFieldCaptions = array('All tables', 'Applications/Leases', 'Rental history', 'Employment and income history', 'References', 'Tenant Center', 'Property Center', 'Units Center', 'Owners Center', 'Audit Trail');
 								echo htmlSelect('tableName', $arrFields, $arrFieldCaptions, $tableName->raw);
 							?>
 							</td>

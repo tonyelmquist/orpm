@@ -3,7 +3,7 @@
 	$j('#tenant-container').prop('readonly', true);
 	$j('#monthly_rent').prop('readonly', true);
 	$j('#rent_balance').prop('readonly', true);
-	$j('#security_deposit').prop('readonly', true);
+	// $j('#security_deposit').prop('readonly', true);
 	$j('#other_charges').prop('readonly', true);
 	$j('#status').prop('readonly', true);
 

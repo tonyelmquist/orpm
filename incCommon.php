@@ -54,7 +54,8 @@
 			'applicants_and_tenants' => array('Tenant Center', 'Listing of all tenants. view tenant\'s information, rented property & unit, current month rent status.', 'resources/table_icons/account_balances.png', 'None'),
 			'properties' => array('Property Center', 'Listing of all properties. Each property has an owner and consists of one or more rental units.', 'resources/table_icons/application_home.png', 'None'),
 			'units' => array('Units Center', 'Listing of all units, its details and current status.', 'resources/table_icons/change_password.png', 'None'),
-			'rental_owners' => array('Rental owners Center', 'Listing of owners of rental properties, and all the properties owned by each.', 'resources/table_icons/administrator.png', 'None')
+			'rental_owners' => array('Owners Center', 'Listing of owners of rental properties, and all the properties owned by each.', 'resources/table_icons/administrator.png', 'None'),
+			'audit_trail' => array('Audit Trail', 'Listing of all Login attempts. Both successful and failed attempts', 'table.gif', 'None')
 		);
 		if($skip_authentication || getLoggedAdmin()) return $arrTables;
 
@@ -148,7 +149,8 @@
 			'applicants_and_tenants' => "`applicants_and_tenants`.`id` as 'id', `applicants_and_tenants`.`last_name` as 'last_name', `applicants_and_tenants`.`first_name` as 'first_name', `applicants_and_tenants`.`email` as 'email', `applicants_and_tenants`.`phone` as 'phone', if(`applicants_and_tenants`.`birth_date`,date_format(`applicants_and_tenants`.`birth_date`,'%Y-%m-%d'),'') as 'birth_date', `applicants_and_tenants`.`status` as 'status', IF(    CHAR_LENGTH(`properties1`.`property_name`), CONCAT_WS('',   `properties1`.`property_name`), '') as 'property', IF(    CHAR_LENGTH(`properties2`.`property_name`) || CHAR_LENGTH(`units1`.`unit_number`), CONCAT_WS('',   `properties2`.`property_name`, ' - ', `units1`.`unit_number`), '') as 'unit', IF(    CHAR_LENGTH(`units1`.`rental_amount`), CONCAT_WS('',   `units1`.`rental_amount`), '') as 'monthly_rent', IF(    CHAR_LENGTH(`units1`.`deposit_amount`), CONCAT_WS('',   `units1`.`deposit_amount`), '') as 'security_deposit', IF(    CHAR_LENGTH(`units1`.`other_charges`), CONCAT_WS('',   `units1`.`other_charges`), '') as 'other_charges', `applicants_and_tenants`.`current_month_rent_status` as 'current_month_rent_status', `applicants_and_tenants`.`total_rent_due` as 'total_rent_due'",
 			'properties' => "`properties`.`id` as 'id', `properties`.`property_name` as 'property_name', `properties`.`type` as 'type', `properties`.`number_of_units` as 'number_of_units', `properties`.`photo` as 'photo', IF(    CHAR_LENGTH(`rental_owners1`.`first_name`) || CHAR_LENGTH(`rental_owners1`.`last_name`), CONCAT_WS('',   `rental_owners1`.`first_name`, ' ', `rental_owners1`.`last_name`), '') as 'owner', `properties`.`country` as 'country', `properties`.`street` as 'street', `properties`.`City` as 'City', `properties`.`State` as 'State'",
 			'units' => "`units`.`id` as 'id', IF(    CHAR_LENGTH(`properties1`.`property_name`), CONCAT_WS('',   `properties1`.`property_name`), '') as 'property', `units`.`unit_number` as 'unit_number', `units`.`photo` as 'photo', `units`.`status` as 'status', `units`.`features` as 'features', `units`.`rental_amount` as 'rental_amount', `units`.`deposit_amount` as 'deposit_amount', `units`.`other_charges` as 'other_charges', `units`.`description` as 'description'",
-			'rental_owners' => "`rental_owners`.`id` as 'id', `rental_owners`.`first_name` as 'first_name', `rental_owners`.`last_name` as 'last_name', if(`rental_owners`.`date_of_birth`,date_format(`rental_owners`.`date_of_birth`,'%Y-%m-%d'),'') as 'date_of_birth', `rental_owners`.`primary_email` as 'primary_email', `rental_owners`.`phone` as 'phone', `rental_owners`.`country` as 'country'"
+			'rental_owners' => "`rental_owners`.`id` as 'id', `rental_owners`.`first_name` as 'first_name', `rental_owners`.`last_name` as 'last_name', if(`rental_owners`.`date_of_birth`,date_format(`rental_owners`.`date_of_birth`,'%Y-%m-%d'),'') as 'date_of_birth', `rental_owners`.`primary_email` as 'primary_email', `rental_owners`.`phone` as 'phone', `rental_owners`.`country` as 'country'",
+			'audit_trail' => "`audit_trail`.`id` as 'id', `audit_trail`.`username` as 'username', `audit_trail`.`ip` as 'ip', `audit_trail`.`ts` as 'ts', `audit_trail`.`details` as 'details'"
 		);
 
 		if(isset($sql_fields[$table_name])){
@@ -169,7 +171,8 @@
 			'applicants_and_tenants' => "`applicants_and_tenants` LEFT JOIN `properties` as properties1 ON `properties1`.`id`=`applicants_and_tenants`.`property` LEFT JOIN `units` as units1 ON `units1`.`id`=`applicants_and_tenants`.`unit` LEFT JOIN `properties` as properties2 ON `properties2`.`id`=`units1`.`property` ",
 			'properties' => "`properties` LEFT JOIN `rental_owners` as rental_owners1 ON `rental_owners1`.`id`=`properties`.`owner` ",
 			'units' => "`units` LEFT JOIN `properties` as properties1 ON `properties1`.`id`=`units`.`property` ",
-			'rental_owners' => "`rental_owners` "
+			'rental_owners' => "`rental_owners` ",
+			'audit_trail' => "`audit_trail` "
 		);
 
 		$pkey = array(   
@@ -180,7 +183,8 @@
 			'applicants_and_tenants' => 'id',
 			'properties' => 'id',
 			'units' => 'id',
-			'rental_owners' => 'id'
+			'rental_owners' => 'id',
+			'audit_trail' => 'id'
 		);
 
 		if(isset($sql_from[$table_name])){
@@ -250,9 +254,9 @@
 					$_SESSION['memberID']=$username;
 					$_SESSION['memberGroupID']=sqlValue("select groupID from membership_users where lcase(memberID)='$username'");
 					if($_POST['rememberMe']==1){
-						@setcookie('Tenant_Management_System_rememberMe', md5($username.$password), time()+86400*30);
+						@setcookie('smartLandlord_rememberMe', md5($username.$password), time()+86400*30);
 					}else{
-						@setcookie('Tenant_Management_System_rememberMe', '', time()-86400*30);
+						@setcookie('smartLandlord_rememberMe', '', time()-86400*30);
 					}
 
 					// hook: login_ok
@@ -281,8 +285,8 @@
 			if(!headers_sent()) header('HTTP/1.0 403 Forbidden');
 			redirect("index.php?loginFailed=1");
 			exit;
-		}elseif((!$_SESSION['memberID'] || $_SESSION['memberID']==$adminConfig['anonymousMember']) && $_COOKIE['Tenant_Management_System_rememberMe']!=''){
-			$chk=makeSafe($_COOKIE['Tenant_Management_System_rememberMe']);
+		}elseif((!$_SESSION['memberID'] || $_SESSION['memberID']==$adminConfig['anonymousMember']) && $_COOKIE['smartLandlord_rememberMe']!=''){
+			$chk=makeSafe($_COOKIE['smartLandlord_rememberMe']);
 			if($username=sqlValue("select memberID from membership_users where convert(md5(concat(memberID, passMD5)), char)='$chk' and isBanned=0")){
 				$_SESSION['memberID']=$username;
 				$_SESSION['memberGroupID']=sqlValue("select groupID from membership_users where lcase(memberID)='$username'");
@@ -316,7 +320,7 @@
 					<span class="icon-bar"></span>
 				</button>
 				<!-- application title is obtained from the name besides the yellow database icon in AppGini, use underscores for spaces -->
-				<a class="navbar-brand" href="<?php echo PREPEND_PATH; ?>index.php"><i class="glyphicon glyphicon-home"></i> Tenant Management System</a>
+				<a class="navbar-brand" href="<?php echo PREPEND_PATH; ?>index.php"><i class="glyphicon glyphicon-home"></i> smartLandlord</a>
 			</div>
 			<div class="collapse navbar-collapse">
 				<ul class="nav navbar-nav">
@@ -1114,6 +1118,9 @@ EOT;
 		$css_links = <<<EOT
 
 			<link rel="stylesheet" href="{$prepend_path}resources/initializr/css/bootstrap.css">
+			<!--[if gt IE 8]><!-->
+				<link rel="stylesheet" href="{$prepend_path}resources/initializr/css/bootstrap-theme.css">
+			<!--<![endif]-->';
 			<link rel="stylesheet" href="{$prepend_path}resources/lightbox/css/lightbox.css" media="screen">
 			<link rel="stylesheet" href="{$prepend_path}resources/select2/select2.css" media="screen">
 			<link rel="stylesheet" href="{$prepend_path}resources/timepicker/bootstrap-timepicker.min.css" media="screen">

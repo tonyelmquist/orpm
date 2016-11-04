@@ -166,12 +166,12 @@
 			),
 
 			array(
-			'title' => 'View Tenant Balance History',
-			'function' => 'tenant_balance_history',
+			'title' => 'View Tenant Statement',
+			'function' => 'tenant_statement',
 			'icon' => 'minus'
-			),
+			)
 			
-			array(
+			/*array(
 			'title' => 'View Tenant Rent Record',
 			'function' => 'tenant_rent_record',
 			'icon' => 'paperclip'
@@ -181,7 +181,7 @@
 			'title' => 'View Tenant ID',
 			'function' => 'tenant_id',
 			'icon' => 'paperclip'
-			)
+			)*/
 
 			/*array(
 			'title' => 'Test Records',

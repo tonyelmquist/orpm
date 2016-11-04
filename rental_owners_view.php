@@ -89,7 +89,7 @@
 	$x->SeparateDV = 1;
 	$x->AllowDeleteOfParents = 0;
 	$x->AllowFilters = 1;
-	$x->AllowSavingFilters = 0;
+	$x->AllowSavingFilters = 1;
 	$x->AllowSorting = 1;
 	$x->AllowNavigation = 1;
 	$x->AllowPrinting = 1;
@@ -99,7 +99,7 @@
 	$x->QuickSearchText = $Translation["quick search"];
 	$x->ScriptFileName = "rental_owners_view.php";
 	$x->RedirectAfterInsert = "rental_owners_view.php?SelectedID=#ID#";
-	$x->TableTitle = "Rental owners Center";
+	$x->TableTitle = "Owners Center";
 	$x->TableIcon = "resources/table_icons/administrator.png";
 	$x->PrimaryKey = "`rental_owners`.`id`";
 

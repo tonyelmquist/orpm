@@ -1,4 +1,15 @@
 <?php
+    $currDir = dirname(__FILE__) . '/..';
+    include("$currDir/defaultLang.php");
+    include("$currDir/language.php");
+    include("$currDir/lib.php");
+
+    /* grant access to all users who have access to the applicants_and_tenants table */
+    $od_from = get_sql_from('applicants_and_tenants');
+    if (!$od_from) {
+        header('HTTP/1.0 401 Unauthorized');
+        exit();
+    }
 /*
  Reportico - PHP Reporting Tool
  Copyright (C) 2010-2014 Peter Deed

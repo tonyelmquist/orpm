@@ -26,6 +26,7 @@
 		setupTable('units', "create table if not exists `units` (   `id` INT unsigned not null auto_increment , primary key (`id`), `property` INT unsigned , `unit_number` VARCHAR(40) , `photo` VARCHAR(40) , `status` VARCHAR(40) not null , `features` TEXT , `rental_amount` DECIMAL(10,2) , `deposit_amount` DECIMAL(10,2) , `other_charges` DECIMAL(10,2) , `description` TEXT ) CHARSET utf8", $silent);
 		setupIndexes('units', array('property'));
 		setupTable('rental_owners', "create table if not exists `rental_owners` (   `id` INT unsigned not null auto_increment , primary key (`id`), `first_name` VARCHAR(40) , `last_name` VARCHAR(40) , `date_of_birth` DATE , `primary_email` VARCHAR(40) , `phone` VARCHAR(40) , `country` VARCHAR(40) ) CHARSET utf8", $silent);
+		setupTable('audit_trail', "create table if not exists `audit_trail` (   `id` INT unsigned not null auto_increment , primary key (`id`), `username` VARCHAR(40) , `ip` VARCHAR(40) , `ts` DATETIME , `details` TEXT ) CHARSET utf8", $silent);
 
 
 		// save MD5

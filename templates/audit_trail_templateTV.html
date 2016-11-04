@@ -1,0 +1,13 @@
+<!-- Edit this file to change the layout of each record in the table view -->
+<!-- To disable clicking of a field, remove the <%%SELECT%%> and <%%ENDSELECT%%> formatters around it-->
+
+<!--
+	If you wish to hide the table view header that contains the column titles,
+	add the following to the audit_trail_init() hook (in hooks/audit_trail.php file)
+	  $options->ShowTableHeader = 0;
+-->
+
+		<td id="audit_trail-username-<%%VALUE(id)%%>" class="audit_trail-username "><%%SELECT%%><%%VALUE(username)%%><%%ENDSELECT%%></td>
+		<td id="audit_trail-ip-<%%VALUE(id)%%>" class="audit_trail-ip "><%%SELECT%%><%%VALUE(ip)%%><%%ENDSELECT%%></td>
+		<td id="audit_trail-ts-<%%VALUE(id)%%>" class="audit_trail-ts "><%%SELECT%%><%%VALUE(ts)%%><%%ENDSELECT%%></td>
+		<td id="audit_trail-details-<%%VALUE(id)%%>" class="audit_trail-details "><%%SELECT%%><%%VALUE(details)%%><%%ENDSELECT%%></td>

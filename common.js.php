@@ -147,6 +147,10 @@ function rental_owners_validateData(){
 	$j('.has-error').removeClass('has-error');
 	return true;
 }
+function audit_trail_validateData(){
+	$j('.has-error').removeClass('has-error');
+	return true;
+}
 function post(url, params, update, disable, loading){
 	new Ajax.Request(
 		url, {

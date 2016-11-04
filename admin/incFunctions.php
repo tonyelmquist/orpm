@@ -53,7 +53,8 @@
 				'applicants_and_tenants' => 'Tenant Center',
 				'properties' => 'Property Center',
 				'units' => 'Units Center',
-				'rental_owners' => 'Rental owners Center'
+				'rental_owners' => 'Owners Center',
+				'audit_trail' => 'Audit Trail'
 			);
 
 			return $arrTables;
@@ -274,8 +275,8 @@
 		if(isset($_COOKIE[session_name()])){
 			setcookie(session_name(), '', time()-42000, '/');
 		}
-		if(isset($_COOKIE['Tenant_Management_System_rememberMe'])){
-			setcookie('Tenant_Management_System_rememberMe', '', time()-42000);
+		if(isset($_COOKIE['smartLandlord_rememberMe'])){
+			setcookie('smartLandlord_rememberMe', '', time()-42000);
 		}
 		session_destroy();
 	}

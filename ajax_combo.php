@@ -191,6 +191,8 @@
 			)
 		),
 		'rental_owners' => array(  
+		),
+		'audit_trail' => array(  
 		)
 	);
 
