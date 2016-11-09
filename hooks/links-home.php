@@ -37,7 +37,7 @@
 		);
 
 	$homeLinks[] = array(
-				'url' => '/simpleinvoices/" target="blank"',
+				'url' => 'http://localhost:8888/orpm/simpleinvoices/" target="blank"',
 				'icon' => 'resources/table_icons/receipt_invoice.png',
 				'title' => 'Invoices / Receipts',
 				'description' => 'Generate all tenants invoices / receipts.',
