@@ -56,8 +56,8 @@ else
 {
 define('SW_DB_DRIVER', SW_DB_TYPE);
 define('SW_DB_USER', 'root');
-define('SW_DB_PASSWORD', '');
-define('SW_DB_HOST', '127.0.0.1');
+define('SW_DB_PASSWORD', 'root');
+define('SW_DB_HOST', 'localhost');
 define('SW_DB_DATABASE', 'orpm');
 }
 define('SW_DB_CONNECT_FROM_CONFIG', true);
