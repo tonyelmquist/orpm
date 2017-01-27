@@ -9,7 +9,7 @@ if(!defined('datalist_db_encoding')) define('datalist_db_encoding', 'UTF-8');
 if(!defined('maxSortBy')) define('maxSortBy', 4);
 if(!defined('empty_lookup_value')) define('empty_lookup_value', '{empty_value}');
 
-if(function_exists('date_default_timezone_set')) @date_default_timezone_set('Africa/Nairobi');
+if(function_exists('date_default_timezone_set')) @date_default_timezone_set('America/New_York');
 if(function_exists('set_magic_quotes_runtime')) @set_magic_quotes_runtime(0);
 
 $GLOBALS['filter_operators'] = array(
@@ -73,7 +73,7 @@ include("$currDir/admin/incFunctions.php");
 	@header('Cache-Control: no-cache, no-store, must-revalidate'); // HTTP 1.1.
 	@header('Pragma: no-cache'); // HTTP 1.0.
 	@header('Expires: 0'); // Proxies.
-	@session_name('smartLandlord');
+	@session_name('landlordTenantSystems');
 	session_start();
 
 	// check if membership system exists

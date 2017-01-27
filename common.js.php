@@ -151,6 +151,18 @@ function audit_trail_validateData(){
 	$j('.has-error').removeClass('has-error');
 	return true;
 }
+function maintenance_tasks_validateData(){
+	$j('.has-error').removeClass('has-error');
+	return true;
+}
+function employees_validateData(){
+	$j('.has-error').removeClass('has-error');
+	return true;
+}
+function task_types_validateData(){
+	$j('.has-error').removeClass('has-error');
+	return true;
+}
 function post(url, params, update, disable, loading){
 	new Ajax.Request(
 		url, {

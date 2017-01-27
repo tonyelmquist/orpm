@@ -152,6 +152,34 @@
 					</div>
 				</div>
 
+				<div class="form-group">
+					<div class="col-lg-offset-3 col-lg-9">
+						<div class="checkbox"><label for="pets"><input type="checkbox" name="pets" id="pets" value="1" <%%CHECKED(pets)%%>> Pets Allowed</label>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-lg-offset-3 col-lg-9">
+						<div class="checkbox"><label for="smoking"><input type="checkbox" name="smoking" id="smoking" value="1" <%%CHECKED(smoking)%%>> Smoking Allowed</label>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="sublet" class="control-label col-lg-3">Sublet Allowed</label>
+					<div class="col-lg-9">
+						<input maxlength="40" type="text" class="form-control" name="sublet" id="sublet" value="<%%VALUE(sublet)%%>">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-lg-offset-3 col-lg-9">
+						<div class="checkbox"><label for="commercial"><input type="checkbox" name="commercial" id="commercial" value="1" <%%CHECKED(commercial)%%>> Commercial</label>
+						</div>
+					</div>
+				</div>
+
 			</fieldset>
 		</div>
 
@@ -188,6 +216,9 @@
 				$j('.nicEdit-panelContain').parent().next().width('88%');
 				$j('.nicEdit-main').width('99%');
 			});
+			/* enable DV action buttons to float on scrolling down the form */
+			enable_dvab_floating();
+
 			$j('select, input[type=text], textarea').not(':disabled').eq(0).focus();
 			$j('form').eq(0).change(function(){
 				if($j(this).data('already_changed')) return;

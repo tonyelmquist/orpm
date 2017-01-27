@@ -23,7 +23,11 @@
 			'emergency_contact' => array('appgini' => 'VARCHAR(100) '),
 			'co_signer_details' => array('appgini' => 'VARCHAR(100) '),
 			'notes' => array('appgini' => 'TEXT '),
-			'agreement' => array('appgini' => 'VARCHAR(40) ')
+			'agreement' => array('appgini' => 'VARCHAR(40) '),
+			'pets' => array('appgini' => 'TINYINT '),
+			'smoking' => array('appgini' => 'TINYINT '),
+			'sublet' => array('appgini' => 'VARCHAR(40) '),
+			'commercial' => array('appgini' => 'TINYINT ')
 		),
 		'residence_and_rental_history' => array(   
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),
@@ -87,7 +91,8 @@
 			'country' => array('appgini' => 'VARCHAR(40) '),
 			'street' => array('appgini' => 'VARCHAR(40) '),
 			'City' => array('appgini' => 'VARCHAR(40) '),
-			'State' => array('appgini' => 'VARCHAR(40) ')
+			'State' => array('appgini' => 'VARCHAR(40) '),
+			'zipCode' => array('appgini' => 'VARCHAR(40) ')
 		),
 		'units' => array(   
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),
@@ -116,6 +121,26 @@
 			'ip' => array('appgini' => 'VARCHAR(40) '),
 			'ts' => array('appgini' => 'DATETIME '),
 			'details' => array('appgini' => 'TEXT ')
+		),
+		'maintenance_tasks' => array(   
+			'property' => array('appgini' => 'INT unsigned '),
+			'unit' => array('appgini' => 'INT unsigned '),
+			'task' => array('appgini' => 'INT '),
+			'due_date' => array('appgini' => 'DATE '),
+			'assigned_to' => array('appgini' => 'VARCHAR(40) '),
+			'task_ID' => array('appgini' => 'INT not null primary key auto_increment ')
+		),
+		'employees' => array(   
+			'name' => array('appgini' => 'VARCHAR(40) '),
+			'address' => array('appgini' => 'VARCHAR(40) '),
+			'phone' => array('appgini' => 'VARCHAR(40) '),
+			'cell' => array('appgini' => 'VARCHAR(40) '),
+			'email' => array('appgini' => 'VARCHAR(80) '),
+			'employee_ID' => array('appgini' => 'INT not null primary key auto_increment ')
+		),
+		'task_types' => array(   
+			'task_type' => array('appgini' => 'VARCHAR(40) '),
+			'task_type_ID' => array('appgini' => 'INT not null primary key auto_increment ')
 		)
 	);
 

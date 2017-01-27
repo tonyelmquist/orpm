@@ -29,17 +29,21 @@
 		"IF(    CHAR_LENGTH(`units1`.`unit_number`), CONCAT_WS('',   `units1`.`unit_number`), '') /* Unit applied for */" => "unit",
 		"`applications_leases`.`type`" => "type",
 		"`applications_leases`.`total_number_of_occupants`" => "total_number_of_occupants",
-		"if(`applications_leases`.`start_date`,date_format(`applications_leases`.`start_date`,'%Y-%m-%d'),'')" => "start_date",
-		"if(`applications_leases`.`end_date`,date_format(`applications_leases`.`end_date`,'%Y-%m-%d'),'')" => "end_date",
+		"if(`applications_leases`.`start_date`,date_format(`applications_leases`.`start_date`,'%m/%d/%Y'),'')" => "start_date",
+		"if(`applications_leases`.`end_date`,date_format(`applications_leases`.`end_date`,'%m/%d/%Y'),'')" => "end_date",
 		"`applications_leases`.`recurring_charges_frequency`" => "recurring_charges_frequency",
-		"if(`applications_leases`.`next_due_date`,date_format(`applications_leases`.`next_due_date`,'%Y-%m-%d'),'')" => "next_due_date",
+		"if(`applications_leases`.`next_due_date`,date_format(`applications_leases`.`next_due_date`,'%m/%d/%Y'),'')" => "next_due_date",
 		"CONCAT('$', FORMAT(`applications_leases`.`rent`, 2))" => "rent",
 		"CONCAT('$', FORMAT(`applications_leases`.`security_deposit`, 2))" => "security_deposit",
-		"if(`applications_leases`.`security_deposit_date`,date_format(`applications_leases`.`security_deposit_date`,'%Y-%m-%d'),'')" => "security_deposit_date",
+		"if(`applications_leases`.`security_deposit_date`,date_format(`applications_leases`.`security_deposit_date`,'%m/%d/%Y'),'')" => "security_deposit_date",
 		"`applications_leases`.`emergency_contact`" => "emergency_contact",
 		"`applications_leases`.`co_signer_details`" => "co_signer_details",
 		"`applications_leases`.`notes`" => "notes",
-		"concat('<img src=\"', if(`applications_leases`.`agreement`, 'checked.gif', 'checkednot.gif'), '\" border=\"0\" />')" => "agreement"
+		"concat('<img src=\"', if(`applications_leases`.`agreement`, 'checked.gif', 'checkednot.gif'), '\" border=\"0\" />')" => "agreement",
+		"concat('<img src=\"', if(`applications_leases`.`pets`, 'checked.gif', 'checkednot.gif'), '\" border=\"0\" />')" => "pets",
+		"concat('<img src=\"', if(`applications_leases`.`smoking`, 'checked.gif', 'checkednot.gif'), '\" border=\"0\" />')" => "smoking",
+		"`applications_leases`.`sublet`" => "sublet",
+		"concat('<img src=\"', if(`applications_leases`.`commercial`, 'checked.gif', 'checkednot.gif'), '\" border=\"0\" />')" => "commercial"
 	);
 	// mapping incoming sort by requests to actual query fields
 	$x->SortFields = array(   
@@ -60,7 +64,11 @@
 		15 => 15,
 		16 => 16,
 		17 => 17,
-		18 => 18
+		18 => 18,
+		19 => '`applications_leases`.`pets`',
+		20 => '`applications_leases`.`smoking`',
+		21 => 21,
+		22 => '`applications_leases`.`commercial`'
 	);
 
 	// Fields that can be displayed in the csv file
@@ -72,17 +80,21 @@
 		"IF(    CHAR_LENGTH(`units1`.`unit_number`), CONCAT_WS('',   `units1`.`unit_number`), '') /* Unit applied for */" => "unit",
 		"`applications_leases`.`type`" => "type",
 		"`applications_leases`.`total_number_of_occupants`" => "total_number_of_occupants",
-		"if(`applications_leases`.`start_date`,date_format(`applications_leases`.`start_date`,'%Y-%m-%d'),'')" => "start_date",
-		"if(`applications_leases`.`end_date`,date_format(`applications_leases`.`end_date`,'%Y-%m-%d'),'')" => "end_date",
+		"if(`applications_leases`.`start_date`,date_format(`applications_leases`.`start_date`,'%m/%d/%Y'),'')" => "start_date",
+		"if(`applications_leases`.`end_date`,date_format(`applications_leases`.`end_date`,'%m/%d/%Y'),'')" => "end_date",
 		"`applications_leases`.`recurring_charges_frequency`" => "recurring_charges_frequency",
-		"if(`applications_leases`.`next_due_date`,date_format(`applications_leases`.`next_due_date`,'%Y-%m-%d'),'')" => "next_due_date",
+		"if(`applications_leases`.`next_due_date`,date_format(`applications_leases`.`next_due_date`,'%m/%d/%Y'),'')" => "next_due_date",
 		"CONCAT('$', FORMAT(`applications_leases`.`rent`, 2))" => "rent",
 		"CONCAT('$', FORMAT(`applications_leases`.`security_deposit`, 2))" => "security_deposit",
-		"if(`applications_leases`.`security_deposit_date`,date_format(`applications_leases`.`security_deposit_date`,'%Y-%m-%d'),'')" => "security_deposit_date",
+		"if(`applications_leases`.`security_deposit_date`,date_format(`applications_leases`.`security_deposit_date`,'%m/%d/%Y'),'')" => "security_deposit_date",
 		"`applications_leases`.`emergency_contact`" => "emergency_contact",
 		"`applications_leases`.`co_signer_details`" => "co_signer_details",
 		"`applications_leases`.`notes`" => "notes",
-		"`applications_leases`.`agreement`" => "agreement"
+		"`applications_leases`.`agreement`" => "agreement",
+		"`applications_leases`.`pets`" => "pets",
+		"`applications_leases`.`smoking`" => "smoking",
+		"`applications_leases`.`sublet`" => "sublet",
+		"`applications_leases`.`commercial`" => "commercial"
 	);
 	// Fields that can be filtered
 	$x->QueryFieldsFilters=array(   
@@ -103,7 +115,11 @@
 		"`applications_leases`.`emergency_contact`" => "Emergency contact",
 		"`applications_leases`.`co_signer_details`" => "Co signer details",
 		"`applications_leases`.`notes`" => "Notes",
-		"`applications_leases`.`agreement`" => "Applicant agrees"
+		"`applications_leases`.`agreement`" => "Applicant agrees",
+		"`applications_leases`.`pets`" => "Pets Allowed",
+		"`applications_leases`.`smoking`" => "Smoking Allowed",
+		"`applications_leases`.`sublet`" => "Sublet Allowed",
+		"`applications_leases`.`commercial`" => "Commercial"
 	);
 
 	// Fields that can be quick searched
@@ -115,17 +131,21 @@
 		"IF(    CHAR_LENGTH(`units1`.`unit_number`), CONCAT_WS('',   `units1`.`unit_number`), '') /* Unit applied for */" => "unit",
 		"`applications_leases`.`type`" => "type",
 		"`applications_leases`.`total_number_of_occupants`" => "total_number_of_occupants",
-		"if(`applications_leases`.`start_date`,date_format(`applications_leases`.`start_date`,'%Y-%m-%d'),'')" => "start_date",
-		"if(`applications_leases`.`end_date`,date_format(`applications_leases`.`end_date`,'%Y-%m-%d'),'')" => "end_date",
+		"if(`applications_leases`.`start_date`,date_format(`applications_leases`.`start_date`,'%m/%d/%Y'),'')" => "start_date",
+		"if(`applications_leases`.`end_date`,date_format(`applications_leases`.`end_date`,'%m/%d/%Y'),'')" => "end_date",
 		"`applications_leases`.`recurring_charges_frequency`" => "recurring_charges_frequency",
-		"if(`applications_leases`.`next_due_date`,date_format(`applications_leases`.`next_due_date`,'%Y-%m-%d'),'')" => "next_due_date",
+		"if(`applications_leases`.`next_due_date`,date_format(`applications_leases`.`next_due_date`,'%m/%d/%Y'),'')" => "next_due_date",
 		"CONCAT('$', FORMAT(`applications_leases`.`rent`, 2))" => "rent",
 		"CONCAT('$', FORMAT(`applications_leases`.`security_deposit`, 2))" => "security_deposit",
-		"if(`applications_leases`.`security_deposit_date`,date_format(`applications_leases`.`security_deposit_date`,'%Y-%m-%d'),'')" => "security_deposit_date",
+		"if(`applications_leases`.`security_deposit_date`,date_format(`applications_leases`.`security_deposit_date`,'%m/%d/%Y'),'')" => "security_deposit_date",
 		"`applications_leases`.`emergency_contact`" => "emergency_contact",
 		"`applications_leases`.`co_signer_details`" => "co_signer_details",
 		"`applications_leases`.`notes`" => "notes",
-		"concat('<img src=\"', if(`applications_leases`.`agreement`, 'checked.gif', 'checkednot.gif'), '\" border=\"0\" />')" => "agreement"
+		"concat('<img src=\"', if(`applications_leases`.`agreement`, 'checked.gif', 'checkednot.gif'), '\" border=\"0\" />')" => "agreement",
+		"concat('<img src=\"', if(`applications_leases`.`pets`, 'checked.gif', 'checkednot.gif'), '\" border=\"0\" />')" => "pets",
+		"concat('<img src=\"', if(`applications_leases`.`smoking`, 'checked.gif', 'checkednot.gif'), '\" border=\"0\" />')" => "smoking",
+		"`applications_leases`.`sublet`" => "sublet",
+		"concat('<img src=\"', if(`applications_leases`.`commercial`, 'checked.gif', 'checkednot.gif'), '\" border=\"0\" />')" => "commercial"
 	);
 
 	// Lookup fields that can be used as filterers
@@ -158,10 +178,10 @@
 	$x->TableIcon = "resources/table_icons/curriculum_vitae.png";
 	$x->PrimaryKey = "`applications_leases`.`id`";
 
-	$x->ColWidth   = array(  60, 50, 80, 60, 40, 70, 70, 60, 70, 80, 120, 70);
-	$x->ColCaption = array("Applicant/ Tenant", "Application status", "Property", "Unit applied for", "Lease type", "Total number of occupants", "Lease period from", "to", "Rental amount", "Security deposit", "Emergency contact", "Applicant agrees");
-	$x->ColFieldName = array('tenants', 'status', 'property', 'unit', 'type', 'total_number_of_occupants', 'start_date', 'end_date', 'rent', 'security_deposit', 'emergency_contact', 'agreement');
-	$x->ColNumber  = array(2, 3, 4, 5, 6, 7, 8, 9, 12, 13, 15, 18);
+	$x->ColWidth   = array(  60, 50, 80, 60, 40, 70, 70, 60, 70, 80, 120, 70, 150);
+	$x->ColCaption = array("Applicant/ Tenant", "Application status", "Property", "Unit applied for", "Lease type", "Total number of occupants", "Lease period from", "to", "Rental amount", "Security deposit", "Emergency contact", "Applicant agrees", "Commercial");
+	$x->ColFieldName = array('tenants', 'status', 'property', 'unit', 'type', 'total_number_of_occupants', 'start_date', 'end_date', 'rent', 'security_deposit', 'emergency_contact', 'agreement', 'commercial');
+	$x->ColNumber  = array(2, 3, 4, 5, 6, 7, 8, 9, 12, 13, 15, 18, 22);
 
 	$x->Template = 'templates/applications_leases_templateTV.html';
 	$x->SelectedTemplate = 'templates/applications_leases_templateTVS.html';

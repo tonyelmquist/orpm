@@ -46,6 +46,14 @@ function applications_leases_insert(){
 		if($data['notes'] == empty_lookup_value){ $data['notes'] = ''; }
 	$data['agreement'] = makeSafe($_REQUEST['agreement']);
 		if($data['agreement'] == empty_lookup_value){ $data['agreement'] = ''; }
+	$data['pets'] = makeSafe($_REQUEST['pets']);
+		if($data['pets'] == empty_lookup_value){ $data['pets'] = ''; }
+	$data['smoking'] = makeSafe($_REQUEST['smoking']);
+		if($data['smoking'] == empty_lookup_value){ $data['smoking'] = ''; }
+	$data['sublet'] = makeSafe($_REQUEST['sublet']);
+		if($data['sublet'] == empty_lookup_value){ $data['sublet'] = ''; }
+	$data['commercial'] = makeSafe($_REQUEST['commercial']);
+		if($data['commercial'] == empty_lookup_value){ $data['commercial'] = ''; }
 	if($data['status'] == '') $data['status'] = "Application";
 	if($data['status']== ''){
 		echo StyleSheet() . "\n\n<div class=\"alert alert-danger\">" . $Translation['error:'] . " 'Application status': " . $Translation['field not null'] . '<br><br>';
@@ -72,7 +80,7 @@ function applications_leases_insert(){
 	}
 
 	$o = array('silentErrors' => true);
-	sql('insert into `applications_leases` set       `tenants`=' . (($data['tenants'] !== '' && $data['tenants'] !== NULL) ? "'{$data['tenants']}'" : 'NULL') . ', `status`=' . (($data['status'] !== '' && $data['status'] !== NULL) ? "'{$data['status']}'" : 'NULL') . ', `property`=' . (($data['property'] !== '' && $data['property'] !== NULL) ? "'{$data['property']}'" : 'NULL') . ', `unit`=' . (($data['unit'] !== '' && $data['unit'] !== NULL) ? "'{$data['unit']}'" : 'NULL') . ', `type`=' . (($data['type'] !== '' && $data['type'] !== NULL) ? "'{$data['type']}'" : 'NULL') . ', `total_number_of_occupants`=' . (($data['total_number_of_occupants'] !== '' && $data['total_number_of_occupants'] !== NULL) ? "'{$data['total_number_of_occupants']}'" : 'NULL') . ', `start_date`=' . (($data['start_date'] !== '' && $data['start_date'] !== NULL) ? "'{$data['start_date']}'" : 'NULL') . ', `end_date`=' . (($data['end_date'] !== '' && $data['end_date'] !== NULL) ? "'{$data['end_date']}'" : 'NULL') . ', `recurring_charges_frequency`=' . (($data['recurring_charges_frequency'] !== '' && $data['recurring_charges_frequency'] !== NULL) ? "'{$data['recurring_charges_frequency']}'" : 'NULL') . ', `next_due_date`=' . (($data['next_due_date'] !== '' && $data['next_due_date'] !== NULL) ? "'{$data['next_due_date']}'" : 'NULL') . ', `rent`=' . (($data['rent'] !== '' && $data['rent'] !== NULL) ? "'{$data['rent']}'" : 'NULL') . ', `security_deposit`=' . (($data['security_deposit'] !== '' && $data['security_deposit'] !== NULL) ? "'{$data['security_deposit']}'" : 'NULL') . ', `security_deposit_date`=' . (($data['security_deposit_date'] !== '' && $data['security_deposit_date'] !== NULL) ? "'{$data['security_deposit_date']}'" : 'NULL') . ', `emergency_contact`=' . (($data['emergency_contact'] !== '' && $data['emergency_contact'] !== NULL) ? "'{$data['emergency_contact']}'" : 'NULL') . ', `co_signer_details`=' . (($data['co_signer_details'] !== '' && $data['co_signer_details'] !== NULL) ? "'{$data['co_signer_details']}'" : 'NULL') . ', `notes`=' . (($data['notes'] !== '' && $data['notes'] !== NULL) ? "'{$data['notes']}'" : 'NULL') . ', `agreement`=' . (($data['agreement'] !== '' && $data['agreement'] !== NULL) ? "'{$data['agreement']}'" : 'NULL'), $o);
+	sql('insert into `applications_leases` set       `tenants`=' . (($data['tenants'] !== '' && $data['tenants'] !== NULL) ? "'{$data['tenants']}'" : 'NULL') . ', `status`=' . (($data['status'] !== '' && $data['status'] !== NULL) ? "'{$data['status']}'" : 'NULL') . ', `property`=' . (($data['property'] !== '' && $data['property'] !== NULL) ? "'{$data['property']}'" : 'NULL') . ', `unit`=' . (($data['unit'] !== '' && $data['unit'] !== NULL) ? "'{$data['unit']}'" : 'NULL') . ', `type`=' . (($data['type'] !== '' && $data['type'] !== NULL) ? "'{$data['type']}'" : 'NULL') . ', `total_number_of_occupants`=' . (($data['total_number_of_occupants'] !== '' && $data['total_number_of_occupants'] !== NULL) ? "'{$data['total_number_of_occupants']}'" : 'NULL') . ', `start_date`=' . (($data['start_date'] !== '' && $data['start_date'] !== NULL) ? "'{$data['start_date']}'" : 'NULL') . ', `end_date`=' . (($data['end_date'] !== '' && $data['end_date'] !== NULL) ? "'{$data['end_date']}'" : 'NULL') . ', `recurring_charges_frequency`=' . (($data['recurring_charges_frequency'] !== '' && $data['recurring_charges_frequency'] !== NULL) ? "'{$data['recurring_charges_frequency']}'" : 'NULL') . ', `next_due_date`=' . (($data['next_due_date'] !== '' && $data['next_due_date'] !== NULL) ? "'{$data['next_due_date']}'" : 'NULL') . ', `rent`=' . (($data['rent'] !== '' && $data['rent'] !== NULL) ? "'{$data['rent']}'" : 'NULL') . ', `security_deposit`=' . (($data['security_deposit'] !== '' && $data['security_deposit'] !== NULL) ? "'{$data['security_deposit']}'" : 'NULL') . ', `security_deposit_date`=' . (($data['security_deposit_date'] !== '' && $data['security_deposit_date'] !== NULL) ? "'{$data['security_deposit_date']}'" : 'NULL') . ', `emergency_contact`=' . (($data['emergency_contact'] !== '' && $data['emergency_contact'] !== NULL) ? "'{$data['emergency_contact']}'" : 'NULL') . ', `co_signer_details`=' . (($data['co_signer_details'] !== '' && $data['co_signer_details'] !== NULL) ? "'{$data['co_signer_details']}'" : 'NULL') . ', `notes`=' . (($data['notes'] !== '' && $data['notes'] !== NULL) ? "'{$data['notes']}'" : 'NULL') . ', `agreement`=' . (($data['agreement'] !== '' && $data['agreement'] !== NULL) ? "'{$data['agreement']}'" : 'NULL') . ', `pets`=' . (($data['pets'] !== '' && $data['pets'] !== NULL) ? "'{$data['pets']}'" : 'NULL') . ', `smoking`=' . (($data['smoking'] !== '' && $data['smoking'] !== NULL) ? "'{$data['smoking']}'" : 'NULL') . ', `sublet`=' . (($data['sublet'] !== '' && $data['sublet'] !== NULL) ? "'{$data['sublet']}'" : 'NULL') . ', `commercial`=' . (($data['commercial'] !== '' && $data['commercial'] !== NULL) ? "'{$data['commercial']}'" : 'NULL'), $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo "<a href=\"applications_leases_view.php?addNew_x=1\">{$Translation['< back']}</a>";
@@ -192,6 +200,14 @@ function applications_leases_update($selected_id){
 		if($data['notes'] == empty_lookup_value){ $data['notes'] = ''; }
 	$data['agreement'] = makeSafe($_REQUEST['agreement']);
 		if($data['agreement'] == empty_lookup_value){ $data['agreement'] = ''; }
+	$data['pets'] = makeSafe($_REQUEST['pets']);
+		if($data['pets'] == empty_lookup_value){ $data['pets'] = ''; }
+	$data['smoking'] = makeSafe($_REQUEST['smoking']);
+		if($data['smoking'] == empty_lookup_value){ $data['smoking'] = ''; }
+	$data['sublet'] = makeSafe($_REQUEST['sublet']);
+		if($data['sublet'] == empty_lookup_value){ $data['sublet'] = ''; }
+	$data['commercial'] = makeSafe($_REQUEST['commercial']);
+		if($data['commercial'] == empty_lookup_value){ $data['commercial'] = ''; }
 	$data['selectedID']=makeSafe($selected_id);
 
 	// hook: applications_leases_before_update
@@ -201,7 +217,7 @@ function applications_leases_update($selected_id){
 	}
 
 	$o=array('silentErrors' => true);
-	sql('update `applications_leases` set       `tenants`=' . (($data['tenants'] !== '' && $data['tenants'] !== NULL) ? "'{$data['tenants']}'" : 'NULL') . ', `status`=' . (($data['status'] !== '' && $data['status'] !== NULL) ? "'{$data['status']}'" : 'NULL') . ', `property`=' . (($data['property'] !== '' && $data['property'] !== NULL) ? "'{$data['property']}'" : 'NULL') . ', `unit`=' . (($data['unit'] !== '' && $data['unit'] !== NULL) ? "'{$data['unit']}'" : 'NULL') . ', `type`=' . (($data['type'] !== '' && $data['type'] !== NULL) ? "'{$data['type']}'" : 'NULL') . ', `total_number_of_occupants`=' . (($data['total_number_of_occupants'] !== '' && $data['total_number_of_occupants'] !== NULL) ? "'{$data['total_number_of_occupants']}'" : 'NULL') . ', `start_date`=' . (($data['start_date'] !== '' && $data['start_date'] !== NULL) ? "'{$data['start_date']}'" : 'NULL') . ', `end_date`=' . (($data['end_date'] !== '' && $data['end_date'] !== NULL) ? "'{$data['end_date']}'" : 'NULL') . ', `recurring_charges_frequency`=' . (($data['recurring_charges_frequency'] !== '' && $data['recurring_charges_frequency'] !== NULL) ? "'{$data['recurring_charges_frequency']}'" : 'NULL') . ', `next_due_date`=' . (($data['next_due_date'] !== '' && $data['next_due_date'] !== NULL) ? "'{$data['next_due_date']}'" : 'NULL') . ', `rent`=' . (($data['rent'] !== '' && $data['rent'] !== NULL) ? "'{$data['rent']}'" : 'NULL') . ', `security_deposit`=' . (($data['security_deposit'] !== '' && $data['security_deposit'] !== NULL) ? "'{$data['security_deposit']}'" : 'NULL') . ', `security_deposit_date`=' . (($data['security_deposit_date'] !== '' && $data['security_deposit_date'] !== NULL) ? "'{$data['security_deposit_date']}'" : 'NULL') . ', `emergency_contact`=' . (($data['emergency_contact'] !== '' && $data['emergency_contact'] !== NULL) ? "'{$data['emergency_contact']}'" : 'NULL') . ', `co_signer_details`=' . (($data['co_signer_details'] !== '' && $data['co_signer_details'] !== NULL) ? "'{$data['co_signer_details']}'" : 'NULL') . ', `notes`=' . (($data['notes'] !== '' && $data['notes'] !== NULL) ? "'{$data['notes']}'" : 'NULL') . ', `agreement`=' . (($data['agreement'] !== '' && $data['agreement'] !== NULL) ? "'{$data['agreement']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
+	sql('update `applications_leases` set       `tenants`=' . (($data['tenants'] !== '' && $data['tenants'] !== NULL) ? "'{$data['tenants']}'" : 'NULL') . ', `status`=' . (($data['status'] !== '' && $data['status'] !== NULL) ? "'{$data['status']}'" : 'NULL') . ', `property`=' . (($data['property'] !== '' && $data['property'] !== NULL) ? "'{$data['property']}'" : 'NULL') . ', `unit`=' . (($data['unit'] !== '' && $data['unit'] !== NULL) ? "'{$data['unit']}'" : 'NULL') . ', `type`=' . (($data['type'] !== '' && $data['type'] !== NULL) ? "'{$data['type']}'" : 'NULL') . ', `total_number_of_occupants`=' . (($data['total_number_of_occupants'] !== '' && $data['total_number_of_occupants'] !== NULL) ? "'{$data['total_number_of_occupants']}'" : 'NULL') . ', `start_date`=' . (($data['start_date'] !== '' && $data['start_date'] !== NULL) ? "'{$data['start_date']}'" : 'NULL') . ', `end_date`=' . (($data['end_date'] !== '' && $data['end_date'] !== NULL) ? "'{$data['end_date']}'" : 'NULL') . ', `recurring_charges_frequency`=' . (($data['recurring_charges_frequency'] !== '' && $data['recurring_charges_frequency'] !== NULL) ? "'{$data['recurring_charges_frequency']}'" : 'NULL') . ', `next_due_date`=' . (($data['next_due_date'] !== '' && $data['next_due_date'] !== NULL) ? "'{$data['next_due_date']}'" : 'NULL') . ', `rent`=' . (($data['rent'] !== '' && $data['rent'] !== NULL) ? "'{$data['rent']}'" : 'NULL') . ', `security_deposit`=' . (($data['security_deposit'] !== '' && $data['security_deposit'] !== NULL) ? "'{$data['security_deposit']}'" : 'NULL') . ', `security_deposit_date`=' . (($data['security_deposit_date'] !== '' && $data['security_deposit_date'] !== NULL) ? "'{$data['security_deposit_date']}'" : 'NULL') . ', `emergency_contact`=' . (($data['emergency_contact'] !== '' && $data['emergency_contact'] !== NULL) ? "'{$data['emergency_contact']}'" : 'NULL') . ', `co_signer_details`=' . (($data['co_signer_details'] !== '' && $data['co_signer_details'] !== NULL) ? "'{$data['co_signer_details']}'" : 'NULL') . ', `notes`=' . (($data['notes'] !== '' && $data['notes'] !== NULL) ? "'{$data['notes']}'" : 'NULL') . ', `agreement`=' . (($data['agreement'] !== '' && $data['agreement'] !== NULL) ? "'{$data['agreement']}'" : 'NULL') . ', `pets`=' . (($data['pets'] !== '' && $data['pets'] !== NULL) ? "'{$data['pets']}'" : 'NULL') . ', `smoking`=' . (($data['smoking'] !== '' && $data['smoking'] !== NULL) ? "'{$data['smoking']}'" : 'NULL') . ', `sublet`=' . (($data['sublet'] !== '' && $data['sublet'] !== NULL) ? "'{$data['sublet']}'" : 'NULL') . ', `commercial`=' . (($data['commercial'] !== '' && $data['commercial'] !== NULL) ? "'{$data['commercial']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo '<a href="applications_leases_view.php?SelectedID='.urlencode($selected_id)."\">{$Translation['< back']}</a>";
@@ -292,7 +308,7 @@ function applications_leases_form($selected_id = '', $AllowUpdate = 1, $AllowIns
 	$combo_type->AllowNull = false;
 	// combobox: start_date
 	$combo_start_date = new DateCombo;
-	$combo_start_date->DateFormat = "ymd";
+	$combo_start_date->DateFormat = "mdy";
 	$combo_start_date->MinYear = 1900;
 	$combo_start_date->MaxYear = 2100;
 	$combo_start_date->DefaultDate = parseMySQLDate('1', '1');
@@ -300,7 +316,7 @@ function applications_leases_form($selected_id = '', $AllowUpdate = 1, $AllowIns
 	$combo_start_date->NamePrefix = 'start_date';
 	// combobox: end_date
 	$combo_end_date = new DateCombo;
-	$combo_end_date->DateFormat = "ymd";
+	$combo_end_date->DateFormat = "mdy";
 	$combo_end_date->MinYear = 1900;
 	$combo_end_date->MaxYear = 2100;
 	$combo_end_date->DefaultDate = parseMySQLDate('1', '1');
@@ -324,7 +340,7 @@ function applications_leases_form($selected_id = '', $AllowUpdate = 1, $AllowIns
 	$combo_recurring_charges_frequency->AllowNull = false;
 	// combobox: next_due_date
 	$combo_next_due_date = new DateCombo;
-	$combo_next_due_date->DateFormat = "ymd";
+	$combo_next_due_date->DateFormat = "mdy";
 	$combo_next_due_date->MinYear = 1900;
 	$combo_next_due_date->MaxYear = 2100;
 	$combo_next_due_date->DefaultDate = parseMySQLDate('1', '1');
@@ -332,7 +348,7 @@ function applications_leases_form($selected_id = '', $AllowUpdate = 1, $AllowIns
 	$combo_next_due_date->NamePrefix = 'next_due_date';
 	// combobox: security_deposit_date
 	$combo_security_deposit_date = new DateCombo;
-	$combo_security_deposit_date->DateFormat = "ymd";
+	$combo_security_deposit_date->DateFormat = "mdy";
 	$combo_security_deposit_date->MinYear = 1900;
 	$combo_security_deposit_date->MaxYear = 2100;
 	$combo_security_deposit_date->DefaultDate = parseMySQLDate('', '');
@@ -710,6 +726,10 @@ function applications_leases_form($selected_id = '', $AllowUpdate = 1, $AllowIns
 		$jsReadOnly .= "\tjQuery('#emergency_contact').replaceWith('<div class=\"form-control-static\" id=\"emergency_contact\">' + (jQuery('#emergency_contact').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#co_signer_details').replaceWith('<div class=\"form-control-static\" id=\"co_signer_details\">' + (jQuery('#co_signer_details').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#agreement').prop('disabled', true);\n";
+		$jsReadOnly .= "\tjQuery('#pets').prop('disabled', true);\n";
+		$jsReadOnly .= "\tjQuery('#smoking').prop('disabled', true);\n";
+		$jsReadOnly .= "\tjQuery('#sublet').replaceWith('<div class=\"form-control-static\" id=\"sublet\">' + (jQuery('#sublet').val() || '') + '</div>');\n";
+		$jsReadOnly .= "\tjQuery('#commercial').prop('disabled', true);\n";
 		$jsReadOnly .= "\tjQuery('.select2-container').hide();\n";
 
 		$noUploads = true;
@@ -778,6 +798,10 @@ function applications_leases_form($selected_id = '', $AllowUpdate = 1, $AllowIns
 	$templateCode=str_replace('<%%UPLOADFILE(co_signer_details)%%>', '', $templateCode);
 	$templateCode=str_replace('<%%UPLOADFILE(notes)%%>', '', $templateCode);
 	$templateCode=str_replace('<%%UPLOADFILE(agreement)%%>', '', $templateCode);
+	$templateCode=str_replace('<%%UPLOADFILE(pets)%%>', '', $templateCode);
+	$templateCode=str_replace('<%%UPLOADFILE(smoking)%%>', '', $templateCode);
+	$templateCode=str_replace('<%%UPLOADFILE(sublet)%%>', '', $templateCode);
+	$templateCode=str_replace('<%%UPLOADFILE(commercial)%%>', '', $templateCode);
 
 	// process values
 	if($selected_id){
@@ -795,20 +819,20 @@ function applications_leases_form($selected_id = '', $AllowUpdate = 1, $AllowIns
 		$templateCode=str_replace('<%%URLVALUE(type)%%>', urlencode($urow['type']), $templateCode);
 		$templateCode=str_replace('<%%VALUE(total_number_of_occupants)%%>', html_attr($row['total_number_of_occupants']), $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(total_number_of_occupants)%%>', urlencode($urow['total_number_of_occupants']), $templateCode);
-		$templateCode=str_replace('<%%VALUE(start_date)%%>', @date('Y-m-d', @strtotime(html_attr($row['start_date']))), $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(start_date)%%>', urlencode(@date('Y-m-d', @strtotime(html_attr($urow['start_date'])))), $templateCode);
-		$templateCode=str_replace('<%%VALUE(end_date)%%>', @date('Y-m-d', @strtotime(html_attr($row['end_date']))), $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(end_date)%%>', urlencode(@date('Y-m-d', @strtotime(html_attr($urow['end_date'])))), $templateCode);
+		$templateCode=str_replace('<%%VALUE(start_date)%%>', @date('m/d/Y', @strtotime(html_attr($row['start_date']))), $templateCode);
+		$templateCode=str_replace('<%%URLVALUE(start_date)%%>', urlencode(@date('m/d/Y', @strtotime(html_attr($urow['start_date'])))), $templateCode);
+		$templateCode=str_replace('<%%VALUE(end_date)%%>', @date('m/d/Y', @strtotime(html_attr($row['end_date']))), $templateCode);
+		$templateCode=str_replace('<%%URLVALUE(end_date)%%>', urlencode(@date('m/d/Y', @strtotime(html_attr($urow['end_date'])))), $templateCode);
 		$templateCode=str_replace('<%%VALUE(recurring_charges_frequency)%%>', html_attr($row['recurring_charges_frequency']), $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(recurring_charges_frequency)%%>', urlencode($urow['recurring_charges_frequency']), $templateCode);
-		$templateCode=str_replace('<%%VALUE(next_due_date)%%>', @date('Y-m-d', @strtotime(html_attr($row['next_due_date']))), $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(next_due_date)%%>', urlencode(@date('Y-m-d', @strtotime(html_attr($urow['next_due_date'])))), $templateCode);
+		$templateCode=str_replace('<%%VALUE(next_due_date)%%>', @date('m/d/Y', @strtotime(html_attr($row['next_due_date']))), $templateCode);
+		$templateCode=str_replace('<%%URLVALUE(next_due_date)%%>', urlencode(@date('m/d/Y', @strtotime(html_attr($urow['next_due_date'])))), $templateCode);
 		$templateCode=str_replace('<%%VALUE(rent)%%>', html_attr($row['rent']), $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(rent)%%>', urlencode($urow['rent']), $templateCode);
 		$templateCode=str_replace('<%%VALUE(security_deposit)%%>', html_attr($row['security_deposit']), $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(security_deposit)%%>', urlencode($urow['security_deposit']), $templateCode);
-		$templateCode=str_replace('<%%VALUE(security_deposit_date)%%>', @date('Y-m-d', @strtotime(html_attr($row['security_deposit_date']))), $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(security_deposit_date)%%>', urlencode(@date('Y-m-d', @strtotime(html_attr($urow['security_deposit_date'])))), $templateCode);
+		$templateCode=str_replace('<%%VALUE(security_deposit_date)%%>', @date('m/d/Y', @strtotime(html_attr($row['security_deposit_date']))), $templateCode);
+		$templateCode=str_replace('<%%URLVALUE(security_deposit_date)%%>', urlencode(@date('m/d/Y', @strtotime(html_attr($urow['security_deposit_date'])))), $templateCode);
 		if($dvprint){
 			$templateCode = str_replace('<%%VALUE(emergency_contact)%%>', nl2br(html_attr($row['emergency_contact'])), $templateCode);
 		}else{
@@ -829,6 +853,11 @@ function applications_leases_form($selected_id = '', $AllowUpdate = 1, $AllowIns
 		$templateCode=str_replace('<%%VALUE(notes)%%>', nl2br($row['notes']), $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(notes)%%>', urlencode($urow['notes']), $templateCode);
 		$templateCode=str_replace('<%%CHECKED(agreement)%%>', ($row['agreement'] ? "checked" : ""), $templateCode);
+		$templateCode=str_replace('<%%CHECKED(pets)%%>', ($row['pets'] ? "checked" : ""), $templateCode);
+		$templateCode=str_replace('<%%CHECKED(smoking)%%>', ($row['smoking'] ? "checked" : ""), $templateCode);
+		$templateCode=str_replace('<%%VALUE(sublet)%%>', html_attr($row['sublet']), $templateCode);
+		$templateCode=str_replace('<%%URLVALUE(sublet)%%>', urlencode($urow['sublet']), $templateCode);
+		$templateCode=str_replace('<%%CHECKED(commercial)%%>', ($row['commercial'] ? "checked" : ""), $templateCode);
 	}else{
 		$templateCode=str_replace('<%%VALUE(id)%%>', '', $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(id)%%>', urlencode(''), $templateCode);
@@ -864,6 +893,11 @@ function applications_leases_form($selected_id = '', $AllowUpdate = 1, $AllowIns
 		$templateCode=str_replace('<%%URLVALUE(co_signer_details)%%>', urlencode(''), $templateCode);
 		$templateCode=str_replace('<%%HTMLAREA(notes)%%>', '<textarea name="notes" id="notes" rows="5"></textarea>', $templateCode);
 		$templateCode=str_replace('<%%CHECKED(agreement)%%>', '', $templateCode);
+		$templateCode=str_replace('<%%CHECKED(pets)%%>', '', $templateCode);
+		$templateCode=str_replace('<%%CHECKED(smoking)%%>', '', $templateCode);
+		$templateCode=str_replace('<%%VALUE(sublet)%%>', '', $templateCode);
+		$templateCode=str_replace('<%%URLVALUE(sublet)%%>', urlencode(''), $templateCode);
+		$templateCode=str_replace('<%%CHECKED(commercial)%%>', '', $templateCode);
 	}
 
 	// process translations

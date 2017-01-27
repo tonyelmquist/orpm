@@ -290,7 +290,7 @@ function applicants_and_tenants_form($selected_id = '', $AllowUpdate = 1, $Allow
 	$rnd1 = ($dvprint ? rand(1000000, 9999999) : '');
 	// combobox: birth_date
 	$combo_birth_date = new DateCombo;
-	$combo_birth_date->DateFormat = "ymd";
+	$combo_birth_date->DateFormat = "mdy";
 	$combo_birth_date->MinYear = 1900;
 	$combo_birth_date->MaxYear = 2100;
 	$combo_birth_date->DefaultDate = parseMySQLDate('', '');
@@ -649,8 +649,8 @@ function applicants_and_tenants_form($selected_id = '', $AllowUpdate = 1, $Allow
 		$templateCode=str_replace('<%%URLVALUE(email)%%>', urlencode($urow['email']), $templateCode);
 		$templateCode=str_replace('<%%VALUE(phone)%%>', html_attr($row['phone']), $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(phone)%%>', urlencode($urow['phone']), $templateCode);
-		$templateCode=str_replace('<%%VALUE(birth_date)%%>', @date('Y-m-d', @strtotime(html_attr($row['birth_date']))), $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(birth_date)%%>', urlencode(@date('Y-m-d', @strtotime(html_attr($urow['birth_date'])))), $templateCode);
+		$templateCode=str_replace('<%%VALUE(birth_date)%%>', @date('m/d/Y', @strtotime(html_attr($row['birth_date']))), $templateCode);
+		$templateCode=str_replace('<%%URLVALUE(birth_date)%%>', urlencode(@date('m/d/Y', @strtotime(html_attr($urow['birth_date'])))), $templateCode);
 		$templateCode=str_replace('<%%VALUE(status)%%>', html_attr($row['status']), $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(status)%%>', urlencode($urow['status']), $templateCode);
 		$templateCode=str_replace('<%%VALUE(property)%%>', html_attr($row['property']), $templateCode);

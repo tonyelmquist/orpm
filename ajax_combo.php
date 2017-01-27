@@ -193,6 +193,45 @@
 		'rental_owners' => array(  
 		),
 		'audit_trail' => array(  
+		),
+		'maintenance_tasks' => array(   
+			'property' => array(
+				'parent_table' => 'properties',
+				'parent_pk_field' => 'id',
+				'parent_caption' => '`properties`.`property_name`',
+				'parent_from' => '`properties` LEFT JOIN `rental_owners` as rental_owners1 ON `rental_owners1`.`id`=`properties`.`owner` ',
+				'filterers' => array(),
+				'custom_query' => '',
+				'inherit_permissions' => false,
+				'list_type' => 0,
+				'not_null' => false
+			),
+			'unit' => array(
+				'parent_table' => 'units',
+				'parent_pk_field' => 'id',
+				'parent_caption' => '`units`.`unit_number`',
+				'parent_from' => '`units` LEFT JOIN `properties` as properties1 ON `properties1`.`id`=`units`.`property` ',
+				'filterers' => array('property' => 'property'),
+				'custom_query' => '',
+				'inherit_permissions' => false,
+				'list_type' => 0,
+				'not_null' => false
+			),
+			'task' => array(
+				'parent_table' => 'task_types',
+				'parent_pk_field' => 'task_type_ID',
+				'parent_caption' => '`task_types`.`task_type`',
+				'parent_from' => '`task_types` ',
+				'filterers' => array(),
+				'custom_query' => '',
+				'inherit_permissions' => false,
+				'list_type' => 0,
+				'not_null' => false
+			)
+		),
+		'employees' => array(  
+		),
+		'task_types' => array(  
 		)
 	);
 

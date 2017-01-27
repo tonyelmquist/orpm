@@ -30,6 +30,8 @@ function properties_insert(){
 		if($data['City'] == empty_lookup_value){ $data['City'] = ''; }
 	$data['State'] = makeSafe($_REQUEST['State']);
 		if($data['State'] == empty_lookup_value){ $data['State'] = ''; }
+	$data['zipCode'] = makeSafe($_REQUEST['zipCode']);
+		if($data['zipCode'] == empty_lookup_value){ $data['zipCode'] = ''; }
 	$data['photo'] = PrepareUploadedFile('photo', 1024000,'jpg|jpeg|gif|png', false, '');
 	if($data['photo']) createThumbnail($data['photo'], getThumbnailSpecs('properties', 'photo', 'tv'));
 	if($data['photo']) createThumbnail($data['photo'], getThumbnailSpecs('properties', 'photo', 'dv'));
@@ -59,7 +61,7 @@ function properties_insert(){
 	}
 
 	$o = array('silentErrors' => true);
-	sql('insert into `properties` set       `property_name`=' . (($data['property_name'] !== '' && $data['property_name'] !== NULL) ? "'{$data['property_name']}'" : 'NULL') . ', `type`=' . (($data['type'] !== '' && $data['type'] !== NULL) ? "'{$data['type']}'" : 'NULL') . ', `number_of_units`=' . (($data['number_of_units'] !== '' && $data['number_of_units'] !== NULL) ? "'{$data['number_of_units']}'" : 'NULL') . ', ' . ($data['photo'] != '' ? "`photo`='{$data['photo']}'" : '`photo`=NULL') . ', `owner`=' . (($data['owner'] !== '' && $data['owner'] !== NULL) ? "'{$data['owner']}'" : 'NULL') . ', `country`=' . (($data['country'] !== '' && $data['country'] !== NULL) ? "'{$data['country']}'" : 'NULL') . ', `street`=' . (($data['street'] !== '' && $data['street'] !== NULL) ? "'{$data['street']}'" : 'NULL') . ', `City`=' . (($data['City'] !== '' && $data['City'] !== NULL) ? "'{$data['City']}'" : 'NULL') . ', `State`=' . (($data['State'] !== '' && $data['State'] !== NULL) ? "'{$data['State']}'" : 'NULL'), $o);
+	sql('insert into `properties` set       `property_name`=' . (($data['property_name'] !== '' && $data['property_name'] !== NULL) ? "'{$data['property_name']}'" : 'NULL') . ', `type`=' . (($data['type'] !== '' && $data['type'] !== NULL) ? "'{$data['type']}'" : 'NULL') . ', `number_of_units`=' . (($data['number_of_units'] !== '' && $data['number_of_units'] !== NULL) ? "'{$data['number_of_units']}'" : 'NULL') . ', ' . ($data['photo'] != '' ? "`photo`='{$data['photo']}'" : '`photo`=NULL') . ', `owner`=' . (($data['owner'] !== '' && $data['owner'] !== NULL) ? "'{$data['owner']}'" : 'NULL') . ', `street`=' . (($data['street'] !== '' && $data['street'] !== NULL) ? "'{$data['street']}'" : 'NULL') . ', `City`=' . (($data['City'] !== '' && $data['City'] !== NULL) ? "'{$data['City']}'" : 'NULL') . ', `State`=' . (($data['State'] !== '' && $data['State'] !== NULL) ? "'{$data['State']}'" : 'NULL') . ', `zipCode`=' . (($data['zipCode'] !== '' && $data['zipCode'] !== NULL) ? "'{$data['zipCode']}'" : 'NULL'), $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo "<a href=\"properties_view.php?addNew_x=1\">{$Translation['< back']}</a>";
@@ -164,6 +166,25 @@ function properties_delete($selected_id, $AllowDeleteOfParents=false, $skipCheck
 		return $RetMsg;
 	}
 
+	// child table: maintenance_tasks
+	$res = sql("select `id` from `properties` where `id`='$selected_id'", $eo);
+	$id = db_fetch_row($res);
+	$rires = sql("select count(1) from `maintenance_tasks` where `property`='".addslashes($id[0])."'", $eo);
+	$rirow = db_fetch_row($rires);
+	if($rirow[0] && !$AllowDeleteOfParents && !$skipChecks){
+		$RetMsg = $Translation["couldn't delete"];
+		$RetMsg = str_replace("<RelatedRecords>", $rirow[0], $RetMsg);
+		$RetMsg = str_replace("<TableName>", "maintenance_tasks", $RetMsg);
+		return $RetMsg;
+	}elseif($rirow[0] && $AllowDeleteOfParents && !$skipChecks){
+		$RetMsg = $Translation["confirm delete"];
+		$RetMsg = str_replace("<RelatedRecords>", $rirow[0], $RetMsg);
+		$RetMsg = str_replace("<TableName>", "maintenance_tasks", $RetMsg);
+		$RetMsg = str_replace("<Delete>", "<input type=\"button\" class=\"button\" value=\"".$Translation['yes']."\" onClick=\"window.location='properties_view.php?SelectedID=".urlencode($selected_id)."&delete_x=1&confirmed=1';\">", $RetMsg);
+		$RetMsg = str_replace("<Cancel>", "<input type=\"button\" class=\"button\" value=\"".$Translation['no']."\" onClick=\"window.location='properties_view.php?SelectedID=".urlencode($selected_id)."';\">", $RetMsg);
+		return $RetMsg;
+	}
+
 	sql("delete from `properties` where `id`='$selected_id'", $eo);
 
 	// hook: properties_after_delete
@@ -215,6 +236,8 @@ function properties_update($selected_id){
 		if($data['City'] == empty_lookup_value){ $data['City'] = ''; }
 	$data['State'] = makeSafe($_REQUEST['State']);
 		if($data['State'] == empty_lookup_value){ $data['State'] = ''; }
+	$data['zipCode'] = makeSafe($_REQUEST['zipCode']);
+		if($data['zipCode'] == empty_lookup_value){ $data['zipCode'] = ''; }
 	$data['selectedID']=makeSafe($selected_id);
 	if($_REQUEST['photo_remove'] == 1){
 		$data['photo'] = '';
@@ -231,7 +254,7 @@ function properties_update($selected_id){
 	}
 
 	$o=array('silentErrors' => true);
-	sql('update `properties` set       `property_name`=' . (($data['property_name'] !== '' && $data['property_name'] !== NULL) ? "'{$data['property_name']}'" : 'NULL') . ', `type`=' . (($data['type'] !== '' && $data['type'] !== NULL) ? "'{$data['type']}'" : 'NULL') . ', `number_of_units`=' . (($data['number_of_units'] !== '' && $data['number_of_units'] !== NULL) ? "'{$data['number_of_units']}'" : 'NULL') . ', ' . ($data['photo']!='' ? "`photo`='{$data['photo']}'" : ($_REQUEST['photo_remove'] != 1 ? '`photo`=`photo`' : '`photo`=NULL')) . ', `owner`=' . (($data['owner'] !== '' && $data['owner'] !== NULL) ? "'{$data['owner']}'" : 'NULL') . ', `country`=' . (($data['country'] !== '' && $data['country'] !== NULL) ? "'{$data['country']}'" : 'NULL') . ', `street`=' . (($data['street'] !== '' && $data['street'] !== NULL) ? "'{$data['street']}'" : 'NULL') . ', `City`=' . (($data['City'] !== '' && $data['City'] !== NULL) ? "'{$data['City']}'" : 'NULL') . ', `State`=' . (($data['State'] !== '' && $data['State'] !== NULL) ? "'{$data['State']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
+	sql('update `properties` set       `property_name`=' . (($data['property_name'] !== '' && $data['property_name'] !== NULL) ? "'{$data['property_name']}'" : 'NULL') . ', `type`=' . (($data['type'] !== '' && $data['type'] !== NULL) ? "'{$data['type']}'" : 'NULL') . ', `number_of_units`=' . (($data['number_of_units'] !== '' && $data['number_of_units'] !== NULL) ? "'{$data['number_of_units']}'" : 'NULL') . ', ' . ($data['photo']!='' ? "`photo`='{$data['photo']}'" : ($_REQUEST['photo_remove'] != 1 ? '`photo`=`photo`' : '`photo`=NULL')) . ', `owner`=' . (($data['owner'] !== '' && $data['owner'] !== NULL) ? "'{$data['owner']}'" : 'NULL') . ', `street`=' . (($data['street'] !== '' && $data['street'] !== NULL) ? "'{$data['street']}'" : 'NULL') . ', `City`=' . (($data['City'] !== '' && $data['City'] !== NULL) ? "'{$data['City']}'" : 'NULL') . ', `State`=' . (($data['State'] !== '' && $data['State'] !== NULL) ? "'{$data['State']}'" : 'NULL') . ', `zipCode`=' . (($data['zipCode'] !== '' && $data['zipCode'] !== NULL) ? "'{$data['zipCode']}'" : 'NULL') . " where `id`='".makeSafe($selected_id)."'", $o);
 	if($o['error']!=''){
 		echo $o['error'];
 		echo '<a href="properties_view.php?SelectedID='.urlencode($selected_id)."\">{$Translation['< back']}</a>";
@@ -500,10 +523,10 @@ function properties_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, 
 		$jsReadOnly .= "\tjQuery('#photo').replaceWith('<div class=\"form-control-static\" id=\"photo\">' + (jQuery('#photo').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#owner').prop('disabled', true).css({ color: '#555', backgroundColor: '#fff' });\n";
 		$jsReadOnly .= "\tjQuery('#owner_caption').prop('disabled', true).css({ color: '#555', backgroundColor: 'white' });\n";
-		$jsReadOnly .= "\tjQuery('#country').replaceWith('<div class=\"form-control-static\" id=\"country\">' + (jQuery('#country').val() || '') + '</div>'); jQuery('#country-multi-selection-help').hide();\n";
 		$jsReadOnly .= "\tjQuery('#street').replaceWith('<div class=\"form-control-static\" id=\"street\">' + (jQuery('#street').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#City').replaceWith('<div class=\"form-control-static\" id=\"City\">' + (jQuery('#City').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('#State').replaceWith('<div class=\"form-control-static\" id=\"State\">' + (jQuery('#State').val() || '') + '</div>');\n";
+		$jsReadOnly .= "\tjQuery('#zipCode').replaceWith('<div class=\"form-control-static\" id=\"zipCode\">' + (jQuery('#zipCode').val() || '') + '</div>');\n";
 		$jsReadOnly .= "\tjQuery('.select2-container').hide();\n";
 
 		$noUploads = true;
@@ -553,6 +576,7 @@ function properties_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, 
 	$templateCode=str_replace('<%%UPLOADFILE(street)%%>', '', $templateCode);
 	$templateCode=str_replace('<%%UPLOADFILE(City)%%>', '', $templateCode);
 	$templateCode=str_replace('<%%UPLOADFILE(State)%%>', '', $templateCode);
+	$templateCode=str_replace('<%%UPLOADFILE(zipCode)%%>', '', $templateCode);
 
 	// process values
 	if($selected_id){
@@ -577,6 +601,8 @@ function properties_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, 
 		$templateCode=str_replace('<%%URLVALUE(City)%%>', urlencode($urow['City']), $templateCode);
 		$templateCode=str_replace('<%%VALUE(State)%%>', html_attr($row['State']), $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(State)%%>', urlencode($urow['State']), $templateCode);
+		$templateCode=str_replace('<%%VALUE(zipCode)%%>', html_attr($row['zipCode']), $templateCode);
+		$templateCode=str_replace('<%%URLVALUE(zipCode)%%>', urlencode($urow['zipCode']), $templateCode);
 	}else{
 		$templateCode=str_replace('<%%VALUE(id)%%>', '', $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(id)%%>', urlencode(''), $templateCode);
@@ -597,6 +623,8 @@ function properties_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 1, 
 		$templateCode=str_replace('<%%URLVALUE(City)%%>', urlencode(''), $templateCode);
 		$templateCode=str_replace('<%%VALUE(State)%%>', '', $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(State)%%>', urlencode(''), $templateCode);
+		$templateCode=str_replace('<%%VALUE(zipCode)%%>', '', $templateCode);
+		$templateCode=str_replace('<%%URLVALUE(zipCode)%%>', urlencode(''), $templateCode);
 	}
 
 	// process translations

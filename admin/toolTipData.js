@@ -173,6 +173,60 @@ audit_trail_delete1Tip=["",spacer+"This option allows each member of the group t
 audit_trail_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'Audit Trail' table."];
 audit_trail_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'Audit Trail' table."];
 
+// maintenance_tasks table
+maintenance_tasks_addTip=["",spacer+"This option allows all members of the group to add records to the 'Maintenance tasks' table. A member who adds a record to the table becomes the 'owner' of that record."];
+
+maintenance_tasks_view0Tip=["",spacer+"This option prohibits all members of the group from viewing any record in the 'Maintenance tasks' table."];
+maintenance_tasks_view1Tip=["",spacer+"This option allows each member of the group to view only his own records in the 'Maintenance tasks' table."];
+maintenance_tasks_view2Tip=["",spacer+"This option allows each member of the group to view any record owned by any member of the group in the 'Maintenance tasks' table."];
+maintenance_tasks_view3Tip=["",spacer+"This option allows each member of the group to view all records in the 'Maintenance tasks' table."];
+
+maintenance_tasks_edit0Tip=["",spacer+"This option prohibits all members of the group from modifying any record in the 'Maintenance tasks' table."];
+maintenance_tasks_edit1Tip=["",spacer+"This option allows each member of the group to edit only his own records in the 'Maintenance tasks' table."];
+maintenance_tasks_edit2Tip=["",spacer+"This option allows each member of the group to edit any record owned by any member of the group in the 'Maintenance tasks' table."];
+maintenance_tasks_edit3Tip=["",spacer+"This option allows each member of the group to edit any records in the 'Maintenance tasks' table, regardless of their owner."];
+
+maintenance_tasks_delete0Tip=["",spacer+"This option prohibits all members of the group from deleting any record in the 'Maintenance tasks' table."];
+maintenance_tasks_delete1Tip=["",spacer+"This option allows each member of the group to delete only his own records in the 'Maintenance tasks' table."];
+maintenance_tasks_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'Maintenance tasks' table."];
+maintenance_tasks_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'Maintenance tasks' table."];
+
+// employees table
+employees_addTip=["",spacer+"This option allows all members of the group to add records to the 'Employees' table. A member who adds a record to the table becomes the 'owner' of that record."];
+
+employees_view0Tip=["",spacer+"This option prohibits all members of the group from viewing any record in the 'Employees' table."];
+employees_view1Tip=["",spacer+"This option allows each member of the group to view only his own records in the 'Employees' table."];
+employees_view2Tip=["",spacer+"This option allows each member of the group to view any record owned by any member of the group in the 'Employees' table."];
+employees_view3Tip=["",spacer+"This option allows each member of the group to view all records in the 'Employees' table."];
+
+employees_edit0Tip=["",spacer+"This option prohibits all members of the group from modifying any record in the 'Employees' table."];
+employees_edit1Tip=["",spacer+"This option allows each member of the group to edit only his own records in the 'Employees' table."];
+employees_edit2Tip=["",spacer+"This option allows each member of the group to edit any record owned by any member of the group in the 'Employees' table."];
+employees_edit3Tip=["",spacer+"This option allows each member of the group to edit any records in the 'Employees' table, regardless of their owner."];
+
+employees_delete0Tip=["",spacer+"This option prohibits all members of the group from deleting any record in the 'Employees' table."];
+employees_delete1Tip=["",spacer+"This option allows each member of the group to delete only his own records in the 'Employees' table."];
+employees_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'Employees' table."];
+employees_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'Employees' table."];
+
+// task_types table
+task_types_addTip=["",spacer+"This option allows all members of the group to add records to the 'Task types' table. A member who adds a record to the table becomes the 'owner' of that record."];
+
+task_types_view0Tip=["",spacer+"This option prohibits all members of the group from viewing any record in the 'Task types' table."];
+task_types_view1Tip=["",spacer+"This option allows each member of the group to view only his own records in the 'Task types' table."];
+task_types_view2Tip=["",spacer+"This option allows each member of the group to view any record owned by any member of the group in the 'Task types' table."];
+task_types_view3Tip=["",spacer+"This option allows each member of the group to view all records in the 'Task types' table."];
+
+task_types_edit0Tip=["",spacer+"This option prohibits all members of the group from modifying any record in the 'Task types' table."];
+task_types_edit1Tip=["",spacer+"This option allows each member of the group to edit only his own records in the 'Task types' table."];
+task_types_edit2Tip=["",spacer+"This option allows each member of the group to edit any record owned by any member of the group in the 'Task types' table."];
+task_types_edit3Tip=["",spacer+"This option allows each member of the group to edit any records in the 'Task types' table, regardless of their owner."];
+
+task_types_delete0Tip=["",spacer+"This option prohibits all members of the group from deleting any record in the 'Task types' table."];
+task_types_delete1Tip=["",spacer+"This option allows each member of the group to delete only his own records in the 'Task types' table."];
+task_types_delete2Tip=["",spacer+"This option allows each member of the group to delete any record owned by any member of the group in the 'Task types' table."];
+task_types_delete3Tip=["",spacer+"This option allows each member of the group to delete any records in the 'Task types' table."];
+
 /*
 	Style syntax:
 	-------------

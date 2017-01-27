@@ -223,7 +223,7 @@ function residence_and_rental_history_form($selected_id = '', $AllowUpdate = 1, 
 	$combo_tenant = new DataCombo;
 	// combobox: month
 	$combo_month = new DateCombo;
-	$combo_month->DateFormat = "ymd";
+	$combo_month->DateFormat = "mdy";
 	$combo_month->MinYear = 1900;
 	$combo_month->MaxYear = 2100;
 	$combo_month->DefaultDate = parseMySQLDate('1', '1');
@@ -231,7 +231,7 @@ function residence_and_rental_history_form($selected_id = '', $AllowUpdate = 1, 
 	$combo_month->NamePrefix = 'month';
 	// combobox: due_date
 	$combo_due_date = new DateCombo;
-	$combo_due_date->DateFormat = "ymd";
+	$combo_due_date->DateFormat = "mdy";
 	$combo_due_date->MinYear = 1900;
 	$combo_due_date->MaxYear = 2100;
 	$combo_due_date->DefaultDate = parseMySQLDate('', '');
@@ -239,7 +239,7 @@ function residence_and_rental_history_form($selected_id = '', $AllowUpdate = 1, 
 	$combo_due_date->NamePrefix = 'due_date';
 	// combobox: rent_reminder
 	$combo_rent_reminder = new DateCombo;
-	$combo_rent_reminder->DateFormat = "ymd";
+	$combo_rent_reminder->DateFormat = "mdy";
 	$combo_rent_reminder->MinYear = 1900;
 	$combo_rent_reminder->MaxYear = 2100;
 	$combo_rent_reminder->DefaultDate = parseMySQLDate('1', '1');
@@ -247,7 +247,7 @@ function residence_and_rental_history_form($selected_id = '', $AllowUpdate = 1, 
 	$combo_rent_reminder->NamePrefix = 'rent_reminder';
 	// combobox: late_rent_reminder
 	$combo_late_rent_reminder = new DateCombo;
-	$combo_late_rent_reminder->DateFormat = "ymd";
+	$combo_late_rent_reminder->DateFormat = "mdy";
 	$combo_late_rent_reminder->MinYear = 1900;
 	$combo_late_rent_reminder->MaxYear = 2100;
 	$combo_late_rent_reminder->DefaultDate = parseMySQLDate('', '');
@@ -255,7 +255,7 @@ function residence_and_rental_history_form($selected_id = '', $AllowUpdate = 1, 
 	$combo_late_rent_reminder->NamePrefix = 'late_rent_reminder';
 	// combobox: duration_of_residency_from
 	$combo_duration_of_residency_from = new DateCombo;
-	$combo_duration_of_residency_from->DateFormat = "ymd";
+	$combo_duration_of_residency_from->DateFormat = "mdy";
 	$combo_duration_of_residency_from->MinYear = 1900;
 	$combo_duration_of_residency_from->MaxYear = 2100;
 	$combo_duration_of_residency_from->DefaultDate = parseMySQLDate('', '');
@@ -263,7 +263,7 @@ function residence_and_rental_history_form($selected_id = '', $AllowUpdate = 1, 
 	$combo_duration_of_residency_from->NamePrefix = 'duration_of_residency_from';
 	// combobox: to
 	$combo_to = new DateCombo;
-	$combo_to->DateFormat = "ymd";
+	$combo_to->DateFormat = "mdy";
 	$combo_to->MinYear = 1900;
 	$combo_to->MaxYear = 2100;
 	$combo_to->DefaultDate = parseMySQLDate('', '');
@@ -537,8 +537,8 @@ function residence_and_rental_history_form($selected_id = '', $AllowUpdate = 1, 
 		$templateCode=str_replace('<%%URLVALUE(id)%%>', urlencode($urow['id']), $templateCode);
 		$templateCode=str_replace('<%%VALUE(tenant)%%>', html_attr($row['tenant']), $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(tenant)%%>', urlencode($urow['tenant']), $templateCode);
-		$templateCode=str_replace('<%%VALUE(month)%%>', @date('Y-m-d', @strtotime(html_attr($row['month']))), $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(month)%%>', urlencode(@date('Y-m-d', @strtotime(html_attr($urow['month'])))), $templateCode);
+		$templateCode=str_replace('<%%VALUE(month)%%>', @date('m/d/Y', @strtotime(html_attr($row['month']))), $templateCode);
+		$templateCode=str_replace('<%%URLVALUE(month)%%>', urlencode(@date('m/d/Y', @strtotime(html_attr($urow['month'])))), $templateCode);
 		$templateCode=str_replace('<%%VALUE(unit)%%>', html_attr($row['unit']), $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(unit)%%>', urlencode($urow['unit']), $templateCode);
 		$templateCode=str_replace('<%%VALUE(monthly_rent)%%>', html_attr($row['monthly_rent']), $templateCode);
@@ -551,18 +551,18 @@ function residence_and_rental_history_form($selected_id = '', $AllowUpdate = 1, 
 		$templateCode=str_replace('<%%URLVALUE(rent_paid)%%>', urlencode($urow['rent_paid']), $templateCode);
 		$templateCode=str_replace('<%%VALUE(rent_balance)%%>', html_attr($row['rent_balance']), $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(rent_balance)%%>', urlencode($urow['rent_balance']), $templateCode);
-		$templateCode=str_replace('<%%VALUE(due_date)%%>', @date('Y-m-d', @strtotime(html_attr($row['due_date']))), $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(due_date)%%>', urlencode(@date('Y-m-d', @strtotime(html_attr($urow['due_date'])))), $templateCode);
-		$templateCode=str_replace('<%%VALUE(rent_reminder)%%>', @date('Y-m-d', @strtotime(html_attr($row['rent_reminder']))), $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(rent_reminder)%%>', urlencode(@date('Y-m-d', @strtotime(html_attr($urow['rent_reminder'])))), $templateCode);
-		$templateCode=str_replace('<%%VALUE(late_rent_reminder)%%>', @date('Y-m-d', @strtotime(html_attr($row['late_rent_reminder']))), $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(late_rent_reminder)%%>', urlencode(@date('Y-m-d', @strtotime(html_attr($urow['late_rent_reminder'])))), $templateCode);
+		$templateCode=str_replace('<%%VALUE(due_date)%%>', @date('m/d/Y', @strtotime(html_attr($row['due_date']))), $templateCode);
+		$templateCode=str_replace('<%%URLVALUE(due_date)%%>', urlencode(@date('m/d/Y', @strtotime(html_attr($urow['due_date'])))), $templateCode);
+		$templateCode=str_replace('<%%VALUE(rent_reminder)%%>', @date('m/d/Y', @strtotime(html_attr($row['rent_reminder']))), $templateCode);
+		$templateCode=str_replace('<%%URLVALUE(rent_reminder)%%>', urlencode(@date('m/d/Y', @strtotime(html_attr($urow['rent_reminder'])))), $templateCode);
+		$templateCode=str_replace('<%%VALUE(late_rent_reminder)%%>', @date('m/d/Y', @strtotime(html_attr($row['late_rent_reminder']))), $templateCode);
+		$templateCode=str_replace('<%%URLVALUE(late_rent_reminder)%%>', urlencode(@date('m/d/Y', @strtotime(html_attr($urow['late_rent_reminder'])))), $templateCode);
 		$templateCode=str_replace('<%%VALUE(status)%%>', html_attr($row['status']), $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(status)%%>', urlencode($urow['status']), $templateCode);
-		$templateCode=str_replace('<%%VALUE(duration_of_residency_from)%%>', @date('Y-m-d', @strtotime(html_attr($row['duration_of_residency_from']))), $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(duration_of_residency_from)%%>', urlencode(@date('Y-m-d', @strtotime(html_attr($urow['duration_of_residency_from'])))), $templateCode);
-		$templateCode=str_replace('<%%VALUE(to)%%>', @date('Y-m-d', @strtotime(html_attr($row['to']))), $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(to)%%>', urlencode(@date('Y-m-d', @strtotime(html_attr($urow['to'])))), $templateCode);
+		$templateCode=str_replace('<%%VALUE(duration_of_residency_from)%%>', @date('m/d/Y', @strtotime(html_attr($row['duration_of_residency_from']))), $templateCode);
+		$templateCode=str_replace('<%%URLVALUE(duration_of_residency_from)%%>', urlencode(@date('m/d/Y', @strtotime(html_attr($urow['duration_of_residency_from'])))), $templateCode);
+		$templateCode=str_replace('<%%VALUE(to)%%>', @date('m/d/Y', @strtotime(html_attr($row['to']))), $templateCode);
+		$templateCode=str_replace('<%%URLVALUE(to)%%>', urlencode(@date('m/d/Y', @strtotime(html_attr($urow['to'])))), $templateCode);
 		$templateCode=str_replace('<%%VALUE(reason_for_leaving)%%>', html_attr($row['reason_for_leaving']), $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(reason_for_leaving)%%>', urlencode($urow['reason_for_leaving']), $templateCode);
 		if($AllowUpdate || $AllowInsert){

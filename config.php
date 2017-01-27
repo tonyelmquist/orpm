@@ -1,7 +1,7 @@
 <?php
 	$dbServer = 'localhost';
 	$dbUsername = 'root';
-	$dbPassword = '';
+	$dbPassword = 'root';
 	$dbDatabase = 'orpm';
 
 	$adminConfig = array(
