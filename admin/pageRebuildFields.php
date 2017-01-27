@@ -23,7 +23,11 @@
 			'emergency_contact' => array('appgini' => 'VARCHAR(100) '),
 			'co_signer_details' => array('appgini' => 'VARCHAR(100) '),
 			'notes' => array('appgini' => 'TEXT '),
-			'agreement' => array('appgini' => 'VARCHAR(40) ')
+			'agreement' => array('appgini' => 'VARCHAR(40) '),
+			'pets' => array('appgini' => 'TINYINT '),
+			'smoking' => array('appgini' => 'TINYINT '),
+			'sublet' => array('appgini' => 'VARCHAR(40) '),
+			'commercial' => array('appgini' => 'TINYINT ')
 		),
 		'residence_and_rental_history' => array(   
 			'id' => array('appgini' => 'INT unsigned not null primary key auto_increment '),

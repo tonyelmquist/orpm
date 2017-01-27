@@ -275,8 +275,8 @@
 		if(isset($_COOKIE[session_name()])){
 			setcookie(session_name(), '', time()-42000, '/');
 		}
-		if(isset($_COOKIE['smartLandlord_rememberMe'])){
-			setcookie('smartLandlord_rememberMe', '', time()-42000);
+		if(isset($_COOKIE['landlordTenantSystems_rememberMe'])){
+			setcookie('landlordTenantSystems_rememberMe', '', time()-42000);
 		}
 		session_destroy();
 	}

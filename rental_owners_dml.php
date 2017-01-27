@@ -196,7 +196,7 @@ function rental_owners_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 	$rnd1 = ($dvprint ? rand(1000000, 9999999) : '');
 	// combobox: date_of_birth
 	$combo_date_of_birth = new DateCombo;
-	$combo_date_of_birth->DateFormat = "ymd";
+	$combo_date_of_birth->DateFormat = "mdy";
 	$combo_date_of_birth->MinYear = 1900;
 	$combo_date_of_birth->MaxYear = 2100;
 	$combo_date_of_birth->DefaultDate = parseMySQLDate('', '');
@@ -373,8 +373,8 @@ function rental_owners_form($selected_id = '', $AllowUpdate = 1, $AllowInsert = 
 		$templateCode=str_replace('<%%URLVALUE(first_name)%%>', urlencode($urow['first_name']), $templateCode);
 		$templateCode=str_replace('<%%VALUE(last_name)%%>', html_attr($row['last_name']), $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(last_name)%%>', urlencode($urow['last_name']), $templateCode);
-		$templateCode=str_replace('<%%VALUE(date_of_birth)%%>', @date('Y-m-d', @strtotime(html_attr($row['date_of_birth']))), $templateCode);
-		$templateCode=str_replace('<%%URLVALUE(date_of_birth)%%>', urlencode(@date('Y-m-d', @strtotime(html_attr($urow['date_of_birth'])))), $templateCode);
+		$templateCode=str_replace('<%%VALUE(date_of_birth)%%>', @date('m/d/Y', @strtotime(html_attr($row['date_of_birth']))), $templateCode);
+		$templateCode=str_replace('<%%URLVALUE(date_of_birth)%%>', urlencode(@date('m/d/Y', @strtotime(html_attr($urow['date_of_birth'])))), $templateCode);
 		$templateCode=str_replace('<%%VALUE(primary_email)%%>', html_attr($row['primary_email']), $templateCode);
 		$templateCode=str_replace('<%%URLVALUE(primary_email)%%>', urlencode($urow['primary_email']), $templateCode);
 		$templateCode=str_replace('<%%VALUE(phone)%%>', html_attr($row['phone']), $templateCode);
